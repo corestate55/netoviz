@@ -114,7 +114,26 @@ class Networks
     check_tp_id_uniqueness
   end
 
+  def check_tp_ref_count
+    all_links do |link, nw|
+      ref_count(nw, link.source)
+      ref_count(nw, link.destination)
+    end
+
+    unref_tps = []
+    all_termination_points do |tp, node, nw|
+      if tp.ref_count == 0 || tp.ref_count % 2 != 0 || tp.ref_count >= 4
+        warn "WARNING: #{nw.network_id}/#{node.node_id}/#{tp.tp_id} ref_count = #{tp.ref_count}"
+      end
+    end
+  end
+
   private
+
+  def ref_count(nw, tp_ref)
+    tp = find_tp(nw.network_id, tp_ref.node_ref, tp_ref.tp_ref)
+    tp.ref_count_up if (tp)
+  end
 
   def check_network_id_uniqueness
     network_ids = @networks.map {|nw| nw.network_id}
@@ -235,7 +254,7 @@ class Node
 end
 
 class TerminationPoint
-  attr_reader :tp_id, :supporting_termination_points
+  attr_reader :tp_id, :supporting_termination_points, :ref_count
 
   class SupportingTerminationPoint
     attr_reader :network_ref, :node_ref, :tp_ref
@@ -253,6 +272,7 @@ class TerminationPoint
 
   def initialize(data)
     @tp_id = data['tp-id']
+    @ref_count = 0
 
     @supporting_termination_points = []
     if data.has_key?('supporting-termination-point')
@@ -260,6 +280,10 @@ class TerminationPoint
         SupportingTerminationPoint.new(stp)
       end
     end
+  end
+
+  def ref_count_up
+    @ref_count = @ref_count + 1
   end
 end
 
@@ -338,3 +362,5 @@ p "## check all link pair"
 networks.check_all_link_pair
 p "## check uniqueness"
 networks.check_object_uniqueness
+p "## check terminal point reference count"
+networks.check_tp_ref_count

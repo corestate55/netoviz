@@ -61,11 +61,11 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
     topoLinks.forEach(function(link) {
         var src = link['source'];
         var dst = link['destination'];
-            var sourceId = findGraphObjId(
-            graphObjPath(nwName, src['source-node'], src['source-tp']), 
+        var sourceId = findGraphObjId(
+            graphObjPath(nwName, src['source-node'], src['source-tp']),
             graphNodes);
         var targetId = findGraphObjId(
-            graphObjPath(nwName, dst['dest-node'], dst['dest-tp']), 
+            graphObjPath(nwName, dst['dest-node'], dst['dest-tp']),
             graphNodes);
 
         graphLinks.push({
@@ -111,7 +111,7 @@ function makeNodeData(topoData) {
 }
 
 function drawGraphs(graphs) {
-    var width = 1000;
+    var width = 2000;
     var height = 800;
     for (var nwName in graphs) {
         var simulation = d3.forceSimulation()
@@ -148,9 +148,9 @@ function drawGraph(simulation, nwLayer, graph) {
         .enter()
         .append("circle")
         .call(d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended));
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
 
     var label = nwLayer.append("g")
         .attr("class", "labels")
@@ -160,7 +160,7 @@ function drawGraph(simulation, nwLayer, graph) {
         .append("text")
         .attr("class", "label")
         .text(function(d) { return d.name; });
-    
+
     simulation
         .nodes(graph.nodes)
         .on("tick", ticked);
@@ -175,13 +175,13 @@ function drawGraph(simulation, nwLayer, graph) {
         d.fx = d.x;
         d.fy = d.y;
     }
-    
+
     function dragged(d) {
         console.log("dragged: ", d);
         d.fx = d3.event.x;
         d.fy = d3.event.y;
     }
-    
+
     function dragended(d) {
         console.log("dragended: ", d);
         if (!d3.event.active) {

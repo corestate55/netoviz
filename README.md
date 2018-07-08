@@ -31,7 +31,19 @@ json2xml topo.jtox target.json | xmllint --format - > target.xml
 
 OOPS...they are YANG/1.1
 ```
-agiwara@exp01:~/nwmodel/exercise$ yang2dsdl -t config ietf-network-topology@2018-02-26.yang ietf-network@2018-02-26.yang 
+hagiwara@exp01:~/nwmodel/exercise$ yang2dsdl -t config ietf-network-topology@2018-02-26.yang ietf-network@2018-02-26.yang
 DSDL plugin supports only YANG version 1.
 hagiwara@exp01:~/nwmodel/exercise$ 
 ```
+
+## Visualizer
+Run HTTP Server, For example with ruby/WEBRick
+```
+$ ruby -rwebrick -e 'WEBrick::HTTPServer.new(:DocumentRoot => "./", :Port => 8000).start'
+```
+or with python.
+```
+$ python -m SimpleHTTPServer &
+```
+
+Access `http://localhost:8000/nwnode-vis.html` .

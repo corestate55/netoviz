@@ -767,14 +767,14 @@
         </nt:source>
         <nt:destination>
           <nt:dest-node>R2-BR-VL20</nt:dest-node>
-          <nt:dest-tp>p2</nt:dest-tp>
+          <nt:dest-tp>p1</nt:dest-tp>
         </nt:destination>
       </nt:link>
       <nt:link>
         <nt:link-id>R2-BR-VL20,p2,R1-GRT,p2</nt:link-id>
         <nt:source>
           <nt:source-node>R2-BR-VL20</nt:source-node>
-          <nt:source-tp>p2</nt:source-tp>
+          <nt:source-tp>p1</nt:source-tp>
         </nt:source>
         <nt:destination>
           <nt:dest-node>R2-GRT</nt:dest-node>

@@ -921,14 +921,14 @@
                         },
                         "destination": {
                             "dest-node": "R2-BR-VL20",
-                            "dest-tp": "p2"
+                            "dest-tp": "p1"
                         }
                     },
                     {
                         "link-id": "R2-BR-VL20,p2,R1-GRT,p2",
                         "source": {
                             "source-node": "R2-BR-VL20",
-                            "source-tp": "p2"
+                            "source-tp": "p1"
                         },
                         "destination": {
                             "dest-node": "R2-GRT",
