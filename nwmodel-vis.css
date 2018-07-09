@@ -1,0 +1,16 @@
+text {
+    font-size: 20px;
+    fill: #4393c3;
+}
+
+rect {
+    stroke: #969696;
+    stroke-width: 1px;
+    fill: #d9d9d9;
+}
+
+circle {
+    stroke: #969696;
+    stroke-width: 1px;
+    fill: #d9d9d9;
+}

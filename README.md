@@ -11,7 +11,7 @@ Generate bi-directional link data from unidirectional link-id string.
 
 Check data consistency
 ```
-ruby model_checker.rb target.json
+ruby nwmodel-checker.rb target.json
 ```
 
 ## JSON to XML

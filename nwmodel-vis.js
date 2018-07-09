@@ -19,18 +19,25 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
     topoNodes.forEach(function(node) {
         // node
         graphNodes.push({
-            "type": "node",
             "name": node['node-id'],
             "id": graphObjId(nwNum, nodeNum, 0),
             "path": graphObjPath(nwName, node['node-id'], null)
         });
+        nodeNum++;
+    });
+    return graphNodes;
+}
+
+function makeGraphTpsFromTopoNodes(nwNum, nwName, topoNodes) {
+    var nodeNum = 1;
+    var graphTps = [];
+    topoNodes.forEach(function(node) {
         // node as termination point
         var tpKey = 'ietf-network-topology:termination-point'; // alias
         if(node[tpKey]) {
             var tpNum = 1;
             node[tpKey].forEach(function(tp) {
-                graphNodes.push({
-                    "type": "tp",
+                graphTps.push({
                     "name": tp['tp-id'],
                     "id": graphObjId(nwNum, nodeNum, tpNum),
                     "path": graphObjPath(nwName, node['node-id'], tp['tp-id'])
@@ -40,7 +47,7 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
         }
         nodeNum++;
     });
-    return graphNodes;
+    return graphTps;
 }
 
 function findGraphObjId(path, graphNodes) {
@@ -54,8 +61,9 @@ function findGraphObjId(path, graphNodes) {
     return objId;
 }
 
-function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
+function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes, graphTps) {
     var graphLinks = [];
+    var nodeAndTp = graphNodes.concat(graphTps);
 
     // tp-tp link
     topoLinks.forEach(function(link) {
@@ -63,10 +71,10 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
         var dst = link['destination'];
         var sourceId = findGraphObjId(
             graphObjPath(nwName, src['source-node'], src['source-tp']),
-            graphNodes);
+            nodeAndTp);
         var targetId = findGraphObjId(
             graphObjPath(nwName, dst['dest-node'], dst['dest-tp']),
-            graphNodes);
+            nodeAndTp);
 
         graphLinks.push({
             "source_id": sourceId,
@@ -75,14 +83,12 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
         });
     });
     // node-tp link
-    graphNodes.forEach(function(node) {
-        if(node['type'] == 'tp') {
-            graphLinks.push({
-                "source_id": (Math.floor(node['id'] / 100)) * 100,
-                "target_id": node['id'],
-                "name": "node-tp:" + node['path']
-            });
-        }
+    graphTps.forEach(function(tp) {
+        graphLinks.push({
+            "source_id": (Math.floor(tp['id'] / 100)) * 100,
+            "target_id": tp['id'],
+            "name": "node-tp:" + tp['path']
+        });
     });
     return graphLinks;
 }
@@ -99,9 +105,11 @@ function makeNodeData(topoData) {
     var nwNum = 1;
     topoData['ietf-network:networks']['network'].forEach(function(nw) {
         var graphNodes = makeGraphNodesFromTopoNodes(nwNum, nw['network-id'], nw['node']);
-        var graphLinks = makeGraphLinksFromTopoLinks(nw['network-id'], nw['ietf-network-topology:link'], graphNodes);
+        var graphTps =  makeGraphTpsFromTopoNodes(nwNum, nw['network-id'], nw['node']);
+        var graphLinks = makeGraphLinksFromTopoLinks(nw['network-id'], nw['ietf-network-topology:link'], graphNodes, graphTps);
         graphs[nw['network-id']] = {
             'nodes': graphNodes,
+            'tps': graphTps,
             'links': graphLinks
         };
         nwNum++;
@@ -141,28 +149,43 @@ function drawGraph(simulation, nwLayer, graph) {
         .enter()
         .append("line");
 
-    var node = nwLayer.append("g")
-        .attr("class", "nodes")
+    var tp = nwLayer.append("g")
+        .attr("class", "tp")
         .selectAll("circle")
-        .data(graph.nodes)
+        .data(graph.tps)
         .enter()
         .append("circle")
+        .attr("id", function(d) { return d.path; })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
               .on("end", dragended));
 
+    var node = nwLayer.append("g")
+        .attr("class", "node")
+        .selectAll("rect")
+        .data(graph.nodes)
+        .enter()
+        .append("rect")
+        .attr("id", function(d) { return d.path; })
+        .call(d3.drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
+
+    var nodeAndTp = graph.nodes.concat(graph.tps);
+
     var label = nwLayer.append("g")
         .attr("class", "labels")
         .selectAll("text")
-        .data(graph.nodes)
+        .data(nodeAndTp)
         .enter()
         .append("text")
         .attr("class", "label")
         .text(function(d) { return d.name; });
 
     simulation
-        .nodes(graph.nodes)
+        .nodes(nodeAndTp)
         .on("tick", ticked);
 
     simulation.force("link")
@@ -198,17 +221,21 @@ function drawGraph(simulation, nwLayer, graph) {
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; });
 
+        var tpSize = 10;
+        tp
+            .attr("r", tpSize)
+            .attr("cx", function (d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+
+        var nodeSize = 40;
         node
-            .attr("r", 20)
-            .style("fill", "#d9d9d9")
-            .style("stroke", "#969696")
-            .style("stroke-width", "1px")
-            .attr("cx", function (d) { return d.x+6; })
-            .attr("cy", function(d) { return d.y-6; });
+            .attr("width", nodeSize)
+            .attr("height", nodeSize)
+            .attr("x", function (d) { return d.x - nodeSize / 2; })
+            .attr("y", function(d) { return d.y - nodeSize / 2; });
 
         label
             .attr("x", function(d) { return d.x; })
-            .attr("y", function (d) { return d.y; })
-            .style("font-size", "20px").style("fill", "#4393c3");
+            .attr("y", function (d) { return d.y; });
     }
 }
