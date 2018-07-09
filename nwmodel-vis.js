@@ -143,11 +143,12 @@ function drawGraph(simulation, nwLayer, graph) {
     });
 
     var link = nwLayer.append("g")
-        .style("stroke", "#aaa")
+        .attr("class", "link")
         .selectAll("line")
         .data(graph.links)
         .enter()
-        .append("line");
+        .append("line")
+        .attr("id", function(d) { return d.name; });
 
     var tp = nwLayer.append("g")
         .attr("class", "tp")
