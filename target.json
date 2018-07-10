@@ -16,6 +16,21 @@
                             },
                             {
                                 "tp-id": "Fa2"
+                            },
+                            {
+                                "tp-id": "Po1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "R1",
+                                        "tp-ref": "Fa0"
+                                    },
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "R1",
+                                        "tp-ref": "Fa1"
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -30,6 +45,21 @@
                             },
                             {
                                 "tp-id": "Fa2"
+                            },
+                            {
+                                "tp-id": "Po1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "R2",
+                                        "tp-ref": "Fa0"
+                                    },
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "R2",
+                                        "tp-ref": "Fa1"
+                                    }
+                                ]
                             }
                         ]
                     },
@@ -139,6 +169,48 @@
                             "dest-node": "R1",
                             "dest-tp": "Fa1"
                         }
+                    },
+                    {
+                        "link-id": "R1,Po1,R2,Po1",
+                        "source": {
+                            "source-node": "R1",
+                            "source-tp": "Po1"
+                        },
+                        "destination": {
+                            "dest-node": "R2",
+                            "dest-tp": "Po1"
+                        },
+                        "supporting-link": [
+                            {
+                                "network-ref": "target-L1",
+                                "link-ref": "R1,Fa0,R2,Fa0"
+                            },
+                            {
+                                "network-ref": "target-L1",
+                                "link-ref": "R1,Fa1,R2,Fa1"
+                            }
+                        ]
+                    },
+                    {
+                        "link-id": "R2,Po1,R1,Po1",
+                        "source": {
+                            "source-node": "R2",
+                            "source-tp": "Po1"
+                        },
+                        "destination": {
+                            "dest-node": "R1",
+                            "dest-tp": "Po1"
+                        },
+                        "supporting-link": [
+                            {
+                                "network-ref": "target-L1",
+                                "link-ref": "R2,Fa0,R1,Fa0"
+                            },
+                            {
+                                "network-ref": "target-L1",
+                                "link-ref": "R2,Fa1,R1,Fa1"
+                            }
+                        ]
                     },
                     {
                         "link-id": "R1,Fa2,SW1,Fa1",
@@ -306,32 +378,6 @@
                 ],
                 "node": [
                     {
-                        "node-id": "R1",
-                        "ietf-network-topology:termination-point": [
-                            {
-                                "tp-id": "Po1",
-                                "supporting-termination-point": [
-                                    {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "R1",
-                                        "tp-ref": "Fa0"
-                                    },
-                                    {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "R1",
-                                        "tp-ref": "Fa1"
-                                    }
-                                ]
-                            }
-                        ],
-                        "supporting-node": [
-                            {
-                                "network-ref": "target-L1",
-                                "node-ref": "R1"
-                            }
-                        ]
-                    },
-                    {
                         "node-id": "R1-GRT",
                         "ietf-network-topology:termination-point": [
                             {
@@ -358,7 +404,7 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L2",
+                                        "network-ref": "target-L1",
                                         "node-ref": "R1",
                                         "tp-ref": "Po1"
                                     }
@@ -392,7 +438,7 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L2",
+                                        "network-ref": "target-L1",
                                         "node-ref": "R1",
                                         "tp-ref": "Po1"
                                     }
@@ -413,32 +459,6 @@
                             {
                                 "network-ref": "target-L1",
                                 "node-ref": "R1"
-                            }
-                        ]
-                    },
-                    {
-                        "node-id": "R2",
-                        "ietf-network-topology:termination-point": [
-                            {
-                                "tp-id": "Po1",
-                                "supporting-termination-point": [
-                                    {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "R2",
-                                        "tp-ref": "Fa0"
-                                    },
-                                    {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "R2",
-                                        "tp-ref": "Fa1"
-                                    }
-                                ]
-                            }
-                        ],
-                        "supporting-node": [
-                            {
-                                "network-ref": "target-L1",
-                                "node-ref": "R2"
                             }
                         ]
                     },
@@ -469,7 +489,7 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L2",
+                                        "network-ref": "target-L1",
                                         "node-ref": "R2",
                                         "tp-ref": "Po1"
                                     }
@@ -503,7 +523,7 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L2",
+                                        "network-ref": "target-L1",
                                         "node-ref": "R2",
                                         "tp-ref": "Po1"
                                     }
@@ -934,48 +954,6 @@
                             "dest-node": "R2-GRT",
                             "dest-tp": "p2"
                         }
-                    },
-                    {
-                        "link-id": "R1,Po1,R2,Po1",
-                        "source": {
-                            "source-node": "R1",
-                            "source-tp": "Po1"
-                        },
-                        "destination": {
-                            "dest-node": "R2",
-                            "dest-tp": "Po1"
-                        },
-                        "supporting-link": [
-                            {
-                                "network-ref": "target-L1",
-                                "link-ref": "R1,Fa0,R2,Fa0"
-                            },
-                            {
-                                "network-ref": "target-L1",
-                                "link-ref": "R1,Fa1,R2,Fa1"
-                            }
-                        ]
-                    },
-                    {
-                        "link-id": "R2,Po1,R1,Po1",
-                        "source": {
-                            "source-node": "R2",
-                            "source-tp": "Po1"
-                        },
-                        "destination": {
-                            "dest-node": "R1",
-                            "dest-tp": "Po1"
-                        },
-                        "supporting-link": [
-                            {
-                                "network-ref": "target-L1",
-                                "link-ref": "R2,Fa0,R1,Fa0"
-                            },
-                            {
-                                "network-ref": "target-L1",
-                                "link-ref": "R2,Fa1,R1,Fa1"
-                            }
-                        ]
                     },
                     {
                         "link-id": "R1-BR-VL10,p2,R2-BR-VL10,p2",
