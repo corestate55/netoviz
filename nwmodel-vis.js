@@ -5,57 +5,64 @@ d3.json("http://localhost:8000/target.json", runNetworkModelVis);
 function graphObjId(nwNum, nodeNum, tpNum) {
     return nwNum * 10000 + nodeNum * 100 + tpNum;
 }
+
 function nodeObjIdFromTpObjId(destId) {
     return (Math.floor(destId / 100)) * 100;
 }
 
 function graphObjPath(nwName, nodeName, tpName) {
-    if(tpName) {
-        return [nwName, nodeName, tpName].join('/');
+    if (tpName) {
+        return [nwName, nodeName, tpName].join("/");
     }
-    return [nwName, nodeName].join('/');
+    return [nwName, nodeName].join("/");
 }
 
 function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
     var nodeNum = 1;
     var graphNodes = [];
     topoNodes.forEach(function(node) {
-        // child node for 'node'
+        // child node for "node"
         var nodeChildPaths = [];
-        if(node['supporting-node']) {
-            node['supporting-node'].forEach(function(snode) {
-                nodeChildPaths.push(graphObjPath(snode['network-ref'], snode['node-ref']));
+        if (node["supporting-node"]) {
+            node["supporting-node"].forEach(function(snode) {
+                nodeChildPaths.push(
+                    graphObjPath(snode["network-ref"], snode["node-ref"])
+                );
             });
         }
         // node
         graphNodes.push({
             "type": "node",
-            "name": node['node-id'],
+            "name": node["node-id"],
             "id": graphObjId(nwNum, nodeNum, 0),
-            "path": graphObjPath(nwName, node['node-id']),
-            "children": nodeChildPaths.join(','),
-            "parents": ''
+            "path": graphObjPath(nwName, node["node-id"]),
+            "children": nodeChildPaths.join(","),
+            "parents": ""
         });
         // node as termination point
-        var tpKey = 'ietf-network-topology:termination-point'; // alias
-        if(node[tpKey]) {
+        var tpKey = "ietf-network-topology:termination-point"; // alias
+        if (node[tpKey]) {
             var tpNum = 1;
             node[tpKey].forEach(function(tp) {
-                // child node for 'tp'
+                // child node for "tp"
                 var tpChildPaths = [];
-                if(tp['supporting-termination-point']) {
-                    tp['supporting-termination-point'].forEach(function(stp) {
-                        tpChildPaths.push(graphObjPath(stp['network-ref'], stp['node-ref'], stp['tp-ref']));
+                if (tp["supporting-termination-point"]) {
+                    tp["supporting-termination-point"].forEach(function(stp) {
+                        tpChildPaths.push(
+                            graphObjPath(stp["network-ref"],
+                                         stp["node-ref"],
+                                         stp["tp-ref"])
+                        );
                     });
                 }
                 // tp
                 graphNodes.push({
                     "type": "tp",
-                    "name": tp['tp-id'],
+                    "name": tp["tp-id"],
                     "id": graphObjId(nwNum, nodeNum, tpNum),
-                    "path": graphObjPath(nwName, node['node-id'], tp['tp-id']),
-                    "children": tpChildPaths.join(','),
-                    "parents": ''
+                    "path": graphObjPath(nwName, node["node-id"], tp["tp-id"]),
+                    "children": tpChildPaths.join(","),
+                    "parents": ""
                 });
                 tpNum++;
             });
@@ -68,7 +75,7 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
 function findGraphObjByPath(path, graphNodes) {
     var obj = null;
     graphNodes.some(function(node) {
-        if(node['path'] == path) {
+        if (node.path === path) {
             obj = node;
             return true;
         }
@@ -79,7 +86,7 @@ function findGraphObjByPath(path, graphNodes) {
 function findGraphObjById(id, graphNodes) {
     var obj = null;
     graphNodes.some(function(node) {
-        if(node['id'] == id) {
+        if (node.id === id) {
             obj = node;
             return true;
         }
@@ -92,30 +99,32 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
 
     // tp-tp link
     topoLinks.forEach(function(link) {
-        var src = link['source'];
-        var dst = link['destination'];
+        var src = link.source;
+        var dst = link.destination;
         var sourceId = findGraphObjByPath(
-            graphObjPath(nwName, src['source-node'], src['source-tp']),
-            graphNodes)['id'];
+            graphObjPath(nwName, src["source-node"], src["source-tp"]),
+            graphNodes).id;
         var targetId = findGraphObjByPath(
-            graphObjPath(nwName, dst['dest-node'], dst['dest-tp']),
-            graphNodes)['id'];
+            graphObjPath(nwName, dst["dest-node"], dst["dest-tp"]),
+            graphNodes).id;
 
         graphLinks.push({
             "source_id": sourceId,
             "target_id": targetId,
-            "name": link['link-id'],
-            "path": graphObjPath(nwName, link['link-id'])
+            "name": link["link-id"],
+            "path": graphObjPath(nwName, link["link-id"])
         });
     });
     // node-tp link
-    graphNodes.filter(function(d) { return d['type'] == 'tp'; }).forEach(function(tp) {
-        var nodeId = nodeObjIdFromTpObjId(tp['id'])
-        var nodeName = findGraphObjById(nodeId, graphNodes)['name'];
-        var tpName = [nodeName, tp['name']].join(',');
+    graphNodes
+        .filter(function(d) { return d.type === "tp"; })
+        .forEach(function(tp) {
+        var nodeId = nodeObjIdFromTpObjId(tp.id);
+        var nodeName = findGraphObjById(nodeId, graphNodes).name;
+        var tpName = [nodeName, tp.name].join(",");
         graphLinks.push({
             "source_id": nodeId,
-            "target_id": tp['id'],
+            "target_id": tp.id,
             "name": tpName,
             "path": graphObjPath(nwName, nodeName, tpName)
         });
@@ -134,18 +143,17 @@ function makeParentRef(graphs) {
     var allGraphNodes = [];
     for (var nwName in graphs) {
         // concatenate nodes in all layers
-        allGraphNodes = allGraphNodes.concat(graphs[nwName]['nodes']);
+        allGraphNodes = allGraphNodes.concat(graphs[nwName].nodes);
     }
     for (var nwName in graphs) {
-        graphs[nwName]['nodes'].forEach(function(node) {
-            if(node['children']) {
-                node['children'].split(',').forEach(function(cPath) {
+        graphs[nwName].nodes.forEach(function(node) {
+            if (node.children) {
+                node.children.split(",").forEach(function(cPath) {
                     var child = findGraphObjByPath(cPath, allGraphNodes);
-                    console.log("cPath, child: ", cPath, child);
-                    if(child['parents']) {
-                        child['parents'] = [child['parents'], node['path']].join(',');
+                    if (child.parents) {
+                        child.parents = [child.parents, node.path].join(",");
                     } else {
-                        child['parents'] = node['path'];
+                        child.parents = node.path;
                     }
                 });
             }
@@ -157,16 +165,19 @@ function makeParentRef(graphs) {
 function makeNodeData(topoData) {
     var graphs = {};
     var nwNum = 1;
-    topoData['ietf-network:networks']['network'].forEach(function(nw) {
-        var graphNodes = makeGraphNodesFromTopoNodes(nwNum, nw['network-id'], nw['node']);
-        var graphLinks = makeGraphLinksFromTopoLinks(nw['network-id'], nw['ietf-network-topology:link'], graphNodes);
-        graphs[nw['network-id']] = {
-            'nodes': graphNodes,
-            'links': graphLinks
+    topoData["ietf-network:networks"].network.forEach(function(nw) {
+        var graphNodes = makeGraphNodesFromTopoNodes(
+            nwNum, nw["network-id"], nw.node
+        );
+        var graphLinks = makeGraphLinksFromTopoLinks(
+            nw["network-id"], nw["ietf-network-topology:link"], graphNodes
+        );
+        graphs[nw["network-id"]] = {
+            "nodes": graphNodes,
+            "links": graphLinks
         };
         nwNum++;
     });
-    console.log(graphs);
     console.log(makeParentRef(graphs));
     return graphs;
 }
@@ -207,7 +218,7 @@ function drawGraph(simulation, nwLayer, graph) {
     var tp = nwLayer.append("g")
         .attr("class", "tp")
         .selectAll("circle")
-        .data(graph.nodes.filter(function(d) { return d.type == 'tp'; }))
+        .data(graph.nodes.filter(function(d) { return d.type === "tp"; }))
         .enter()
         .append("circle")
         .attr("id", function(d) { return d.path; })
@@ -219,7 +230,7 @@ function drawGraph(simulation, nwLayer, graph) {
     var node = nwLayer.append("g")
         .attr("class", "node")
         .selectAll("rect")
-        .data(graph.nodes.filter(function(d) { return d.type == 'node'; }))
+        .data(graph.nodes.filter(function(d) { return d.type === "node"; }))
         .enter()
         .append("rect")
         .attr("id", function(d) { return d.path; })
