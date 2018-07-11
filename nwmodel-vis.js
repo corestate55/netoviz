@@ -25,7 +25,7 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
             "type": "node",
             "name": node['node-id'],
             "id": graphObjId(nwNum, nodeNum, 0),
-            "path": graphObjPath(nwName, node['node-id'], null)
+            "path": graphObjPath(nwName, node['node-id'])
         });
         // node as termination point
         var tpKey = 'ietf-network-topology:termination-point'; // alias
@@ -46,15 +46,26 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
     return graphNodes;
 }
 
-function findGraphObjId(path, graphNodes) {
-    var objId = 0;
+function findGraphObjByPath(path, graphNodes) {
+    var obj = null;
     graphNodes.some(function(node) {
         if(node['path'] == path) {
-            objId = node['id'];
+            obj = node;
             return true;
         }
     });
-    return objId;
+    return obj;
+}
+
+function findGraphObjById(id, graphNodes) {
+    var obj = null;
+    graphNodes.some(function(node) {
+        if(node['id'] == id) {
+            obj = node;
+            return true;
+        }
+    });
+    return obj;
 }
 
 function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
@@ -64,25 +75,30 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
     topoLinks.forEach(function(link) {
         var src = link['source'];
         var dst = link['destination'];
-        var sourceId = findGraphObjId(
+        var sourceId = findGraphObjByPath(
             graphObjPath(nwName, src['source-node'], src['source-tp']),
-            graphNodes);
-        var targetId = findGraphObjId(
+            graphNodes)['id'];
+        var targetId = findGraphObjByPath(
             graphObjPath(nwName, dst['dest-node'], dst['dest-tp']),
-            graphNodes);
+            graphNodes)['id'];
 
         graphLinks.push({
             "source_id": sourceId,
             "target_id": targetId,
-            "name": link['link-id'] // for label/matching/debug
+            "name": link['link-id'],
+            "path": graphObjPath(nwName, link['link-id'])
         });
     });
     // node-tp link
-    graphNodes.filter(function(d) { return d['type'] == 'tp'; }).forEach(function(node) {
+    graphNodes.filter(function(d) { return d['type'] == 'tp'; }).forEach(function(tp) {
+        var nodeId = nodeObjIdFromTpObjId(tp['id'])
+        var nodeName = findGraphObjById(nodeId, graphNodes)['name'];
+        var tpName = [nodeName, tp['name']].join(',');
         graphLinks.push({
-            "source_id": nodeObjIdFromTpObjId(node['id']),
-            "target_id": node['id'],
-            "name": "node-tp:" + node['path']
+            "source_id": nodeId,
+            "target_id": tp['id'],
+            "name": tpName,
+            "path": graphObjPath(nwName, nodeName, tpName)
         });
     });
     return graphLinks;
@@ -142,7 +158,7 @@ function drawGraph(simulation, nwLayer, graph) {
         .data(graph.links)
         .enter()
         .append("line")
-        .attr("id", function(d) { return d.name; });
+        .attr("id", function(d) { return d.path; });
 
     var tp = nwLayer.append("g")
         .attr("class", "tp")
