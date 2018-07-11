@@ -15,6 +15,19 @@
         <nt:termination-point>
           <nt:tp-id>Fa2</nt:tp-id>
         </nt:termination-point>
+        <nt:termination-point>
+          <nt:tp-id>Po1</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1</nt:network-ref>
+            <nt:node-ref>R1</nt:node-ref>
+            <nt:tp-ref>Fa0</nt:tp-ref>
+          </nt:supporting-termination-point>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1</nt:network-ref>
+            <nt:node-ref>R1</nt:node-ref>
+            <nt:tp-ref>Fa1</nt:tp-ref>
+          </nt:supporting-termination-point>
+        </nt:termination-point>
       </nw:node>
       <nw:node>
         <nw:node-id>R2</nw:node-id>
@@ -26,6 +39,19 @@
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>Fa2</nt:tp-id>
+        </nt:termination-point>
+        <nt:termination-point>
+          <nt:tp-id>Po1</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1</nt:network-ref>
+            <nt:node-ref>R2</nt:node-ref>
+            <nt:tp-ref>Fa0</nt:tp-ref>
+          </nt:supporting-termination-point>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1</nt:network-ref>
+            <nt:node-ref>R2</nt:node-ref>
+            <nt:tp-ref>Fa1</nt:tp-ref>
+          </nt:supporting-termination-point>
         </nt:termination-point>
       </nw:node>
       <nw:node>
@@ -122,6 +148,44 @@
           <nt:dest-node>R1</nt:dest-node>
           <nt:dest-tp>Fa1</nt:dest-tp>
         </nt:destination>
+      </nt:link>
+      <nt:link>
+        <nt:link-id>R1,Po1,R2,Po1</nt:link-id>
+        <nt:source>
+          <nt:source-node>R1</nt:source-node>
+          <nt:source-tp>Po1</nt:source-tp>
+        </nt:source>
+        <nt:destination>
+          <nt:dest-node>R2</nt:dest-node>
+          <nt:dest-tp>Po1</nt:dest-tp>
+        </nt:destination>
+        <nt:supporting-link>
+          <nt:network-ref>target-L1</nt:network-ref>
+          <nt:link-ref>R1,Fa0,R2,Fa0</nt:link-ref>
+        </nt:supporting-link>
+        <nt:supporting-link>
+          <nt:network-ref>target-L1</nt:network-ref>
+          <nt:link-ref>R1,Fa1,R2,Fa1</nt:link-ref>
+        </nt:supporting-link>
+      </nt:link>
+      <nt:link>
+        <nt:link-id>R2,Po1,R1,Po1</nt:link-id>
+        <nt:source>
+          <nt:source-node>R2</nt:source-node>
+          <nt:source-tp>Po1</nt:source-tp>
+        </nt:source>
+        <nt:destination>
+          <nt:dest-node>R1</nt:dest-node>
+          <nt:dest-tp>Po1</nt:dest-tp>
+        </nt:destination>
+        <nt:supporting-link>
+          <nt:network-ref>target-L1</nt:network-ref>
+          <nt:link-ref>R2,Fa0,R1,Fa0</nt:link-ref>
+        </nt:supporting-link>
+        <nt:supporting-link>
+          <nt:network-ref>target-L1</nt:network-ref>
+          <nt:link-ref>R2,Fa1,R1,Fa1</nt:link-ref>
+        </nt:supporting-link>
       </nt:link>
       <nt:link>
         <nt:link-id>R1,Fa2,SW1,Fa1</nt:link-id>
@@ -285,26 +349,6 @@
         <nw:network-ref>target-L1</nw:network-ref>
       </nw:supporting-network>
       <nw:node>
-        <nw:node-id>R1</nw:node-id>
-        <nt:termination-point>
-          <nt:tp-id>Po1</nt:tp-id>
-          <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>R1</nt:node-ref>
-            <nt:tp-ref>Fa0</nt:tp-ref>
-          </nt:supporting-termination-point>
-          <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>R1</nt:node-ref>
-            <nt:tp-ref>Fa1</nt:tp-ref>
-          </nt:supporting-termination-point>
-        </nt:termination-point>
-        <nw:supporting-node>
-          <nw:network-ref>target-L1</nw:network-ref>
-          <nw:node-ref>R1</nw:node-ref>
-        </nw:supporting-node>
-      </nw:node>
-      <nw:node>
         <nw:node-id>R1-GRT</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>p1</nt:tp-id>
@@ -325,7 +369,7 @@
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L2</nt:network-ref>
+            <nt:network-ref>target-L1</nt:network-ref>
             <nt:node-ref>R1</nt:node-ref>
             <nt:tp-ref>Po1</nt:tp-ref>
           </nt:supporting-termination-point>
@@ -351,7 +395,7 @@
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L2</nt:network-ref>
+            <nt:network-ref>target-L1</nt:network-ref>
             <nt:node-ref>R1</nt:node-ref>
             <nt:tp-ref>Po1</nt:tp-ref>
           </nt:supporting-termination-point>
@@ -367,26 +411,6 @@
         <nw:supporting-node>
           <nw:network-ref>target-L1</nw:network-ref>
           <nw:node-ref>R1</nw:node-ref>
-        </nw:supporting-node>
-      </nw:node>
-      <nw:node>
-        <nw:node-id>R2</nw:node-id>
-        <nt:termination-point>
-          <nt:tp-id>Po1</nt:tp-id>
-          <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>R2</nt:node-ref>
-            <nt:tp-ref>Fa0</nt:tp-ref>
-          </nt:supporting-termination-point>
-          <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>R2</nt:node-ref>
-            <nt:tp-ref>Fa1</nt:tp-ref>
-          </nt:supporting-termination-point>
-        </nt:termination-point>
-        <nw:supporting-node>
-          <nw:network-ref>target-L1</nw:network-ref>
-          <nw:node-ref>R2</nw:node-ref>
         </nw:supporting-node>
       </nw:node>
       <nw:node>
@@ -410,7 +434,7 @@
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L2</nt:network-ref>
+            <nt:network-ref>target-L1</nt:network-ref>
             <nt:node-ref>R2</nt:node-ref>
             <nt:tp-ref>Po1</nt:tp-ref>
           </nt:supporting-termination-point>
@@ -436,7 +460,7 @@
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L2</nt:network-ref>
+            <nt:network-ref>target-L1</nt:network-ref>
             <nt:node-ref>R2</nt:node-ref>
             <nt:tp-ref>Po1</nt:tp-ref>
           </nt:supporting-termination-point>
@@ -782,44 +806,6 @@
         </nt:destination>
       </nt:link>
       <nt:link>
-        <nt:link-id>R1,Po1,R2,Po1</nt:link-id>
-        <nt:source>
-          <nt:source-node>R1</nt:source-node>
-          <nt:source-tp>Po1</nt:source-tp>
-        </nt:source>
-        <nt:destination>
-          <nt:dest-node>R2</nt:dest-node>
-          <nt:dest-tp>Po1</nt:dest-tp>
-        </nt:destination>
-        <nt:supporting-link>
-          <nt:network-ref>target-L1</nt:network-ref>
-          <nt:link-ref>R1,Fa0,R2,Fa0</nt:link-ref>
-        </nt:supporting-link>
-        <nt:supporting-link>
-          <nt:network-ref>target-L1</nt:network-ref>
-          <nt:link-ref>R1,Fa1,R2,Fa1</nt:link-ref>
-        </nt:supporting-link>
-      </nt:link>
-      <nt:link>
-        <nt:link-id>R2,Po1,R1,Po1</nt:link-id>
-        <nt:source>
-          <nt:source-node>R2</nt:source-node>
-          <nt:source-tp>Po1</nt:source-tp>
-        </nt:source>
-        <nt:destination>
-          <nt:dest-node>R1</nt:dest-node>
-          <nt:dest-tp>Po1</nt:dest-tp>
-        </nt:destination>
-        <nt:supporting-link>
-          <nt:network-ref>target-L1</nt:network-ref>
-          <nt:link-ref>R2,Fa0,R1,Fa0</nt:link-ref>
-        </nt:supporting-link>
-        <nt:supporting-link>
-          <nt:network-ref>target-L1</nt:network-ref>
-          <nt:link-ref>R2,Fa1,R1,Fa1</nt:link-ref>
-        </nt:supporting-link>
-      </nt:link>
-      <nt:link>
         <nt:link-id>R1-BR-VL10,p2,R2-BR-VL10,p2</nt:link-id>
         <nt:source>
           <nt:source-node>R1-BR-VL10</nt:source-node>
@@ -830,7 +816,7 @@
           <nt:dest-tp>p2</nt:dest-tp>
         </nt:destination>
         <nt:supporting-link>
-          <nt:network-ref>target-L2</nt:network-ref>
+          <nt:network-ref>target-L1</nt:network-ref>
           <nt:link-ref>R1,Po1,R2,Po1</nt:link-ref>
         </nt:supporting-link>
       </nt:link>
@@ -845,7 +831,7 @@
           <nt:dest-tp>p2</nt:dest-tp>
         </nt:destination>
         <nt:supporting-link>
-          <nt:network-ref>target-L2</nt:network-ref>
+          <nt:network-ref>target-L1</nt:network-ref>
           <nt:link-ref>R2,Po1,R1,Po1</nt:link-ref>
         </nt:supporting-link>
       </nt:link>
@@ -860,7 +846,7 @@
           <nt:dest-tp>p2</nt:dest-tp>
         </nt:destination>
         <nt:supporting-link>
-          <nt:network-ref>target-L2</nt:network-ref>
+          <nt:network-ref>target-L1</nt:network-ref>
           <nt:link-ref>R1,Po1,R2,Po1</nt:link-ref>
         </nt:supporting-link>
       </nt:link>
@@ -875,7 +861,7 @@
           <nt:dest-tp>p2</nt:dest-tp>
         </nt:destination>
         <nt:supporting-link>
-          <nt:network-ref>target-L2</nt:network-ref>
+          <nt:network-ref>target-L1</nt:network-ref>
           <nt:link-ref>R2,Po1,R1,Po1</nt:link-ref>
         </nt:supporting-link>
       </nt:link>
@@ -1457,24 +1443,40 @@
         <nt:termination-point>
           <nt:tp-id>eth0</nt:tp-id>
         </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:node-ref>VM1</nw:node-ref>
+        </nw:supporting-node>
       </nw:node>
       <nw:node>
         <nw:node-id>VM2</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>eth0</nt:tp-id>
         </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:node-ref>VM2</nw:node-ref>
+        </nw:supporting-node>
       </nw:node>
       <nw:node>
         <nw:node-id>SV1</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>eth0</nt:tp-id>
         </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:node-ref>SV1</nw:node-ref>
+        </nw:supporting-node>
       </nw:node>
       <nw:node>
         <nw:node-id>SV2</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>eth0</nt:tp-id>
         </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:node-ref>SV2</nw:node-ref>
+        </nw:supporting-node>
       </nw:node>
       <nt:link>
         <nt:link-id>GRT-vRT,p1,Seg.A,p0</nt:link-id>

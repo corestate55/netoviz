@@ -967,7 +967,7 @@
                         },
                         "supporting-link": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1",
                                 "link-ref": "R1,Po1,R2,Po1"
                             }
                         ]
@@ -984,7 +984,7 @@
                         },
                         "supporting-link": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1",
                                 "link-ref": "R2,Po1,R1,Po1"
                             }
                         ]
@@ -1001,7 +1001,7 @@
                         },
                         "supporting-link": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1",
                                 "link-ref": "R1,Po1,R2,Po1"
                             }
                         ]
@@ -1018,7 +1018,7 @@
                         },
                         "supporting-link": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1",
                                 "link-ref": "R2,Po1,R1,Po1"
                             }
                         ]
@@ -1686,6 +1686,12 @@
                             {
                                 "tp-id": "eth0"
                             }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "VM1"
+                            }
                         ]
                     },
                     {
@@ -1693,6 +1699,12 @@
                         "ietf-network-topology:termination-point": [
                             {
                                 "tp-id": "eth0"
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "VM2"
                             }
                         ]
                     },
@@ -1702,6 +1714,12 @@
                             {
                                 "tp-id": "eth0"
                             }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "SV1"
+                            }
                         ]
                     },
                     {
@@ -1709,6 +1727,12 @@
                         "ietf-network-topology:termination-point": [
                             {
                                 "tp-id": "eth0"
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "SV2"
                             }
                         ]
                     }

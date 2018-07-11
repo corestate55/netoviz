@@ -36,8 +36,8 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
             "name": node["node-id"],
             "id": graphObjId(nwNum, nodeNum, 0),
             "path": graphObjPath(nwName, node["node-id"]),
-            "children": nodeChildPaths.join(","),
-            "parents": ""
+            "children": nodeChildPaths.join(","), // lower layer
+            "parents": "" // upper layer
         });
         // node as termination point
         var tpKey = "ietf-network-topology:termination-point"; // alias
@@ -119,16 +119,16 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
     graphNodes
         .filter(function(d) { return d.type === "tp"; })
         .forEach(function(tp) {
-        var nodeId = nodeObjIdFromTpObjId(tp.id);
-        var nodeName = findGraphObjById(nodeId, graphNodes).name;
-        var tpName = [nodeName, tp.name].join(",");
-        graphLinks.push({
-            "source_id": nodeId,
-            "target_id": tp.id,
-            "name": tpName,
-            "path": graphObjPath(nwName, nodeName, tpName)
+            var nodeId = nodeObjIdFromTpObjId(tp.id);
+            var nodeName = findGraphObjById(nodeId, graphNodes).name;
+            var tpName = [nodeName, tp.name].join(",");
+            graphLinks.push({
+                "source_id": nodeId,
+                "target_id": tp.id,
+                "name": tpName,
+                "path": graphObjPath(nwName, nodeName, tpName)
+            });
         });
-    });
     return graphLinks;
 }
 
@@ -215,6 +215,10 @@ function drawGraph(simulation, nwLayer, graph) {
         .append("line")
         .attr("id", function(d) { return d.path; });
 
+    function makeClassStr(d) {
+        return [d.children, d.parents].join("|");
+    }
+
     var tp = nwLayer.append("g")
         .attr("class", "tp")
         .selectAll("circle")
@@ -222,6 +226,8 @@ function drawGraph(simulation, nwLayer, graph) {
         .enter()
         .append("circle")
         .attr("id", function(d) { return d.path; })
+        .attr("class", makeClassStr)
+        .on("mouseover", function() { highlightNode(this); })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
@@ -234,6 +240,8 @@ function drawGraph(simulation, nwLayer, graph) {
         .enter()
         .append("rect")
         .attr("id", function(d) { return d.path; })
+        .attr("class", makeClassStr)
+        .on("mouseover", function() { highlightNode(this); })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
@@ -254,6 +262,14 @@ function drawGraph(simulation, nwLayer, graph) {
         .force("link")
         .links(graph.links);
 
+    function highlightNode(d) {
+        var classStr = d.getAttribute("class");
+        var childrenStr = classStr.split("|").shift();
+        var parentsStr = classStr.split("|").pop();
+        console.log("childrenStr: ", childrenStr);
+        console.log("parentsStr: ", parentsStr);
+    }
+
     function dragstarted(d) {
         if (!d3.event.active) {
             simulation.alphaTarget(0.3).restart();
@@ -263,13 +279,13 @@ function drawGraph(simulation, nwLayer, graph) {
     }
 
     function dragged(d) {
-        console.log("dragged: ", d);
+        // console.log("dragged: ", d);
         d.fx = d3.event.x;
         d.fy = d3.event.y;
     }
 
     function dragended(d) {
-        console.log("dragended: ", d);
+        // console.log("dragended: ", d);
         if (!d3.event.active) {
             simulation.alphaTarget(0);
         }
