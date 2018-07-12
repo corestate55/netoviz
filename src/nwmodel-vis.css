@@ -5,6 +5,11 @@ svg {
     margin: 10px;
 }
 
+.selectready {
+    stroke: coral;
+    stroke-width: 4px;
+}
+
 text {
     font-size: 20px;
     fill: #4393c3;

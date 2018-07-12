@@ -89,6 +89,14 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
         .append("line")
         .attr("id", function(d) { return d.path; });
 
+    function mouseover(element) {
+        element.classList.add("selectready");
+    }
+
+    function mouseout(element) {
+        element.classList.remove("selectready");
+    }
+
     var tp = nwLayer.append("g")
         .attr("class", "tp")
         .selectAll("circle")
@@ -97,6 +105,8 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
         .append("circle")
         .attr("id", function(d) { return d.path; })
         .on("click", function() { highlightNode(this); })
+        .on("mouseover", function() { mouseover(this); })
+        .on("mouseout", function () { mouseout(this); })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
@@ -110,6 +120,8 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
         .append("rect")
         .attr("id", function(d) { return d.path; })
         .on("click", function() { highlightNode(this); })
+        .on("mouseover", function() { mouseover(this); })
+        .on("mouseout", function () { mouseout(this); })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
