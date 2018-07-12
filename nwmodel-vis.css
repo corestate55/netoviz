@@ -3,18 +3,24 @@ text {
     fill: #4393c3;
 }
 
+.selected {
+    stroke: #FFC3CE;
+    stroke-width: 8px;
+}
+
 rect {
-    stroke: #969696;
+    stroke: #636563;
     stroke-width: 1px;
-    fill: #d9d9d9;
+    fill: #D6E3B5;
 }
 
 circle {
-    stroke: #969696;
+    stroke: #636563;
     stroke-width: 1px;
-    fill: #d9d9d9;
+    fill: #FEF6EB;
 }
 
 g.link {
-    stroke: #aaa;
+    stroke: #636563;
+    stroke-width: 1px;
 }

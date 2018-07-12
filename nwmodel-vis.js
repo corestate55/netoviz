@@ -192,10 +192,27 @@ function drawGraphs(graphs) {
     var height = 1000;
     var allGraphNodes = makeAllGraphNodes(graphs);
 
+    // highlight selected node
+    function highlightNodeByPath(direction, path) {
+        var element = document.getElementById(path);
+        // console.log("highlight ", direction, path, element);
+        element.classList.add("selected");
+    }
+    // clear all highlighted object
+    function clearHighlight() {
+        var element = document.getElementById("visualizer");
+        var selectedElements = element.getElementsByClassName("selected");
+        Array.from(selectedElements).forEach(function(element) {
+            element.classList.remove("selected");
+        });
+    }
+
     // find nodes to highlight via through all layers
     function highlightNode(d) {
         function findSupportingObj(direction, path) {
-            console.log("highlight ", direction, path);
+            // highlight DOM
+            highlightNodeByPath(direction, path);
+            // recursive search
             var node = findGraphObjByPath(path, allGraphNodes);
             var list = [];
             if(node[direction]) {
@@ -205,10 +222,17 @@ function drawGraphs(graphs) {
                 });
             }
         }
+        // clear all at first
+        clearHighlight();
+        // highlight selected object and its children/parents
         var path = d.getAttribute("id");
         console.log("highlight_top: ", path);
         findSupportingObj("children", path);
         findSupportingObj("parents", path);
+        // highlight root (clicked) node, to fix its highlight
+        // because findSupportingObj operation includes root node,
+        // so, when call it for children/parents, root node was toggled.
+        highlightNodeByPath("root", path);
     }
 
     // draw each layer
@@ -218,6 +242,7 @@ function drawGraphs(graphs) {
             .force("charge", d3.forceManyBody().strength(-50))
             .force("center", d3.forceCenter(width / 2, height / 2));
         var nwLayer = d3.select("body")
+            .select("div#visualizer")
             .append("svg")
             .attr("width", width)
             .attr("height", height)
@@ -249,7 +274,7 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
         .enter()
         .append("circle")
         .attr("id", function(d) { return d.path; })
-        .on("mouseover", function() { highlightNode(this); })
+        .on("click", function() { highlightNode(this); })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
@@ -262,7 +287,7 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
         .enter()
         .append("rect")
         .attr("id", function(d) { return d.path; })
-        .on("mouseover", function() { highlightNode(this); })
+        .on("click", function() { highlightNode(this); })
         .call(d3.drag()
               .on("start", dragstarted)
               .on("drag", dragged)
