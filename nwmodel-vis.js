@@ -139,12 +139,17 @@ function runNetworkModelVis(error, topoData) {
     drawGraphs(makeNodeData(topoData));
 }
 
-function makeParentRef(graphs) {
+function makeAllGraphNodes(graphs) {
     var allGraphNodes = [];
     for (var nwName in graphs) {
         // concatenate nodes in all layers
         allGraphNodes = allGraphNodes.concat(graphs[nwName].nodes);
     }
+    return allGraphNodes;
+}
+
+function makeParentRef(graphs) {
+    var allGraphNodes = makeAllGraphNodes(graphs);
     for (var nwName in graphs) {
         graphs[nwName].nodes.forEach(function(node) {
             if (node.children) {
@@ -185,6 +190,28 @@ function makeNodeData(topoData) {
 function drawGraphs(graphs) {
     var width = 1000;
     var height = 1000;
+    var allGraphNodes = makeAllGraphNodes(graphs);
+
+    // find nodes to highlight via through all layers
+    function highlightNode(d) {
+        function findSupportingObj(direction, path) {
+            console.log("highlight ", direction, path);
+            var node = findGraphObjByPath(path, allGraphNodes);
+            var list = [];
+            if(node[direction]) {
+                list = node[direction].split(",");
+                list.forEach(function(d) {
+                    findSupportingObj(direction, d);
+                });
+            }
+        }
+        var path = d.getAttribute("id");
+        console.log("highlight_top: ", path);
+        findSupportingObj("children", path);
+        findSupportingObj("parents", path);
+    }
+
+    // draw each layer
     for (var nwName in graphs) {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
@@ -197,11 +224,11 @@ function drawGraphs(graphs) {
             .append("g") // topology graph container
             .attr("id", nwName)
             .attr("class", "network");
-        drawGraph(simulation, nwLayer, graphs[nwName]);
+        drawGraph(simulation, nwLayer, graphs[nwName], highlightNode);
     }
 }
 
-function drawGraph(simulation, nwLayer, graph) {
+function drawGraph(simulation, nwLayer, graph, highlightNode) {
     graph.links.forEach(function(d) {
         d.source = d.source_id;
         d.target = d.target_id;
@@ -215,10 +242,6 @@ function drawGraph(simulation, nwLayer, graph) {
         .append("line")
         .attr("id", function(d) { return d.path; });
 
-    function makeClassStr(d) {
-        return [d.children, d.parents].join("|");
-    }
-
     var tp = nwLayer.append("g")
         .attr("class", "tp")
         .selectAll("circle")
@@ -226,7 +249,6 @@ function drawGraph(simulation, nwLayer, graph) {
         .enter()
         .append("circle")
         .attr("id", function(d) { return d.path; })
-        .attr("class", makeClassStr)
         .on("mouseover", function() { highlightNode(this); })
         .call(d3.drag()
               .on("start", dragstarted)
@@ -240,7 +262,6 @@ function drawGraph(simulation, nwLayer, graph) {
         .enter()
         .append("rect")
         .attr("id", function(d) { return d.path; })
-        .attr("class", makeClassStr)
         .on("mouseover", function() { highlightNode(this); })
         .call(d3.drag()
               .on("start", dragstarted)
@@ -261,14 +282,6 @@ function drawGraph(simulation, nwLayer, graph) {
         .on("tick", ticked)
         .force("link")
         .links(graph.links);
-
-    function highlightNode(d) {
-        var classStr = d.getAttribute("class");
-        var childrenStr = classStr.split("|").shift();
-        var parentsStr = classStr.split("|").pop();
-        console.log("childrenStr: ", childrenStr);
-        console.log("parentsStr: ", parentsStr);
-    }
 
     function dragstarted(d) {
         if (!d3.event.active) {
