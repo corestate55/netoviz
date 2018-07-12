@@ -630,6 +630,37 @@
                         ]
                     },
                     {
+                        "node-id": "SW1-BR-VL30",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "p1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "SW1",
+                                        "tp-ref": "Fa2"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p2",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "SW1",
+                                        "tp-ref": "Fa0"
+                                    }
+                                ]
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L1",
+                                "node-ref": "SW1"
+                            }
+                        ]
+                    },
+                    {
                         "node-id": "SW2-BR-VL10",
                         "ietf-network-topology:termination-point": [
                             {
@@ -732,6 +763,47 @@
                         ]
                     },
                     {
+                        "node-id": "SW2-BR-VL30",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "p1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "SW2",
+                                        "tp-ref": "Fa2"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p2",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "SW2",
+                                        "tp-ref": "Fa0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p3",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "SW2",
+                                        "tp-ref": "Fa4"
+                                    }
+                                ]
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L1",
+                                "node-ref": "SW2"
+                            }
+                        ]
+                    },
+                    {
                         "node-id": "HYP1-vSW1",
                         "ietf-network-topology:termination-point": [],
                         "supporting-node": [
@@ -794,7 +866,41 @@
                                     {
                                         "network-ref": "target-L1",
                                         "node-ref": "HYP1",
+                                        "tp-ref": "eth1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p3"
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "HYP1-vSW1"
+                            }
+                        ]
+                    },
+                    {
+                        "node-id": "HYP1-vSW1-BR-VL30",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "p1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "HYP1",
                                         "tp-ref": "eth0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p2",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "HYP1",
+                                        "tp-ref": "eth1"
                                     }
                                 ]
                             },
@@ -828,6 +934,26 @@
                         "ietf-network-topology:termination-point": [
                             {
                                 "tp-id": "eth0"
+                            },
+                            {
+                                "tp-id": "eth0.20",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L2",
+                                        "node-ref": "VM2",
+                                        "tp-ref": "eth0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "eth0.30",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L2",
+                                        "node-ref": "VM2",
+                                        "tp-ref": "eth0"
+                                    }
+                                ]
                             }
                         ],
                         "supporting-node": [
@@ -862,7 +988,17 @@
                         "node-id": "SV2",
                         "ietf-network-topology:termination-point": [
                             {
-                                "tp-id": "eth0",
+                                "tp-id": "eth0.20",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "SV2",
+                                        "tp-ref": "eth0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "eth0.30",
                                 "supporting-termination-point": [
                                     {
                                         "network-ref": "target-L1",
@@ -1242,6 +1378,28 @@
                         ]
                     },
                     {
+                        "link-id": "SW1-BR-VL30,p2,SW2-BR-VL30,p2",
+                        "source": {
+                            "source-node": "SW1-BR-VL30",
+                            "source-tp": "p2"
+                        },
+                        "destination": {
+                            "dest-node": "SW2-BR-VL30",
+                            "dest-tp": "p2"
+                        }
+                    },
+                    {
+                        "link-id": "SW2-BR-VL30,p2,SW1-BR-VL30,p2",
+                        "source": {
+                            "source-node": "SW2-BR-VL30",
+                            "source-tp": "p2"
+                        },
+                        "destination": {
+                            "dest-node": "SW1-BR-VL30",
+                            "dest-tp": "p2"
+                        }
+                    },
+                    {
                         "link-id": "SW1-BR-VL10,p3,HYP1-vSW1-BR-VL10,p1",
                         "source": {
                             "source-node": "SW1-BR-VL10",
@@ -1412,14 +1570,14 @@
                         ]
                     },
                     {
-                        "link-id": "SW2-BR-VL20,p4,SV2,eth0",
+                        "link-id": "SW2-BR-VL20,p4,SV2,eth0.20",
                         "source": {
                             "source-node": "SW2-BR-VL20",
                             "source-tp": "p4"
                         },
                         "destination": {
                             "dest-node": "SV2",
-                            "dest-tp": "eth0"
+                            "dest-tp": "eth0.20"
                         },
                         "supporting-link": [
                             {
@@ -1429,10 +1587,10 @@
                         ]
                     },
                     {
-                        "link-id": "SV2,eth0,SW2-BR-VL20,p4",
+                        "link-id": "SV2,eth0.20,SW2-BR-VL20,p4",
                         "source": {
                             "source-node": "SV2",
-                            "source-tp": "eth0"
+                            "source-tp": "eth0.20"
                         },
                         "destination": {
                             "dest-node": "SW2-BR-VL20",
@@ -1468,24 +1626,112 @@
                         }
                     },
                     {
-                        "link-id": "HYP1-vSW1-BR-VL20,p3,VM2,eth0",
+                        "link-id": "HYP1-vSW1-BR-VL20,p3,VM2,eth0.20",
                         "source": {
                             "source-node": "HYP1-vSW1-BR-VL20",
                             "source-tp": "p3"
                         },
                         "destination": {
                             "dest-node": "VM2",
-                            "dest-tp": "eth0"
+                            "dest-tp": "eth0.20"
                         }
                     },
                     {
-                        "link-id": "VM2,eth0,HYP1-vSW1-BR-VL20,p3",
+                        "link-id": "VM2,eth0.20,HYP1-vSW1-BR-VL20,p3",
                         "source": {
                             "source-node": "VM2",
-                            "source-tp": "eth0"
+                            "source-tp": "eth0.20"
                         },
                         "destination": {
                             "dest-node": "HYP1-vSW1-BR-VL20",
+                            "dest-tp": "p3"
+                        }
+                    },
+                    {
+                        "link-id": "SW1-BR-VL30,p1,HYP1-vSW1-BR-VL30,p1",
+                        "source": {
+                            "source-node": "SW1-BR-VL30",
+                            "source-tp": "p1"
+                        },
+                        "destination": {
+                            "dest-node": "HYP1-vSW1-BR-VL30",
+                            "dest-tp": "p1"
+                        }
+                    },
+                    {
+                        "link-id": "HYP1-vSW1-BR-VL30,p1,SW1-BR-VL30,p1",
+                        "source": {
+                            "source-node": "HYP1-vSW1-BR-VL30",
+                            "source-tp": "p1"
+                        },
+                        "destination": {
+                            "dest-node": "SW1-BR-VL30",
+                            "dest-tp": "p1"
+                        }
+                    },
+                    {
+                        "link-id": "SW2-BR-VL30,p1,HYP1-vSW1-BR-VL30,p2",
+                        "source": {
+                            "source-node": "SW2-BR-VL30",
+                            "source-tp": "p1"
+                        },
+                        "destination": {
+                            "dest-node": "HYP1-vSW1-BR-VL30",
+                            "dest-tp": "p2"
+                        }
+                    },
+                    {
+                        "link-id": "HYP1-vSW1-BR-VL30,p2,SW2-BR-VL30,p1",
+                        "source": {
+                            "source-node": "HYP1-vSW1-BR-VL30",
+                            "source-tp": "p2"
+                        },
+                        "destination": {
+                            "dest-node": "SW2-BR-VL30",
+                            "dest-tp": "p1"
+                        }
+                    },
+                    {
+                        "link-id": "SW2-BR-VL30,p3,SV2,eth0.30",
+                        "source": {
+                            "source-node": "SW2-BR-VL30",
+                            "source-tp": "p3"
+                        },
+                        "destination": {
+                            "dest-node": "SV2",
+                            "dest-tp": "eth0.30"
+                        }
+                    },
+                    {
+                        "link-id": "SV2,eth0.30,SW2-BR-VL30,p3",
+                        "source": {
+                            "source-node": "SV2",
+                            "source-tp": "eth0.30"
+                        },
+                        "destination": {
+                            "dest-node": "SW2-BR-VL30",
+                            "dest-tp": "p3"
+                        }
+                    },
+                    {
+                        "link-id": "HYP1-vSW1-BR-VL30,p3,VM2,eth0.30",
+                        "source": {
+                            "source-node": "HYP1-vSW1-BR-VL30",
+                            "source-tp": "p3"
+                        },
+                        "destination": {
+                            "dest-node": "VM2",
+                            "dest-tp": "eth0.30"
+                        }
+                    },
+                    {
+                        "link-id": "VM2,eth0.30,HYP1-vSW1-BR-VL30,p3",
+                        "source": {
+                            "source-node": "VM2",
+                            "source-tp": "eth0.30"
+                        },
+                        "destination": {
+                            "dest-node": "HYP1-vSW1-BR-VL30",
                             "dest-tp": "p3"
                         }
                     }
@@ -1723,6 +1969,45 @@
                         ]
                     },
                     {
+                        "node-id": "Seg.C",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "p1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L2",
+                                        "node-ref": "HYP1-vSW1-BR-VL30",
+                                        "tp-ref": "p3"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p2",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L2",
+                                        "node-ref": "SW2-BR-VL30",
+                                        "tp-ref": "p3"
+                                    }
+                                ]
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "SW1-BR-VL30"
+                            },
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "SW2-BR-VL30"
+                            },
+                            {
+                                "network-ref": "target-L2",
+                                "node-ref": "HYP1-vSW1-BR-VL30"
+                            }
+                        ]
+                    },
+                    {
                         "node-id": "VM1",
                         "ietf-network-topology:termination-point": [
                             {
@@ -1747,12 +2032,22 @@
                         "node-id": "VM2",
                         "ietf-network-topology:termination-point": [
                             {
-                                "tp-id": "eth0",
+                                "tp-id": "eth0.20",
                                 "supporting-termination-point": [
                                     {
                                         "network-ref": "target-L2",
                                         "node-ref": "VM2",
-                                        "tp-ref": "eth0"
+                                        "tp-ref": "eth0.20"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "eth0.30",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L2",
+                                        "node-ref": "VM2",
+                                        "tp-ref": "eth0.30"
                                     }
                                 ]
                             }
@@ -1789,12 +2084,22 @@
                         "node-id": "SV2",
                         "ietf-network-topology:termination-point": [
                             {
-                                "tp-id": "eth0",
+                                "tp-id": "eth0.20",
                                 "supporting-termination-point": [
                                     {
                                         "network-ref": "target-L2",
                                         "node-ref": "SV2",
-                                        "tp-ref": "eth0"
+                                        "tp-ref": "eth0.20"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "eth0.30",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L2",
+                                        "node-ref": "SV2",
+                                        "tp-ref": "eth0.30"
                                     }
                                 ]
                             }
@@ -1963,21 +2268,21 @@
                         }
                     },
                     {
-                        "link-id": "Seg.B,p3,VM2,eth0",
+                        "link-id": "Seg.B,p3,VM2,eth0.20",
                         "source": {
                             "source-node": "Seg.B",
                             "source-tp": "p3"
                         },
                         "destination": {
                             "dest-node": "VM2",
-                            "dest-tp": "eth0"
+                            "dest-tp": "eth0.20"
                         }
                     },
                     {
-                        "link-id": "VM2,eth0,Seg.B,p3",
+                        "link-id": "VM2,eth0.20,Seg.B,p3",
                         "source": {
                             "source-node": "VM2",
-                            "source-tp": "eth0"
+                            "source-tp": "eth0.20"
                         },
                         "destination": {
                             "dest-node": "Seg.B",
@@ -2007,25 +2312,69 @@
                         }
                     },
                     {
-                        "link-id": "Seg.B,p4,SV2,eth0",
+                        "link-id": "Seg.B,p4,SV2,eth0.20",
                         "source": {
                             "source-node": "Seg.B",
                             "source-tp": "p4"
                         },
                         "destination": {
                             "dest-node": "SV2",
-                            "dest-tp": "eth0"
+                            "dest-tp": "eth0.20"
                         }
                     },
                     {
-                        "link-id": "SV2,eth0,Seg.B,p4",
+                        "link-id": "SV2,eth0.20,Seg.B,p4",
                         "source": {
                             "source-node": "SV2",
-                            "source-tp": "eth0"
+                            "source-tp": "eth0.20"
                         },
                         "destination": {
                             "dest-node": "Seg.B",
                             "dest-tp": "p4"
+                        }
+                    },
+                    {
+                        "link-id": "VM2,eth0.30,Seg.C,p1",
+                        "source": {
+                            "source-node": "VM2",
+                            "source-tp": "eth0.30"
+                        },
+                        "destination": {
+                            "dest-node": "Seg.C",
+                            "dest-tp": "p1"
+                        }
+                    },
+                    {
+                        "link-id": "Seg.C,p1,VM2,eth0.30",
+                        "source": {
+                            "source-node": "Seg.C",
+                            "source-tp": "p1"
+                        },
+                        "destination": {
+                            "dest-node": "VM2",
+                            "dest-tp": "eth0.30"
+                        }
+                    },
+                    {
+                        "link-id": "SV2,eth0.30,Seg.C,p2",
+                        "source": {
+                            "source-node": "SV2",
+                            "source-tp": "eth0.30"
+                        },
+                        "destination": {
+                            "dest-node": "Seg.C",
+                            "dest-tp": "p2"
+                        }
+                    },
+                    {
+                        "link-id": "Seg.C,p2,SV2,eth0.30",
+                        "source": {
+                            "source-node": "Seg.C",
+                            "source-tp": "p2"
+                        },
+                        "destination": {
+                            "dest-node": "SV2",
+                            "dest-tp": "eth0.30"
                         }
                     }
                 ]

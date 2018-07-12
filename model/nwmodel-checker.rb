@@ -130,6 +130,10 @@ class Networks
 
   private
 
+  def ununique_element(list)
+    list.group_by{|i| i}.reject{|k,v| v.one?}.keys
+  end
+
   def ref_count(nw, tp_ref)
     tp = find_tp(nw.network_id, tp_ref.node_ref, tp_ref.tp_ref)
     tp.ref_count_up if (tp)
@@ -139,7 +143,7 @@ class Networks
     network_ids = @networks.map {|nw| nw.network_id}
     return if @networks.size == network_ids.uniq.size
     warn "WARNING: There are duplicate 'network_id's"
-    warn "#=> #{network_ids}"
+    warn "#=> #{ununique_element network_ids}"
   end
 
   def check_node_id_uniqueness
@@ -147,7 +151,7 @@ class Networks
       node_ids = nw.nodes.map {|node| node.node_id}
       next if nw.nodes.size == node_ids.uniq.size
       warn "WARNING: There are duplicate 'node_id's in #{nw.network_id}"
-      warn "#=> #{node_ids}"
+      warn "#=> #{ununique_element node_ids}"
     end
   end
 
@@ -156,7 +160,7 @@ class Networks
       link_ids = nw.links.map {|link| link.link_id}
       next if nw.links.size == link_ids.uniq.size
       warn "WARNING: There are duplicate 'link_id's in #{nw.network_id}"
-      warn "#=> #{link_ids}"
+      warn "#=> #{ununique_element link_ids}"
     end
   end
 
@@ -165,7 +169,7 @@ class Networks
       tp_ids = node.termination_points.map {|tp| tp.tp_id}
       next if node.termination_points.size == tp_ids.uniq.size
       warn "WARNING: There are duplicate 'tp_id's in #{nw.network_id}/#{node.node_id}"
-      warn "#=> #{tp_ids}"
+      warn "#=> #{ununique_element tp_ids}"
     end
   end
 end
