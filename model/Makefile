@@ -6,8 +6,9 @@ TARGETXML := target.xml
 all: $(TARGETXML)
 
 $(TARGETXML): $(JTOX) $(TARGETJSON)
+	jsonlint-cli $(TARGETJSON)
 	ruby nwmodel-checker.rb $(TARGETJSON)
-	json2xml $(JTOX) $(TARGETJSON) | xmllint --format - > $(TARGETXML)
+	json2xml $(JTOX) $(TARGETJSON) | xmllint --output $(TARGETXML) --format -
 
 $(JTOX): $(YANGFILES)
 	pyang -f jtox -o $(JTOX) $(YANGFILES)
