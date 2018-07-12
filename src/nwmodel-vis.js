@@ -50,14 +50,17 @@ function drawGraphs(graphs) {
     // draw each layer
     for (var nwName in graphs) {
         var graphSize = graphs[nwName].nodes.length;
-        var r = 1.0;
-        if (20 <= graphSize && graphSize < 50) {
-            r = 0.65;
-        } else if (graphSize < 20) {
-            r = 0.35;
+        var width = 400; // small
+        var height = 400;
+        if (50 < graphSize) {
+            // large
+            width = 2500;
+            height = 2000;
+        } else if (20 <= graphSize && graphSize < 50) {
+            // medium
+            width = 800;
+            height = 800;
         }
-        var width = r * 1200;
-        var height = r * 1200;
 
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
