@@ -370,10 +370,135 @@
             },
             {
                 "network-types": {},
+                "network-id": "target-L1.5",
+                "supporting-network": [
+                    {
+                        "network-ref": "target-L1"
+                    }
+                ],
+                "node": [
+                    {
+                        "node-id": "HYP1-vSW1",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "eth0",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "HYP1",
+                                        "tp-ref": "eth0"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "eth1",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1",
+                                        "node-ref": "HYP1",
+                                        "tp-ref": "eth1"
+                                    }
+                                ]
+                            },
+                            {
+                                "tp-id": "p1"
+                            },
+                            {
+                                "tp-id": "p2"
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L1",
+                                "node-ref": "HYP1"
+                            }
+                        ]
+                    },
+                    {
+                        "node-id": "VM1",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "eth0"
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L1",
+                                "node-ref": "HYP1"
+                            }
+                        ]
+                    },
+                    {
+                        "node-id": "VM2",
+                        "ietf-network-topology:termination-point": [
+                            {
+                                "tp-id": "eth0"
+                            }
+                        ],
+                        "supporting-node": [
+                            {
+                                "network-ref": "target-L1",
+                                "node-ref": "HYP1"
+                            }
+                        ]
+                    }
+                ],
+                "ietf-network-topology:link": [
+                    {
+                        "link-id": "HYP1-vSW1,p1,VM1,eth0",
+                        "source": {
+                            "source-node": "HYP1-vSW1",
+                            "source-tp": "p1"
+                        },
+                        "destination": {
+                            "dest-node": "VM1",
+                            "dest-tp": "eth0"
+                        }
+                    },
+                    {
+                        "link-id": "VM1,eth0,HYP1-vSW1,p1",
+                        "source": {
+                            "source-node": "VM1",
+                            "source-tp": "eth0"
+                        },
+                        "destination": {
+                            "dest-node": "HYP1-vSW1",
+                            "dest-tp": "p1"
+                        }
+                    },
+                    {
+                        "link-id": "HYP1-vSW1,p2,VM2,eth0",
+                        "source": {
+                            "source-node": "HYP1-vSW1",
+                            "source-tp": "p2"
+                        },
+                        "destination": {
+                            "dest-node": "VM2",
+                            "dest-tp": "eth0"
+                        }
+                    },
+                    {
+                        "link-id": "VM2,eth0,HYP1-vSW1,p2",
+                        "source": {
+                            "source-node": "VM2",
+                            "source-tp": "eth0"
+                        },
+                        "destination": {
+                            "dest-node": "HYP1-vSW1",
+                            "dest-tp": "p2"
+                        }
+                    }
+                ]
+            },
+            {
+                "network-types": {},
                 "network-id": "target-L2",
                 "supporting-network": [
                     {
                         "network-ref": "target-L1"
+                    },
+                    {
+                        "network-ref": "target-L1.5"
                     }
                 ],
                 "node": [
@@ -804,24 +929,14 @@
                         ]
                     },
                     {
-                        "node-id": "HYP1-vSW1",
-                        "ietf-network-topology:termination-point": [],
-                        "supporting-node": [
-                            {
-                                "network-ref": "target-L1",
-                                "node-ref": "HYP1"
-                            }
-                        ]
-                    },
-                    {
                         "node-id": "HYP1-vSW1-BR-VL10",
                         "ietf-network-topology:termination-point": [
                             {
                                 "tp-id": "p1",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "HYP1",
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
                                         "tp-ref": "eth0"
                                     }
                                 ]
@@ -830,19 +945,26 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "HYP1",
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
                                         "tp-ref": "eth1"
                                     }
                                 ]
                             },
                             {
-                                "tp-id": "p3"
+                                "tp-id": "p3",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
+                                        "tp-ref": "p1"
+                                    }
+                                ]
                             }
                         ],
                         "supporting-node": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1.5",
                                 "node-ref": "HYP1-vSW1"
                             }
                         ]
@@ -854,8 +976,8 @@
                                 "tp-id": "p1",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "HYP1",
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
                                         "tp-ref": "eth0"
                                     }
                                 ]
@@ -864,19 +986,26 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "HYP1",
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
                                         "tp-ref": "eth1"
                                     }
                                 ]
                             },
                             {
-                                "tp-id": "p3"
+                                "tp-id": "p3",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
+                                        "tp-ref": "p2"
+                                    }
+                                ]
                             }
                         ],
                         "supporting-node": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1.5",
                                 "node-ref": "HYP1-vSW1"
                             }
                         ]
@@ -888,8 +1017,8 @@
                                 "tp-id": "p1",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "HYP1",
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
                                         "tp-ref": "eth0"
                                     }
                                 ]
@@ -898,19 +1027,26 @@
                                 "tp-id": "p2",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L1",
-                                        "node-ref": "HYP1",
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
                                         "tp-ref": "eth1"
                                     }
                                 ]
                             },
                             {
-                                "tp-id": "p3"
+                                "tp-id": "p3",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "HYP1-vSW1",
+                                        "tp-ref": "p2"
+                                    }
+                                ]
                             }
                         ],
                         "supporting-node": [
                             {
-                                "network-ref": "target-L2",
+                                "network-ref": "target-L1.5",
                                 "node-ref": "HYP1-vSW1"
                             }
                         ]
@@ -919,13 +1055,20 @@
                         "node-id": "VM1",
                         "ietf-network-topology:termination-point": [
                             {
-                                "tp-id": "eth0"
+                                "tp-id": "eth0",
+                                "supporting-termination-point": [
+                                    {
+                                        "network-ref": "target-L1.5",
+                                        "node-ref": "VM1",
+                                        "tp-ref": "eth0"
+                                    }
+                                ]
                             }
                         ],
                         "supporting-node": [
                             {
-                                "network-ref": "target-L1",
-                                "node-ref": "HYP1"
+                                "network-ref": "target-L1.5",
+                                "node-ref": "VM1"
                             }
                         ]
                     },
@@ -933,13 +1076,10 @@
                         "node-id": "VM2",
                         "ietf-network-topology:termination-point": [
                             {
-                                "tp-id": "eth0"
-                            },
-                            {
                                 "tp-id": "eth0.20",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L2",
+                                        "network-ref": "target-L1.5",
                                         "node-ref": "VM2",
                                         "tp-ref": "eth0"
                                     }
@@ -949,7 +1089,7 @@
                                 "tp-id": "eth0.30",
                                 "supporting-termination-point": [
                                     {
-                                        "network-ref": "target-L2",
+                                        "network-ref": "target-L1.5",
                                         "node-ref": "VM2",
                                         "tp-ref": "eth0"
                                     }
@@ -958,8 +1098,8 @@
                         ],
                         "supporting-node": [
                             {
-                                "network-ref": "target-L1",
-                                "node-ref": "HYP1"
+                                "network-ref": "target-L1.5",
+                                "node-ref": "VM2"
                             }
                         ]
                     },
@@ -1741,6 +1881,9 @@
                 "network-id": "target-L3",
                 "network-types": {},
                 "supporting-network": [
+                    {
+                        "network-ref": "target-L1.5"
+                    },
                     {
                         "network-ref": "target-L2"
                     },

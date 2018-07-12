@@ -1,12 +1,13 @@
 /* https://www.colorcombos.com/color-schemes/175/ColorCombo175.html */
+svg {
+    border-style: solid;
+    border-width: 1px;
+    margin: 10px;
+}
+
 text {
     font-size: 20px;
     fill: #4393c3;
-}
-
-.selected {
-    stroke: #FFC3CE;
-    stroke-width: 5px;
 }
 
 rect {
@@ -15,10 +16,17 @@ rect {
     fill: #D6E3B5;
 }
 
+rect.selected {
+    fill: #FFC3CE;
+}
+
 circle {
     stroke: #636563;
     stroke-width: 1px;
     fill: #FEF6EB;
+}
+circle.selected {
+    fill: #FFC3CE;
 }
 
 g.link {

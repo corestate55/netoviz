@@ -343,10 +343,113 @@
       </nt:link>
     </nw:network>
     <nw:network>
+      <nw:network-id>target-L1.5</nw:network-id>
+      <nw:network-types/>
+      <nw:supporting-network>
+        <nw:network-ref>target-L1</nw:network-ref>
+      </nw:supporting-network>
+      <nw:node>
+        <nw:node-id>HYP1-vSW1</nw:node-id>
+        <nt:termination-point>
+          <nt:tp-id>eth0</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1</nt:network-ref>
+            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:tp-ref>eth0</nt:tp-ref>
+          </nt:supporting-termination-point>
+        </nt:termination-point>
+        <nt:termination-point>
+          <nt:tp-id>eth1</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1</nt:network-ref>
+            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:tp-ref>eth1</nt:tp-ref>
+          </nt:supporting-termination-point>
+        </nt:termination-point>
+        <nt:termination-point>
+          <nt:tp-id>p1</nt:tp-id>
+        </nt:termination-point>
+        <nt:termination-point>
+          <nt:tp-id>p2</nt:tp-id>
+        </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L1</nw:network-ref>
+          <nw:node-ref>HYP1</nw:node-ref>
+        </nw:supporting-node>
+      </nw:node>
+      <nw:node>
+        <nw:node-id>VM1</nw:node-id>
+        <nt:termination-point>
+          <nt:tp-id>eth0</nt:tp-id>
+        </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L1</nw:network-ref>
+          <nw:node-ref>HYP1</nw:node-ref>
+        </nw:supporting-node>
+      </nw:node>
+      <nw:node>
+        <nw:node-id>VM2</nw:node-id>
+        <nt:termination-point>
+          <nt:tp-id>eth0</nt:tp-id>
+        </nt:termination-point>
+        <nw:supporting-node>
+          <nw:network-ref>target-L1</nw:network-ref>
+          <nw:node-ref>HYP1</nw:node-ref>
+        </nw:supporting-node>
+      </nw:node>
+      <nt:link>
+        <nt:link-id>HYP1-vSW1,p1,VM1,eth0</nt:link-id>
+        <nt:source>
+          <nt:source-node>HYP1-vSW1</nt:source-node>
+          <nt:source-tp>p1</nt:source-tp>
+        </nt:source>
+        <nt:destination>
+          <nt:dest-node>VM1</nt:dest-node>
+          <nt:dest-tp>eth0</nt:dest-tp>
+        </nt:destination>
+      </nt:link>
+      <nt:link>
+        <nt:link-id>VM1,eth0,HYP1-vSW1,p1</nt:link-id>
+        <nt:source>
+          <nt:source-node>VM1</nt:source-node>
+          <nt:source-tp>eth0</nt:source-tp>
+        </nt:source>
+        <nt:destination>
+          <nt:dest-node>HYP1-vSW1</nt:dest-node>
+          <nt:dest-tp>p1</nt:dest-tp>
+        </nt:destination>
+      </nt:link>
+      <nt:link>
+        <nt:link-id>HYP1-vSW1,p2,VM2,eth0</nt:link-id>
+        <nt:source>
+          <nt:source-node>HYP1-vSW1</nt:source-node>
+          <nt:source-tp>p2</nt:source-tp>
+        </nt:source>
+        <nt:destination>
+          <nt:dest-node>VM2</nt:dest-node>
+          <nt:dest-tp>eth0</nt:dest-tp>
+        </nt:destination>
+      </nt:link>
+      <nt:link>
+        <nt:link-id>VM2,eth0,HYP1-vSW1,p2</nt:link-id>
+        <nt:source>
+          <nt:source-node>VM2</nt:source-node>
+          <nt:source-tp>eth0</nt:source-tp>
+        </nt:source>
+        <nt:destination>
+          <nt:dest-node>HYP1-vSW1</nt:dest-node>
+          <nt:dest-tp>p2</nt:dest-tp>
+        </nt:destination>
+      </nt:link>
+    </nw:network>
+    <nw:network>
       <nw:network-id>target-L2</nw:network-id>
       <nw:network-types/>
       <nw:supporting-network>
         <nw:network-ref>target-L1</nw:network-ref>
+      </nw:supporting-network>
+      <nw:supporting-network>
+        <nw:network-ref>target-L1.5</nw:network-ref>
       </nw:supporting-network>
       <nw:node>
         <nw:node-id>R1-GRT</nw:node-id>
@@ -673,35 +776,33 @@
         </nw:supporting-node>
       </nw:node>
       <nw:node>
-        <nw:node-id>HYP1-vSW1</nw:node-id>
-        <nw:supporting-node>
-          <nw:network-ref>target-L1</nw:network-ref>
-          <nw:node-ref>HYP1</nw:node-ref>
-        </nw:supporting-node>
-      </nw:node>
-      <nw:node>
         <nw:node-id>HYP1-vSW1-BR-VL10</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>p1</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
             <nt:tp-ref>eth0</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
             <nt:tp-ref>eth1</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p3</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
+            <nt:tp-ref>p1</nt:tp-ref>
+          </nt:supporting-termination-point>
         </nt:termination-point>
         <nw:supporting-node>
-          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:network-ref>target-L1.5</nw:network-ref>
           <nw:node-ref>HYP1-vSW1</nw:node-ref>
         </nw:supporting-node>
       </nw:node>
@@ -710,24 +811,29 @@
         <nt:termination-point>
           <nt:tp-id>p1</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
             <nt:tp-ref>eth0</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
             <nt:tp-ref>eth1</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p3</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
+            <nt:tp-ref>p2</nt:tp-ref>
+          </nt:supporting-termination-point>
         </nt:termination-point>
         <nw:supporting-node>
-          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:network-ref>target-L1.5</nw:network-ref>
           <nw:node-ref>HYP1-vSW1</nw:node-ref>
         </nw:supporting-node>
       </nw:node>
@@ -736,24 +842,29 @@
         <nt:termination-point>
           <nt:tp-id>p1</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
             <nt:tp-ref>eth0</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L1</nt:network-ref>
-            <nt:node-ref>HYP1</nt:node-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
             <nt:tp-ref>eth1</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p3</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>HYP1-vSW1</nt:node-ref>
+            <nt:tp-ref>p2</nt:tp-ref>
+          </nt:supporting-termination-point>
         </nt:termination-point>
         <nw:supporting-node>
-          <nw:network-ref>target-L2</nw:network-ref>
+          <nw:network-ref>target-L1.5</nw:network-ref>
           <nw:node-ref>HYP1-vSW1</nw:node-ref>
         </nw:supporting-node>
       </nw:node>
@@ -761,21 +872,23 @@
         <nw:node-id>VM1</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>eth0</nt:tp-id>
+          <nt:supporting-termination-point>
+            <nt:network-ref>target-L1.5</nt:network-ref>
+            <nt:node-ref>VM1</nt:node-ref>
+            <nt:tp-ref>eth0</nt:tp-ref>
+          </nt:supporting-termination-point>
         </nt:termination-point>
         <nw:supporting-node>
-          <nw:network-ref>target-L1</nw:network-ref>
-          <nw:node-ref>HYP1</nw:node-ref>
+          <nw:network-ref>target-L1.5</nw:network-ref>
+          <nw:node-ref>VM1</nw:node-ref>
         </nw:supporting-node>
       </nw:node>
       <nw:node>
         <nw:node-id>VM2</nw:node-id>
         <nt:termination-point>
-          <nt:tp-id>eth0</nt:tp-id>
-        </nt:termination-point>
-        <nt:termination-point>
           <nt:tp-id>eth0.20</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L2</nt:network-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
             <nt:node-ref>VM2</nt:node-ref>
             <nt:tp-ref>eth0</nt:tp-ref>
           </nt:supporting-termination-point>
@@ -783,14 +896,14 @@
         <nt:termination-point>
           <nt:tp-id>eth0.30</nt:tp-id>
           <nt:supporting-termination-point>
-            <nt:network-ref>target-L2</nt:network-ref>
+            <nt:network-ref>target-L1.5</nt:network-ref>
             <nt:node-ref>VM2</nt:node-ref>
             <nt:tp-ref>eth0</nt:tp-ref>
           </nt:supporting-termination-point>
         </nt:termination-point>
         <nw:supporting-node>
-          <nw:network-ref>target-L1</nw:network-ref>
-          <nw:node-ref>HYP1</nw:node-ref>
+          <nw:network-ref>target-L1.5</nw:network-ref>
+          <nw:node-ref>VM2</nw:node-ref>
         </nw:supporting-node>
       </nw:node>
       <nw:node>
@@ -1497,6 +1610,9 @@
     <nw:network>
       <nw:network-id>target-L3</nw:network-id>
       <nw:network-types/>
+      <nw:supporting-network>
+        <nw:network-ref>target-L1.5</nw:network-ref>
+      </nw:supporting-network>
       <nw:supporting-network>
         <nw:network-ref>target-L2</nw:network-ref>
       </nw:supporting-network>

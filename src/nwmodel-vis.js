@@ -1,8 +1,6 @@
 "use strict";
 
 function drawGraphs(graphs) {
-    var width = 1000;
-    var height = 1000;
     var allGraphNodes = makeAllGraphNodes(graphs);
 
     // highlight selected node
@@ -11,6 +9,7 @@ function drawGraphs(graphs) {
         // console.log("highlight ", direction, path, element);
         element.classList.add("selected");
     }
+
     // clear all highlighted object
     function clearHighlight() {
         var element = document.getElementById("visualizer");
@@ -50,6 +49,16 @@ function drawGraphs(graphs) {
 
     // draw each layer
     for (var nwName in graphs) {
+        var graphSize = graphs[nwName].nodes.length;
+        var r = 1.0;
+        if (20 <= graphSize && graphSize < 50) {
+            r = 0.65;
+        } else if (graphSize < 20) {
+            r = 0.35;
+        }
+        var width = r * 1200;
+        var height = r * 1200;
+
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) { return d.id; }))
             .force("charge", d3.forceManyBody().strength(-50))
