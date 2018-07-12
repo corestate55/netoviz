@@ -349,7 +349,9 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
             .attr("width", nodeSize)
             .attr("height", nodeSize)
             .attr("x", function (d) { return d.x - nodeSize / 2; })
-            .attr("y", function(d) { return d.y - nodeSize / 2; });
+            .attr("y", function(d) { return d.y - nodeSize / 2; })
+            .attr("rx", nodeSize / 8)
+            .attr("ry", nodeSize / 8);
 
         label
             .attr("x", function(d) { return d.x; })

@@ -1,3 +1,4 @@
+/* https://www.colorcombos.com/color-schemes/175/ColorCombo175.html */
 text {
     font-size: 20px;
     fill: #4393c3;
@@ -5,7 +6,7 @@ text {
 
 .selected {
     stroke: #FFC3CE;
-    stroke-width: 8px;
+    stroke-width: 5px;
 }
 
 rect {
