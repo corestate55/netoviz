@@ -31,9 +31,8 @@ json2xml topo.jtox target.json | xmllint --format - > target.xml
 
 OOPS...they are YANG/1.1
 ```
-hagiwara@exp01:~/nwmodel/exercise$ yang2dsdl -t config ietf-network-topology@2018-02-26.yang ietf-network@2018-02-26.yang
+$ yang2dsdl -t config ietf-network-topology@2018-02-26.yang ietf-network@2018-02-26.yang
 DSDL plugin supports only YANG version 1.
-hagiwara@exp01:~/nwmodel/exercise$ 
 ```
 
 ## Visualizer

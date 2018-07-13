@@ -1,4 +1,4 @@
-YANGFILES := ietf-network-topology@2018-02-26.yang ietf-network@2018-02-26.yang
+YANGFILES := yang/ietf-network-topology@2018-02-26.yang yang/ietf-network@2018-02-26.yang
 JTOX := topo.jtox
 TARGETJSON := target.json
 TARGETXML := target.xml
