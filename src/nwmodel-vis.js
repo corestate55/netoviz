@@ -26,10 +26,8 @@ function drawGraphs(graphs) {
             highlightNodeByPath(direction, path);
             // recursive search
             var node = findGraphObjByPath(path, allGraphNodes);
-            var list = [];
             if(node[direction]) {
-                list = node[direction].split(",");
-                list.forEach(function(d) {
+                node[direction].split(",").forEach(function(d) {
                     findSupportingObj(direction, d);
                 });
             }
@@ -41,10 +39,6 @@ function drawGraphs(graphs) {
         console.log("highlight_top: ", path);
         findSupportingObj("children", path);
         findSupportingObj("parents", path);
-        // highlight root (clicked) node, to fix its highlight
-        // because findSupportingObj operation includes root node,
-        // so, when call it for children/parents, root node was toggled.
-        highlightNodeByPath("root", path);
     }
 
     // draw each layer

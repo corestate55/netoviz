@@ -7,13 +7,11 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
         // child node for "node"
         var nodeChildPaths = [];
         if (node["supporting-node"]) {
-            node["supporting-node"].forEach(function(snode) {
-                nodeChildPaths.push(
-                    graphObjPath(snode["network-ref"], snode["node-ref"])
-                );
+            nodeChildPaths = node["supporting-node"].map(function(snode) {
+                return graphObjPath(snode["network-ref"], snode["node-ref"]);
             });
         }
-        // node
+        // "node" node (for drawing)
         graphNodes.push({
             "type": "node",
             "name": node["node-id"],
@@ -29,16 +27,15 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
             node[tpKey].forEach(function(tp) {
                 // child node for "tp"
                 var tpChildPaths = [];
-                if (tp["supporting-termination-point"]) {
-                    tp["supporting-termination-point"].forEach(function(stp) {
-                        tpChildPaths.push(
-                            graphObjPath(stp["network-ref"],
-                                         stp["node-ref"],
-                                         stp["tp-ref"])
+                var stpKey = "supporting-termination-point"; // alias
+                if (tp[stpKey]) {
+                    tpChildPaths = tp[stpKey].map(function(stp) {
+                        return graphObjPath(
+                            stp["network-ref"], stp["node-ref"], stp["tp-ref"]
                         );
                     });
                 }
-                // tp
+                // "tp" node (for drawing)
                 graphNodes.push({
                     "type": "tp",
                     "name": tp["tp-id"],
