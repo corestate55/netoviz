@@ -43,36 +43,34 @@ function drawGraphs(graphs) {
 
     // draw each layer
     for (var nwName in graphs) {
-        var graphSize = graphs[nwName].nodes.length;
-        var width = 400; // small
-        var height = 400;
-        if (50 < graphSize) {
-            // large
-            width = 2500;
-            height = 2000;
-        } else if (20 <= graphSize && graphSize < 50) {
-            // medium
-            width = 800;
-            height = 800;
-        }
-
-        var simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; }))
-            .force("charge", d3.forceManyBody().strength(-50))
-            .force("center", d3.forceCenter(width / 2, height / 2));
-        var nwLayer = d3.select("body")
-            .select("div#visualizer")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height)
-            .append("g") // topology graph container
-            .attr("id", nwName)
-            .attr("class", "network");
-        drawGraph(simulation, nwLayer, graphs[nwName], highlightNode);
+        drawGraph(nwName, graphs[nwName], highlightNode);
     }
 }
 
-function drawGraph(simulation, nwLayer, graph, highlightNode) {
+function drawGraph(nwName, graph, highlightNode) {
+    var graphSize = graph.nodes.length;
+    // small
+    var width = 400;
+    var height = 400;
+    if (50 < graphSize) {
+        // large
+        width = 2000;
+        height = 1000;
+    } else if (20 <= graphSize && graphSize < 50) {
+        // medium
+        width = 800;
+        height = 800;
+    }
+
+    var nwLayer = d3.select("body")
+        .select("div#visualizer")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g") // topology graph container
+        .attr("id", nwName)
+        .attr("class", "network");
+
     graph.links.forEach(function(d) {
         d.source = d.source_id;
         d.target = d.target_id;
@@ -133,11 +131,54 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
         .attr("class", "label")
         .text(function(d) { return d.name; });
 
+    var simulation = d3.forceSimulation()
+        .force("link",
+               d3.forceLink()
+               .id(function(d) { return d.id; })
+               .distance(linkDistance)
+               .strength(linkStrength)
+               .iterations(8)
+              )
+        .force("collide",
+               d3.forceCollide()
+               .radius(nodeCollideRadius)
+               .strength(1.0) // collision not allowed
+               .iterations(8)
+              )
+        .force("charge", d3.forceManyBody().strength(-50))
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
     simulation
         .nodes(graph.nodes)
         .on("tick", ticked)
         .force("link")
         .links(graph.links);
+
+    var tpSize = 10; // tp circle radius
+    var nodeSize = 40; // node width/height
+
+    function nodeCollideRadius(d) {
+        if (d.type === "node") {
+            return 1.2 * nodeSize * 3 / 4;
+        }
+        return 1.2 * tpSize;
+    }
+
+    function linkDistance(d) {
+        // ?? cannot use outer scope variable
+        var x = 1.2 * 30; // 1.2 * nodeSize * 3 / 4
+        if (d.type === "node-tp") {
+            return x;
+        }
+        return 2 * x;
+    }
+
+    function linkStrength(d) {
+        if (d.type == "node-tp") {
+            return 1.0;
+        }
+        return 0.1;
+    }
 
     function dragstarted(d) {
         if (!d3.event.active) {
@@ -169,13 +210,11 @@ function drawGraph(simulation, nwLayer, graph, highlightNode) {
             .attr("x2", function(d) { return d.target.x; })
             .attr("y2", function(d) { return d.target.y; });
 
-        var tpSize = 10;
         tp
             .attr("r", tpSize)
             .attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
 
-        var nodeSize = 40;
         node
             .attr("width", nodeSize)
             .attr("height", nodeSize)

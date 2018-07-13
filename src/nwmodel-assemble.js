@@ -67,6 +67,7 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
             graphNodes).id;
 
         graphLinks.push({
+            "type": "tp-tp",
             "source_id": sourceId,
             "target_id": targetId,
             "name": link["link-id"],
@@ -81,6 +82,7 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
             var nodeName = findGraphObjById(nodeId, graphNodes).name;
             var tpName = [nodeName, tp.name].join(",");
             graphLinks.push({
+                "type": "node-tp",
                 "source_id": nodeId,
                 "target_id": tp.id,
                 "name": tpName,
