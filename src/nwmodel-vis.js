@@ -6,16 +6,26 @@ function drawGraphs(graphs) {
     // highlight selected node
     function highlightNodeByPath(direction, path) {
         var element = document.getElementById(path);
-        // console.log("highlight ", direction, path, element);
-        element.classList.add("selected");
+        if (direction === "children") {
+            element.classList.add("selectedchildren");
+        } else if (direction === "parents") {
+            element.classList.add("selectedparents");
+        } else {
+            ["selectedchildren", "selectedparents"].forEach(function(d) {
+                element.classList.remove(d);
+            });
+            element.classList.add("selected");
+        }
     }
 
     // clear all highlighted object
     function clearHighlight() {
         var element = document.getElementById("visualizer");
-        var selectedElements = element.getElementsByClassName("selected");
-        Array.from(selectedElements).forEach(function(element) {
-            element.classList.remove("selected");
+        ["selectedchildren", "selectedparents", "selected"].forEach(function(d) {
+            var selectedElements = element.getElementsByClassName(d);
+            Array.from(selectedElements).forEach(function(element) {
+                element.classList.remove(d);
+            });
         });
     }
 
@@ -39,6 +49,7 @@ function drawGraphs(graphs) {
         console.log("highlight_top: ", path);
         findSupportingObj("children", path);
         findSupportingObj("parents", path);
+        findSupportingObj("clicked", path); // dummy direction
     }
 
     // draw each layer

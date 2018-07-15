@@ -5,11 +5,6 @@ svg {
     margin: 10px;
 }
 
-.selectready {
-    stroke: coral;
-    stroke-width: 4px;
-}
-
 text {
     font-size: 20px;
     fill: #4393c3;
@@ -20,9 +15,14 @@ rect {
     stroke-width: 1px;
     fill: #D6E3B5;
 }
-
-rect.selected {
+rect.selectedchildren {
     fill: #FFC3CE;
+}
+rect.selectedparents {
+    fill: #6B824A;
+}
+rect.selected {
+    fill: coral;
 }
 
 circle {
@@ -30,11 +30,22 @@ circle {
     stroke-width: 1px;
     fill: #FEF6EB;
 }
-circle.selected {
+circle.selectedchildren {
     fill: #FFC3CE;
+}
+circle.selectedparents {
+    fill: #6B824A;
+}
+circle.selected {
+    fill: coral;
 }
 
 g.link {
     stroke: #636563;
     stroke-width: 1px;
+}
+
+.selectready {
+    stroke: coral;
+    stroke-width: 4px;
 }
