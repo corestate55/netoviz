@@ -1,5 +1,9 @@
 "use strict";
 
+import * as d3 from 'd3';
+import {makeNodeData} from './nwmodel-assemble';
+import {makeAllGraphNodes, findGraphObjByPath} from './nwmodel-util';
+
 function drawGraphs(graphs) {
     var allGraphNodes = makeAllGraphNodes(graphs);
 
@@ -255,12 +259,9 @@ function drawGraph(nwName, graph, highlightNode) {
     }
 }
 
-function runNetworkModelVis(error, topoData) {
+export function runNetworkModelVis(error, topoData) {
     if (error) {
         throw error;
     }
     drawGraphs(makeNodeData(topoData));
 }
-
-// Entry point
-d3.json("http://localhost:8000/model/target.json", runNetworkModelVis);

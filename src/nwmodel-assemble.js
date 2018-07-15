@@ -1,5 +1,11 @@
 "use strict";
 
+import {
+    graphObjId, nodeObjIdFromTpObjId, graphObjPath,
+    findGraphObjByPath, findGraphObjById,
+    makeAllGraphNodes
+} from './nwmodel-util';
+
 function makeTpChildrenFromSupportingTp(tp) {
     var stpKey = "supporting-termination-point"; // alias
     if (!tp[stpKey]) {
@@ -130,7 +136,7 @@ function makeParentRef(graphs) {
     return graphs;
 }
 
-function makeNodeData(topoData) {
+export function makeNodeData(topoData) {
     var graphs = {};
     topoData["ietf-network:networks"].network.forEach(function(nw, nwNum) {
         var graphNodes = makeGraphNodesFromTopoNodes(

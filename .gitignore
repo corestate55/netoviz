@@ -1,6 +1,8 @@
 *~
 *.gem
 *.rbc
+npm-debug.log
+/node_modules/
 /.config
 /coverage/
 /InstalledFiles

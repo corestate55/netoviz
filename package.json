@@ -1,0 +1,35 @@
+{
+  "name": "nwmodel-exercise",
+  "version": "0.0.1",
+  "description": "RFC8345-based network topology model exercise",
+  "main": "src/index.js",
+  "dependencies": {
+    "d3": "^4.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.1.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "webpack": "^4.16.0",
+    "webpack-cli": "^3.0.8",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server",
+    "test": "eslint src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/corestate55/nwmodel-exercise.git"
+  },
+  "author": "corestate55",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/corestate55/nwmodel-exercise/issues"
+  },
+  "homepage": "https://github.com/corestate55/nwmodel-exercise#readme"
+}
