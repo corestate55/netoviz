@@ -1,5 +1,17 @@
 "use strict";
 
+function makeTpChildrenFromSupportingTp(tp) {
+    var stpKey = "supporting-termination-point"; // alias
+    if (!tp[stpKey]) {
+        return [];
+    }
+    return tp[stpKey].map(function(stp) {
+        return graphObjPath(
+            stp["network-ref"], stp["node-ref"], stp["tp-ref"]
+        );
+    });
+}
+
 function makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node) {
     var tpKey = "ietf-network-topology:termination-point"; // alias
     if (!node[tpKey]) {
@@ -9,15 +21,10 @@ function makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node) {
     // node as termination point
     return node[tpKey].map(function(tp, tpNum) {
         // child node for "tp"
-        var tpChildPaths = [];
-        var stpKey = "supporting-termination-point"; // alias
-        if (tp[stpKey]) {
-            tpChildPaths = tp[stpKey].map(function(stp) {
-                return graphObjPath(
-                    stp["network-ref"], stp["node-ref"], stp["tp-ref"]
-                );
-            });
-        }
+        // It always has THIS node (which owns THIS tp)
+        var tpChildPaths = [graphObjPath(nwName, node["node-id"])].concat(
+            makeTpChildrenFromSupportingTp(tp)
+        );
         // "tp" node (for drawing)
         return {
             "type": "tp",
@@ -27,17 +34,6 @@ function makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node) {
             "children": tpChildPaths.join(","),
             "parents": ""
         };
-    });
-}
-
-function makeNodeChildrenFromTp(nwName, node) {
-    // "trivial" children: termination points ON THIS node.
-    var tpKey = "ietf-network-topology:termination-point"; // alias
-    if (!node[tpKey]) {
-        return [];
-    }
-    return node[tpKey].map(function(tp) {
-        return graphObjPath(nwName, node["node-id"], tp["tp-id"]);
     });
 }
 
@@ -54,10 +50,8 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
     var graphNodes = [];
     topoNodes.forEach(function(node, i) {
         var nodeNum = i + 1; // index starts from 1
-        // child node for "node"
-        var nodeChildPaths = makeNodeChildrenFromSupportingNode(node).concat(
-            makeNodeChildrenFromTp(nwName, node)
-        );
+        // child node for "node" (ref to underlay)
+        var nodeChildPaths = makeNodeChildrenFromSupportingNode(node);
         // "node" node (for drawing)
         graphNodes.push({
             "type": "node",

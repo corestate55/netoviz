@@ -11,11 +11,18 @@
         <script src="./src/nwmodel-assemble.js"></script>
         <script src="./src/nwmodel-vis.js"></script>
         <div id="stylecheck">
-          <svg width="200" height="60">
+          <svg width="500" height="60">
             <rect width="40" height="40" x="10" y="10" rx="5" ry="5"></rect>
-            <rect width="40" height="40" x="60" y="10" rx="5" ry="5" class="selected"></rect>
-            <circle r="10" cx="120" cy="20"></circle>
-            <circle r="10" cx="150" cy="20" class="selected"></circle>
+            <rect width="40" height="40" x="60" y="10" rx="5" ry="5" class="selectedchildren"></rect>
+            <rect width="40" height="40" x="110" y="10" rx="5" ry="5" class="selected"></rect>
+            <rect width="40" height="40" x="160" y="10" rx="5" ry="5" class="selectedparents"></rect>
+            <circle r="10" cx="220" cy="20"></circle>
+            <circle r="10" cx="270" cy="20" class="selectedchildren"></circle>
+            <circle r="10" cx="320" cy="20" class="selected"></circle>
+            <circle r="10" cx="370" cy="20" class="selectedparents"></circle>
+            <text x="270" y="40">child</text>
+            <text x="320" y="40">click</text>
+            <text x="370" y="40">parent</text>
           </svg>
         </div>
         <div id="visualizer"></div>

@@ -33,6 +33,7 @@ function drawGraphs(graphs) {
     function highlightNode(d) {
         function findSupportingObj(direction, path) {
             // highlight DOM
+            console.log(direction, path);
             highlightNodeByPath(direction, path);
             // recursive search
             var node = findGraphObjByPath(path, allGraphNodes);
