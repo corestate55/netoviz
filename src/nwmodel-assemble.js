@@ -32,7 +32,6 @@ function makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node) {
             "id": graphObjId(nwNum, nodeNum, tpNum + 1),
             "path": graphObjPath(nwName, node["node-id"], tp["tp-id"]),
             "children": tpChildPaths.join(","),
-            "parents": ""
         };
     });
 }
@@ -59,7 +58,6 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
             "id": graphObjId(nwNum, nodeNum, 0),
             "path": graphObjPath(nwName, node["node-id"]),
             "children": nodeChildPaths.join(","), // lower layer
-            "parents": "" // upper layer
         });
         // "tp" node (for drawing)
         var graphTps = makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node);
@@ -110,6 +108,13 @@ function makeGraphLinksFromTopoLinks(nwName, topoLinks, graphNodes) {
     return graphLinks;
 }
 
+function concatNodeParents(child, path) {
+    if (child.parents) {
+        return [child.parents, path].join(",");
+    }
+    return path;
+}
+
 function makeParentRef(graphs) {
     var allGraphNodes = makeAllGraphNodes(graphs);
     for (var nwName in graphs) {
@@ -117,11 +122,7 @@ function makeParentRef(graphs) {
             if (node.children) {
                 node.children.split(",").forEach(function(cPath) {
                     var child = findGraphObjByPath(cPath, allGraphNodes);
-                    if (child.parents) {
-                        child.parents = [child.parents, node.path].join(",");
-                    } else {
-                        child.parents = node.path;
-                    }
+                    child.parents = concatNodeParents(child, node.path);
                 });
             }
         });
