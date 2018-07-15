@@ -1,8 +1,5 @@
 require 'json'
-require './topo_checker/node.rb'
-require './topo_checker/link.rb'
-require './topo_checker/network.rb'
-require './topo_checker/networks.rb'
+require_relative 'topo_checker/networks_ops'
 
 ## read file
 data = []

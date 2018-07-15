@@ -2,12 +2,14 @@ YANGFILES := yang/ietf-network-topology@2018-02-26.yang yang/ietf-network@2018-0
 JTOX := topo.jtox
 TARGETJSON := target.json
 TARGETXML := target.xml
+CHECKER := nwmodel-checker.rb
+CHECKERSRC := $(CHECKER) $(wildcard topo_checker/*.rb)
 
 all: $(TARGETXML)
 
-$(TARGETXML): $(JTOX) $(TARGETJSON)
+$(TARGETXML): $(JTOX) $(TARGETJSON) $(CHECKERSRC)
 	jsonlint-cli $(TARGETJSON)
-	ruby nwmodel-checker.rb $(TARGETJSON)
+	ruby $(CHECKER) $(TARGETJSON)
 	json2xml $(JTOX) $(TARGETJSON) | xmllint --output $(TARGETXML) --format -
 
 $(JTOX): $(YANGFILES)

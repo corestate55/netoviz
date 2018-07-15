@@ -1,3 +1,6 @@
+require_relative 'node'
+require_relative 'link'
+
 module TopoChecker
   class Network
     attr_reader :network_types, :network_id, :nodes, :links, :supporting_networks
