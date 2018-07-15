@@ -1,16 +1,63 @@
 "use strict";
 
-function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
-    var nodeNum = 1;
-    var graphNodes = [];
-    topoNodes.forEach(function(node) {
-        // child node for "node"
-        var nodeChildPaths = [];
-        if (node["supporting-node"]) {
-            nodeChildPaths = node["supporting-node"].map(function(snode) {
-                return graphObjPath(snode["network-ref"], snode["node-ref"]);
+function makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node) {
+    var tpKey = "ietf-network-topology:termination-point"; // alias
+    if (!node[tpKey]) {
+        return [];
+    }
+
+    // node as termination point
+    return node[tpKey].map(function(tp, tpNum) {
+        // child node for "tp"
+        var tpChildPaths = [];
+        var stpKey = "supporting-termination-point"; // alias
+        if (tp[stpKey]) {
+            tpChildPaths = tp[stpKey].map(function(stp) {
+                return graphObjPath(
+                    stp["network-ref"], stp["node-ref"], stp["tp-ref"]
+                );
             });
         }
+        // "tp" node (for drawing)
+        return {
+            "type": "tp",
+            "name": tp["tp-id"],
+            "id": graphObjId(nwNum, nodeNum, tpNum + 1),
+            "path": graphObjPath(nwName, node["node-id"], tp["tp-id"]),
+            "children": tpChildPaths.join(","),
+            "parents": ""
+        };
+    });
+}
+
+function makeNodeChildrenFromTp(nwName, node) {
+    // "trivial" children: termination points ON THIS node.
+    var tpKey = "ietf-network-topology:termination-point"; // alias
+    if (!node[tpKey]) {
+        return [];
+    }
+    return node[tpKey].map(function(tp) {
+        return graphObjPath(nwName, node["node-id"], tp["tp-id"]);
+    });
+}
+
+function makeNodeChildrenFromSupportingNode(node) {
+    if (!node["supporting-node"]) {
+        return [];
+    }
+    return node["supporting-node"].map(function(snode) {
+        return graphObjPath(snode["network-ref"], snode["node-ref"]);
+    });
+}
+
+function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
+    var graphNodes = [];
+    topoNodes.forEach(function(node, i) {
+        var nodeNum = i + 1; // index starts from 1
+        // child node for "node"
+        var nodeChildPaths = makeNodeChildrenFromSupportingNode(node).concat(
+            makeNodeChildrenFromTp(nwName, node)
+        );
         // "node" node (for drawing)
         graphNodes.push({
             "type": "node",
@@ -20,34 +67,11 @@ function makeGraphNodesFromTopoNodes(nwNum, nwName, topoNodes) {
             "children": nodeChildPaths.join(","), // lower layer
             "parents": "" // upper layer
         });
-        // node as termination point
-        var tpKey = "ietf-network-topology:termination-point"; // alias
-        if (node[tpKey]) {
-            var tpNum = 1;
-            node[tpKey].forEach(function(tp) {
-                // child node for "tp"
-                var tpChildPaths = [];
-                var stpKey = "supporting-termination-point"; // alias
-                if (tp[stpKey]) {
-                    tpChildPaths = tp[stpKey].map(function(stp) {
-                        return graphObjPath(
-                            stp["network-ref"], stp["node-ref"], stp["tp-ref"]
-                        );
-                    });
-                }
-                // "tp" node (for drawing)
-                graphNodes.push({
-                    "type": "tp",
-                    "name": tp["tp-id"],
-                    "id": graphObjId(nwNum, nodeNum, tpNum),
-                    "path": graphObjPath(nwName, node["node-id"], tp["tp-id"]),
-                    "children": tpChildPaths.join(","),
-                    "parents": ""
-                });
-                tpNum++;
-            });
+        // "tp" node (for drawing)
+        var graphTps = makeGraphTpsFromTopoTps(nwNum, nwName, nodeNum, node);
+        if (graphTps) {
+            graphNodes = graphNodes.concat(graphTps);
         }
-        nodeNum++;
     });
     return graphNodes;
 }
@@ -113,10 +137,9 @@ function makeParentRef(graphs) {
 
 function makeNodeData(topoData) {
     var graphs = {};
-    var nwNum = 1;
-    topoData["ietf-network:networks"].network.forEach(function(nw) {
+    topoData["ietf-network:networks"].network.forEach(function(nw, nwNum) {
         var graphNodes = makeGraphNodesFromTopoNodes(
-            nwNum, nw["network-id"], nw.node
+            nwNum + 1, nw["network-id"], nw.node
         );
         var graphLinks = makeGraphLinksFromTopoLinks(
             nw["network-id"], nw["ietf-network-topology:link"], graphNodes
@@ -125,7 +148,6 @@ function makeNodeData(topoData) {
             "nodes": graphNodes,
             "links": graphLinks
         };
-        nwNum++;
     });
     console.log(makeParentRef(graphs));
     return graphs;
