@@ -58,6 +58,66 @@ function drawGraphs(graphs) {
     }
 }
 
+function mouseOver(element) {
+    element.classList.add("selectready");
+}
+
+function mouseOut(element) {
+    element.classList.remove("selectready");
+}
+
+function makeNetworkLayer(nwName, width, height) {
+    return d3.select("body")
+        .select("div#visualizer")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g") // topology graph container
+        .attr("id", nwName)
+        .attr("class", "network");
+}
+
+function makeLinkObjects(nwLayer, links) {
+    return nwLayer.append("g")
+        .attr("class", "link")
+        .selectAll("line")
+        .data(links)
+        .enter()
+        .append("line")
+        .attr("id", function(d) { return d.path; });
+}
+
+function makeTpObjects(nwLayer, nodes, highlightNode) {
+    return nwLayer.append("g")
+        .attr("class", "tp")
+        .selectAll("circle")
+        .data(nodes.filter(function(d) { return d.type === "tp"; }))
+        .enter()
+        .append("circle")
+        .attr("id", function(d) { return d.path; });
+}
+
+function makeNodeObjects(nwLayer, nodes, highlightNode) {
+    return nwLayer.append("g")
+        .attr("class", "node")
+        .selectAll("rect")
+        .data(nodes.filter(function(d) { return d.type === "node"; }))
+        .enter()
+        .append("rect")
+        .attr("id", function(d) { return d.path; });
+}
+
+function makeLabelObjects(nwLayer, nodes) {
+    return nwLayer.append("g")
+        .attr("class", "labels")
+        .selectAll("text")
+        .data(nodes)
+        .enter()
+        .append("text")
+        .attr("class", "label")
+        .text(function(d) { return d.name; });
+}
+
 function drawGraph(nwName, graph, highlightNode) {
     var graphSize = graph.nodes.length;
     // small
@@ -72,75 +132,29 @@ function drawGraph(nwName, graph, highlightNode) {
         width = 800;
         height = 800;
     }
-
-    var nwLayer = d3.select("body")
-        .select("div#visualizer")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g") // topology graph container
-        .attr("id", nwName)
-        .attr("class", "network");
-
-    graph.links.forEach(function(d) {
+    graph.links.forEach(function(d) { // key alias
         d.source = d.source_id;
         d.target = d.target_id;
     });
 
-    var link = nwLayer.append("g")
-        .attr("class", "link")
-        .selectAll("line")
-        .data(graph.links)
-        .enter()
-        .append("line")
-        .attr("id", function(d) { return d.path; });
-
-    function mouseover(element) {
-        element.classList.add("selectready");
+    function setEventCallBack(obj) {
+        obj
+            .on("click", function() { highlightNode(this); })
+            .on("mouseover", function() { mouseOver(this); })
+            .on("mouseout", function () { mouseOut(this); })
+            .call(d3.drag()
+                  .on("start", dragstarted)
+                  .on("drag", dragged)
+                  .on("end", dragended));
     }
 
-    function mouseout(element) {
-        element.classList.remove("selectready");
-    }
-
-    var tp = nwLayer.append("g")
-        .attr("class", "tp")
-        .selectAll("circle")
-        .data(graph.nodes.filter(function(d) { return d.type === "tp"; }))
-        .enter()
-        .append("circle")
-        .attr("id", function(d) { return d.path; })
-        .on("click", function() { highlightNode(this); })
-        .on("mouseover", function() { mouseover(this); })
-        .on("mouseout", function () { mouseout(this); })
-        .call(d3.drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended));
-
-    var node = nwLayer.append("g")
-        .attr("class", "node")
-        .selectAll("rect")
-        .data(graph.nodes.filter(function(d) { return d.type === "node"; }))
-        .enter()
-        .append("rect")
-        .attr("id", function(d) { return d.path; })
-        .on("click", function() { highlightNode(this); })
-        .on("mouseover", function() { mouseover(this); })
-        .on("mouseout", function () { mouseout(this); })
-        .call(d3.drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended));
-
-    var label = nwLayer.append("g")
-        .attr("class", "labels")
-        .selectAll("text")
-        .data(graph.nodes)
-        .enter()
-        .append("text")
-        .attr("class", "label")
-        .text(function(d) { return d.name; });
+    var nwLayer = makeNetworkLayer(nwName, width, height);
+    var link = makeLinkObjects(nwLayer, graph.links);
+    var tp = makeTpObjects(nwLayer, graph.nodes);
+    setEventCallBack(tp);
+    var node = makeNodeObjects(nwLayer, graph.nodes);
+    setEventCallBack(node);
+    var label = makeLabelObjects(nwLayer, graph.nodes);
 
     var simulation = d3.forceSimulation()
         .force("link",
