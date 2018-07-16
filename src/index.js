@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import {runNetworkModelVis} from './nwmodel-vis'
+import {GraphVisualizer} from './nwmodel-vis'
 
 function drawLegend () {
   var legend = d3 // .select(document.body)
@@ -53,4 +53,10 @@ function drawLegend () {
 
 // Entry point
 drawLegend()
-d3.json('http://localhost:8080/model/target.json', runNetworkModelVis)
+d3.json('http://localhost:8080/model/target.json', (error, topoData) => {
+  if (error) {
+    throw error
+  }
+  var visualizer = new GraphVisualizer(topoData)
+  visualizer.drawGraphs()
+})

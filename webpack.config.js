@@ -1,5 +1,5 @@
 module.exports = {
-    entry: `./src2/index.js`,
+    entry: `./src/index.js`,
     mode: "development",
     devServer: {
         contentBase: 'dist',
