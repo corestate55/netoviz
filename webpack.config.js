@@ -1,5 +1,5 @@
 module.exports = {
-    entry: `./src/index.js`,
+    entry: `./src2/nwmodel-vis.js`,
     mode: "development",
     devServer: {
         contentBase: 'dist',
