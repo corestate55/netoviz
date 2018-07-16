@@ -1,16 +1,13 @@
 'use strict'
 
 import {TermPoint} from './term-points'
+import {graphNode} from './graph'
 
 class SupportingNode {
   constructor (data) {
     this.networkRef = data['network-ref']
     this.nodeRef = data['node-ref']
     this.refPath = [this.networkRef, this.nodeRef].join('/')
-  }
-
-  refPath () {
-    return [this.networkRef, this.nodeRef].join('/')
   }
 }
 
@@ -37,13 +34,19 @@ export class Node {
     }
   }
 
+  makeChildren () {
+    return this.supportingNodes.map((sn) => {
+      return sn.refPath
+    })
+  }
+
   graphNode () {
-    return {
+    return new graphNode({
       'type': 'node',
       'name': this.name,
       'id': this.id,
       'path': this.path,
-      'children': '' // TODO
-    }
+      'children': this.makeChildren()
+    })
   }
 }

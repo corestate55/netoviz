@@ -1,5 +1,7 @@
 'use strict'
 
+import {graphNode, graphLink} from './graph'
+
 class SupportingTermPoint {
   constructor (data) {
     this.networkRef = data['network-ref']
@@ -25,26 +27,34 @@ export class TermPoint {
     }
   }
 
+  makeChildren () {
+    var children = this.supportingTermPoints.map((stp) => {
+      return stp.refPath
+    })
+    children.unshift(this.parentPath)
+    return children
+  }
+
   graphNode () {
-    return {
+    return new graphNode({
       'type': 'tp',
       'name': this.name,
       'id': this.id,
       'path': this.path,
-      'children': '' // TODO
-    }
+      'children': this.makeChildren()
+    })
   }
 
   graphLink () {
     var pathList = this.parentPath.split('/')
     var nodeName = pathList.pop()
     var linkName = [nodeName, this.name].join(',')
-    return {
+    return new graphLink({
       'type': 'node-tp',
       'source_path': this.parentPath,
       'target_path': this.path,
       'name': linkName,
       'path': [pathList, linkName].join('/')
-    }
+    })
   }
 }

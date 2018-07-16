@@ -13,7 +13,7 @@ class SupportingNetwork {
 
 export class Network extends BaseContainer {
   constructor (data, nwNum) {
-    super(data)
+    super()
     this.networkTypes = data['network-types']
     this.name = data['network-id'] // name string
     this.id = nwNum * 10000 // integer
@@ -73,17 +73,5 @@ export class Network extends BaseContainer {
     })
     linksNodeTp = this.flatten(linksNodeTp)
     return this.flatten([links, linksNodeTp])
-  }
-
-  findNodeById (id) {
-    return this.nodes.find((d) => {
-      return d.id === id
-    })
-  }
-
-  findNodeByPath (path) {
-    return this.nodes.find((d) => {
-      return d.path === path
-    })
   }
 }

@@ -1,10 +1,8 @@
 'use strict'
 
 export class BaseContainer {
-  constructor (data) {
-    this.id = 0
+  constructor () {
     this.name = ''
-    this.path = ''
   }
 
   flatten (list) {

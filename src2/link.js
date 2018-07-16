@@ -1,5 +1,7 @@
 'use strict'
 
+import {graphLink} from './graph'
+
 class TpRef {
   constructor (data, nwPath) {
     this.nodeRef = data['source-node'] || data['dest-node']
@@ -31,12 +33,12 @@ export class Link {
   }
 
   graphLink () {
-    return {
+    return new graphLink({
       'type': 'tp-tp',
       'source_path': this.source.refPath,
       'target_path': this.destination.refPath,
       'name': this.name,
       'path': this.path
-    }
+    })
   }
 }
