@@ -1,8 +1,23 @@
 # nwmodel-exercise
 
-Exercise of Network Topology Model
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-## Write data by JSON and run check script
+Exercise of Network Topology Model ( ref. [RFC 8345 \- A YANG Data Model for Network Topologies](https://datatracker.ietf.org/doc/rfc8345/))
+
+## Directory
+
+* `src`: Source code files of visualizer.
+  * Codes are packed by `webpack` and stored in `dist` as `main.js`.
+* `dist`: Distributed files. (`devServer`'s document-root)
+* `dist/model`: Topology data files and helper scripts.
+
+## YANG Files
+
+You can find latest yang files defined in RFC8345 at [Yang models repository on github](https://github.com/YangModels/yang/tree/master/standard/ietf/RFC).
+
+## Handling Network Topology Data Instance
+
+### Write data by JSON and run check script
 
 Generate bi-directional link data from unidirectional link-id string.
 ```
@@ -14,7 +29,7 @@ Check data consistency
 ruby nwmodel-checker.rb target.json
 ```
 
-## JSON to XML
+### JSON to XML
 
 Create jtox file at first.
 Notice: only use base topology model (NOT augmented model such as L2/L3).
@@ -27,7 +42,7 @@ Convert json to xml
 json2xml topo.jtox target.json | xmllint --format - > target.xml
 ```
 
-## Validate XML
+### Validate XML
 
 OOPS...they are YANG/1.1
 ```
@@ -36,13 +51,33 @@ DSDL plugin supports only YANG version 1.
 ```
 
 ## Visualizer
-Run HTTP Server, For example with ruby/WEBRick
+
+### Install
+
+Install Node.js and NPM at first in your system.
+
+Install packages used by this visualizer (according to `package.json`).
 ```
-$ ruby -rwebrick -e 'WEBrick::HTTPServer.new(:DocumentRoot => "./", :Port => 8000).start'
-```
-or with python.
-```
-$ python -m SimpleHTTPServer &
+npm install
 ```
 
-Access `http://localhost:8000/nwnode-vis.html` .
+### Run web server
+Run `webpack-dev-server`.
+```
+npm run start
+```
+Then, it opens dist/index.html with browser.
+
+### Build
+
+Run `webpack`
+```
+npm run build
+```
+
+### Lint
+
+Run `eslint`.
+```
+npm run lint
+```
