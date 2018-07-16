@@ -32,6 +32,39 @@ export class Network {
     }
   }
 
+  makeGraphNodesAsNode() {
+    return this.nodes.map((node) => {
+      return node.graphNode()
+    })
+  }
+
+  makeGraphNodesAsTp() {
+    var tps = this.nodes.map((node) => {
+      return node.termPoints.map((tp) => {
+        return tp.graphNode()
+      })
+    })
+    return Array.prototype.concat.apply([], tps) // flatten
+  }
+
+  makeGraphNodes() {
+    var gNodes = [this.makeGraphNodesAsNode(), this.makeGraphNodesAsTp()]
+    return Array.prototype.concat.apply([], gNodes) // flatten
+  }
+
+  makeGraphLinks() {
+    var gLinks = this.links.map((link) => {
+      return link.graphLink()
+    })
+    var gLinksNodeTp = this.nodes.map((node) => {
+      return node.termPoints.map((tp) => {
+        return tp.graphLink()
+      })
+    })
+    gLinksNodeTp = Array.prototype.concat.apply([], gLinksNodeTp) // flatten
+    return Array.prototype.concat.apply([], [gLinks, gLinksNodeTp]) // flatten
+  }
+
   findNodeById(id) {
     return this.nodes.find((d) => {
       return d.id === id

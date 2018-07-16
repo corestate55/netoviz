@@ -29,4 +29,14 @@ export class Link {
       })
     }
   }
+
+  graphLink() {
+    return {
+      'type': 'tp-tp',
+      'source_path': this.source.refPath,
+      'target_path': this.destination.refPath,
+      'name': this.name,
+      'path': this.path
+    }
+  }
 }

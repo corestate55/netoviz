@@ -9,4 +9,18 @@ export class Networks {
         return new Network(nw, nwNum + 1)
       })
   }
+
+  makeGraphNodes() {
+    var nodes = this.networks.map((nw) => {
+      return nw.makeGraphNodes()
+    })
+    return Array.prototype.concat.apply([], nodes) // flatten
+  }
+
+  makeGraphLinks() {
+    var links = this.networks.map((nw) => {
+      return nw.makeGraphLinks()
+    })
+    return Array.prototype.concat.apply([], links) // flatten
+  }
 }

@@ -13,7 +13,8 @@ export class TermPoint {
   constructor(data, nodePath, nodeId, tpNum) {
     this.name = data['tp-id'] // name string
     this.id = nodeId + tpNum
-    this.path = [nodePath, this.name].join('/')
+    this.parentPath = nodePath
+    this.path = [this.parentPath, this.name].join('/')
 
     this.supportingTermPoints = []
     var stpKey = 'supporting-termination-point' // alias
@@ -29,8 +30,22 @@ export class TermPoint {
       'type': 'tp',
       'name': this.name,
       'id': this.id,
-      'path': [super.path, this.tpId].join('/'),
+      'path': this.path,
       'children': "" // TODO
     }
   }
+
+  graphLink() {
+    var pathList = this.parentPath.split('/')
+    var nodeName = pathList.pop()
+    var linkName = [nodeName, this.name].join(',')
+    return {
+      'type': 'node-tp',
+      'source_path': this.parentPath,
+      'target_path': this.path,
+      'name': linkName,
+      'path': [pathList, linkName].join('/'),
+    }
+  }
+
 }

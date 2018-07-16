@@ -18,7 +18,8 @@ export class Node {
   constructor(data, nwPath, nwId, nodeNum) {
     this.name = data['node-id'] // name string
     this.id = nwId + nodeNum * 100
-    this.path = [nwPath, this.name].join('/')
+    this.parentPath = nwPath
+    this.path = [this.parentPath, this.name].join('/')
 
     this.termPts = []
     var tpKey = ['ietf-network-topology:termination-point'] // alias
@@ -41,7 +42,7 @@ export class Node {
       'type': 'node',
       'name': this.name,
       'id': this.id,
-      'path': [super.path, this.nodeId].join('/'),
+      'path': this.path,
       'children': "" // TODO
     }
   }

@@ -5,5 +5,7 @@ import {Networks} from './networks'
 
 d3.json('http://localhost:8080/model/target.json', (error, topoData) => {
   var networks = new Networks(topoData)
-  console.log(networks)
+  console.log("networks: ", networks)
+  console.log("graphNodes: ", networks.makeGraphNodes())
+  console.log("graphLinks: ", networks.makeGraphLinks())
 })
