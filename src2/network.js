@@ -1,16 +1,19 @@
 'use strict'
 
+import {BaseContainer} from './base'
 import {Node} from './node'
 import {Link} from './link'
 
 class SupportingNetwork {
-  constructor(data) {
+  constructor (data) {
     this.networkRef = data['network-ref']
+    this.refPath = this.networkRef
   }
 }
 
-export class Network {
-  constructor(data, nwNum) {
+export class Network extends BaseContainer {
+  constructor (data, nwNum) {
+    super(data)
     this.networkTypes = data['network-types']
     this.name = data['network-id'] // name string
     this.id = nwNum * 10000 // integer
@@ -30,48 +33,55 @@ export class Network {
         return new Link(d, this.path)
       })
     }
+
+    this.supportingNetworks = []
+    if (data['supporting-network']) {
+      this.supportingNetworks = data['supporting-network'].map((d) => {
+        return new SupportingNetwork(d)
+      })
+    }
   }
 
-  makeGraphNodesAsNode() {
+  makeGraphNodesAsNode () {
     return this.nodes.map((node) => {
       return node.graphNode()
     })
   }
 
-  makeGraphNodesAsTp() {
+  makeGraphNodesAsTp () {
     var tps = this.nodes.map((node) => {
       return node.termPoints.map((tp) => {
         return tp.graphNode()
       })
     })
-    return Array.prototype.concat.apply([], tps) // flatten
+    return this.flatten(tps)
   }
 
-  makeGraphNodes() {
-    var gNodes = [this.makeGraphNodesAsNode(), this.makeGraphNodesAsTp()]
-    return Array.prototype.concat.apply([], gNodes) // flatten
+  makeGraphNodes () {
+    var nodes = [this.makeGraphNodesAsNode(), this.makeGraphNodesAsTp()]
+    return this.flatten(nodes)
   }
 
-  makeGraphLinks() {
-    var gLinks = this.links.map((link) => {
+  makeGraphLinks () {
+    var links = this.links.map((link) => {
       return link.graphLink()
     })
-    var gLinksNodeTp = this.nodes.map((node) => {
+    var linksNodeTp = this.nodes.map((node) => {
       return node.termPoints.map((tp) => {
         return tp.graphLink()
       })
     })
-    gLinksNodeTp = Array.prototype.concat.apply([], gLinksNodeTp) // flatten
-    return Array.prototype.concat.apply([], [gLinks, gLinksNodeTp]) // flatten
+    linksNodeTp = this.flatten(linksNodeTp)
+    return this.flatten([links, linksNodeTp])
   }
 
-  findNodeById(id) {
+  findNodeById (id) {
     return this.nodes.find((d) => {
       return d.id === id
     })
   }
 
-  findNodeByPath(path) {
+  findNodeByPath (path) {
     return this.nodes.find((d) => {
       return d.path === path
     })

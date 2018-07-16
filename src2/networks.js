@@ -1,26 +1,28 @@
 'use strict'
 
+import {BaseContainer} from './base'
 import {Network} from './network'
 
-export class Networks {
-  constructor(topoData) {
+export class Networks extends BaseContainer {
+  constructor (topoData) {
+    super(topoData)
     var nwKey = 'ietf-network:networks' // alias
     this.networks = topoData[nwKey].network.map((nw, nwNum) => {
-        return new Network(nw, nwNum + 1)
-      })
+      return new Network(nw, nwNum + 1)
+    })
   }
 
-  makeGraphNodes() {
+  makeGraphNodes () {
     var nodes = this.networks.map((nw) => {
       return nw.makeGraphNodes()
     })
-    return Array.prototype.concat.apply([], nodes) // flatten
+    return this.flatten(nodes)
   }
 
-  makeGraphLinks() {
+  makeGraphLinks () {
     var links = this.networks.map((nw) => {
       return nw.makeGraphLinks()
     })
-    return Array.prototype.concat.apply([], links) // flatten
+    return this.flatten(links)
   }
 }

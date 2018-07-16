@@ -1,7 +1,7 @@
 'use strict'
 
 class SupportingTermPoint {
-  constructor(data) {
+  constructor (data) {
     this.networkRef = data['network-ref']
     this.nodeRef = data['node-ref']
     this.tpRef = data['tp-ref']
@@ -10,7 +10,7 @@ class SupportingTermPoint {
 }
 
 export class TermPoint {
-  constructor(data, nodePath, nodeId, tpNum) {
+  constructor (data, nodePath, nodeId, tpNum) {
     this.name = data['tp-id'] // name string
     this.id = nodeId + tpNum
     this.parentPath = nodePath
@@ -25,17 +25,17 @@ export class TermPoint {
     }
   }
 
-  graphNode() {
+  graphNode () {
     return {
       'type': 'tp',
       'name': this.name,
       'id': this.id,
       'path': this.path,
-      'children': "" // TODO
+      'children': '' // TODO
     }
   }
 
-  graphLink() {
+  graphLink () {
     var pathList = this.parentPath.split('/')
     var nodeName = pathList.pop()
     var linkName = [nodeName, this.name].join(',')
@@ -44,8 +44,7 @@ export class TermPoint {
       'source_path': this.parentPath,
       'target_path': this.path,
       'name': linkName,
-      'path': [pathList, linkName].join('/'),
+      'path': [pathList, linkName].join('/')
     }
   }
-
 }

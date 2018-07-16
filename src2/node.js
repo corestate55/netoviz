@@ -3,19 +3,19 @@
 import {TermPoint} from './term-points'
 
 class SupportingNode {
-  constructor(data) {
+  constructor (data) {
     this.networkRef = data['network-ref']
     this.nodeRef = data['node-ref']
     this.refPath = [this.networkRef, this.nodeRef].join('/')
   }
 
-  refPath() {
+  refPath () {
     return [this.networkRef, this.nodeRef].join('/')
   }
 }
 
 export class Node {
-  constructor(data, nwPath, nwId, nodeNum) {
+  constructor (data, nwPath, nwId, nodeNum) {
     this.name = data['node-id'] // name string
     this.id = nwId + nodeNum * 100
     this.parentPath = nwPath
@@ -30,20 +30,20 @@ export class Node {
     }
 
     this.supportingNodes = []
-    if (data['supporting-node'] ) {
+    if (data['supporting-node']) {
       this.supportingNodes = data['supporting-node'].map((d) => {
         return new SupportingNode(d)
       })
     }
   }
 
-  graphNode() {
+  graphNode () {
     return {
       'type': 'node',
       'name': this.name,
       'id': this.id,
       'path': this.path,
-      'children': "" // TODO
+      'children': '' // TODO
     }
   }
 }
