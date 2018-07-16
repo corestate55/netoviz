@@ -19,10 +19,10 @@ rect.selectedchildren {
     fill: #FFC3CE;
 }
 rect.selectedparents {
-    fill: #6B824A;
+    fill: coral;
 }
 rect.selected {
-    fill: coral;
+    fill: #6B824A;
 }
 
 circle {
@@ -34,10 +34,10 @@ circle.selectedchildren {
     fill: #FFC3CE;
 }
 circle.selectedparents {
-    fill: #6B824A;
+    fill: coral;
 }
 circle.selected {
-    fill: coral;
+    fill: #6B824A;
 }
 
 g.link {
@@ -48,4 +48,8 @@ g.link {
 .selectready {
     stroke: coral;
     stroke-width: 4px;
+}
+text.selectready { /* clear button */
+    fill: coral;
+    stroke-width: 1px;
 }

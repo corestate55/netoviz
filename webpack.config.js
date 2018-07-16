@@ -5,7 +5,7 @@ module.exports = {
         contentBase: 'dist',
         open: true,
         historyApiFallback: true,
-        watchOptions: { aggregateTimeout: 300, poll: 1000 },
+        watchOptions: { aggregateTimeout: 500, poll: 2000 },
         headers: {
             "Access-Control-Allow-Origin": "*"
         }

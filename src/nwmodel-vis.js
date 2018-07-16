@@ -1,11 +1,11 @@
 'use strict'
 
 import * as d3 from 'd3'
-import {makeNodeData} from './nwmodel-assemble'
-import {makeAllGraphNodes, findGraphObjByPath} from './nwmodel-util'
+import * as nwmAsm from './nwmodel-assemble'
+import * as nwmUtil from './nwmodel-util'
 
 function drawGraphs (graphs) {
-  var allGraphNodes = makeAllGraphNodes(graphs)
+  var allGraphNodes = nwmUtil.makeAllGraphNodes(graphs)
 
   // highlight selected node
   function highlightNodeByPath (direction, path) {
@@ -40,15 +40,13 @@ function drawGraphs (graphs) {
       console.log('....', direction, path)
       highlightNodeByPath(direction, path)
       // recursive search
-      var node = findGraphObjByPath(path, allGraphNodes)
+      var node = nwmUtil.findGraphObjByPath(path, allGraphNodes)
       if (node[direction]) {
         node[direction].split(',').forEach(function (d) {
           findSupportingObj(direction, d)
         })
       }
     }
-    // clear all at first
-    clearHighlight()
     // highlight selected object and its children/parents
     var path = d.getAttribute('id')
     console.log('highlight_top: ', path)
@@ -59,7 +57,7 @@ function drawGraphs (graphs) {
 
   // draw each layer
   for (var nwName in graphs) {
-    drawGraph(nwName, graphs[nwName], highlightNode)
+    drawGraph(nwName, graphs[nwName], highlightNode, clearHighlight)
   }
 }
 
@@ -82,6 +80,15 @@ function makeNetworkLayer (nwName, width, height) {
     .attr('class', 'network')
 }
 
+function makeClearButton (nwLayer) {
+  return nwLayer.append('g')
+    .attr('class', 'clearbutton')
+    .append('text')
+    .attr('x', 10)
+    .attr('y', 20)
+    .text('[clear all selection/highlight]')
+}
+
 function makeLinkObjects (nwLayer, links) {
   return nwLayer.append('g')
     .attr('class', 'link')
@@ -92,7 +99,7 @@ function makeLinkObjects (nwLayer, links) {
     .attr('id', function (d) { return d.path })
 }
 
-function makeTpObjects (nwLayer, nodes, highlightNode) {
+function makeTpObjects (nwLayer, nodes) {
   return nwLayer.append('g')
     .attr('class', 'tp')
     .selectAll('circle')
@@ -102,7 +109,7 @@ function makeTpObjects (nwLayer, nodes, highlightNode) {
     .attr('id', function (d) { return d.path })
 }
 
-function makeNodeObjects (nwLayer, nodes, highlightNode) {
+function makeNodeObjects (nwLayer, nodes) {
   return nwLayer.append('g')
     .attr('class', 'node')
     .selectAll('rect')
@@ -123,7 +130,7 @@ function makeLabelObjects (nwLayer, nodes) {
     .text(function (d) { return d.name })
 }
 
-function drawGraph (nwName, graph, highlightNode) {
+function drawGraph (nwName, graph, highlightNode, clearHighlight) {
   var graphSize = graph.nodes.length
   // small
   var width = 400
@@ -154,6 +161,11 @@ function drawGraph (nwName, graph, highlightNode) {
   }
 
   var nwLayer = makeNetworkLayer(nwName, width, height)
+  var clearBtn = makeClearButton(nwLayer)
+  clearBtn
+    .on('click', clearHighlight)
+    .on('mouseover', function () { mouseOver(this) })
+    .on('mouseout', function () { mouseOut(this) })
   var link = makeLinkObjects(nwLayer, graph.links)
   var tp = makeTpObjects(nwLayer, graph.nodes)
   setEventCallBack(tp)
@@ -263,5 +275,5 @@ export function runNetworkModelVis (error, topoData) {
   if (error) {
     throw error
   }
-  drawGraphs(makeNodeData(topoData))
+  drawGraphs(nwmAsm.makeNodeData(topoData))
 }

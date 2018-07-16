@@ -1,10 +1,6 @@
 'use strict'
 
-import {
-  graphObjId, nodeObjIdFromTpObjId, graphObjPath,
-  findGraphObjByPath, findGraphObjById,
-  makeAllGraphNodes
-} from './nwmodel-util'
+import * as nwmUtil from './nwmodel-util'
 
 function makeTpChildrenFromSupportingTp (tp) {
   var stpKey = 'supporting-termination-point' // alias
@@ -12,7 +8,7 @@ function makeTpChildrenFromSupportingTp (tp) {
     return []
   }
   return tp[stpKey].map(function (stp) {
-    return graphObjPath(
+    return nwmUtil.graphObjPath(
       stp['network-ref'], stp['node-ref'], stp['tp-ref']
     )
   })
@@ -28,15 +24,15 @@ function makeGraphTpsFromTopoTps (nwNum, nwName, nodeNum, node) {
   return node[tpKey].map(function (tp, tpNum) {
     // child node for "tp"
     // It always has THIS node (which owns THIS tp)
-    var tpChildPaths = [graphObjPath(nwName, node['node-id'])].concat(
+    var tpChildPaths = [nwmUtil.graphObjPath(nwName, node['node-id'])].concat(
       makeTpChildrenFromSupportingTp(tp)
     )
     // "tp" node (for drawing)
     return {
       'type': 'tp',
       'name': tp['tp-id'],
-      'id': graphObjId(nwNum, nodeNum, tpNum + 1),
-      'path': graphObjPath(nwName, node['node-id'], tp['tp-id']),
+      'id': nwmUtil.graphObjId(nwNum, nodeNum, tpNum + 1),
+      'path': nwmUtil.graphObjPath(nwName, node['node-id'], tp['tp-id']),
       'children': tpChildPaths.join(',')
     }
   })
@@ -47,7 +43,7 @@ function makeNodeChildrenFromSupportingNode (node) {
     return []
   }
   return node['supporting-node'].map(function (snode) {
-    return graphObjPath(snode['network-ref'], snode['node-ref'])
+    return nwmUtil.graphObjPath(snode['network-ref'], snode['node-ref'])
   })
 }
 
@@ -61,8 +57,8 @@ function makeGraphNodesFromTopoNodes (nwNum, nwName, topoNodes) {
     graphNodes.push({
       'type': 'node',
       'name': node['node-id'],
-      'id': graphObjId(nwNum, nodeNum, 0),
-      'path': graphObjPath(nwName, node['node-id']),
+      'id': nwmUtil.graphObjId(nwNum, nodeNum, 0),
+      'path': nwmUtil.graphObjPath(nwName, node['node-id']),
       'children': nodeChildPaths.join(',') // lower layer
     })
     // "tp" node (for drawing)
@@ -81,11 +77,11 @@ function makeGraphLinksFromTopoLinks (nwName, topoLinks, graphNodes) {
   topoLinks.forEach(function (link) {
     var src = link.source
     var dst = link.destination
-    var sourceId = findGraphObjByPath(
-      graphObjPath(nwName, src['source-node'], src['source-tp']),
+    var sourceId = nwmUtil.findGraphObjByPath(
+      nwmUtil.graphObjPath(nwName, src['source-node'], src['source-tp']),
       graphNodes).id
-    var targetId = findGraphObjByPath(
-      graphObjPath(nwName, dst['dest-node'], dst['dest-tp']),
+    var targetId = nwmUtil.findGraphObjByPath(
+      nwmUtil.graphObjPath(nwName, dst['dest-node'], dst['dest-tp']),
       graphNodes).id
 
     graphLinks.push({
@@ -93,22 +89,22 @@ function makeGraphLinksFromTopoLinks (nwName, topoLinks, graphNodes) {
       'source_id': sourceId,
       'target_id': targetId,
       'name': link['link-id'],
-      'path': graphObjPath(nwName, link['link-id'])
+      'path': nwmUtil.graphObjPath(nwName, link['link-id'])
     })
   })
   // node-tp link
   graphNodes
     .filter(function (d) { return d.type === 'tp' })
     .forEach(function (tp) {
-      var nodeId = nodeObjIdFromTpObjId(tp.id)
-      var nodeName = findGraphObjById(nodeId, graphNodes).name
+      var nodeId = nwmUtil.nodeObjIdFromTpObjId(tp.id)
+      var nodeName = nwmUtil.findGraphObjById(nodeId, graphNodes).name
       var tpName = [nodeName, tp.name].join(',')
       graphLinks.push({
         'type': 'node-tp',
         'source_id': nodeId,
         'target_id': tp.id,
         'name': tpName,
-        'path': graphObjPath(nwName, nodeName, tpName)
+        'path': nwmUtil.graphObjPath(nwName, nodeName, tpName)
       })
     })
   return graphLinks
@@ -122,12 +118,12 @@ function concatNodeParents (child, path) {
 }
 
 function makeParentRef (graphs) {
-  var allGraphNodes = makeAllGraphNodes(graphs)
+  var allGraphNodes = nwmUtil.makeAllGraphNodes(graphs)
   for (var nwName in graphs) {
     graphs[nwName].nodes.forEach(function (node) {
       if (node.children) {
         node.children.split(',').forEach(function (cPath) {
-          var child = findGraphObjByPath(cPath, allGraphNodes)
+          var child = nwmUtil.findGraphObjByPath(cPath, allGraphNodes)
           child.parents = concatNodeParents(child, node.path)
         })
       }

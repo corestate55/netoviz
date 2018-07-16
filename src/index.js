@@ -5,7 +5,7 @@ function drawLegend () {
   var legend = d3 // .select(document.body)
     .select('body')
     .append('div')
-    .append('class', 'legend')
+    .attr('id', 'legend')
     .append('svg')
     .attr('width', 500)
     .attr('height', 60)
