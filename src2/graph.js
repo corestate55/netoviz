@@ -1,15 +1,15 @@
 'use strict'
 
 export class Graph {
-  constructor(nw) {
+  constructor (nw) {
     this.name = nw.name
     this.nodes = nw.makeGraphNodes()
     this.links = nw.makeGraphLinks()
   }
 }
 
-export class graphNode {
-  constructor(data) {
+export class GraphNode {
+  constructor (data) {
     this.type = data.type
     this.name = data.name
     this.id = data.id
@@ -18,28 +18,28 @@ export class graphNode {
     this.parents = data.parents || [] // array of path(string)
   }
 
-  addParent(path) {
+  addParent (path) {
     this.parents.push(path)
   }
 
-  childrenStr() {
+  childrenStr () {
     return this.children.join(',')
   }
 
-  parentsStr() {
+  parentsStr () {
     return this.parents.join(',')
   }
 }
 
-export class graphLink {
-  constructor(data) {
-    this.type = data.type
-    this.source_path = data.source_path
-    this.target_path = data.target_path
-    // if source/target id === 0, then error
-    this.source_id = data.source_id || 0
-    this.target_id = data.target_id || 0
+export class GraphLink {
+  constructor (data) {
     this.name = data.name
     this.path = data.path
+    this.type = data.type
+    this.sourcePath = data.sourcePath
+    this.targetPath = data.targetPath
+    // Link termination point ID (0 means error...)
+    this.sourceId = data.sourceId || 0
+    this.targetId = data.targetId || 0
   }
 }

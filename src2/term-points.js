@@ -1,6 +1,6 @@
 'use strict'
 
-import {graphNode, graphLink} from './graph'
+import {GraphNode, GraphLink} from './graph'
 
 class SupportingTermPoint {
   constructor (data) {
@@ -36,7 +36,7 @@ export class TermPoint {
   }
 
   graphNode () {
-    return new graphNode({
+    return new GraphNode({
       'type': 'tp',
       'name': this.name,
       'id': this.id,
@@ -49,10 +49,10 @@ export class TermPoint {
     var pathList = this.parentPath.split('/')
     var nodeName = pathList.pop()
     var linkName = [nodeName, this.name].join(',')
-    return new graphLink({
+    return new GraphLink({
       'type': 'node-tp',
-      'source_path': this.parentPath,
-      'target_path': this.path,
+      'sourcePath': this.parentPath,
+      'targetPath': this.path,
       'name': linkName,
       'path': [pathList, linkName].join('/')
     })

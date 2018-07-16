@@ -4,7 +4,7 @@ import {BaseContainer} from './base'
 import {Graph} from './graph'
 
 export class Graphs extends BaseContainer {
-  constructor(networks) {
+  constructor (networks) {
     super()
     this.graphs = networks.networks.map((nw) => {
       return new Graph(nw)
@@ -14,18 +14,18 @@ export class Graphs extends BaseContainer {
     this.resolveLinkRef()
   }
 
-  allNodes() {
+  allNodes () {
     var allNodes = this.graphs.map((graph) => {
       return graph.nodes
     })
     return this.flatten(allNodes)
   }
 
-  findNodeByPath(path) {
+  findNodeByPath (path) {
     return this.allNodes.find((d) => { return d.path === path })
   }
 
-  makeParentRef() {
+  makeParentRef () {
     this.allNodes.forEach((node) => {
       if (node.children) {
         node.children.forEach((path) => {
@@ -38,14 +38,13 @@ export class Graphs extends BaseContainer {
     })
   }
 
-  resolveLinkRef() {
+  resolveLinkRef () {
     this.graphs.forEach((graph) => {
       graph.links.forEach((link) => {
-        var source = this.findNodeByPath(link.source_path)
-        var target = this.findNodeByPath(link.target_path)
-        // TODO error check (when not found?)
-        link.source_id = source.id
-        link.target_id = target.id
+        var source = this.findNodeByPath(link.sourcePath)
+        var target = this.findNodeByPath(link.targetPath)
+        link.sourceId = source.id
+        link.targetId = target.id
       })
     })
   }

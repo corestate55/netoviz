@@ -1,7 +1,7 @@
 'use strict'
 
 import {TermPoint} from './term-points'
-import {graphNode} from './graph'
+import {GraphNode} from './graph'
 
 class SupportingNode {
   constructor (data) {
@@ -34,6 +34,10 @@ export class Node {
     }
   }
 
+  findTpByPath (path) {
+    return this.termPoints.find((d) => { return d.path === path })
+  }
+
   makeChildren () {
     return this.supportingNodes.map((sn) => {
       return sn.refPath
@@ -41,7 +45,7 @@ export class Node {
   }
 
   graphNode () {
-    return new graphNode({
+    return new GraphNode({
       'type': 'node',
       'name': this.name,
       'id': this.id,
