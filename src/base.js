@@ -2,7 +2,6 @@
 
 export class BaseContainer {
   constructor () {
-    this.name = ''
   }
 
   flatten (list) {

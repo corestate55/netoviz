@@ -21,16 +21,14 @@ export class TermPoint {
     this.supportingTermPoints = []
     var stpKey = 'supporting-termination-point' // alias
     if (data[stpKey]) {
-      this.supportingTermPoints = data[stpKey].map((d) => {
-        return new SupportingTermPoint(d)
-      })
+      this.supportingTermPoints = data[stpKey].map(
+        d => new SupportingTermPoint(d)
+      )
     }
   }
 
   makeChildren () {
-    var children = this.supportingTermPoints.map((stp) => {
-      return stp.refPath
-    })
+    var children = this.supportingTermPoints.map(stp => stp.refPath)
     children.unshift(this.parentPath)
     return children
   }

@@ -18,35 +18,35 @@ export class ForceSimulator {
       return 2 * x
     }
 
-    function ticked() {
+    function ticked () {
       data.link
-        .attr('x1', (d) => { return d.source.x })
-        .attr('y1', (d) => { return d.source.y })
-        .attr('x2', (d) => { return d.target.x })
-        .attr('y2', (d) => { return d.target.y })
+        .attr('x1', d => d.source.x)
+        .attr('y1', d => d.source.y)
+        .attr('x2', d => d.target.x)
+        .attr('y2', d => d.target.y)
 
       data.tp
         .attr('r', tpSize)
-        .attr('cx', (d) => { return d.x })
-        .attr('cy', (d) => { return d.y })
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
 
       data.node
         .attr('width', nodeSize)
         .attr('height', nodeSize)
-        .attr('x', (d) => { return d.x - nodeSize / 2 })
-        .attr('y', (d) => { return d.y - nodeSize / 2 })
+        .attr('x', d => d.x - nodeSize / 2)
+        .attr('y', d => d.y - nodeSize / 2)
         .attr('rx', nodeSize / 8)
         .attr('ry', nodeSize / 8)
 
       data.label
-        .attr('x', (d) => { return d.x })
-        .attr('y', (d) => { return d.y })
+        .attr('x', d => d.x)
+        .attr('y', d => d.y)
     }
 
     this.simulation = d3.forceSimulation()
       .force('link',
         d3.forceLink()
-          .id((d) => { return d.id })
+          .id(d => d.id)
           .distance(linkDistance)
           .iterations(8)
       )
@@ -75,14 +75,12 @@ export class ForceSimulator {
       d.fy = d.y
     }
 
-    this.dragged = function (d) {
-      // console.log("dragged: ", d);
+    this.dragged = (d) => {
       d.fx = d3.event.x
       d.fy = d3.event.y
     }
 
     this.dragended = (d) => {
-      // console.log("dragended: ", d);
       if (!d3.event.active) {
         this.simulation.alphaTarget(0)
       }

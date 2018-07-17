@@ -26,9 +26,9 @@ export class Link {
 
     this.supportingLinks = []
     if (data['supporting-link']) {
-      this.supportingLinks = data['supporting-link'].map((d) => {
-        return new SupportingLink(d)
-      })
+      this.supportingLinks = data['supporting-link'].map(
+        d => new SupportingLink(d)
+      )
     }
   }
 

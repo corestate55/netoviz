@@ -29,30 +29,24 @@ export class Network extends BaseContainer {
     this.links = []
     var linkKey = 'ietf-network-topology:link' // alias
     if (data[linkKey]) {
-      this.links = data[linkKey].map((d) => {
-        return new Link(d, this.path)
-      })
+      this.links = data[linkKey].map(d => new Link(d, this.path))
     }
 
     this.supportingNetworks = []
     if (data['supporting-network']) {
-      this.supportingNetworks = data['supporting-network'].map((d) => {
-        return new SupportingNetwork(d)
-      })
+      this.supportingNetworks = data['supporting-network'].map(
+        d => new SupportingNetwork(d)
+      )
     }
   }
 
   makeGraphNodesAsNode () {
-    return this.nodes.map((node) => {
-      return node.graphNode()
-    })
+    return this.nodes.map(node => node.graphNode())
   }
 
   makeGraphNodesAsTp () {
     var tps = this.nodes.map((node) => {
-      return node.termPoints.map((tp) => {
-        return tp.graphNode()
-      })
+      return node.termPoints.map(tp => tp.graphNode())
     })
     return this.flatten(tps)
   }
@@ -63,13 +57,9 @@ export class Network extends BaseContainer {
   }
 
   makeGraphLinks () {
-    var links = this.links.map((link) => {
-      return link.graphLink()
-    })
+    var links = this.links.map(link => link.graphLink())
     var linksNodeTp = this.nodes.map((node) => {
-      return node.termPoints.map((tp) => {
-        return tp.graphLink()
-      })
+      return node.termPoints.map(tp => tp.graphLink())
     })
     linksNodeTp = this.flatten(linksNodeTp)
     return this.flatten([links, linksNodeTp])

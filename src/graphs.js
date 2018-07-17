@@ -8,23 +8,19 @@ export class Graphs extends BaseContainer {
   constructor (topoData) {
     super()
     this.topoModel = new Networks(topoData)
-    this.graphs = this.topoModel.networks.map((nw) => {
-      return new Graph(nw)
-    })
+    this.graphs = this.topoModel.networks.map(nw => new Graph(nw))
     this.allNodes = this.allNodes()
     this.makeParentRef()
     this.resolveLinkRef()
   }
 
   allNodes () {
-    var allNodes = this.graphs.map((graph) => {
-      return graph.nodes
-    })
+    var allNodes = this.graphs.map(graph => graph.nodes)
     return this.flatten(allNodes)
   }
 
   findNodeByPath (path) {
-    return this.allNodes.find((d) => { return d.path === path })
+    return this.allNodes.find(d => d.path === path)
   }
 
   makeParentRef () {

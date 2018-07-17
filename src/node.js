@@ -28,20 +28,18 @@ export class Node {
 
     this.supportingNodes = []
     if (data['supporting-node']) {
-      this.supportingNodes = data['supporting-node'].map((d) => {
-        return new SupportingNode(d)
-      })
+      this.supportingNodes = data['supporting-node'].map(
+        d => new SupportingNode(d)
+      )
     }
   }
 
   findTpByPath (path) {
-    return this.termPoints.find((d) => { return d.path === path })
+    return this.termPoints.find(d => d.path === path)
   }
 
   makeChildren () {
-    return this.supportingNodes.map((sn) => {
-      return sn.refPath
-    })
+    return this.supportingNodes.map(sn => sn.refPath)
   }
 
   graphNode () {

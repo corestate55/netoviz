@@ -11,9 +11,7 @@ export class GraphVisualizer extends Graphs {
 
   drawGraphs () {
     // entrypoint: draw each layer
-    this.graphs.forEach((graph) => {
-      this.drawGraph(graph)
-    })
+    this.graphs.forEach(graph => this.drawGraph(graph))
   }
 
   makeNetworkLayer (nwName, width, height) {
@@ -43,27 +41,27 @@ export class GraphVisualizer extends Graphs {
       .data(links)
       .enter()
       .append('line')
-      .attr('id', (d) => { return d.path })
+      .attr('id', d => d.path)
   }
 
   makeTpObjects (nwLayer, nodes) {
     return nwLayer.append('g')
       .attr('class', 'tp')
       .selectAll('circle')
-      .data(nodes.filter((d) => { return d.type === 'tp' }))
+      .data(nodes.filter(d => d.type === 'tp'))
       .enter()
       .append('circle')
-      .attr('id', (d) => { return d.path })
+      .attr('id', d => d.path)
   }
 
   makeNodeObjects (nwLayer, nodes) {
     return nwLayer.append('g')
       .attr('class', 'node')
       .selectAll('rect')
-      .data(nodes.filter((d) => { return d.type === 'node' }))
+      .data(nodes.filter(d => d.type === 'node'))
       .enter()
       .append('rect')
-      .attr('id', (d) => { return d.path })
+      .attr('id', d => d.path)
   }
 
   makeLabelObjects (nwLayer, nodes) {
@@ -74,7 +72,7 @@ export class GraphVisualizer extends Graphs {
       .enter()
       .append('text')
       .attr('class', 'label')
-      .text((d) => { return d.name })
+      .text(d => d.name)
   }
 
   drawGraph (graph) {
@@ -91,7 +89,7 @@ export class GraphVisualizer extends Graphs {
       width = 800
       height = 800
     }
-    graph.links.forEach((d) => { // key alias
+    graph.links.forEach((d) => { // key rename
       d.source = d.sourceId
       d.target = d.targetId
     })
