@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import {GraphVisualizer} from './nwmodel-vis'
+import {GraphVisualizer} from './visualizer'
 
 function drawLegend () {
   var legend = d3 // .select(document.body)
@@ -61,5 +61,6 @@ d3.json('http://localhost:8080/model/target.json', (error, topoData) => {
   // for debug
   console.log('topology : ', visualizer.topoModel)
   console.log('graphs   : ', visualizer.graphs)
+  // draw
   visualizer.drawGraphs()
 })

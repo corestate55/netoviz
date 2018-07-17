@@ -2,6 +2,7 @@
 
 import * as d3 from 'd3'
 import {Graphs} from './graphs'
+import {ForceSimulator} from './force-simulator'
 
 export class GraphVisualizer extends Graphs {
   constructor (topoData) {
@@ -145,135 +146,51 @@ export class GraphVisualizer extends Graphs {
       findSupportingObj('clicked', path) // dummy direction
     }
 
+    var nwLayer = this.makeNetworkLayer(graph.name, width, height)
+    var clearBtn = this.makeClearButton(nwLayer)
+    var link = this.makeLinkObjects(nwLayer, graph.links)
+    var tp = this.makeTpObjects(nwLayer, graph.nodes)
+    var node = this.makeNodeObjects(nwLayer, graph.nodes)
+    var label = this.makeLabelObjects(nwLayer, graph.nodes)
+
+    var simulator = new ForceSimulator({
+      'height': height,
+      'width': width,
+      'graph': graph,
+      'link': link,
+      'tp': tp,
+      'node': node,
+      'label': label})
+
+    // set event callback for tp/node
+    setEventCallBack(tp)
+    setEventCallBack(node)
+
+    function setEventCallBack (obj) {
+      // use `function() {}` NOT arrow-function `() => {}`.
+      // arrow-function bind `this` according to decrared position
+      obj
+        .on('click', function () { highlightNode(this) })
+        .on('mouseover', function () { mouseOver(this) })
+        .on('mouseout', function () { mouseOut(this) })
+        .call(d3.drag()
+          .on('start', simulator.dragstarted)
+          .on('drag', simulator.dragged)
+          .on('end', simulator.dragended))
+    }
+
+    // set event callback for clear button
+    clearBtn
+      .on('click', clearHighlight)
+      .on('mouseover', function () { mouseOver(this) }) // NOTICE: `this`
+      .on('mouseout', function () { mouseOut(this) })
+
     function mouseOver (element) {
       element.classList.add('selectready')
     }
 
     function mouseOut (element) {
       element.classList.remove('selectready')
-    }
-
-    function setEventCallBack (obj) {
-      // use `function() {}` NOT arrow function `() => {}`.
-      // arrow function bind `this` according to decrared position
-      obj
-        .on('click', function () { highlightNode(this) })
-        .on('mouseover', function () { mouseOver(this) })
-        .on('mouseout', function () { mouseOut(this) })
-        .call(d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended))
-    }
-
-    var nwLayer = this.makeNetworkLayer(graph.name, width, height)
-    var clearBtn = this.makeClearButton(nwLayer)
-    clearBtn
-      .on('click', clearHighlight)
-      .on('mouseover', function () { mouseOver(this) }) // NOTICE: `this`
-      .on('mouseout', function () { mouseOut(this) })
-    var link = this.makeLinkObjects(nwLayer, graph.links)
-    var tp = this.makeTpObjects(nwLayer, graph.nodes)
-    var node = this.makeNodeObjects(nwLayer, graph.nodes)
-    setEventCallBack(tp)
-    setEventCallBack(node)
-    var label = this.makeLabelObjects(nwLayer, graph.nodes)
-
-    var simulation = d3.forceSimulation()
-      .force('link',
-        d3.forceLink()
-          .id((d) => { return d.id })
-          .distance(linkDistance)
-          .strength(linkStrength)
-          .iterations(8)
-      )
-      .force('collide',
-        d3.forceCollide()
-          .radius(nodeCollideRadius)
-          .strength(1.0) // collision not allowed
-          .iterations(8)
-      )
-      .force('charge', d3.forceManyBody().strength(-50))
-      .force('center', d3.forceCenter(width / 2, height / 2))
-
-    simulation
-      .nodes(graph.nodes)
-      .on('tick', ticked)
-      .force('link')
-      .links(graph.links)
-
-    var tpSize = 10 // tp circle radius
-    var nodeSize = 40 // node width/height
-
-    function nodeCollideRadius (d) {
-      if (d.type === 'node') {
-        return 1.2 * nodeSize * 3 / 4
-      }
-      return 1.2 * tpSize
-    }
-
-    function linkDistance (d) {
-      // ?? cannot use outer scope variable
-      var x = 1.2 * 30 // 1.2 * nodeSize * 3 / 4
-      if (d.type === 'node-tp') {
-        return x
-      }
-      return 2 * x
-    }
-
-    function linkStrength (d) {
-      if (d.type === 'node-tp') {
-        return 1.0
-      }
-      return 0.1
-    }
-
-    function dragstarted (d) {
-      if (!d3.event.active) {
-        simulation.alphaTarget(0.3).restart()
-      }
-      d.fx = d.x
-      d.fy = d.y
-    }
-
-    function dragged (d) {
-      // console.log("dragged: ", d);
-      d.fx = d3.event.x
-      d.fy = d3.event.y
-    }
-
-    function dragended (d) {
-      // console.log("dragended: ", d);
-      if (!d3.event.active) {
-        simulation.alphaTarget(0)
-      }
-      d.fx = null
-      d.fy = null
-    }
-
-    function ticked () {
-      link
-        .attr('x1', (d) => { return d.source.x })
-        .attr('y1', (d) => { return d.source.y })
-        .attr('x2', (d) => { return d.target.x })
-        .attr('y2', (d) => { return d.target.y })
-
-      tp
-        .attr('r', tpSize)
-        .attr('cx', (d) => { return d.x })
-        .attr('cy', (d) => { return d.y })
-
-      node
-        .attr('width', nodeSize)
-        .attr('height', nodeSize)
-        .attr('x', (d) => { return d.x - nodeSize / 2 })
-        .attr('y', (d) => { return d.y - nodeSize / 2 })
-        .attr('rx', nodeSize / 8)
-        .attr('ry', nodeSize / 8)
-
-      label
-        .attr('x', (d) => { return d.x })
-        .attr('y', (d) => { return d.y })
     }
   }
 }
