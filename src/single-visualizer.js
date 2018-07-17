@@ -91,7 +91,7 @@ export class SingleGraphVisualizer {
   }
 
   renameLinkKey () {
-    this.graph.links.forEach((d) => {
+    this.graph.links.forEach(d => {
       d.source = d.sourceId
       d.target = d.targetId
     })
@@ -124,7 +124,7 @@ export class SingleGraphVisualizer {
 
   setEventCallBack (objs) {
     var self = this // alias to use event callback closure
-    objs.forEach((obj) => {
+    objs.forEach(obj => {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
@@ -141,9 +141,9 @@ export class SingleGraphVisualizer {
   clearHighlight () {
     // clear all highlighted object
     var element = document.getElementById('visualizer');
-    ['selectedchildren', 'selectedparents', 'selected'].forEach((d) => {
+    ['selectedchildren', 'selectedparents', 'selected'].forEach(d => {
       var selectedElements = element.getElementsByClassName(d)
-      Array.from(selectedElements).forEach((element) => {
+      Array.from(selectedElements).forEach(element => {
         element.classList.remove(d)
       })
     })

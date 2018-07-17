@@ -19,9 +19,9 @@ export class GraphVisualizer extends Graphs {
       } else if (direction === 'parents') {
         element.classList.add('selectedparents')
       } else {
-        ['selectedchildren', 'selectedparents'].forEach((d) => {
-          element.classList.remove(d)
-        })
+        ['selectedchildren', 'selectedparents'].forEach(
+          d => element.classList.remove(d)
+        )
         element.classList.add('selected')
       }
     }
@@ -36,9 +36,9 @@ export class GraphVisualizer extends Graphs {
         // recursive search
         var node = self.findNodeByPath(path)
         if (node[direction]) {
-          node[direction].forEach((d) => {
-            findSupportingObj(direction, d)
-          })
+          node[direction].forEach(
+            d => findSupportingObj(direction, d)
+          )
         }
       }
       // highlight selected object and its children/parents
@@ -50,8 +50,9 @@ export class GraphVisualizer extends Graphs {
     }
 
     // entrypoint: draw each layer
-    this.graphs.forEach((graph) => {
+    this.graphs.forEach(graph => {
       var sgv = new SingleGraphVisualizer(graph)
+      // handout operation through all layers
       sgv.setHighlightNodeCallback(highlightNode)
       sgv.draw()
     })

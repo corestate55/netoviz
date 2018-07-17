@@ -24,9 +24,9 @@ export class Graphs extends BaseContainer {
   }
 
   makeParentRef () {
-    this.allNodes.forEach((node) => {
+    this.allNodes.forEach(node => {
       if (node.children) {
-        node.children.forEach((path) => {
+        node.children.forEach(path => {
           var child = this.findNodeByPath(path)
           if (child) {
             child.addParent(node.path)
@@ -37,8 +37,8 @@ export class Graphs extends BaseContainer {
   }
 
   resolveLinkRef () {
-    this.graphs.forEach((graph) => {
-      graph.links.forEach((link) => {
+    this.graphs.forEach(graph => {
+      graph.links.forEach(link => {
         var source = this.findNodeByPath(link.sourcePath)
         var target = this.findNodeByPath(link.targetPath)
         link.sourceId = source.id

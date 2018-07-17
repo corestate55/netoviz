@@ -45,7 +45,7 @@ export class Network extends BaseContainer {
   }
 
   makeGraphNodesAsTp () {
-    var tps = this.nodes.map((node) => {
+    var tps = this.nodes.map(node => {
       return node.termPoints.map(tp => tp.graphNode())
     })
     return this.flatten(tps)
@@ -58,7 +58,7 @@ export class Network extends BaseContainer {
 
   makeGraphLinks () {
     var links = this.links.map(link => link.graphLink())
-    var linksNodeTp = this.nodes.map((node) => {
+    var linksNodeTp = this.nodes.map(node => {
       return node.termPoints.map(tp => tp.graphLink())
     })
     linksNodeTp = this.flatten(linksNodeTp)

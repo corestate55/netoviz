@@ -67,7 +67,7 @@ export class ForceSimulator {
     // event callbacks for node/tp object (mouse dragging)
     // notice use arrow-function `() => {}' NOT `function(){}`
     // TO BIND `this`
-    this.dragstarted = (d) => {
+    this.dragstarted = d => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0.3).restart()
       }
@@ -75,12 +75,12 @@ export class ForceSimulator {
       d.fy = d.y
     }
 
-    this.dragged = (d) => {
+    this.dragged = d => {
       d.fx = d3.event.x
       d.fy = d3.event.y
     }
 
-    this.dragended = (d) => {
+    this.dragended = d => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0)
       }
