@@ -1,12 +1,14 @@
 'use strict'
 
 import {BaseContainer} from './base'
+import {Networks} from './networks'
 import {Graph} from './graph'
 
 export class Graphs extends BaseContainer {
-  constructor (networks) {
+  constructor (topoData) {
     super()
-    this.graphs = networks.networks.map((nw) => {
+    this.topoModel = new Networks(topoData)
+    this.graphs = this.topoModel.networks.map((nw) => {
       return new Graph(nw)
     })
     this.allNodes = this.allNodes()

@@ -58,5 +58,8 @@ d3.json('http://localhost:8080/model/target.json', (error, topoData) => {
     throw error
   }
   var visualizer = new GraphVisualizer(topoData)
+  // for debug
+  console.log('topology : ', visualizer.topoModel)
+  console.log('graphs   : ', visualizer.graphs)
   visualizer.drawGraphs()
 })

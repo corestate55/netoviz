@@ -1,21 +1,16 @@
 'use strict'
 
 import * as d3 from 'd3'
-import {Networks} from './networks'
 import {Graphs} from './graphs'
 
-export class GraphVisualizer {
+export class GraphVisualizer extends Graphs {
   constructor (topoData) {
-    this.networks = new Networks(topoData)
-    this.graphs = new Graphs(this.networks)
-    // for debug
-    console.log('networks: ', this.networks)
-    console.log('graphs: ', this.graphs)
+    super(topoData)
   }
 
   drawGraphs () {
     // entrypoint: draw each layer
-    this.graphs.graphs.forEach((graph) => {
+    this.graphs.forEach((graph) => {
       this.drawGraph(graph)
     })
   }
@@ -135,7 +130,7 @@ export class GraphVisualizer {
         console.log('....', direction, path)
         highlightNodeByPath(direction, path)
         // recursive search
-        var node = self.graphs.findNodeByPath(path)
+        var node = self.findNodeByPath(path)
         if (node[direction]) {
           node[direction].forEach((d) => {
             findSupportingObj(direction, d)
