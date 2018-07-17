@@ -1,3 +1,5 @@
+'use strict'
+
 import * as d3 from 'd3'
 import {GraphVisualizer} from './visualizer'
 
@@ -29,11 +31,11 @@ function drawLegend () {
     .append('rect')
     .attr('width', objSize)
     .attr('height', objSize)
-    .attr('x', function (d, i) { return dp + (dp + objSize) * i })
+    .attr('x', (d, i) => dp + (dp + objSize) * i)
     .attr('y', dp)
     .attr('rx', objSize / 8)
     .attr('ry', objSize / 8)
-    .attr('class', function (d) { return d.class })
+    .attr('class', d => d.class)
   legend.selectAll('circle')
     .data(styles)
     .enter()
@@ -41,14 +43,14 @@ function drawLegend () {
     .attr('r', objSize / 4)
     .attr('cx', circleX)
     .attr('cy', objSize / 2)
-    .attr('class', function (d) { return d.class })
+    .attr('class', d => d.class)
   legend.selectAll('text')
     .data(styles)
     .enter()
     .append('text')
     .attr('x', circleX)
     .attr('y', objSize + dp)
-    .text(function (d) { return d.label })
+    .text(d => d.label)
 }
 
 // Entry point
