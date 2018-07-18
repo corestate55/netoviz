@@ -16,18 +16,11 @@ export class GraphNode {
     this.path = data.path
     this.children = data.children || [] // array of path(string)
     this.parents = data.parents || [] // array of path(string)
+    this.attribute = data.attribute || {}
   }
 
   addParent (path) {
     this.parents.push(path)
-  }
-
-  childrenStr () {
-    return this.children.join(',')
-  }
-
-  parentsStr () {
-    return this.parents.join(',')
   }
 }
 
@@ -41,5 +34,6 @@ export class GraphLink {
     // Link termination point ID (0 means error...)
     this.sourceId = data.sourceId || 0
     this.targetId = data.targetId || 0
+    this.attribute = data.attribute || {}
   }
 }

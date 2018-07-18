@@ -1,14 +1,20 @@
 'use strict'
 
-import {BaseContainer} from './base'
-import {Network} from './network'
+import {Network, L3Network} from './network'
 
-export class Networks extends BaseContainer {
+export class Networks {
   constructor (topoData) {
-    super()
     var nwKey = 'ietf-network:networks' // alias
     this.networks = topoData[nwKey].network.map((nw, nwNum) => {
-      return new Network(nw, nwNum + 1)
+      return this.newNetwork(nw, nwNum + 1)
     })
+  }
+
+  newNetwork (data, index) {
+    let nw = new Network(data, index)
+    if (nw.isTypeLayer3()) {
+      return new L3Network(data, index)
+    }
+    return nw
   }
 }

@@ -9,25 +9,25 @@ export class Graphs extends BaseContainer {
     super()
     this.topoModel = new Networks(topoData)
     this.graphs = this.topoModel.networks.map(nw => new Graph(nw))
-    this.allNodes = this.allNodes()
+    this.allGraphNodes = this.allGraphNodes()
     this.makeParentRef()
     this.resolveLinkRef()
   }
 
-  allNodes () {
-    var allNodes = this.graphs.map(graph => graph.nodes)
-    return this.flatten(allNodes)
+  allGraphNodes () {
+    var allGraphNodes = this.graphs.map(graph => graph.nodes)
+    return this.flatten(allGraphNodes)
   }
 
-  findNodeByPath (path) {
-    return this.allNodes.find(d => d.path === path)
+  findGraphNodeByPath (path) {
+    return this.allGraphNodes.find(d => d.path === path)
   }
 
   makeParentRef () {
-    this.allNodes.forEach(node => {
+    this.allGraphNodes.forEach(node => {
       if (node.children) {
         node.children.forEach(path => {
-          var child = this.findNodeByPath(path)
+          var child = this.findGraphNodeByPath(path)
           if (child) {
             child.addParent(node.path)
           } // TODO error check (when not found?)
@@ -39,8 +39,8 @@ export class Graphs extends BaseContainer {
   resolveLinkRef () {
     this.graphs.forEach(graph => {
       graph.links.forEach(link => {
-        var source = this.findNodeByPath(link.sourcePath)
-        var target = this.findNodeByPath(link.targetPath)
+        var source = this.findGraphNodeByPath(link.sourcePath)
+        var target = this.findGraphNodeByPath(link.targetPath)
         link.sourceId = source.id
         link.targetId = target.id
       })

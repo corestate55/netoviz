@@ -11,38 +11,44 @@ export class GraphVisualizer extends Graphs {
   drawGraphs () {
     var self = this // alias to use event callback closure
 
+    function clearElementHighlight (element) {
+      ['selectedchildren', 'selectedparents', 'selected'].forEach(
+        d => element.classList.remove(d)
+      )
+    }
+
     // highlight selected node
     function highlightNodeByPath (direction, path) {
       var element = document.getElementById(path)
+      clearElementHighlight(element)
       if (direction === 'children') {
         element.classList.add('selectedchildren')
       } else if (direction === 'parents') {
         element.classList.add('selectedparents')
       } else {
-        ['selectedchildren', 'selectedparents'].forEach(
-          d => element.classList.remove(d)
-        )
         element.classList.add('selected')
       }
     }
 
     // event callback
-    // find nodes to highlight via through *all* layers
-    function highlightNode (d) {
+    function highlightNode (element) {
       function findSupportingObj (direction, path) {
         // highlight DOM
         console.log('....', direction, path)
         highlightNodeByPath(direction, path)
-        // recursive search
-        var node = self.findNodeByPath(path)
+        // find nodes to highlight via through *all* layers
+        var node = self.findGraphNodeByPath(path)
         if (node[direction]) {
+          // search children/parent recursively
           node[direction].forEach(
             d => findSupportingObj(direction, d)
           )
+        } else {
+          console.log('attribute: ', node.attribute)
         }
       }
       // highlight selected object and its children/parents
-      var path = d.getAttribute('id')
+      var path = element.getAttribute('id')
       console.log('highlight_top: ', path)
       findSupportingObj('children', path)
       findSupportingObj('parents', path)

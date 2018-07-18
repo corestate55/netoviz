@@ -23,7 +23,10 @@ export class Link {
     this.path = [nwPath, this.name].join('/')
     this.source = new TpRef(data['source'], nwPath)
     this.destination = new TpRef(data['destination'], nwPath)
+    this.constructSupportingLinks(data)
+  }
 
+  constructSupportingLinks (data) {
     this.supportingLinks = []
     if (data['supporting-link']) {
       this.supportingLinks = data['supporting-link'].map(
@@ -38,7 +41,25 @@ export class Link {
       'sourcePath': this.source.refPath,
       'targetPath': this.destination.refPath,
       'name': this.name,
-      'path': this.path
+      'path': this.path,
+      'attribute': this.attribute || {}
     })
+  }
+}
+
+class L3LinkAttribute {
+  constructor (data) {
+    this.name = data.name || ''
+    this.flag = data.flag || ''
+    this.metric1 = data.metric1 || 100
+    this.metric2 = data.metric2 || 100
+  }
+}
+
+export class L3Link extends Link {
+  constructor (data, nwPath) {
+    super(data, nwPath)
+    let attrKey = 'ietf-l3-unicast-topology:l3-link-attributes' // alias
+    this.attribute = new L3LinkAttribute(data[attrKey] || {}) // avoid undefined
   }
 }
