@@ -70,6 +70,14 @@ class L3Prefix {
     this.metric = data.metric || 100
     this.flag = data.flag || [] // array
   }
+
+  toString () {
+    return [
+      'Prefix:' + this.prefix,
+      'Metric:' + this.metric,
+      'Flag:' + this.flag
+    ].join(', ')
+  }
 }
 
 class L3NodeAttribute {
@@ -81,6 +89,20 @@ class L3NodeAttribute {
     if (data.prefix) {
       this.prefix = data.prefix.map(d => new L3Prefix(d))
     }
+  }
+
+  toHtml () {
+    var prefixList = this.prefix.map(d => {
+      return ['<li>', d.toString(), '</li>'].join('')
+    })
+    return `
+<ul>
+  <li>Name: ${this.name}</li>
+  <li>Flag: ${this.flag}</li>
+  <li>prefix:</li>
+  <ul>${prefixList.join('')}</ul>
+</ul>
+`
   }
 }
 

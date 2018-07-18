@@ -68,6 +68,14 @@ class L3TPAttribute {
     // but, now use only ip
     this.ipAddress = data['ip-address'] || [] // notice: array
   }
+
+  toHtml () {
+    return `
+<ul>
+ <li>IP Address: ${this.ipAddress}</li>
+</ul>
+`
+  }
 }
 
 export class L3TermPoint extends TermPoint {

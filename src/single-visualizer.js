@@ -11,7 +11,6 @@ export class SingleGraphVisualizer {
       .select('div#visualizer')
       .append('div')
       .attr('class', 'networklayer')
-    console.log(findAllNodeFunc)
     this.findGraphNodeByPath = findAllNodeFunc
   }
 
@@ -177,17 +176,14 @@ export class SingleGraphVisualizer {
 
     function mouseOver (element) {
       element.classList.add('selectready')
+      var header = element.id
       var node = self.findGraphNodeByPath(element.id)
-      if (node) {
-        console.log('mouseover, ', node)
-        self.tooltip
-          .style('visibility', 'visible')
-          .html('element: ' + node.path)
-      } else {
-        self.tooltip
-          .style('visibility', 'visible')
-          .html('element: ' + element.id)
+      if (node && Object.keys(node.attribute).length > 0) {
+        header = header + node.attribute.toHtml()
       }
+      self.tooltip
+        .style('visibility', 'visible')
+        .html(header)
     }
 
     function mouseMove (element) {
@@ -200,7 +196,6 @@ export class SingleGraphVisualizer {
       element.classList.remove('selectready')
       self.tooltip
         .style('visibility', 'hidden')
-        .html('')
     }
 
     // set event callbacks
@@ -213,9 +208,9 @@ export class SingleGraphVisualizer {
         .on('mousemove', function () { mouseMove(this) })
         .on('mouseout', function () { mouseOut(this) })
         .call(d3.drag()
-              .on('start', self.simulator.dragstarted)
-              .on('drag', self.simulator.dragged)
-              .on('end', self.simulator.dragended))
+          .on('start', self.simulator.dragstarted)
+          .on('drag', self.simulator.dragged)
+          .on('end', self.simulator.dragended))
     })
   }
 

@@ -64,15 +64,14 @@ text.selectready { /* clear button */
 
 div.tooltip {
     position: absolute;
-    text-align: center;
     width: auto;
     height: auto;
     visibility: hidden;
 
     line-height: 1;
     padding: 6px;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
     color: #fff;
-    border-radius: 4px;
-    font-size: 12px;
+    border-radius: 8px;
+    font-size: 16px;
 }
