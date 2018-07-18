@@ -1,6 +1,7 @@
 *~
 *.gem
 *.rbc
+*.jtox
 npm-debug.log
 /node_modules/
 /.config

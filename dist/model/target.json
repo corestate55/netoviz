@@ -1879,7 +1879,9 @@
       },
       {
         "network-id": "target-L3",
-        "network-types": {},
+        "network-types": {
+          "ietf-l3-unicast-topology:l3-unicast-topology": {}
+        },
         "supporting-network": [
           {
             "network-ref": "target-L1.5"
@@ -1897,6 +1899,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "p1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.10.254"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L3",
@@ -1912,6 +1917,9 @@
               },
               {
                 "tp-id": "p2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.20.254"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L3",
@@ -1926,6 +1934,21 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": []
+                },
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ],
+              "flag": ["fhrp-virtual-router", "default-gateway", "pseudo-node"]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L3",
@@ -1942,6 +1965,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "p1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.10.253"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -1952,6 +1978,9 @@
               },
               {
                 "tp-id": "p2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.20.253"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -1961,6 +1990,21 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "router-id": ["192.168.0.1"],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": []
+                },
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -1973,6 +2017,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "p1",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.10.252"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -1983,6 +2030,9 @@
               },
               {
                 "tp-id": "p2",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.20.252"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -1992,6 +2042,21 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "router-id": ["192.168.0.2"],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": []
+                },
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2032,6 +2097,16 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ],
+              "flag": ["l3-segment", "pseudo-node"]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2088,6 +2163,16 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ],
+              "flag": ["l3-segment", "pseudo-node"]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2135,6 +2220,16 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.30.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ],
+              "flag": ["l3-segment", "pseudo-node"]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2155,6 +2250,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "eth0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.10.11"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -2164,6 +2262,15 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2176,6 +2283,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "eth0.20",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.20.2"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -2186,6 +2296,9 @@
               },
               {
                 "tp-id": "eth0.30",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.30.2"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -2195,6 +2308,20 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": []
+                },
+                {
+                  "prefix": "192.168.30.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2207,6 +2334,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "eth0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.10.31"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -2216,6 +2346,15 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
@@ -2228,6 +2367,9 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "eth0.20",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.20.4"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -2238,6 +2380,9 @@
               },
               {
                 "tp-id": "eth0.30",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": ["192.168.30.4"]
+                },
                 "supporting-termination-point": [
                   {
                     "network-ref": "target-L2",
@@ -2247,6 +2392,20 @@
                 ]
               }
             ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "prefix": [
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": []
+                },
+                {
+                  "prefix": "192.168.30.0/24",
+                  "metric": 100,
+                  "flag": []
+                }
+              ]
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L2",
