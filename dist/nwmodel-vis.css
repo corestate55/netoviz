@@ -30,7 +30,6 @@ rect.selectready {
     stroke-opacity: 0.7;
 }
 
-
 circle {
     stroke: #636563;
     stroke-width: 1px;
@@ -74,4 +73,8 @@ div.tooltip {
     color: #fff;
     border-radius: 8px;
     font-size: 16px;
+}
+
+select {
+    font-size: 20px;
 }

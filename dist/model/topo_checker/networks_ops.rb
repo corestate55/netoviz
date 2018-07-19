@@ -26,7 +26,7 @@ module TopoChecker
         tp.supporting_termination_points.each do |stp|
           # p "#{nw.network_id}/#{node.node_id}/#{tp.tp_id} refs #{stp.to_s}"
           next if find_tp(stp.network_ref, stp.node_ref, stp.tp_ref)
-          warn "Not Found: #{stp.to_s} of tp:#{nw.network_id}/#{node.node_id}/#{tp.to_id}"
+          warn "Not Found: #{stp.to_s} of tp:#{nw.network_id}/#{node.node_id}/#{tp.tp_id}"
         end
       end
     end

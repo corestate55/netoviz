@@ -53,16 +53,60 @@ function drawLegend () {
     .text(d => d.label)
 }
 
-// Entry point
-drawLegend()
-d3.json('http://localhost:8080/model/target.json', (error, topoData) => {
-  if (error) {
-    throw error
+function drawSelection () {
+  var select = d3.select('body')
+    .append('select')
+    .attr('id', 'modelselect')
+    .on('change', onchange)
+  var options = select.selectAll('option')
+    .data(modelFiles)
+    .enter()
+    .append('option')
+    .attr('value', d => d.value)
+    .text(d => d.label)
+
+  // set default selection
+  var selectedFile = modelFiles.find(d => d.selected)
+  options.filter(d => d.value === selectedFile.value)
+    .attr('selected', true)
+
+  function onchange () {
+    var selectValue = d3.select('select').property('value')
+    d3.select('body') // clear all graphs
+      .select('div#visualizer')
+      .selectAll('div.networklayer')
+      .remove()
+    drawJsonModel(selectValue)
   }
-  var visualizer = new GraphVisualizer(topoData)
-  // for debug
-  console.log('topology : ', visualizer.topoModel)
-  console.log('graphs   : ', visualizer.graphs)
-  // draw
-  visualizer.drawGraphs()
-})
+}
+
+function drawJsonModel (file) {
+  d3.json('http://localhost:8080/model/' + file, (error, topoData) => {
+    if (error) {
+      throw error
+    }
+    var visualizer = new GraphVisualizer(topoData)
+    // for debug
+    console.log('topology : ', visualizer.topoModel)
+    console.log('graphs   : ', visualizer.graphs)
+    // draw
+    visualizer.drawGraphs()
+  })
+}
+
+// Entry point
+var modelFiles = [
+  {
+    'selected': false,
+    'value': 'target.json',
+    'label': 'L2 Verbose Model'
+  },
+  {
+    'selected': true,
+    'value': 'target2.json',
+    'label': 'L2 Compact Model'
+  }
+]
+drawLegend()
+drawSelection()
+drawJsonModel(modelFiles.find(d => d.selected).value)

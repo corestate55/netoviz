@@ -4,7 +4,7 @@ import {TermPoint} from './term-points'
 
 class VlanIdName {
   constructor (data) {
-    this.vlanid = data['vlan-id']
+    this.vlanId = data['vlan-id']
     this.vlanName = data['vlan-name']
   }
 
@@ -22,7 +22,7 @@ class L2TPAttribute {
     this.maxFrameSize = data['maximum-frame-size'] || 1500
     this.macAddr = data['mac-address'] || 'xx:xx:xx:xx:xx:xx'
     this.ethEncap = data['eth-encapsulation'] || ''
-    this.portVlanId = data['port-vlan-id'] || 1
+    this.portVlanId = data['port-vlan-id'] || 0
     this.vlanIdName = []
     if (data['vlan-id-name']) {
       this.vlanIdName = data['vlan-id-name'].map(d => new VlanIdName(d))
@@ -42,7 +42,7 @@ class L2TPAttribute {
   <li>Ether Encapsulation: ${this.ethEncap}</li>
   <li>Port VLAN ID: ${this.portVlanId}</li>
   <li>Vlan ID/Name:</li>
-    <ul>${portIdNameStr}</ul>
+    <ul>${portIdNameStr.join('')}</ul>
   <li>TP State: ${this.tpState}</li>
 </ul>
 `
