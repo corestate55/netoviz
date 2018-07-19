@@ -1,8 +1,8 @@
 'use strict'
 
 import {BaseContainer} from './base'
-import {Node, L3Node} from './node'
-import {Link, L3Link} from './link'
+import {Node} from './node'
+import {Link} from './link'
 
 class SupportingNetwork {
   constructor (data) {
@@ -113,28 +113,5 @@ export class Network extends BaseContainer {
     // network type check
     let nwL3TypeKey = 'ietf-l3-unicast-topology:l3-unicast-topology' // alias
     return this.networkTypes.hasType(nwL3TypeKey)
-  }
-}
-
-class L3NetworkAttributes {
-  constructor (data) {
-    this.name = data.name || ''
-    this.flag = data.flag || []
-  }
-}
-
-export class L3Network extends Network {
-  constructor (data, nwNum) {
-    super(data, nwNum)
-    let attrKey = 'ietf-l3-unicast-topology:l3-topology-attributes'
-    this.attribute = new L3NetworkAttributes(data[attrKey] || {}) // avoid undefined
-  }
-
-  newNode (data, index) {
-    return new L3Node(data, this.path, this.id, index)
-  }
-
-  newLink (data) {
-    return new L3Link(data, this.path)
   }
 }

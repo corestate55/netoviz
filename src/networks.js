@@ -1,6 +1,7 @@
 'use strict'
 
-import {Network, L3Network} from './network'
+import {Network} from './network'
+import {L3Network} from './aug-network'
 
 export class Networks {
   constructor (topoData) {
