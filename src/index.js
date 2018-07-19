@@ -105,6 +105,11 @@ var modelFiles = [
     'selected': true,
     'value': 'target2.json',
     'label': 'L2 Compact Model'
+  },
+  {
+    'selected': false,
+    'value': 'target3.json',
+    'label': 'L2 Aggregated Model'
   }
 ]
 drawLegend()

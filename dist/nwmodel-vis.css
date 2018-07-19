@@ -1,4 +1,9 @@
 /* https://www.colorcombos.com/color-schemes/175/ColorCombo175.html */
+
+div.networklayer {
+    float: left;
+}
+
 svg {
     border-style: solid;
     border-width: 1px;
