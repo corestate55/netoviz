@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<nc:data xmlns:l3t="urn:ietf:params:xml:ns:yang:ietf-l3-unicast-topology" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nt="urn:ietf:params:xml:ns:yang:ietf-network-topology" xmlns:nw="urn:ietf:params:xml:ns:yang:ietf-network" xmlns:inet="urn:ietf:params:xml:ns:yang:ietf-inet-types" xmlns:rt-types="urn:ietf:params:xml:ns:yang:ietf-routing-types" xmlns:yang="urn:ietf:params:xml:ns:yang:ietf-yang-types">
+<nc:data xmlns:l2t="urn:ietf:params:xml:ns:yang:ietf-l2-topology" xmlns:l3t="urn:ietf:params:xml:ns:yang:ietf-l3-unicast-topology" xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" xmlns:nt="urn:ietf:params:xml:ns:yang:ietf-network-topology" xmlns:nw="urn:ietf:params:xml:ns:yang:ietf-network" xmlns:inet="urn:ietf:params:xml:ns:yang:ietf-inet-types" xmlns:rt-types="urn:ietf:params:xml:ns:yang:ietf-routing-types" xmlns:yang="urn:ietf:params:xml:ns:yang:ietf-yang-types">
   <nw:networks>
     <nw:network>
       <nw:network-id>target-L1</nw:network-id>
@@ -444,7 +444,12 @@
     </nw:network>
     <nw:network>
       <nw:network-id>target-L2</nw:network-id>
-      <nw:network-types/>
+      <nw:network-types>
+        <l2t:l2-network/>
+      </nw:network-types>
+      <l2t:l2-network-attributes>
+        <l2t:name>L2 of target network</l2t:name>
+      </l2t:l2-network-attributes>
       <nw:supporting-network>
         <nw:network-ref>target-L1</nw:network-ref>
       </nw:supporting-network>
@@ -455,10 +460,42 @@
         <nw:node-id>R1-GRT</nw:node-id>
         <nt:termination-point>
           <nt:tp-id>p1</nt:tp-id>
+          <l2t:l2-termination-point-attributes>
+            <l2t:description/>
+            <l2t:maximum-frame-size>1500</l2t:maximum-frame-size>
+            <l2t:mac-address/>
+            <l2t:eth-encapsulation>l2t:</l2t:eth-encapsulation>
+            <l2t:port-vlan-id>10</l2t:port-vlan-id>
+            <l2t:vlan-id-name>
+              <l2t:vlan-id>10</l2t:vlan-id>
+              <l2t:vlan-name>Seg.A</l2t:vlan-name>
+            </l2t:vlan-id-name>
+            <l2t:tp-state>in-use</l2t:tp-state>
+          </l2t:l2-termination-point-attributes>
         </nt:termination-point>
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
+          <l2t:l2-termination-point-attributes>
+            <l2t:description/>
+            <l2t:maximum-frame-size>1500</l2t:maximum-frame-size>
+            <l2t:mac-address/>
+            <l2t:eth-encapsulation>l2t:</l2t:eth-encapsulation>
+            <l2t:port-vlan-id>10</l2t:port-vlan-id>
+            <l2t:vlan-id-name>
+              <l2t:vlan-id>10</l2t:vlan-id>
+              <l2t:vlan-name>Seg.A</l2t:vlan-name>
+            </l2t:vlan-id-name>
+            <l2t:tp-state>in-use</l2t:tp-state>
+          </l2t:l2-termination-point-attributes>
         </nt:termination-point>
+        <l2t:l2-node-attributes>
+          <l2t:name>R1-GRT</l2t:name>
+          <l2t:description>L2 of R1-GRT</l2t:description>
+          <l2t:management-address>192.168.10.253</l2t:management-address>
+          <l2t:management-address>192.168.20.253</l2t:management-address>
+          <l2t:sys-mac-address/>
+          <l2t:management-vid>10</l2t:management-vid>
+        </l2t:l2-node-attributes>
         <nw:supporting-node>
           <nw:network-ref>target-L1</nw:network-ref>
           <nw:node-ref>R1</nw:node-ref>
@@ -524,6 +561,14 @@
         <nt:termination-point>
           <nt:tp-id>p2</nt:tp-id>
         </nt:termination-point>
+        <l2t:l2-node-attributes>
+          <l2t:name>R2-GRT</l2t:name>
+          <l2t:description>L2 of R2-GRT</l2t:description>
+          <l2t:management-address>192.168.10.252</l2t:management-address>
+          <l2t:management-address>192.168.20.252</l2t:management-address>
+          <l2t:sys-mac-address/>
+          <l2t:management-vid>10</l2t:management-vid>
+        </l2t:l2-node-attributes>
         <nw:supporting-node>
           <nw:network-ref>target-L1</nw:network-ref>
           <nw:node-ref>R2</nw:node-ref>

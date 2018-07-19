@@ -491,8 +491,14 @@
         ]
       },
       {
-        "network-types": {},
+        "network-types": {
+          "ietf-l2-topology:l2-network": {}
+        },
         "network-id": "target-L2",
+        "ietf-l2-topology:l2-network-attributes": {
+          "name": "L2 of target network",
+          "flag": []
+        },
         "supporting-network": [
           {
             "network-ref": "target-L1"
@@ -506,12 +512,48 @@
             "node-id": "R1-GRT",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "p1"
+                "tp-id": "p1",
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "",
+                  "port-vlan-id": 10,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A"
+                    }
+                  ],
+                  "tp-state": "in-use"
+                }
               },
               {
-                "tp-id": "p2"
+                "tp-id": "p2",
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "",
+                  "port-vlan-id": 10,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A"
+                    }
+                  ],
+                  "tp-state": "in-use"
+                }
               }
             ],
+            "ietf-l2-topology:l2-node-attributes": {
+              "name": "R1-GRT",
+              "description": "L2 of R1-GRT",
+              "management-address": ["192.168.10.253", "192.168.20.253"],
+              "sys-mac-address": "",
+              "management-vid": 10,
+              "flag": []
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L1",
@@ -597,6 +639,14 @@
                 "tp-id": "p2"
               }
             ],
+            "ietf-l2-topology:l2-node-attributes": {
+              "name": "R2-GRT",
+              "description": "L2 of R2-GRT",
+              "management-address": ["192.168.10.252", "192.168.20.252"],
+              "sys-mac-address": "",
+              "management-vid": 10,
+              "flag": []
+            },
             "supporting-node": [
               {
                 "network-ref": "target-L1",
