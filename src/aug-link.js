@@ -3,7 +3,7 @@
 import {Link} from './link'
 
 class L2LinkAttribute {
-  constructor(data) {
+  constructor (data) {
     this.name = data.name || ''
     this.flag = data.flag || ''
     this.rate = data.rate || 100

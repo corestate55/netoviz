@@ -8,7 +8,7 @@ class VlanIdName {
     this.vlanName = data['vlan-name']
   }
 
-  toString() {
+  toString () {
     return [
       'VLAN-ID:' + this.vlanId, 'VLAN-Name:' + this.vlanName
     ].join(',')
@@ -30,7 +30,7 @@ class L2TPAttribute {
     this.tpState = data['tp-state'] || 'others'
   }
 
-  toHtml() {
+  toHtml () {
     var portIdNameStr = this.vlanIdName.map(
       d => '<li>' + d.toString() + '</li>'
     )

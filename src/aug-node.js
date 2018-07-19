@@ -13,7 +13,7 @@ class L2NodeAttribute {
     this.flag = data.flag || [] // list
   }
 
-  toHtml() {
+  toHtml () {
     var mgmtIpStr = this.mgmtAddr.map(d => '<li>' + d + '</li>')
     return `
 <ul>
