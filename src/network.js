@@ -114,4 +114,10 @@ export class Network extends BaseContainer {
     let nwL3TypeKey = 'ietf-l3-unicast-topology:l3-unicast-topology' // alias
     return this.networkTypes.hasType(nwL3TypeKey)
   }
+
+  isTypeLayer2 () {
+    // network type check
+    let nwL2TypeKey = 'ietf-l2-topology:l2-network' // alias
+    return this.networkTypes.hasType(nwL2TypeKey)
+  }
 }

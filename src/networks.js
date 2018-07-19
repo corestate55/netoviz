@@ -1,7 +1,7 @@
 'use strict'
 
 import {Network} from './network'
-import {L3Network} from './aug-network'
+import {L2Network, L3Network} from './aug-network'
 
 export class Networks {
   constructor (topoData) {
@@ -13,8 +13,11 @@ export class Networks {
 
   newNetwork (data, index) {
     let nw = new Network(data, index)
+    // if network has augmented type, re-generate its type
     if (nw.isTypeLayer3()) {
       return new L3Network(data, index)
+    } else if (nw.isTypeLayer2()) {
+      return new L2Network(data, index)
     }
     return nw
   }

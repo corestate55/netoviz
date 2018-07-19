@@ -1,7 +1,43 @@
 'use strict'
 
-import {L3TermPoint} from './aug-term-points'
+import {L3TermPoint, L2TermPoint} from './aug-term-points'
 import {Node} from './node'
+
+class L2NodeAttribute {
+  constructor (data) {
+    this.name = data.name || ''
+    this.description = data.description || ''
+    this.mgmtAddr = data['management-address'] || [] // ip addr list
+    this.sysMacAddr = data['sys-mac-address'] || 'zz:zz:zz:zz:zz:zz'
+    this.mgmtVid = data['management-vid'] || 1
+    this.flag = data.flag || [] // list
+  }
+
+  toHtml() {
+    var mgmtIpStr = this.mgmtAddr.map(d => '<li>' + d + '</li>')
+    return `
+<ul>
+  <li>Name: ${this.name}</li>
+  <li>Description: ${this.description}</li>
+  <li>Management IP: </li>
+    <ul>${mgmtIpStr.join('')}</ul>
+  <li>Management VID: ${this.mgmtVid}</li>
+  <li>Flag: ${this.flag}</li>
+`
+  }
+}
+
+export class L2Node extends Node {
+  constructor (data, nwPath, nwId, nodeNum) {
+    super(data, nwPath, nwId, nodeNum)
+    let attrKey = 'ietf-l2-topology:l2-node-attributes' // alias
+    this.attribute = new L2NodeAttribute(data[attrKey] || {}) // avoid undefined
+  }
+
+  newTP (data, index) {
+    return new L2TermPoint(data, this.path, this.id, index)
+  }
+}
 
 class L3Prefix {
   constructor (data) {
