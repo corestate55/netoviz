@@ -18,13 +18,14 @@ text {
 
 circle.nodecircle {
     stroke: #6B824A;
+    fill: #c1d590;
     stroke-width: 1px;
-    fill: #e0eac8;
+    /* fill: #e0eac8; */
 }
 
 circle.node {
     stroke: none;
-    fill: #c1d590;
+    fill: #FEF6EB;
 }
 circle.node.selectedchildren {
     fill: #FFC3CE;

@@ -10,12 +10,10 @@ export class ForceSimulator {
 
     // functions to set parameters for simulation
     function linkDistance (d) {
-      // ?? cannot use outer scope variable
-      var x = 1.2 * 30 // 1.2 * nodeSize * 3 / 4
       if (d.type === 'node-tp') {
-        return x
+        return nodeSize
       }
-      return 2 * x
+      return 2 * nodeSize // tp-tp (inter node)
     }
 
     function ticked () {

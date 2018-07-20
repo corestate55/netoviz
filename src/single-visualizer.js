@@ -79,7 +79,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('circle')
       .attr('class', 'nodecircle')
-      .attr('id', d=> d.path + 'bg')
+      .attr('id', d => d.path + 'bg')
   }
 
   makeLabelObjects () {
