@@ -51,22 +51,35 @@ export class SingleGraphVisualizer {
 
   makeTpObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'tp')
-      .selectAll('circle')
+      .attr('class', 'terminalpoints')
+      .selectAll('circle.tp')
       .data(this.graph.nodes.filter(d => d.type === 'tp'))
       .enter()
       .append('circle')
+      .attr('class', 'tp')
       .attr('id', d => d.path)
   }
 
   makeNodeObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'node')
-      .selectAll('rect')
+      .attr('class', 'nodes')
+      .selectAll('circle')
       .data(this.graph.nodes.filter(d => d.type === 'node'))
       .enter()
-      .append('rect')
+      .append('circle')
+      .attr('class', 'node')
       .attr('id', d => d.path)
+  }
+
+  makeNodeCircleObjects () {
+    return this.nwLayer.append('g')
+      .attr('class', 'nodecircles')
+      .selectAll('circle.nodecircle')
+      .data(this.graph.nodes.filter(d => d.type === 'node'))
+      .enter()
+      .append('circle')
+      .attr('class', 'nodecircle')
+      .attr('id', d=> d.path + 'bg')
   }
 
   makeLabelObjects () {
@@ -110,8 +123,9 @@ export class SingleGraphVisualizer {
     this.tooltip = this.makeToolTip()
     this.clearBtn = this.makeClearButton()
     this.link = this.makeLinkObjects()
-    this.tp = this.makeTpObjects()
+    this.nodeCircle = this.makeNodeCircleObjects()
     this.node = this.makeNodeObjects()
+    this.tp = this.makeTpObjects()
     this.label = this.makeLabelObjects()
 
     this.simulator = new ForceSimulator({
@@ -121,6 +135,7 @@ export class SingleGraphVisualizer {
       'link': this.link,
       'tp': this.tp,
       'node': this.node,
+      'nodecircle': this.nodeCircle,
       'label': this.label
     })
 

@@ -25,25 +25,22 @@ function drawLegend () {
     return (dp + objSize) * (1 + styles.length + i)
   }
 
-  legend.selectAll('rect')
+  legend.selectAll('circle.node')
     .data(styles)
     .enter()
-    .append('rect')
-    .attr('width', objSize)
-    .attr('height', objSize)
-    .attr('x', (d, i) => dp + (dp + objSize) * i)
-    .attr('y', dp)
-    .attr('rx', objSize / 8)
-    .attr('ry', objSize / 8)
-    .attr('class', d => d.class)
-  legend.selectAll('circle')
+    .append('circle')
+    .attr('r', objSize / 2)
+    .attr('cx', (d, i) => dp + objSize / 2 + (dp + objSize) * i)
+    .attr('cy', objSize / 2 + dp)
+    .attr('class', d => ['node', d.class].join(' '))
+  legend.selectAll('circle.tp')
     .data(styles)
     .enter()
     .append('circle')
     .attr('r', objSize / 4)
     .attr('cx', circleX)
     .attr('cy', objSize / 2)
-    .attr('class', d => d.class)
+    .attr('class', d => ['tp', d.class].join(' '))
   legend.selectAll('text')
     .data(styles)
     .enter()
@@ -97,19 +94,19 @@ function drawJsonModel (file) {
 // Entry point
 var modelFiles = [
   {
-    'selected': false,
-    'value': 'target.json',
-    'label': 'L2 Verbose Model'
+    'selected': true,
+    'value': 'target3.json',
+    'label': 'L2 Aggregated Model'
   },
   {
-    'selected': true,
+    'selected': false,
     'value': 'target2.json',
     'label': 'L2 Compact Model'
   },
   {
     'selected': false,
-    'value': 'target3.json',
-    'label': 'L2 Aggregated Model'
+    'value': 'target.json',
+    'label': 'L2 Verbose Model'
   }
 ]
 drawLegend()

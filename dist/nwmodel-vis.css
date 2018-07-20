@@ -12,44 +12,51 @@ svg {
 
 text {
     font-size: 20px;
-    fill: #4393c3;
+    fill: #303030;
 }
 
-rect {
-    stroke: #636563;
+
+circle.nodecircle {
+    stroke: #6B824A;
     stroke-width: 1px;
-    fill: #D6E3B5;
+    fill: #e0eac8;
 }
-rect.selectedchildren {
+
+circle.node {
+    stroke: none;
+    fill: #c1d590;
+}
+circle.node.selectedchildren {
     fill: #FFC3CE;
 }
-rect.selectedparents {
+circle.node.selectedparents {
     fill: coral;
 }
-rect.selected {
+circle.node.selected {
     fill: #6B824A;
 }
-rect.selectready {
+circle.node.selectready {
     stroke: #6B824A;
     stroke-width: 14px;
     stroke-opacity: 0.7;
 }
 
-circle {
+circle.tp {
     stroke: #636563;
     stroke-width: 1px;
     fill: #FEF6EB;
 }
-circle.selectedchildren {
+
+circle.tp.selectedchildren {
     fill: #FFC3CE;
 }
-circle.selectedparents {
+circle.tp.selectedparents {
     fill: coral;
 }
-circle.selected {
+circle.tp.selected {
     fill: #6B824A;
 }
-circle.selectready {
+circle.tp.selectready {
     stroke: #6B824A;
     stroke-width: 14px;
     stroke-opacity: 0.7;

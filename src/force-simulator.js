@@ -31,12 +31,14 @@ export class ForceSimulator {
         .attr('cy', d => d.y)
 
       data.node
-        .attr('width', nodeSize)
-        .attr('height', nodeSize)
-        .attr('x', d => d.x - nodeSize / 2)
-        .attr('y', d => d.y - nodeSize / 2)
-        .attr('rx', nodeSize / 8)
-        .attr('ry', nodeSize / 8)
+        .attr('r', nodeSize * 0.7)
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
+
+      data.nodecircle
+        .attr('r', nodeSize)
+        .attr('cx', d => d.x)
+        .attr('cy', d => d.y)
 
       data.label
         .attr('x', d => d.x)
