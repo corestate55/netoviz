@@ -87,7 +87,7 @@ function drawSelection () {
 }
 
 function drawJsonModel (file) {
-  d3.json('http://localhost:8080/model/' + file, (error, topoData) => {
+  d3.json('/model/' + file, (error, topoData) => {
     if (error) {
       throw error
     }
