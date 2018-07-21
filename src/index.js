@@ -4,25 +4,27 @@ import * as d3 from 'd3'
 import {GraphVisualizer} from './visualizer'
 
 function drawLegend () {
-  var legend = d3.select('body')
-    .select('div#legend')
-    .append('svg')
-    .attr('width', 250)
-    .attr('height', 110)
-
   var styles = [
-    { 'class': 'normal', 'label': '' },
-    { 'class': 'selectedchildren', 'label': 'child' },
+    { 'class': 'normal', 'label': 'normal' },
+    { 'class': 'selectready', 'label': 'select' },
     { 'class': 'selected', 'label': 'click' },
+    { 'class': 'selectedchildren', 'label': 'child' },
     { 'class': 'selectedparents', 'label': 'parent' }
   ]
   var objSize = 40
-  var dp = 10
+  var xdp = 30
+  var ydp = 10
+  var legend = d3.select('body')
+    .select('div#legend')
+    .append('svg')
+    .attr('width', xdp + (xdp + objSize) * styles.length)
+    .attr('height', ydp + objSize + ydp + objSize / 2 + ydp * 3)
+  var nodeY = ydp + objSize / 2
 
   function nodeCircleX (d, i) {
-    return dp + objSize / 2 + (dp + objSize) * i
+    return xdp + objSize / 2 + (xdp + objSize) * i
   }
-  var nodeY = dp + objSize / 2
+
   legend.selectAll('circle.nodecircle')
     .data(styles)
     .enter()
@@ -39,7 +41,7 @@ function drawLegend () {
     .attr('cx', nodeCircleX)
     .attr('cy', nodeY)
     .attr('class', d => ['node', d.class].join(' '))
-  var tpY = nodeY + objSize / 2 + dp + objSize / 4
+  var tpY = nodeY + objSize / 2 + ydp + objSize / 4
   legend.selectAll('circle.tp')
     .data(styles)
     .enter()
@@ -48,7 +50,7 @@ function drawLegend () {
     .attr('cx', nodeCircleX)
     .attr('cy', tpY)
     .attr('class', d => ['tp', d.class].join(' '))
-  var textY = tpY + objSize / 4 + dp * 2
+  var textY = tpY + objSize / 4 + ydp * 2
   legend.selectAll('text')
     .data(styles)
     .enter()

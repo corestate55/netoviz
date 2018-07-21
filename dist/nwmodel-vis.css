@@ -1,6 +1,6 @@
 /* https://www.colorcombos.com/color-schemes/175/ColorCombo175.html */
 
-div.networklayer {
+.networklayer {
     float: left;
 }
 
@@ -11,79 +11,98 @@ svg {
 }
 
 text {
-    font-size: 20px;
     fill: #303030;
+    font-size: 20px;
+}
+
+text.selectready { /* clear button */
+    fill: #E4001B;
+    stroke-opacity: 1.0;
+    stroke-width: 1px;
+}
+
+.node {
+    fill: #FEF6EB;
+    stroke: #6B824A;
+    stroke-width: 1px;
 }
 
 circle.nodecircle {
-    stroke: none;
     fill: #c1d590;
-}
-
-circle.node {
-    stroke: #6B824A;
-    stroke-width: 1px;
-    fill: #FEF6EB;
+    stroke: none;
 }
 
 circle.nodecircle.selectedchildren {
     fill: #FFC3CE;
 }
+
 circle.nodecircle.selectedparents {
     fill: coral;
 }
+
 circle.nodecircle.selected {
     fill: #6B824A;
 }
+
 circle.nodecircle.selectready {
     fill: #E4001B;
     opacity: 0.5;
 }
 
 circle.tp {
+    fill: #FEF6EB;
     stroke: #636563;
     stroke-width: 1px;
-    fill: #FEF6EB;
 }
 
 circle.tp.selectedchildren {
     fill: #FFC3CE;
 }
+
 circle.tp.selectedparents {
     fill: coral;
 }
+
 circle.tp.selected {
     fill: #6B824A;
 }
+
 circle.tp.selectready {
     stroke: #E4001B;
-    stroke-width: 10px;
     stroke-opacity: 0.5;
+    stroke-width: 10px;
 }
 
-g.link {
+.link {
     stroke: #636563;
     stroke-width: 1px;
 }
 
-text.selectready { /* clear button */
-    fill: coral;
-    stroke-width: 1px;
-    stroke-opacity: 1.0;
-}
-
 div.tooltip {
-    position: absolute;
-    width: auto;
-    height: auto;
-    visibility: hidden;
-
-    line-height: 1;
-    padding: 6px;
+    background: #000;
     background: rgba(0, 0, 0, 0.6);
-    color: #fff;
     border-radius: 8px;
+    color: #fff;
     font-size: 16px;
+    height: auto;
+    line-height: 1.1;
+    min-height: 25px; /* text font size * 1.5 */
+    padding: 10px;
+    position: absolute;
+    visibility: hidden;
+    width: auto;
+}
+div.tooltip:after {
+    border: 12px solid transparent;
+    border-left-width: 0;
+    border-right-color: #000;
+    border-right-color: rgba(0, 0, 0, 0.6);
+    content: "";
+    display: block;
+    left: -12px;
+    position: absolute;
+    top: 10px;
+    width: 0;
 }
 
 select {

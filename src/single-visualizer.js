@@ -220,8 +220,8 @@ export class SingleGraphVisualizer {
 
     function mouseMove (element) {
       self.tooltip
-        .style('top', (d3.event.pageY - 20) + 'px')
-        .style('left', (d3.event.pageX + 10) + 'px')
+        .style('top', d3.event.pageY - 20 + 'px')
+        .style('left', (d3.event.pageX + 30) + 'px')
     }
 
     function mouseOut (element) {
