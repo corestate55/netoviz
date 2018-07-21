@@ -3,8 +3,10 @@ module.exports = {
   mode: "development",
   devServer: {
     contentBase: 'dist',
+    compress: true,
     open: true,
     historyApiFallback: true,
+    host: '0.0.0.0',
     watchOptions: { aggregateTimeout: 500, poll: 2000 },
     headers: {
       "Access-Control-Allow-Origin": "*"

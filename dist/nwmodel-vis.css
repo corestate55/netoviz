@@ -15,31 +15,29 @@ text {
     fill: #303030;
 }
 
-
 circle.nodecircle {
-    stroke: #6B824A;
+    stroke: none;
     fill: #c1d590;
-    stroke-width: 1px;
-    /* fill: #e0eac8; */
 }
 
 circle.node {
-    stroke: none;
+    stroke: #6B824A;
+    stroke-width: 1px;
     fill: #FEF6EB;
 }
-circle.node.selectedchildren {
+
+circle.nodecircle.selectedchildren {
     fill: #FFC3CE;
 }
-circle.node.selectedparents {
+circle.nodecircle.selectedparents {
     fill: coral;
 }
-circle.node.selected {
+circle.nodecircle.selected {
     fill: #6B824A;
 }
-circle.node.selectready {
-    stroke: #6B824A;
-    stroke-width: 14px;
-    stroke-opacity: 0.7;
+circle.nodecircle.selectready {
+    fill: #E4001B;
+    opacity: 0.5;
 }
 
 circle.tp {
@@ -58,9 +56,9 @@ circle.tp.selected {
     fill: #6B824A;
 }
 circle.tp.selectready {
-    stroke: #6B824A;
-    stroke-width: 14px;
-    stroke-opacity: 0.7;
+    stroke: #E4001B;
+    stroke-width: 10px;
+    stroke-opacity: 0.5;
 }
 
 g.link {

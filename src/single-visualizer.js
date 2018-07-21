@@ -79,7 +79,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('circle')
       .attr('class', 'nodecircle')
-      .attr('id', d => d.path + 'bg')
+      .attr('id', d => d.path + '.bg')
   }
 
   makeLabelObjects () {
@@ -153,8 +153,19 @@ export class SingleGraphVisualizer {
       )
     }
 
+    function pathObjType (path) {
+      if (path.match(/.+\/.+\/.+/)) {
+        return 'tp'
+      }
+      return 'node'
+    }
+
     // highlight selected node
     function highlightNodeByPath (direction, path) {
+      console.log('highlight: ', direction, path)
+      if (pathObjType(path) === 'node') {
+        path = path + '.bg'
+      }
       var element = document.getElementById(path)
       clearElementHighlight(element)
       if (direction === 'children') {
@@ -170,7 +181,7 @@ export class SingleGraphVisualizer {
     function highlightNode (element) {
       function findSupportingObj (direction, path) {
         // highlight DOM
-        console.log('....', direction, path)
+        // console.log('....', direction, path)
         highlightNodeByPath(direction, path)
         // find nodes to highlight via through *all* layers
         var node = self.findGraphNodeByPath(path)
@@ -190,9 +201,15 @@ export class SingleGraphVisualizer {
     }
 
     function mouseOver (element) {
+      var path = element.id
+      // set highlight style
+      if (pathObjType(path) === 'node') {
+        element = document.getElementById(path + '.bg')
+      }
       element.classList.add('selectready')
-      var header = element.id
-      var node = self.findGraphNodeByPath(element.id)
+      // enable tooltip
+      var header = path
+      var node = self.findGraphNodeByPath(path)
       if (node && Object.keys(node.attribute).length > 0) {
         header = header + node.attribute.toHtml()
       }
@@ -208,7 +225,12 @@ export class SingleGraphVisualizer {
     }
 
     function mouseOut (element) {
+      // remove highlight style
+      if (pathObjType(element.id) === 'node') {
+        element = document.getElementById(element.id + '.bg')
+      }
       element.classList.remove('selectready')
+      // disable tooltip
       self.tooltip
         .style('visibility', 'hidden')
     }

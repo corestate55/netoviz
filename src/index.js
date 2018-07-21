@@ -4,13 +4,11 @@ import * as d3 from 'd3'
 import {GraphVisualizer} from './visualizer'
 
 function drawLegend () {
-  var legend = d3 // .select(document.body)
-    .select('body')
-    .append('div')
-    .attr('id', 'legend')
+  var legend = d3.select('body')
+    .select('div#legend')
     .append('svg')
-    .attr('width', 500)
-    .attr('height', 60)
+    .attr('width', 250)
+    .attr('height', 110)
 
   var styles = [
     { 'class': 'normal', 'label': '' },
@@ -21,37 +19,48 @@ function drawLegend () {
   var objSize = 40
   var dp = 10
 
-  function circleX (d, i) {
-    return (dp + objSize) * (1 + styles.length + i)
+  function nodeCircleX (d, i) {
+    return dp + objSize / 2 + (dp + objSize) * i
   }
-
-  legend.selectAll('circle.node')
+  var nodeY = dp + objSize / 2
+  legend.selectAll('circle.nodecircle')
     .data(styles)
     .enter()
     .append('circle')
     .attr('r', objSize / 2)
-    .attr('cx', (d, i) => dp + objSize / 2 + (dp + objSize) * i)
-    .attr('cy', objSize / 2 + dp)
+    .attr('cx', nodeCircleX)
+    .attr('cy', nodeY)
+    .attr('class', d => ['nodecircle', d.class].join(' '))
+  legend.selectAll('circle.node')
+    .data(styles)
+    .enter()
+    .append('circle')
+    .attr('r', 0.75 * objSize / 2)
+    .attr('cx', nodeCircleX)
+    .attr('cy', nodeY)
     .attr('class', d => ['node', d.class].join(' '))
+  var tpY = nodeY + objSize / 2 + dp + objSize / 4
   legend.selectAll('circle.tp')
     .data(styles)
     .enter()
     .append('circle')
     .attr('r', objSize / 4)
-    .attr('cx', circleX)
-    .attr('cy', objSize / 2)
+    .attr('cx', nodeCircleX)
+    .attr('cy', tpY)
     .attr('class', d => ['tp', d.class].join(' '))
+  var textY = tpY + objSize / 4 + dp * 2
   legend.selectAll('text')
     .data(styles)
     .enter()
     .append('text')
-    .attr('x', circleX)
-    .attr('y', objSize + dp)
+    .attr('x', (d, i) => nodeCircleX(d, i) - objSize / 2)
+    .attr('y', textY)
     .text(d => d.label)
 }
 
 function drawSelection () {
   var select = d3.select('body')
+    .select('div#modelselector')
     .append('select')
     .attr('id', 'modelselect')
     .on('change', onchange)
