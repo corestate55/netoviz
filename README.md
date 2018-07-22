@@ -60,6 +60,12 @@ DSDL plugin supports only YANG version 1.
 
 This visualizer depends on [D3.js v4](https://d3js.org/), [Webpack](https://webpack.js.org/), [Node.js](https://nodejs.org/ja/) and [NPM](https://www.npmjs.com/).
 
+### Demo
+
+The visualizer works on Heroku.
+
+* https://nwmodel-vis.herokuapp.com/
+
 ### Install
 
 Install Node.js and NPM at first in your system.
@@ -93,30 +99,30 @@ npm run lint
 ## Structure
 
 ```
- augmented topology data model          topology data structure           graph object structure         visualizer
- (RFC8346,                              (RFC8345)
+ augmented topology data model        topology data structure         graph object structure      visualizer
+ (RFC8346,                            (RFC8345)
  draft-ietf-i2rs-yang-l2-network-topology)
-                                            +----------+                       +----------+             +----------+  contrlol
-                +---------------------------| networks |-----------------------|  graphs  |<|-----------|visualizer|  whole layers
-                |                           +----+-----+                       +----+-----+             +----+-----+
-           +----+-----+                          |                                  |                        |
-           | L2/3     |                     +----+-----+                       +----+-----+             +----+-----+
-           | network  |-------------------|>| network  |                       |  graph   |             |single-vis|  single layer
-           +----+-----+                     +----+-----+                       +----+-----+             +----+-----+
-                |                                |                                  |                        |
-       +--------+-------+               +--------+-------+                 +--------+-------+           +----+-----+
-       |                |               |                |                 |                |           |force-siml|
-       |           +----+-----+         |                |                 |      node +----------+     +----------+
-       |           |   L2/3   |         |           +----+-----+           |    object |  graph   |
-       |           |   node   |---------(---------|>|   node   | . . . . . ( . . . . . |   node   |
-       |           +----+-----+         |           +----+-----+           |           +----------+
-  +----------+          |               |                |      tp-tp +----+-----+          : tp
-  |   L2/3   |          |          +----+-----+          |       link |  graph   |          : object
-  |   link   |----------(--------|>|   link   | . . . . .( . . . . . .|   link   |          :
-  +----------+          |          +----------+          |            +----------+          :
-                        |                                |                 : tp-node        :
-                   +----+-----+                          |                 : link           :
-                   |  L2/3    |                     +----+-----+           :                :
-                   | term pts |-------------------|>| term pts | . . . . . : . . . . . . . .:
-                   +----------+                     +----------+
+                                       +----------+                     +----------+             +----------+  contrlol
+             +-------------------------| networks |---------------------|  graphs  |<|-----------|visualizer|  whole layers
+             |                         +----+-----+                     +----+-----+             +----+-----+
+        +----+-----+                        |                                |                        |
+        |  L2/L3   |                   +----+-----+                     +----+-----+             +----+-----+
+        | network  |-----------------|>| network  |                     |  graph   |             |single-vis|  single layer
+        +----+-----+                   +----+-----+                     +----+-----+             +----+-----+
+             |                              |                                |                        |
+      +------+-------+               +------+-------+                 +------+-------+           +----+-----+
+      |              |               |              |                 |              |           |force-siml|
+      |         +----+-----+         |              |                 |    node +----+-----+     +----------+
+      |         |  L2/L3   |         |         +----+-----+           |  object |  graph   |
+      |         |   node   |---------(-------|>|   node   | . . . . . ( . . . . |   node   |
+      |         +----+-----+         |         +----+-----+           |         +----------+
+ +----------+        |               |              |      tp-tp +----+-----+        : tp
+ |  L2/L3   |        |          +----+-----+        |       link |  graph   |        : object
+ |   link   |--------(--------|>|   link   | . . . .( . . . . . .|   link   |        :
+ +----------+        |          +----------+        |            +----------+        :
+                     |                              |                 : tp-node      :
+                +----+-----+                        |                 : link         :
+                |  L2/L3   |                   +----+-----+           :              :
+                | term pts |-----------------|>| term pts | . . . . . : . . . . . . .:
+                +----------+                   +----------+
 ```
