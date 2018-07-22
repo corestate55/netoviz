@@ -53,7 +53,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'terminalpoints')
       .selectAll('circle.tp')
-      .data(this.graph.nodes.filter(d => d.type === 'tp'))
+      .data(this.graph.tpTypeNodes())
       .enter()
       .append('circle')
       .attr('class', 'tp')
@@ -64,7 +64,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
-      .data(this.graph.nodes.filter(d => d.type === 'node'))
+      .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
       .attr('class', 'node')
@@ -75,21 +75,32 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'nodecircles')
       .selectAll('circle.nodecircle')
-      .data(this.graph.nodes.filter(d => d.type === 'node'))
+      .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
       .attr('class', 'nodecircle')
       .attr('id', d => d.path + '.bg')
   }
 
-  makeLabelObjects () {
+  makeTpLabelObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'labels')
-      .selectAll('text')
-      .data(this.graph.nodes)
+      .attr('class', 'tplabels')
+      .selectAll('text.tplabel')
+      .data(this.graph.tpTypeNodes())
       .enter()
       .append('text')
-      .attr('class', 'label')
+      .attr('class', 'tplabel')
+      .text(d => d.name)
+  }
+
+  makeNodeLabelObjects () {
+    return this.nwLayer.append('g')
+      .attr('class', 'nodelabels')
+      .selectAll('text.nodelabel')
+      .data(this.graph.nodeTypeNodes())
+      .enter()
+      .append('text')
+      .attr('class', 'nodelabel')
       .text(d => d.name)
   }
 
@@ -126,7 +137,8 @@ export class SingleGraphVisualizer {
     this.nodeCircle = this.makeNodeCircleObjects()
     this.node = this.makeNodeObjects()
     this.tp = this.makeTpObjects()
-    this.label = this.makeLabelObjects()
+    this.tpLabel = this.makeTpLabelObjects()
+    this.nodeLabel = this.makeNodeLabelObjects()
 
     this.simulator = new ForceSimulator({
       'height': this.height,
@@ -136,7 +148,8 @@ export class SingleGraphVisualizer {
       'tp': this.tp,
       'node': this.node,
       'nodecircle': this.nodeCircle,
-      'label': this.label
+      'tplabel': this.tpLabel,
+      'nodelabel': this.nodeLabel
     })
 
     // set event callback for tp/node

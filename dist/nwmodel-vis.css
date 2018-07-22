@@ -12,6 +12,13 @@ svg {
 
 text {
     fill: #303030;
+}
+
+.tplabel {
+    font-size: 15px;
+}
+
+.nodelabel {
     font-size: 20px;
 }
 

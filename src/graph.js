@@ -6,6 +6,14 @@ export class Graph {
     this.nodes = nw.makeGraphNodes()
     this.links = nw.makeGraphLinks()
   }
+
+  tpTypeNodes () {
+    return this.nodes.filter(d => d.type === 'tp')
+  }
+
+  nodeTypeNodes () {
+    return this.nodes.filter(d => d.type === 'node')
+  }
 }
 
 export class GraphNode {

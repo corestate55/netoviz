@@ -37,7 +37,7 @@ function drawLegend () {
     .data(styles)
     .enter()
     .append('circle')
-    .attr('r', 0.75 * objSize / 2)
+    .attr('r', 0.7 * objSize / 2)
     .attr('cx', nodeCircleX)
     .attr('cy', nodeY)
     .attr('class', d => ['node', d.class].join(' '))
