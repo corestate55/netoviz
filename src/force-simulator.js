@@ -41,13 +41,11 @@ export class ForceSimulator {
       data.tplabel
         .attr('x', d => d.x)
         .attr('y', d => d.y)
-        .attr('dx', 5 + tpSize / 2) // offset to click tp easily
-        .attr('dy', tpSize / 2) // centering
+        .attr('dx', 1.5 * tpSize / 2) // offset to click tp easily
 
       data.nodelabel
         .attr('x', d => d.x)
         .attr('y', d => d.y)
-        .attr('dy', tpSize / 2) // centering
     }
 
     this.simulation = d3.forceSimulation()

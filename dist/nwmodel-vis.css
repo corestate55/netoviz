@@ -16,10 +16,12 @@ text {
 
 .tplabel {
     font-size: 15px;
+    dominant-baseline: central;
 }
 
 .nodelabel {
     font-size: 20px;
+    dominant-baseline: central;
 }
 
 text.selectready { /* clear button */
