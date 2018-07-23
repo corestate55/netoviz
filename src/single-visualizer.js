@@ -90,6 +90,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('text')
       .attr('class', 'tplabel')
+      .attr('id', d => d.path + '.tplb')
       .text(d => d.name)
   }
 
@@ -101,6 +102,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('text')
       .attr('class', 'nodelabel')
+      .attr('id', d => d.path + '.ndlb')
       .text(d => d.name)
   }
 
@@ -153,7 +155,9 @@ export class SingleGraphVisualizer {
     })
 
     // set event callback for tp/node
-    this.setEventCallBack([this.tp, this.node])
+    this.setEventCallBack(
+      [this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel]
+    )
     this.setClearButtonEventCallback()
   }
 
@@ -173,28 +177,44 @@ export class SingleGraphVisualizer {
       return 'node'
     }
 
+    function pathBody (path) {
+      // remove each id(path) suffix
+      return path.replace(/\.(bg|ndlb|tplb)$/, '')
+    }
+
+    function highlightElementsByPath (path) {
+      if (pathObjType(path) === 'tp') {
+        return [
+          document.getElementById(path),
+          document.getElementById(path + '.tplb')
+        ]
+      }
+      // pathObjType === 'node'
+      return [
+        document.getElementById(path + '.bg'),
+        document.getElementById(path + '.ndlb')
+      ]
+    }
+
     // highlight selected node
     function highlightNodeByPath (direction, path) {
-      console.log('highlight: ', direction, path)
-      if (pathObjType(path) === 'node') {
-        path = path + '.bg'
-      }
-      var element = document.getElementById(path)
-      clearElementHighlight(element)
-      if (direction === 'children') {
-        element.classList.add('selectedchildren')
-      } else if (direction === 'parents') {
-        element.classList.add('selectedparents')
-      } else {
-        element.classList.add('selected')
-      }
+      highlightElementsByPath(path).forEach(element => {
+        clearElementHighlight(element)
+        if (direction === 'children') {
+          element.classList.add('selectedchildren')
+        } else if (direction === 'parents') {
+          element.classList.add('selectedparents')
+        } else {
+          element.classList.add('selected')
+        }
+      })
     }
 
     // event callback
     function highlightNode (element) {
       function findSupportingObj (direction, path) {
         // highlight DOM
-        // console.log('....', direction, path)
+        console.log('....', direction, path)
         highlightNodeByPath(direction, path)
         // find nodes to highlight via through *all* layers
         var node = self.findGraphNodeByPath(path)
@@ -206,7 +226,7 @@ export class SingleGraphVisualizer {
         }
       }
       // highlight selected object and its children/parents
-      var path = element.getAttribute('id')
+      var path = pathBody(element.getAttribute('id'))
       console.log('highlight_top: ', path)
       findSupportingObj('children', path)
       findSupportingObj('parents', path)
@@ -214,21 +234,20 @@ export class SingleGraphVisualizer {
     }
 
     function mouseOver (element) {
-      var path = element.id
+      var path = pathBody(element.id)
       // set highlight style
-      if (pathObjType(path) === 'node') {
-        element = document.getElementById(path + '.bg')
-      }
-      element.classList.add('selectready')
-      // enable tooltip
-      var header = path
-      var node = self.findGraphNodeByPath(path)
-      if (node && Object.keys(node.attribute).length > 0) {
-        header = header + node.attribute.toHtml()
-      }
-      self.tooltip
-        .style('visibility', 'visible')
-        .html(header)
+      highlightElementsByPath(path).forEach(elm => {
+        elm.classList.add('selectready')
+        // enable tooltip
+        var header = path
+        var node = self.findGraphNodeByPath(path)
+        if (node && Object.keys(node.attribute).length > 0) {
+          header = header + node.attribute.toHtml()
+        }
+        self.tooltip
+          .style('visibility', 'visible')
+          .html(header)
+      })
     }
 
     function mouseMove (element) {
@@ -238,14 +257,14 @@ export class SingleGraphVisualizer {
     }
 
     function mouseOut (element) {
+      var path = pathBody(element.id)
       // remove highlight style
-      if (pathObjType(element.id) === 'node') {
-        element = document.getElementById(element.id + '.bg')
-      }
-      element.classList.remove('selectready')
-      // disable tooltip
-      self.tooltip
-        .style('visibility', 'hidden')
+      highlightElementsByPath(path).forEach(elm => {
+        elm.classList.remove('selectready')
+        // disable tooltip
+        self.tooltip
+          .style('visibility', 'hidden')
+      })
     }
 
     // set event callbacks

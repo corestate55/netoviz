@@ -24,9 +24,8 @@ text {
     dominant-baseline: central;
 }
 
-text.selectready { /* clear button */
+text.selectready {
     fill: #E4001B;
-    stroke-opacity: 1.0;
     stroke-width: 1px;
 }
 
