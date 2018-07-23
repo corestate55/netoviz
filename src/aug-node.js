@@ -17,12 +17,12 @@ class L2NodeAttribute {
     var mgmtIpStr = this.mgmtAddr.map(d => '<li>' + d + '</li>')
     return `
 <ul>
-  <li>Name: ${this.name}</li>
-  <li>Description: ${this.description}</li>
-  <li>Management IP: </li>
+  <li><span class="attr">Name:</span> ${this.name}</li>
+  <li><span class="attr">Description:</span> ${this.description}</li>
+  <li><span class="attr">Management IP:</span></li>
     <ul>${mgmtIpStr.join('')}</ul>
-  <li>Management VID: ${this.mgmtVid}</li>
-  <li>Flag: ${this.flag}</li>
+  <li><span class="attr">Management VID:</span> ${this.mgmtVid}</li>
+  <li><span class="attr">Flag:</span> ${this.flag}</li>
 `
   }
 }
@@ -46,11 +46,11 @@ class L3Prefix {
     this.flag = data.flag || [] // array
   }
 
-  toString () {
+  toHtml () {
     return [
-      'Prefix:' + this.prefix,
-      'Metric:' + this.metric,
-      'Flag:' + this.flag
+      '<span class="attr">Prefix:</span>' + this.prefix,
+      '<span class="attr">Metric:</span>' + this.metric,
+      '<span class="attr">Flag:</span>' + this.flag
     ].join(', ')
   }
 }
@@ -68,13 +68,13 @@ class L3NodeAttribute {
 
   toHtml () {
     var prefixList = this.prefix.map(d => {
-      return ['<li>', d.toString(), '</li>'].join('')
+      return ['<li>', d.toHtml(), '</li>'].join('')
     })
     return `
 <ul>
-  <li>Name: ${this.name}</li>
-  <li>Flag: ${this.flag}</li>
-  <li>prefix:</li>
+  <li><span class="attr">Name:</span> ${this.name}</li>
+  <li><span class="attr">Flag:</span> ${this.flag}</li>
+  <li><span class="attr">prefix:</span></li>
   <ul>${prefixList.join('')}</ul>
 </ul>
 `

@@ -8,9 +8,10 @@ class VlanIdName {
     this.vlanName = data['vlan-name']
   }
 
-  toString () {
+  toHtml () {
     return [
-      'VLAN-ID:' + this.vlanId, 'VLAN-Name:' + this.vlanName
+      '<span class="attr">VID:</span>' + this.vlanId,
+      '<span class="attr">Name:</span>' + this.vlanName
     ].join(',')
   }
 }
@@ -32,18 +33,18 @@ class L2TPAttribute {
 
   toHtml () {
     var portIdNameStr = this.vlanIdName.map(
-      d => '<li>' + d.toString() + '</li>'
+      d => '<li>' + d.toHtml() + '</li>'
     )
     return `
 <ul>
-  <li>Description: ${this.description}</li>
-  <li>Maximum Frame Size: ${this.maxFrameSize}</li>
-  <li>Mac Address: ${this.macAddr}</li>
-  <li>Ether Encapsulation: ${this.ethEncap}</li>
-  <li>Port VLAN ID: ${this.portVlanId}</li>
-  <li>Vlan ID/Name:</li>
+  <li><span class="attr">Description:</span> ${this.description}</li>
+  <li><span class="attr">Maximum Frame Size:</span> ${this.maxFrameSize}</li>
+  <li><span class="attr">Mac Address:</span> ${this.macAddr}</li>
+  <li><span class="attr">Ether Encapsulation:</span> ${this.ethEncap}</li>
+  <li><span class="attr">Port VLAN ID:</span> ${this.portVlanId}</li>
+  <li><span class="attr">Vlan ID/Name:</span></li>
     <ul>${portIdNameStr.join('')}</ul>
-  <li>TP State: ${this.tpState}</li>
+  <li><span class="attr">TP State:</span> ${this.tpState}</li>
 </ul>
 `
   }
@@ -67,7 +68,7 @@ class L3TPAttribute {
   toHtml () {
     return `
 <ul>
- <li>IP Address: ${this.ipAddress}</li>
+ <li><span class="attr">IP Address:</span> ${this.ipAddress}</li>
 </ul>
 `
   }
