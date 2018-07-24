@@ -1,7 +1,7 @@
 'use strict'
 
 import {Graphs} from './graphs'
-import {SingleGraphVisualizer} from './single-visualizer'
+import {OperationalVisualizer} from './operational-visualizer'
 
 export class GraphVisualizer extends Graphs {
   constructor (topoData) {
@@ -14,8 +14,8 @@ export class GraphVisualizer extends Graphs {
     var callback = path => this.findGraphNodeByPath(path)
     // entrypoint: draw each layer
     this.graphs.forEach(graph => {
-      var sgv = new SingleGraphVisualizer(graph, callback)
-      sgv.draw()
+      var singleGraphVisualizer = new OperationalVisualizer(graph, callback)
+      singleGraphVisualizer.startSimulation()
     })
   }
 }

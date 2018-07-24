@@ -1,12 +1,13 @@
 'use strict'
 
 import * as d3 from 'd3'
+import {SingleGraphVisualizer} from './single-visualizer'
 
-export class ForceSimulator {
-  constructor (data) {
+export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
+  constructor (graph, findAllNodeFunc) {
+    super(graph, findAllNodeFunc)
     var tpSize = 10 // tp circle radius
     var nodeSize = 40 // node width/height
-    this.graph = data.graph
 
     // functions to set parameters for simulation
     function linkDistance (d) {
@@ -16,62 +17,41 @@ export class ForceSimulator {
       return 2 * nodeSize // tp-tp (inter node)
     }
 
-    function ticked () {
-      data.link
+    // Set event callbacks for node/tp object (mouse dragging)
+    // notice use arrow-function `() => {}' NOT `function(){}`
+    // TO BIND `this`
+    this.ticked = () => {
+      this.link
         .attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y)
 
-      data.tp
+      this.tp
         .attr('r', tpSize)
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
 
-      data.node
+      this.node
         .attr('r', nodeSize * 0.7)
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
 
-      data.nodecircle
+      this.nodeCircle
         .attr('r', nodeSize)
         .attr('cx', d => d.x)
         .attr('cy', d => d.y)
 
-      data.tplabel
+      this.tpLabel
         .attr('x', d => d.x)
         .attr('y', d => d.y)
         .attr('dx', 1.5 * tpSize / 2) // offset to click tp easily
 
-      data.nodelabel
+      this.nodeLabel
         .attr('x', d => d.x)
         .attr('y', d => d.y)
     }
 
-    this.simulation = d3.forceSimulation()
-      .force('link',
-        d3.forceLink()
-          .id(d => d.id)
-          .distance(linkDistance)
-          .iterations(8)
-      )
-      .force('collide',
-        d3.forceCollide()
-          .strength(1.0) // collision not allowed
-          .iterations(8)
-      )
-      .force('charge', d3.forceManyBody().strength(-50))
-      .force('center', d3.forceCenter(data.width / 2, data.height / 2))
-
-    this.simulation
-      .nodes(this.graph.nodes)
-      .on('tick', ticked)
-      .force('link')
-      .links(this.graph.links)
-
-    // event callbacks for node/tp object (mouse dragging)
-    // notice use arrow-function `() => {}' NOT `function(){}`
-    // TO BIND `this`
     this.dragstarted = d => {
       if (!d3.event.active) {
         this.simulation.alphaTarget(0.3).restart()
@@ -92,5 +72,38 @@ export class ForceSimulator {
       d.fx = null
       d.fy = null
     }
+
+    // make simulation
+    this.simulation = d3.forceSimulation()
+      .force('link',
+        d3.forceLink()
+          .id(d => d.id)
+          .distance(linkDistance)
+          .iterations(8)
+      )
+      .force('collide',
+        d3.forceCollide()
+          .strength(1.0) // collision not allowed
+          .iterations(8)
+      )
+      .force('charge', d3.forceManyBody().strength(-50))
+      .force('center', d3.forceCenter(this.width / 2, this.height / 2))
+
+    this.simulation
+      .nodes(this.graph.nodes)
+      .on('tick', this.ticked)
+      .force('link')
+      .links(this.graph.links)
+
+    // default state
+    this.stopSimulation()
+  }
+
+  startSimulation () {
+    this.simulation.restart()
+  }
+
+  stopSimulation () {
+    this.simulation.stop()
   }
 }
