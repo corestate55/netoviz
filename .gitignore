@@ -2,6 +2,7 @@
 *.gem
 *.rbc
 *.jtox
+*.jsonschema
 npm-debug.log
 /node_modules/
 /.config

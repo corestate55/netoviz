@@ -35,6 +35,19 @@ Check data consistency
 ruby nwmodel-checker.rb target.json
 ```
 
+### Validate JSON
+
+Install pyang JSON Schema plugin from [EAGLE\-Open\-Model\-Profile\-and\-Tools/YangJsonTools at ToolChain](https://github.com/OpenNetworkingFoundation/EAGLE-Open-Model-Profile-and-Tools/tree/ToolChain/YangJsonTools) instead of [cmoberg/pyang\-json\-schema\-plugin](https://github.com/cmoberg/pyang-json-schema-plugin). (because cmoberg's plugin [can work only on single yang module at a time](https://github.com/cmoberg/pyang-json-schema-plugin/issues/4))
+
+Generate json schema
+```
+pyang -f json_schema -o topo.jsonschema ietf-network@2018-02-26.yang ietf-network-topology@2018-02-26.yang
+```
+and validate (using [jsonlint](https://www.npmjs.com/package/jsonlint-cli) or other json tool).
+```
+jsonlint-cli -s topo.jsonschema target.json
+```
+
 ### JSON to XML
 
 Create jtox file at first.
