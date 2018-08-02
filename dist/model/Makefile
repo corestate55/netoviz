@@ -8,7 +8,7 @@ CHECKERSRC := $(CHECKER) $(wildcard topo_checker/*.rb)
 
 all: $(TARGETXML)
 
-$(TARGETXML): $(TARGETJSON) $(JTOX) $(CHECKERSRC)
+$(TARGETXML): $(TARGETJSON) $(JTOX) $(JSONSCHEMA) $(CHECKERSRC)
 
 %.xml: %.json
 	echo "# convert json 2 xml" $<
@@ -19,5 +19,5 @@ $(TARGETXML): $(TARGETJSON) $(JTOX) $(CHECKERSRC)
 $(JTOX): $(YANGFILES)
 	pyang -f jtox -o $(JTOX) $(YANGFILES)
 
-jsonschema: $(YANGFILES)
+$(JSONSCHEMA): $(YANGFILES)
 	pyang -f json_schema -o $(JSONSCHEMA) yang/ietf-network@2018-02-26.yang yang/ietf-network@2018-02-26.yang yang/ietf-l3-unicast-topology@2018-02-26.yang yang/ietf-l2-topology@2018-06-29.yang
