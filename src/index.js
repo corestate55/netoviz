@@ -3,6 +3,7 @@
 import * as d3 from 'd3'
 import {GraphVisualizer} from './visualizer'
 import './nwmodel-vis.scss'
+import 'json-editor'
 
 function drawLegend () {
   const styles = [
@@ -94,14 +95,110 @@ function drawJsonModel (file) {
     if (error) {
       throw error
     }
+    topoData = value
+    applyJsonModel()
+  })
+}
+
+function applyJsonModel () {
     const visualizer = new GraphVisualizer(topoData)
     // for debug
     console.log('topology : ', visualizer.topoModel)
     console.log('graphs   : ', visualizer.graphs)
     // draw
     visualizer.drawGraphs()
-  })
 }
+
+function drawEditButton () {
+  d3.select('body')
+    .select('div#edit')
+    .append('button')
+    .attr('type', 'button')
+    .attr('class', 'btn-btn')
+    .on('click', onclick)
+    .append('div')
+    .text('Edit')
+
+  function onclick () {
+    drawDesign()
+  }
+}
+
+function drawPresentation() {
+  d3.select('body')
+    .select('div#design')
+    .style('display', 'none')
+
+  d3.select('body')
+    .select('div#editor')
+    .remove()
+
+  d3.select('body')
+    .select('div#presentation')
+    .style('display', '')
+}
+
+function drawDesign () {
+  d3.select('body')
+    .select('div#presentation')
+    .style('display', 'none')
+
+  d3.select('body')
+    .select('div#editor')
+    .remove()
+
+ var editorNode = d3.select('body')
+    .select('div#design')
+    .append('div')
+    .attr('id', 'editor')
+    .node()
+
+  d3.select('body')
+    .select('div#editor')
+    .append('button')
+    .attr('type', 'button')
+    .attr('class', 'btn-btn')
+    .on('click', onclickApply)
+    .append('div')
+    .text('Apply')
+
+  d3.select('body')
+    .select('div#editor')
+    .append('button')
+    .attr('type', 'button')
+    .attr('class', 'btn-btn')
+    .on('click', onclickCancel)
+    .append('div')
+    .text('Cancel')
+
+  var editor = new JSONEditor(editorNode, {
+    ajax: true,
+    schema: {
+      $ref: "/model/schema.json"
+    },
+    startval: topoData
+  })
+
+  d3.select('body')
+    .select('div#design')
+    .style('display', '')
+
+   function onclickApply () {
+    topoData = editor.getValue()
+    d3.select('body') // clear all graphs
+      .select('div#visualizer')
+      .selectAll('div.networklayer')
+      .remove()
+    drawPresentation()
+    applyJsonModel()
+  }
+
+  function onclickCancel () {
+    drawPresentation()
+  }
+}
+
+var topoData = null
 
 // Entry point
 const modelFiles = [
@@ -121,6 +218,10 @@ const modelFiles = [
     'label': 'L2 Verbose Model'
   }
 ]
+
+
 drawLegend()
 drawSelection()
+drawEditButton()
+drawPresentation()
 drawJsonModel(modelFiles.find(d => d.selected).value)

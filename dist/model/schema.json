@@ -1,0 +1,459 @@
+{
+  "description": "Serves as a top-level container for a list of networks.",
+  "$schema": "http://json-schema.org/schema#",
+  "properties": {
+    "ietf-network:networks": {
+      "type": "object",
+      "properties": {
+        "network": {
+          "description": "Describes a network.\nA network typically contains an inventory of nodes,\ntopological information (augmented through the\nnetwork-topology data model), and layering information.",
+          "x-key": "network-id",
+          "items": {
+            "properties": {
+              "l3-topology-attributes": {
+                "description": "Contains topology attributes",
+                "properties": {
+                  "flag": {
+                    "items": {
+                      "description": "Topology flags",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "description": "Name of the topology",
+                    "type": "string"
+                  }
+                }
+              },
+              "ietf-network-topology:link": {
+                "description": "A network link connects a local (source) node and\na remote (destination) node via a set of the respective\nnode's termination points.  It is possible to have several\nlinks between the same source and destination nodes.\nLikewise, a link could potentially be re-homed between\ntermination points.  Therefore, in order to ensure that we\nwould always know to distinguish between links, every link\nis identified by a dedicated link identifier.  Note that a\nlink models a point-to-point link, not a multipoint link.",
+                "x-key": "link-id",
+                "items": {
+                  "properties": {
+                    "l3-link-attributes": {
+                      "description": "Contains link attributes",
+                      "properties": {
+                        "flag": {
+                          "items": {
+                            "description": "Link flags",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "metric1": {
+                          "description": "Link Metric 1",
+                          "type": "string"
+                        },
+                        "metric2": {
+                          "description": "Link Metric 2",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Link Name",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "destination": {
+                      "description": "This container holds the logical destination of a\nparticular link.",
+                      "properties": {
+                        "dest-node": {
+                          "description": "Destination node identifier.  Must be in the same\nnetwork.",
+                          "type": "string",
+                          "x-path": "../../../nw:node/nw:node-id"
+                        },
+                        "dest-tp": {
+                          "description": "This termination point is located within the\ndestination node and terminates the link.",
+                          "type": "string",
+                          "x-path": "../../../nw:node[nw:node-id=current()/../dest-node]/termination-point/tp-id"
+                        }
+                      }
+                    },
+                    "supporting-link": {
+                      "description": "Identifies the link or links on which this link depends.",
+                      "x-key": "network-ref link-ref",
+                      "items": {
+                        "properties": {
+                          "link-ref": {
+                            "description": "This leaf identifies a link that is a part\nof this link's underlay.  Reference loops in which\na link identifies itself as its underlay, either\ndirectly or transitively, are not allowed.",
+                            "type": "string",
+                            "x-path": "/nw:networks/nw:network[nw:network-id=current()/../network-ref]/link/link-id"
+                          },
+                          "network-ref": {
+                            "description": "This leaf identifies in which underlay topology\nthe supporting link is present.",
+                            "type": "string",
+                            "x-path": "../../../nw:supporting-network/nw:network-ref"
+                          }
+                        }
+                      },
+                      "type": "array"
+                    },
+                    "source": {
+                      "description": "This container holds the logical source of a particular\nlink.",
+                      "properties": {
+                        "source-tp": {
+                          "description": "This termination point is located within the source node\nand terminates the link.",
+                          "type": "string",
+                          "x-path": "../../../nw:node[nw:node-id=current()/../source-node]/termination-point/tp-id"
+                        },
+                        "source-node": {
+                          "description": "Source node identifier.  Must be in the same topology.",
+                          "type": "string",
+                          "x-path": "../../../nw:node/nw:node-id"
+                        }
+                      }
+                    },
+                    "link-id": {
+                      "description": "The identifier of a link in the topology.\nA link is specific to a topology to which it belongs.",
+                      "type": "string"
+                    },
+                    "l2-link-attributes": {
+                      "description": "Containing L2 link attributes",
+                      "properties": {
+                        "delay": {
+                          "description": "Link delay in microseconds",
+                          "type": "string"
+                        },
+                        "flag": {
+                          "items": {
+                            "description": "Link flags",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "srlg": {
+                          "items": {
+                            "description": "List of Shared Risk Link Groups\nthis link belongs to.",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "name": {
+                          "description": "Link name",
+                          "type": "string"
+                        },
+                        "rate": {
+                          "description": "Link rate",
+                          "format": "double",
+                          "type": "number"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "array"
+              },
+              "supporting-network": {
+                "description": "An underlay network, used to represent layered network\ntopologies.",
+                "x-key": "network-ref",
+                "items": {
+                  "properties": {
+                    "network-ref": {
+                      "description": "References the underlay network.",
+                      "type": "string",
+                      "x-path": "/nw:networks/nw:network/nw:network-id"
+                    }
+                  }
+                },
+                "type": "array"
+              },
+              "network-id": {
+                "description": "Identifies a network.",
+                "type": "string"
+              },
+              "node": {
+                "description": "The inventory of nodes of this network.",
+                "x-key": "node-id",
+                "items": {
+                  "properties": {
+                    "supporting-node": {
+                      "description": "Represents another node that is in an underlay network\nand that supports this node.  Used to represent layering\nstructure.",
+                      "x-key": "network-ref node-ref",
+                      "items": {
+                        "properties": {
+                          "node-ref": {
+                            "description": "References the underlay node itself.",
+                            "type": "string",
+                            "x-path": "/nw:networks/nw:network/nw:node/nw:node-id"
+                          },
+                          "network-ref": {
+                            "description": "References the underlay network of which the\nunderlay node is a part.",
+                            "type": "string",
+                            "x-path": "../../../nw:supporting-network/nw:network-ref"
+                          }
+                        }
+                      },
+                      "type": "array"
+                    },
+                    "node-id": {
+                      "description": "Uniquely identifies a node within the containing\nnetwork.",
+                      "type": "string"
+                    },
+                    "ietf-l2-topology:l2-node-attributes": {
+                      "description": "Containing L2 node attributes",
+                      "properties": {
+                        "management-vid": {
+                          "description": "System management VID",
+                          "type": "string"
+                        },
+                        "nick-name": {
+                          "items": {
+                            "description": "Nickname of the RBridge",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "vn-id": {
+                          "items": {
+                            "description": "VNI of the VxLAN",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "sys-mac-address": {
+                          "description": "System MAC-address",
+                          "type": "string"
+                        },
+                        "description": {
+                          "description": "Node description",
+                          "type": "string"
+                        },
+                        "management-address": {
+                          "items": {
+                            "description": "System management address",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "flag": {
+                          "items": {
+                            "description": "Node operational flags",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "name": {
+                          "description": "Node name",
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "ietf-network-topology:termination-point": {
+                      "description": "A termination point can terminate a link.\nDepending on the type of topology, a termination point\ncould, for example, refer to a port or an interface.",
+                      "x-key": "tp-id",
+                      "items": {
+                        "properties": {
+                          "ietf-l2-topology:l2-termination-point-attributes": {
+                            "description": "Containing L2 TP attributes",
+                            "properties": {
+                              "l2-termination-point-type": {
+                                "description": "Indicates termination-point type\nspecific attributes",
+                                "properties": {
+                                  "legacy": {
+                                    "properties": {
+                                      "layer-2-address": {
+                                        "description": "Interface Layer 2 address",
+                                        "type": "string"
+                                      },
+                                      "encapsulation": {
+                                        "description": "Encapsulation type of this termination point.",
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "ethernet": {
+                                    "properties": {
+                                      "mac-address": {
+                                        "description": "Interface MAC address",
+                                        "type": "string"
+                                      },
+                                      "port-vlan-id": {
+                                        "description": "Port VLAN ID",
+                                        "type": "string"
+                                      },
+                                      "eth-encapsulation": {
+                                        "description": "Encapsulation type of this\nternimation point.",
+                                        "type": "string"
+                                      },
+                                      "vlan-id-name": {
+                                        "description": "Interface configured VLANs",
+                                        "x-key": "vlan-id",
+                                        "items": {
+                                          "properties": {
+                                            "vlan-id": {
+                                              "description": "VLAN ID",
+                                              "type": "string"
+                                            },
+                                            "vlan-name": {
+                                              "description": "VLAN name",
+                                              "type": "string"
+                                            }
+                                          }
+                                        },
+                                        "type": "array"
+                                      }
+                                    }
+                                  }
+                                }
+                              },
+                              "description": {
+                                "description": "Port description",
+                                "type": "string"
+                              },
+                              "maximum-frame-size": {
+                                "description": "Maximum frame size",
+                                "type": "string"
+                              },
+                              "tp-state": {
+                                "description": "State of the termination point",
+                                "enum": [
+                                  "in-use",
+                                  "blocking",
+                                  "down",
+                                  "others"
+                                ],
+                                "type": "string"
+                              }
+                            }
+                          },
+                          "supporting-termination-point": {
+                            "description": "This list identifies any termination points on which a\ngiven termination point depends or onto which it maps.\nThose termination points will themselves be contained\nin a supporting node.  This dependency information can be\ninferred from the dependencies between links.  Therefore,\nthis item is not separately configurable.  Hence, no\ncorresponding constraint needs to be articulated.\nThe corresponding information is simply provided by the\nimplementing system.",
+                            "x-key": "network-ref node-ref tp-ref",
+                            "items": {
+                              "properties": {
+                                "node-ref": {
+                                  "description": "This leaf identifies in which node the supporting\ntermination point is present.",
+                                  "type": "string",
+                                  "x-path": "../../../nw:supporting-node/nw:node-ref"
+                                },
+                                "tp-ref": {
+                                  "description": "Reference to the underlay node (the underlay node must\nbe in a different topology).",
+                                  "type": "string",
+                                  "x-path": "/nw:networks/nw:network[nw:network-id=current()/../network-ref]/nw:node[nw:node-id=current()/../node-ref]/termination-point/tp-id"
+                                },
+                                "network-ref": {
+                                  "description": "This leaf identifies in which topology the\nsupporting termination point is present.",
+                                  "type": "string",
+                                  "x-path": "../../../nw:supporting-node/nw:network-ref"
+                                }
+                              }
+                            },
+                            "type": "array"
+                          },
+                          "tp-id": {
+                            "description": "Termination point identifier.",
+                            "type": "string"
+                          },
+                          "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                            "description": "Contains termination point attributes",
+                            "properties": {
+                              "termination-point-type": {
+                                "description": "Indicates the termination point type",
+                                "properties": {
+                                  "interface-name": {
+                                    "properties": {
+                                      "interface-name": {
+                                        "description": "Name of the interface.  The name can (but does not\nhave to) correspond to an interface reference of a\ncontaining node's interface, i.e., the path name of a\ncorresponding interface data node on the containing\nnode reminiscent of data type interface-ref defined\nin RFC 8343. It should be noted that data type\ninterface-ref of RFC 8343 cannot be used directly,\n\nas this data type is used to reference an interface\nin a datastore of a single node in the network, not\nto uniquely reference interfaces across a network.",
+                                        "type": "string"
+                                      }
+                                    }
+                                  },
+                                  "ip": {
+                                    "properties": {
+                                      "ip-address": {
+                                        "items": {
+                                          "description": "IPv4 or IPv6 address.",
+                                          "type": "string"
+                                        },
+                                        "type": "array"
+                                      }
+                                    }
+                                  },
+                                  "unnumbered": {
+                                    "properties": {
+                                      "unnumbered-id": {
+                                        "description": "Unnumbered interface identifier.\nThe identifier will correspond to the ifIndex value\nof the interface, i.e., the ifIndex value of the\nifEntry that represents the interface in\nimplementations where the Interfaces Group MIB\n(RFC 2863) is supported.",
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "type": "array"
+                    },
+                    "ietf-l3-unicast-topology:l3-node-attributes": {
+                      "description": "Contains node attributes",
+                      "properties": {
+                        "router-id": {
+                          "items": {
+                            "description": "Router-id for the node",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "flag": {
+                          "items": {
+                            "description": "Node flags",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "name": {
+                          "description": "Node name",
+                          "type": "string"
+                        },
+                        "prefix": {
+                          "description": "A list of prefixes along with their attributes",
+                          "x-key": "prefix",
+                          "items": {
+                            "$ref": "#/definitions/l3-prefix-attributes"
+                          },
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                },
+                "type": "array"
+              },
+              "network-types": {
+                "description": "Serves as an augmentation target.\nThe network type is indicated through corresponding\npresence containers augmented into this container.",
+                "properties": {
+                  "l3-unicast-topology": {
+                    "description": "The presence of the container node indicates L3 Unicast\ntopology"
+                  },
+                  "l2-network": {
+                    "description": "The presence of the container node indicates\nL2 Topology"
+                  }
+                }
+              },
+              "ietf-l2-topology:l2-network-attributes": {
+                "description": "Containing L2 network attributes",
+                "properties": {
+                  "flag": {
+                    "items": {
+                      "description": "L2 network flags",
+                      "type": "string"
+                    },
+                    "type": "array"
+                  },
+                  "name": {
+                    "description": "Name of the L2 network",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

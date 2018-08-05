@@ -4,7 +4,8 @@
   "description": "RFC8345-based network topology model exercise",
   "main": "src/index.js",
   "dependencies": {
-    "d3": "^4.13.0"
+    "d3": "^4.13.0",
+    "json-editor": "^0.7.28"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
