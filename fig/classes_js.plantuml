@@ -1,0 +1,293 @@
+@startuml
+
+class BaseContainer {
+}
+
+class L2NetworkAttribute {
+      +name
+      +flag
+}
+
+class L2Network {
+      +attribute
+}
+L2Network --|> Network
+L2Network "1" -- "1" L2NetworkAttribute
+L2Network "1" o-- "0..*" L2Node
+L2Network "1" o-- "0..*" L2Link
+
+class L3NetworkAttribute {
+      +name
+      +flag
+}
+
+class L3Network {
+      +attribute
+}
+L3Network --|> Network
+L3Network "1" -- "1" L3NetworkAttribute
+L3Network "1" o-- "0..*" L3Node
+L3Network "1" o-- "0..*" L3Link
+
+class L2NodeAttribute {
+      +name
+      +description
+      +mgmtAddr
+      +sysMacAddr
+      +mgmtVid
+      +flag
+}
+
+class L2Node {
+      +attribute
+      +toHtml()
+}
+L2Node --|> Node
+L2Node "1" -- "1" L2NodeAttribute
+L2Node "1" o-- "0..*" L2TermPoint
+
+class L3Prefix {
+      +prefix
+      +metric
+      +flag
+      +toHtml()
+}
+
+class L3NodeAttribute {
+      +name
+      +description
+      +mgmtAddr
+      +sysMacAddr
+      +mgmtVid
+      +flag
+      +toHtml()
+}
+L3NodeAttribute "1" -- "0..*" L3Prefix
+
+class L3Node {
+      +attribute
+      +constructor()
+}
+L3Node --|> Node
+L3Node "1" -- "1" L3NodeAttribute
+L3Node "1" o-- "0..*" L3TermPoint
+
+class VlanIdName {
+      +vlanId
+      +vlanName
+      +toHtml()
+}
+
+class L2TPAttribute {
+      +description
+      +maxFrameSize
+      +macAddr
+      +ethEncap
+      +portVlanId
+      +vlanIdName
+      +tpState
+      +toHtml()
+}
+L2TPAttribute "1" -- "0..*" VlanIdName
+
+class L2TermPoint {
+      +attribute
+      +constructor()
+}
+L2TermPoint --|> TermPoint
+L2TermPoint "1" -- "1" L2TPAttribute
+
+class L3TPAttribute {
+      +ipAddress
+      +constructor()
+      +toHtml()
+}
+
+class L3TermPoint {
+      +constructor()
+      +attribute
+}
+L3TermPoint --|> TermPoint
+L3TermPoint "1" -- "1" L3TPAttribute
+
+class L2LinkAttribute {
+      +name
+      +flag
+      +rate
+      +delay
+      +srlg
+}
+
+class L2Link {
+      +constructor()
+      +attribute
+}
+L2Link --|> Link
+L2Link "1" -- "1" L2LinkAttribute
+
+class L3LinkAttribute {
+      +name
+      +flag
+      +metric1
+      +metric2
+}
+
+class L3Link {
+      +constructor()
+      +attribute
+}
+L3Link --|> Link
+L3Link "1" -- "1" L3LinkAttribute
+
+class Networks {
+      +networks
+}
+Networks "1" o-- "0..*" Network
+
+class SupportingNetwork {
+      +networkRef
+      +refPath
+}
+
+class NetworkTypes {
+      +data
+      +types
+      +hasType()
+}
+
+class Network {
+      +networkTypes
+      +name
+      +id
+      +path
+      +isTypeLayer3()
+      +isTypeLayer2()
+}
+Network --|> BaseContainer
+Network "1" -- "0..*" NetworkTypes
+Network "1" -- "0..*" SupportingNetwork
+Network "1" o-- "0..*" Link
+Network "1" o-- "0..*" Node
+
+class SupportingNode {
+      +networkRef
+      +nodeRef
+      +refPath
+}
+
+class Node {
+      +name
+      +id
+      +parentPath
+      +path
+      +findTpByPath()      
+}
+Node "1" -- "0..*" SupportingNode
+Node <.. GraphNode
+
+class SupportingTermPoint {
+      +networkRef
+      +nodeRef
+      +tpRef
+      +refPath
+}
+
+class TermPoint {
+      +name
+      +id
+      +parentPath
+      +path
+      +graphNode()
+      +graphLink()
+}
+TermPoint "1" -- "0..*" SupportingTermPoint
+TermPoint <.. GraphNode
+TermPoint <.. GraphLink
+
+class TpRef {
+      +nodeRef
+      +tpRef
+      +refPath
+}
+
+class SupportingLink {
+      +networkRef
+      +linkRef
+}
+
+class Link {
+      +name
+      +path
+      +source
+      +destination
+}
+Link "1" -- "2" TpRef
+Link "1" -- "0..*" SupportingLink
+Link <.. GraphLink
+
+class Graphs {
+      +topoModel
+      +graphs
+      +allGraphNodes
+      +findGraphNodeByPath()
+}
+Graphs --|> BaseContainer
+Graphs "1" *-- "1" Networks
+Graphs "1" *-- "1" Graph
+
+class Graph {
+      +name
+      +nodes
+      +links
+      +tpTypeNodes()
+      +nodeTypeNodes()
+}
+Graph "1" o-- "0..*" GraphNode
+Graph "1" o-- "0..*" GraphLink
+
+class GraphNode {
+      +type
+      +name
+      +id
+      +path
+      +children
+      +parents
+      +attribute
+      +addParent()
+}
+
+class GraphLink {
+      +name
+      +path
+      +type
+      +sourcePath
+      +targetPath
+      +sourceId
+      +targetId
+      +attribute
+}
+
+class GraphVisualizer {
+      +drawGraphs()
+}
+GraphVisualizer --|> Graphs
+GraphVisualizer "1" o-- "1" OperationalVisualizer
+
+class OperationalVisualizer {
+      +setEventCallBack()
+      +setClearButtonEventCallBack()
+}
+OperationalVisualizer --|> ForceSimulatedVisualizer
+
+class ForceSimulatedVisualizer {
+      +startSimulation()
+      +stopSimulation()
+}
+ForceSimulatedVisualizer --|> SingleGraphVisualizer
+
+class SingleGraphVisualizer {
+      +graph
+      +findGraphNodeByPath()
+}
+
+@enduml
