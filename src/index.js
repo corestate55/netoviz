@@ -115,11 +115,11 @@ function drawEditButton () {
     .append('button')
     .attr('type', 'button')
     .attr('class', 'btn-btn')
-    .on('click', onclick)
+    .on('click', onClick)
     .append('div')
     .text('Edit')
 
-  function onclick () {
+  function onClick () {
     drawDesign()
   }
 }
@@ -158,7 +158,7 @@ function drawDesign () {
     .append('button')
     .attr('type', 'button')
     .attr('class', 'btn-btn')
-    .on('click', onclickApply)
+    .on('click', onClickApply)
     .append('div')
     .text('Apply')
 
@@ -167,9 +167,16 @@ function drawDesign () {
     .append('button')
     .attr('type', 'button')
     .attr('class', 'btn-btn')
-    .on('click', onclickCancel)
+    .on('click', onClickCancel)
     .append('div')
     .text('Cancel')
+
+  d3.select('body')
+    .select('div#editor')
+    .append('input')
+    .attr('type', 'file')
+    .attr('id', 'file')
+    .on('change', onChangeFile)
 
   var editor = new JSONEditor(editorNode, {
     ajax: true,
@@ -183,7 +190,7 @@ function drawDesign () {
     .select('div#design')
     .style('display', '')
 
-   function onclickApply () {
+  function onClickApply () {
     topoData = editor.getValue()
     d3.select('body') // clear all graphs
       .select('div#visualizer')
@@ -193,8 +200,40 @@ function drawDesign () {
     applyJsonModel()
   }
 
-  function onclickCancel () {
+  function onClickCancel () {
     drawPresentation()
+  }
+
+  function onChangeFile(e) {
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+    } else {
+        alert('The File APIs are not supported in this browser.')
+        return
+    }
+
+    if (!window.confirm('Data will be overwritten. Are you sure?')) {
+      d3.select('body')
+        .select('div#editor')
+        .select('input#file')
+        .property('value', '')
+      return
+    }
+
+    var file = event.target.files[0]
+    var reader = new FileReader()
+
+    reader.onload = function(event) {
+      d3.json(event.target.result, function(error, value) {
+        editor.setValue(value)
+        alert('Load completed.')
+
+        d3.select('body')
+          .select('div#editor')
+          .select('input#file')
+          .property('value', '')
+       })
+    }
+    reader.readAsDataURL(file)
   }
 }
 
