@@ -91,7 +91,7 @@ function drawSelection () {
 }
 
 function drawJsonModel (file) {
-  d3.json(`/model/${file}`, (error, topoData) => {
+  d3.json(`/model/${file}`, (error, value) => {
     if (error) {
       throw error
     }
@@ -101,12 +101,12 @@ function drawJsonModel (file) {
 }
 
 function applyJsonModel () {
-    const visualizer = new GraphVisualizer(topoData)
-    // for debug
-    console.log('topology : ', visualizer.topoModel)
-    console.log('graphs   : ', visualizer.graphs)
-    // draw
-    visualizer.drawGraphs()
+  const visualizer = new GraphVisualizer(topoData)
+  // for debug
+  console.log('topology : ', visualizer.topoModel)
+  console.log('graphs   : ', visualizer.graphs)
+  // draw
+  visualizer.drawGraphs()
 }
 
 function drawEditButton () {
@@ -124,7 +124,7 @@ function drawEditButton () {
   }
 }
 
-function drawPresentation() {
+function drawPresentation () {
   d3.select('body')
     .select('div#design')
     .style('display', 'none')
@@ -147,7 +147,7 @@ function drawDesign () {
     .select('div#editor')
     .remove()
 
- var editorNode = d3.select('body')
+  var editorNode = d3.select('body')
     .select('div#design')
     .append('div')
     .attr('id', 'editor')
@@ -173,6 +173,15 @@ function drawDesign () {
 
   d3.select('body')
     .select('div#editor')
+    .append('button')
+    .attr('type', 'button')
+    .attr('class', 'btn-btn')
+    .on('click', onClickDownload)
+    .append('div')
+    .text('Download')
+
+  d3.select('body')
+    .select('div#editor')
     .append('input')
     .attr('type', 'file')
     .attr('id', 'file')
@@ -181,7 +190,7 @@ function drawDesign () {
   var editor = new JSONEditor(editorNode, {
     ajax: true,
     schema: {
-      $ref: "/model/schema.json"
+      $ref: '/model/schema.json'
     },
     startval: topoData
   })
@@ -204,11 +213,22 @@ function drawDesign () {
     drawPresentation()
   }
 
-  function onChangeFile(e) {
+  function onClickDownload () {
+    var json = JSON.stringify(editor.getValue(), undefined, '\t')
+    var downloadLinkNode = d3.select('body')
+      .append('a')
+      .node()
+    downloadLinkNode.download = 'topo.json'
+    downloadLinkNode.href = URL.createObjectURL(new Blob([json], {type: 'text.plain'}))
+    downloadLinkNode.dataset.downloadurl = ['application/json', downloadLinkNode.download, downloadLinkNode.href].join(':')
+    downloadLinkNode.click()
+  }
+
+  function onChangeFile (e) {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
     } else {
-        alert('The File APIs are not supported in this browser.')
-        return
+      alert('The File APIs are not supported in this browser.')
+      return
     }
 
     if (!window.confirm('Data will be overwritten. Are you sure?')) {
@@ -222,8 +242,8 @@ function drawDesign () {
     var file = event.target.files[0]
     var reader = new FileReader()
 
-    reader.onload = function(event) {
-      d3.json(event.target.result, function(error, value) {
+    reader.onload = function (event) {
+      d3.json(event.target.result, function (error, value) {
         editor.setValue(value)
         alert('Load completed.')
 
@@ -231,7 +251,7 @@ function drawDesign () {
           .select('div#editor')
           .select('input#file')
           .property('value', '')
-       })
+      })
     }
     reader.readAsDataURL(file)
   }
@@ -257,7 +277,6 @@ const modelFiles = [
     'label': 'L2 Verbose Model'
   }
 ]
-
 
 drawLegend()
 drawSelection()
