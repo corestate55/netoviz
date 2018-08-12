@@ -1,6 +1,9 @@
+const MODE = 'development'
+const enableSourceMap = (MODE === 'development')
+
 module.exports = {
   entry: `./src/index.js`,
-  mode: "development",
+  mode: MODE,
   devServer: {
     contentBase: 'dist',
     compress: true,
@@ -11,7 +14,7 @@ module.exports = {
     disableHostCheck: true,
     watchOptions: { aggregateTimeout: 500, poll: 2000 },
     headers: {
-      "Access-Control-Allow-Origin": "*"
+      'Access-Control-Allow-Origin': '*'
     }
   },
   output: {
@@ -28,7 +31,21 @@ module.exports = {
             loader: 'eslint-loader'
           }
         ]
+      },
+      {
+        test: /\.css/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              url: false,
+              minimize: true,
+              sourceMap: enableSourceMap
+            }
+          }
+        ]
       }
     ]
   }
-};
+}

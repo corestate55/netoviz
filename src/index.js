@@ -2,6 +2,7 @@
 
 import * as d3 from 'd3'
 import {GraphVisualizer} from './visualizer'
+import './nwmodel-vis.css'
 
 function drawLegend () {
   var styles = [
