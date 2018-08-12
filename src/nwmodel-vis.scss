@@ -1,0 +1,132 @@
+// color selection
+// https://www.colorcombos.com/color-schemes/175/ColorCombo175.html
+
+select {
+  font-size: 20px;
+}
+
+svg {
+  border: solid 1px;
+  margin: 10px;
+}
+
+text {
+  fill: #303030;
+  &.selectready {
+    fill: #E4001B;
+    stroke-width: 1px;
+  }
+}
+
+%circlebase {
+  fill: #FEF6EB;
+  stroke: #6B824A;
+  stroke-width: 1px;
+}
+
+circle {
+  // node circle: core(center) circle
+  &.node {
+    @extend %circlebase;
+  }
+
+  // fill color
+  $select_child_color: #FFC3CE;
+  $select_parent_color: coral;
+  $select_color: #6B824A;
+  $select_ready_color: #E4001B;
+
+  // node circle: outer circle
+  &.nodecircle {
+    fill: #c1d590;
+    stroke: none;
+
+    &.selectedchildren {
+      fill: $select_child_color;
+    }
+    &.selectedparents {
+      fill: $select_parent_color;
+    }
+    &.selected {
+      fill: $select_color;
+    }
+    &.selectready {
+      fill: $select_ready_color;
+      opacity: 0.5;
+    }
+  }
+
+  // termination point circle
+  &.tp {
+    @extend %circlebase;
+
+    &.selectedchildren {
+      fill: $select_child_color;
+    }
+    &.selectedparents {
+      fill: $select_parent_color;
+    }
+    &.selected {
+      fill: $select_color;
+    }
+    &.selectready {
+      stroke: $select_ready_color;
+      stroke-opacity: 0.5;
+      stroke-width: 10px;
+    }
+  }
+}
+
+.link {
+  stroke: #636563;
+  stroke-width: 1px;
+}
+
+div {
+  &.networklayer {
+    float: left;
+  }
+
+  &.tooltip {
+    background: #000;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    height: auto;
+    line-height: 1.1;
+    min-height: 25px; // text font size * 1.5
+    padding: 10px;
+    position: absolute;
+    visibility: hidden;
+    width: auto;
+
+    &:after {
+      border: 12px solid transparent;
+      border-left-width: 0;
+      border-right-color: #000;
+      border-right-color: rgba(0, 0, 0, 0.7);
+      content: "";
+      display: block;
+      left: -12px;
+      position: absolute;
+      top: 10px;
+      width: 0;
+    }
+  }
+}
+
+// styles for tooltip text
+.attr {
+  color: lightgreen;
+}
+
+// node/termination-point label
+.tplabel {
+  font-size: 15px;
+  dominant-baseline: central;
+}
+.nodelabel {
+  font-size: 20px;
+  dominant-baseline: central;
+}

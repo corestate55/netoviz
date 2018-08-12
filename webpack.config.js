@@ -33,7 +33,7 @@ module.exports = {
         ]
       },
       {
-        test: /\.css/,
+        test: /\.scss$/,
         use: [
           'style-loader',
           {
@@ -41,6 +41,13 @@ module.exports = {
             options: {
               url: false,
               minimize: true,
+              sourceMap: enableSourceMap,
+              importLoaders: 2 // postcss-loader, sass-loader
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
               sourceMap: enableSourceMap
             }
           }
