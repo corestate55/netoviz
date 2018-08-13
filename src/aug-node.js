@@ -14,7 +14,7 @@ class L2NodeAttribute {
   }
 
   toHtml () {
-    var mgmtIpStr = this.mgmtAddr.map(d => '<li>' + d + '</li>')
+    const mgmtIpStr = this.mgmtAddr.map(d => `<li>${d}</li>`)
     return `
 <ul>
   <li><span class="attr">Name:</span> ${this.name}</li>
@@ -30,7 +30,7 @@ class L2NodeAttribute {
 export class L2Node extends Node {
   constructor (data, nwPath, nwId, nodeNum) {
     super(data, nwPath, nwId, nodeNum)
-    let attrKey = 'ietf-l2-topology:l2-node-attributes' // alias
+    const attrKey = 'ietf-l2-topology:l2-node-attributes' // alias
     this.attribute = new L2NodeAttribute(data[attrKey] || {}) // avoid undefined
   }
 
@@ -47,11 +47,11 @@ class L3Prefix {
   }
 
   toHtml () {
-    return [
-      '<span class="attr">Prefix:</span>' + this.prefix,
-      '<span class="attr">Metric:</span>' + this.metric,
-      '<span class="attr">Flag:</span>' + this.flag
-    ].join(', ')
+    return `
+<span class="attr">Prefix:</span> ${this.prefix},
+<span class="attr">Metric:</span> ${this.metric},
+<span class="attr">Flag:</span> ${this.flag}
+`
   }
 }
 
@@ -67,7 +67,7 @@ class L3NodeAttribute {
   }
 
   toHtml () {
-    var prefixList = this.prefix.map(d => {
+    const prefixList = this.prefix.map(d => {
       return ['<li>', d.toHtml(), '</li>'].join('')
     })
     return `
@@ -84,7 +84,7 @@ class L3NodeAttribute {
 export class L3Node extends Node {
   constructor (data, nwPath, nwId, nodeNum) {
     super(data, nwPath, nwId, nodeNum)
-    let attrKey = 'ietf-l3-unicast-topology:l3-node-attributes' // alias
+    const attrKey = 'ietf-l3-unicast-topology:l3-node-attributes' // alias
     this.attribute = new L3NodeAttribute(data[attrKey] || {}) // avoid undefined
   }
 

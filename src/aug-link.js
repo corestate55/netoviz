@@ -15,7 +15,7 @@ class L2LinkAttribute {
 export class L2Link extends Link {
   constructor (data, nwPath) {
     super(data, nwPath)
-    let attrKey = 'ietf-l2-topology:l2-link-attributes' // alias
+    const attrKey = 'ietf-l2-topology:l2-link-attributes' // alias
     this.attribute = new L2LinkAttribute(data[attrKey] || {}) // avoid undefined
   }
 }
@@ -32,7 +32,7 @@ class L3LinkAttribute {
 export class L3Link extends Link {
   constructor (data, nwPath) {
     super(data, nwPath)
-    let attrKey = 'ietf-l3-unicast-topology:l3-link-attributes' // alias
+    const attrKey = 'ietf-l3-unicast-topology:l3-link-attributes' // alias
     this.attribute = new L3LinkAttribute(data[attrKey] || {}) // avoid undefined
   }
 }

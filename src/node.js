@@ -1,6 +1,6 @@
 'use strict'
 
-import {TermPoint} from './term-points'
+import {TermPoint} from './term-point'
 import {GraphNode} from './graph'
 
 class SupportingNode {
@@ -17,13 +17,14 @@ export class Node {
     this.id = nwId + nodeNum * 100
     this.parentPath = nwPath
     this.path = [this.parentPath, this.name].join('/')
+    this.attribute = {} // for extension
     this.constructSupportingNodes(data)
     this.constructTermPts(data)
   }
 
   constructTermPts (data) {
     this.termPoints = []
-    var tpKey = ['ietf-network-topology:termination-point'] // alias
+    const tpKey = ['ietf-network-topology:termination-point'] // alias
     if (data[tpKey]) {
       this.termPoints = data[tpKey].map((d, i) => {
         return this.newTP(d, i + 1)
@@ -59,7 +60,7 @@ export class Node {
       'id': this.id,
       'path': this.path,
       'children': this.makeChildren(),
-      'attribute': this.attribute || {}
+      'attribute': this.attribute
     })
   }
 }

@@ -17,12 +17,13 @@ export class TermPoint {
     this.id = nodeId + tpNum
     this.parentPath = nodePath
     this.path = [this.parentPath, this.name].join('/')
+    this.attribute = {} // for extension
     this.constructSupportingTermPoints(data)
   }
 
   constructSupportingTermPoints (data) {
     this.supportingTermPoints = []
-    var stpKey = 'supporting-termination-point' // alias
+    const stpKey = 'supporting-termination-point' // alias
     if (data[stpKey]) {
       this.supportingTermPoints = data[stpKey].map(
         d => new SupportingTermPoint(d)
@@ -31,7 +32,7 @@ export class TermPoint {
   }
 
   makeChildren () {
-    var children = this.supportingTermPoints.map(stp => stp.refPath)
+    const children = this.supportingTermPoints.map(stp => stp.refPath)
     children.unshift(this.parentPath)
     return children
   }
@@ -43,21 +44,21 @@ export class TermPoint {
       'id': this.id,
       'path': this.path,
       'children': this.makeChildren(),
-      'attribute': this.attribute || {}
+      'attribute': this.attribute
     })
   }
 
   graphLink () {
-    var pathList = this.parentPath.split('/')
-    var nodeName = pathList.pop()
-    var linkName = [nodeName, this.name].join(',')
+    const pathList = this.parentPath.split('/')
+    const nodeName = pathList.pop()
+    const linkName = [nodeName, this.name].join(',')
     return new GraphLink({
       'type': 'node-tp',
       'sourcePath': this.parentPath,
       'targetPath': this.path,
       'name': linkName,
       'path': [pathList, linkName].join('/'),
-      'attribute': this.attribute || {}
+      'attribute': {} // Notice (Link attribute does not implemented yet)
     })
   }
 }

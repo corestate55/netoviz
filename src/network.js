@@ -29,10 +29,7 @@ class NetworkTypes {
   }
 
   hasType (type) {
-    if (this.types && this.types.find(d => d === type)) {
-      return true
-    }
-    return false
+    return this.types && this.types.find(d => d === type)
   }
 }
 
@@ -62,14 +59,14 @@ export class Network extends BaseContainer {
   }
 
   makeGraphNodesAsTp () {
-    var tps = this.nodes.map(node => {
+    const tps = this.nodes.map(node => {
       return node.termPoints.map(tp => tp.graphNode())
     })
     return this.flatten(tps)
   }
 
   makeGraphNodes () {
-    var nodes = [this.makeGraphNodesAsNode(), this.makeGraphNodesAsTp()]
+    const nodes = [this.makeGraphNodesAsNode(), this.makeGraphNodesAsTp()]
     return this.flatten(nodes)
   }
 
@@ -88,7 +85,7 @@ export class Network extends BaseContainer {
 
   constructLinks (data) {
     this.links = []
-    var linkKey = 'ietf-network-topology:link' // alias
+    const linkKey = 'ietf-network-topology:link' // alias
     if (data[linkKey]) {
       this.links = data[linkKey].map((d) => {
         return this.newLink(d)
@@ -101,23 +98,22 @@ export class Network extends BaseContainer {
   }
 
   makeGraphLinks () {
-    var links = this.links.map(link => link.graphLink())
-    var linksNodeTp = this.nodes.map(node => {
+    const links = this.links.map(link => link.graphLink())
+    const linksNodeTp = this.nodes.map(node => {
       return node.termPoints.map(tp => tp.graphLink())
     })
-    linksNodeTp = this.flatten(linksNodeTp)
-    return this.flatten([links, linksNodeTp])
+    return this.flatten([links, this.flatten(linksNodeTp)])
   }
 
   isTypeLayer3 () {
     // network type check
-    let nwL3TypeKey = 'ietf-l3-unicast-topology:l3-unicast-topology' // alias
+    const nwL3TypeKey = 'ietf-l3-unicast-topology:l3-unicast-topology' // alias
     return this.networkTypes.hasType(nwL3TypeKey)
   }
 
   isTypeLayer2 () {
     // network type check
-    let nwL2TypeKey = 'ietf-l2-topology:l2-network' // alias
+    const nwL2TypeKey = 'ietf-l2-topology:l2-network' // alias
     return this.networkTypes.hasType(nwL2TypeKey)
   }
 }

@@ -6,8 +6,8 @@ import {SingleGraphVisualizer} from './single-visualizer'
 export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
-    var tpSize = 10 // tp circle radius
-    var nodeSize = 40 // node width/height
+    const tpSize = 10 // tp circle radius
+    const nodeSize = 40 // node width/height
 
     // functions to set parameters for simulation
     function linkDistance (d) {

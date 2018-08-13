@@ -5,24 +5,24 @@ import {GraphVisualizer} from './visualizer'
 import './nwmodel-vis.scss'
 
 function drawLegend () {
-  var styles = [
+  const styles = [
     { 'class': 'normal', 'label': 'normal' },
     { 'class': 'selectready', 'label': 'select' },
     { 'class': 'selected', 'label': 'click' },
     { 'class': 'selectedchildren', 'label': 'child' },
     { 'class': 'selectedparents', 'label': 'parent' }
   ]
-  var objSize = 40
-  var xdp = 30
-  var ydp = 10
-  var legend = d3.select('body')
+  const objSize = 40
+  const xdp = 30
+  const ydp = 10
+  const legend = d3.select('body')
     .select('div#legend')
     .append('svg')
     .attr('width', xdp + (xdp + objSize) * styles.length)
     .attr('height', ydp + objSize + ydp + objSize / 2 + ydp * 3)
-  var nodeY = ydp + objSize / 2
+  const nodeY = ydp + objSize / 2
 
-  function nodeCircleX (d, i) {
+  const nodeCircleX = (d, i) => {
     return xdp + objSize / 2 + (xdp + objSize) * i
   }
 
@@ -42,7 +42,8 @@ function drawLegend () {
     .attr('cx', nodeCircleX)
     .attr('cy', nodeY)
     .attr('class', d => ['node', d.class].join(' '))
-  var tpY = nodeY + objSize / 2 + ydp + objSize / 4
+
+  const tpY = nodeY + objSize / 2 + ydp + objSize / 4
   legend.selectAll('circle.tp')
     .data(styles)
     .enter()
@@ -51,7 +52,8 @@ function drawLegend () {
     .attr('cx', nodeCircleX)
     .attr('cy', tpY)
     .attr('class', d => ['tp', d.class].join(' '))
-  var textY = tpY + objSize / 4 + ydp * 2
+
+  const textY = tpY + objSize / 4 + ydp * 2
   legend.selectAll('text')
     .data(styles)
     .enter()
@@ -62,12 +64,19 @@ function drawLegend () {
 }
 
 function drawSelection () {
-  var select = d3.select('body')
+  const modelSelector = d3.select('body')
     .select('div#modelselector')
     .append('select')
     .attr('id', 'modelselect')
-    .on('change', onchange)
-  var options = select.selectAll('option')
+    .on('change', () => {
+      const selectValue = d3.select('select').property('value')
+      d3.select('body') // clear all graphs
+        .select('div#visualizer')
+        .selectAll('div.networklayer')
+        .remove()
+      drawJsonModel(selectValue)
+    })
+  const options = modelSelector.selectAll('option')
     .data(modelFiles)
     .enter()
     .append('option')
@@ -75,26 +84,17 @@ function drawSelection () {
     .text(d => d.label)
 
   // set default selection
-  var selectedFile = modelFiles.find(d => d.selected)
+  const selectedFile = modelFiles.find(d => d.selected)
   options.filter(d => d.value === selectedFile.value)
     .attr('selected', true)
-
-  function onchange () {
-    var selectValue = d3.select('select').property('value')
-    d3.select('body') // clear all graphs
-      .select('div#visualizer')
-      .selectAll('div.networklayer')
-      .remove()
-    drawJsonModel(selectValue)
-  }
 }
 
 function drawJsonModel (file) {
-  d3.json('/model/' + file, (error, topoData) => {
+  d3.json(`/model/${file}`, (error, topoData) => {
     if (error) {
       throw error
     }
-    var visualizer = new GraphVisualizer(topoData)
+    const visualizer = new GraphVisualizer(topoData)
     // for debug
     console.log('topology : ', visualizer.topoModel)
     console.log('graphs   : ', visualizer.graphs)
@@ -104,7 +104,7 @@ function drawJsonModel (file) {
 }
 
 // Entry point
-var modelFiles = [
+const modelFiles = [
   {
     'selected': true,
     'value': 'target3.json',

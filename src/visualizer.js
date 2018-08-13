@@ -11,11 +11,11 @@ export class GraphVisualizer extends Graphs {
   drawGraphs () {
     // hand-over the operation through all layers
     // NOTICE: BIND `this`
-    var callback = path => this.findGraphNodeByPath(path)
+    const callback = path => this.findGraphNodeByPath(path)
     // entrypoint: draw each layer
-    this.graphs.forEach(graph => {
-      var singleGraphVisualizer = new OperationalVisualizer(graph, callback)
+    for (const graph of this.graphs) {
+      const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
       singleGraphVisualizer.startSimulation()
-    })
+    }
   }
 }

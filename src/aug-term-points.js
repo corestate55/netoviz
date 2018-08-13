@@ -1,6 +1,6 @@
 'use strict'
 
-import {TermPoint} from './term-points'
+import {TermPoint} from './term-point'
 
 class VlanIdName {
   constructor (data) {
@@ -9,10 +9,10 @@ class VlanIdName {
   }
 
   toHtml () {
-    return [
-      '<span class="attr">VID:</span>' + this.vlanId,
-      '<span class="attr">Name:</span>' + this.vlanName
-    ].join(',')
+    return `
+<span class="attr">VID:</span> ${this.vlanId},
+<span class="attr">Name:</span> ${this.vlanName}
+`
   }
 }
 
@@ -32,8 +32,8 @@ class L2TPAttribute {
   }
 
   toHtml () {
-    var portIdNameStr = this.vlanIdName.map(
-      d => '<li>' + d.toHtml() + '</li>'
+    const portIdNameStr = this.vlanIdName.map(
+      d => `<li>${d.toHtml()}</li>`
     )
     return `
 <ul>
@@ -53,7 +53,7 @@ class L2TPAttribute {
 export class L2TermPoint extends TermPoint {
   constructor (data, nodePath, nodeId, tpNum) {
     super(data, nodePath, nodeId, tpNum)
-    let attrKey = 'ietf-l2-topology:l2-termination-point-attributes' // alias
+    const attrKey = 'ietf-l2-topology:l2-termination-point-attributes' // alias
     this.attribute = new L2TPAttribute(data[attrKey] || {}) // avoid undefined
   }
 }
@@ -77,7 +77,7 @@ class L3TPAttribute {
 export class L3TermPoint extends TermPoint {
   constructor (data, nodePath, nodeId, tpNum) {
     super(data, nodePath, nodeId, tpNum)
-    let attrKey = 'ietf-l3-unicast-topology:l3-termination-point-attributes' // alias
+    const attrKey = 'ietf-l3-unicast-topology:l3-termination-point-attributes' // alias
     this.attribute = new L3TPAttribute(data[attrKey] || {}) // avoid undefined
   }
 }

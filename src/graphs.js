@@ -15,7 +15,7 @@ export class Graphs extends BaseContainer {
   }
 
   allGraphNodes () {
-    var allGraphNodes = this.graphs.map(graph => graph.nodes)
+    const allGraphNodes = this.graphs.map(graph => graph.nodes)
     return this.flatten(allGraphNodes)
   }
 
@@ -24,26 +24,26 @@ export class Graphs extends BaseContainer {
   }
 
   makeParentRef () {
-    this.allGraphNodes.forEach(node => {
+    for (const node of this.allGraphNodes) {
       if (node.children) {
-        node.children.forEach(path => {
-          var child = this.findGraphNodeByPath(path)
+        for (const path of node.children) {
+          const child = this.findGraphNodeByPath(path)
           if (child) {
             child.addParent(node.path)
           } // TODO error check (when not found?)
-        })
+        }
       }
-    })
+    }
   }
 
   resolveLinkRef () {
-    this.graphs.forEach(graph => {
-      graph.links.forEach(link => {
-        var source = this.findGraphNodeByPath(link.sourcePath)
-        var target = this.findGraphNodeByPath(link.targetPath)
+    for (const graph of this.graphs) {
+      for (const link of graph.links) {
+        const source = this.findGraphNodeByPath(link.sourcePath)
+        const target = this.findGraphNodeByPath(link.targetPath)
         link.sourceId = source.id
         link.targetId = target.id
-      })
-    })
+      }
+    }
   }
 }

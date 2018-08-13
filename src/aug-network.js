@@ -14,7 +14,7 @@ class L2NetworkAttribute {
 export class L2Network extends Network {
   constructor (data, nwNum) {
     super(data, nwNum)
-    let attrKey = 'ietf-l2-topology:l2-topology-attributes'
+    const attrKey = 'ietf-l2-topology:l2-topology-attributes'
     this.attribute = new L2NetworkAttribute(data[attrKey] || {}) // avoid undefined
   }
 
@@ -37,7 +37,7 @@ class L3NetworkAttribute {
 export class L3Network extends Network {
   constructor (data, nwNum) {
     super(data, nwNum)
-    let attrKey = 'ietf-l3-unicast-topology:l3-topology-attributes'
+    const attrKey = 'ietf-l3-unicast-topology:l3-topology-attributes'
     this.attribute = new L3NetworkAttribute(data[attrKey] || {}) // avoid undefined
   }
 

@@ -95,7 +95,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('circle')
       .attr('class', 'nodecircle')
-      .attr('id', d => d.path + '.bg')
+      .attr('id', d => `${d.path}.bg`) // background
   }
 
   makeTpLabelObjects () {
@@ -106,7 +106,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('text')
       .attr('class', 'tplabel')
-      .attr('id', d => d.path + '.tplb')
+      .attr('id', d => `${d.path}.tplb`) // tp label
       .text(d => d.name)
   }
 
@@ -118,12 +118,12 @@ export class SingleGraphVisualizer {
       .enter()
       .append('text')
       .attr('class', 'nodelabel')
-      .attr('id', d => d.path + '.ndlb')
+      .attr('id', d => `${d.path}.ndlb`) // node label
       .text(d => d.name)
   }
 
   setCavasSize () {
-    var graphSize = this.graph.nodes.length
+    const graphSize = this.graph.nodes.length
     // small
     this.width = 400
     this.height = 400
@@ -139,9 +139,9 @@ export class SingleGraphVisualizer {
   }
 
   renameLinkKey () {
-    this.graph.links.forEach(d => {
+    for (const d of this.graph.links) {
       d.source = d.sourceId
       d.target = d.targetId
-    })
+    }
   }
 }

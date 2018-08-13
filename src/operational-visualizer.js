@@ -15,12 +15,13 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   setEventCallBack (objs) {
-    var self = this // alias to use event callback closure
+    const self = this // alias to use event callback closure
 
     function clearElementHighlight (element) {
-      ['selectedchildren', 'selectedparents', 'selected'].forEach(
-        d => element.classList.remove(d)
-      )
+      const classList = ['selectedchildren', 'selectedparents', 'selected']
+      for (const d of classList) {
+        element.classList.remove(d)
+      }
     }
 
     function pathObjType (path) {
@@ -39,19 +40,19 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       if (pathObjType(path) === 'tp') {
         return [
           document.getElementById(path),
-          document.getElementById(path + '.tplb')
+          document.getElementById(`${path}.tplb`)
         ]
       }
       // pathObjType === 'node'
       return [
-        document.getElementById(path + '.bg'),
-        document.getElementById(path + '.ndlb')
+        document.getElementById(`${path}.bg`),
+        document.getElementById(`${path}.ndlb`)
       ]
     }
 
     // highlight selected node
     function highlightNodeByPath (direction, path) {
-      highlightElementsByPath(path).forEach(element => {
+      for (const element of highlightElementsByPath(path)) {
         clearElementHighlight(element)
         if (direction === 'children') {
           element.classList.add('selectedchildren')
@@ -60,7 +61,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         } else {
           element.classList.add('selected')
         }
-      })
+      }
     }
 
     // event callback
@@ -70,16 +71,16 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         console.log('....', direction, path)
         highlightNodeByPath(direction, path)
         // find nodes to highlight via through *all* layers
-        var node = self.findGraphNodeByPath(path)
+        const node = self.findGraphNodeByPath(path)
         if (node[direction]) {
           // search children/parent recursively
-          node[direction].forEach(
-            d => findSupportingObj(direction, d)
-          )
+          for (const d of node[direction]) {
+            findSupportingObj(direction, d)
+          }
         }
       }
       // highlight selected object and its children/parents
-      var path = pathBody(element.getAttribute('id'))
+      const path = pathBody(element.getAttribute('id'))
       console.log('highlight_top: ', path)
       findSupportingObj('children', path)
       findSupportingObj('parents', path)
@@ -87,41 +88,41 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
 
     function mouseOver (element) {
-      var path = pathBody(element.id)
+      const path = pathBody(element.id)
       // set highlight style
-      highlightElementsByPath(path).forEach(elm => {
+      for (const elm of highlightElementsByPath(path)) {
         elm.classList.add('selectready')
         // enable tooltip
-        var header = path
-        var node = self.findGraphNodeByPath(path)
+        let tooltipBody = path // tooltip header
+        const node = self.findGraphNodeByPath(path)
         if (node && Object.keys(node.attribute).length > 0) {
-          header = header + node.attribute.toHtml()
+          tooltipBody = tooltipBody + node.attribute.toHtml()
         }
         self.tooltip
           .style('visibility', 'visible')
-          .html(header)
-      })
+          .html(tooltipBody)
+      }
     }
 
     function mouseMove (element) {
       self.tooltip
-        .style('top', d3.event.pageY - 20 + 'px')
-        .style('left', (d3.event.pageX + 30) + 'px')
+        .style('top', `${d3.event.pageY - 20}px`)
+        .style('left', `${d3.event.pageX + 30}px`)
     }
 
     function mouseOut (element) {
-      var path = pathBody(element.id)
+      const path = pathBody(element.id)
       // remove highlight style
-      highlightElementsByPath(path).forEach(elm => {
+      for (const elm of highlightElementsByPath(path)) {
         elm.classList.remove('selectready')
         // disable tooltip
         self.tooltip
           .style('visibility', 'hidden')
-      })
+      }
     }
 
     // set event callbacks
-    objs.forEach(obj => {
+    for (const obj of objs) {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
@@ -133,19 +134,20 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
           .on('start', self.dragstarted)
           .on('drag', self.dragged)
           .on('end', self.dragended))
-    })
+    }
   }
 
   setClearButtonEventCallback () {
     function clearHighlight () {
       // clear all highlighted object
-      var element = document.getElementById('visualizer');
-      ['selectedchildren', 'selectedparents', 'selected'].forEach(d => {
-        var selectedElements = element.getElementsByClassName(d)
-        Array.from(selectedElements).forEach(element => {
+      const element = document.getElementById('visualizer')
+      const classList = ['selectedchildren', 'selectedparents', 'selected']
+      for (const d of classList) {
+        const selectedElements = element.getElementsByClassName(d)
+        for (const element of Array.from(selectedElements)) {
           element.classList.remove(d)
-        })
-      })
+        }
+      }
     }
 
     // set event callback for clear button
