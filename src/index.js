@@ -107,6 +107,11 @@ function drawJsonModel (file) {
 const modelFiles = [
   {
     'selected': true,
+    'value': 'target3.diff.json',
+    'label': 'target3 diff data'
+  },
+  {
+    'selected': false,
     'value': 'target3.json',
     'label': 'L2 Aggregated Model'
   },

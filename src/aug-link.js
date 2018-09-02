@@ -1,9 +1,11 @@
 'use strict'
 
+import {TopoBaseContainer} from './base'
 import {Link} from './link'
 
-class L2LinkAttribute {
+class L2LinkAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.name = data.name || ''
     this.flag = data.flag || ''
     this.rate = data.rate || 100
@@ -20,8 +22,9 @@ export class L2Link extends Link {
   }
 }
 
-class L3LinkAttribute {
+class L3LinkAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.name = data.name || ''
     this.flag = data.flag || ''
     this.metric1 = data.metric1 || 100

@@ -1,9 +1,11 @@
 'use strict'
 
+import {TopoBaseContainer} from './base'
 import {TermPoint} from './term-point'
 
-class VlanIdName {
+class VlanIdName extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.vlanId = data['vlan-id']
     this.vlanName = data['vlan-name']
   }
@@ -16,9 +18,10 @@ class VlanIdName {
   }
 }
 
-class L2TPAttribute {
+class L2TPAttribute extends TopoBaseContainer {
   // NOTICE: Attribute for type VLAN
   constructor (data) {
+    super(data)
     this.description = data.description || ''
     this.maxFrameSize = data['maximum-frame-size'] || 1500
     this.macAddr = data['mac-address'] || 'xx:xx:xx:xx:xx:xx'
@@ -58,8 +61,9 @@ export class L2TermPoint extends TermPoint {
   }
 }
 
-class L3TPAttribute {
+class L3TPAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     // TODO: choice ip/unnumbered/interface-name,
     // but, now use only ip
     this.ipAddress = data['ip-address'] || [] // notice: array

@@ -1,5 +1,6 @@
 'use strict'
 
+import {TopoBaseContainer} from './base'
 import {GraphNode, GraphLink} from './graph'
 
 class SupportingTermPoint {
@@ -11,8 +12,9 @@ class SupportingTermPoint {
   }
 }
 
-export class TermPoint {
+export class TermPoint extends TopoBaseContainer {
   constructor (data, nodePath, nodeId, tpNum) {
+    super(data)
     this.name = data['tp-id'] // name string
     this.id = nodeId + tpNum
     this.parentPath = nodePath

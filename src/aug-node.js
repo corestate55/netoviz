@@ -1,10 +1,12 @@
 'use strict'
 
+import {TopoBaseContainer} from './base'
 import {L3TermPoint, L2TermPoint} from './aug-term-points'
 import {Node} from './node'
 
-class L2NodeAttribute {
+class L2NodeAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.name = data.name || ''
     this.description = data.description || ''
     this.mgmtAddr = data['management-address'] || [] // ip addr list
@@ -39,8 +41,9 @@ export class L2Node extends Node {
   }
 }
 
-class L3Prefix {
+class L3Prefix extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.prefix = data.prefix || ''
     this.metric = data.metric || 100
     this.flag = data.flag || [] // array
@@ -55,8 +58,9 @@ class L3Prefix {
   }
 }
 
-class L3NodeAttribute {
+class L3NodeAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.name = data.name || ''
     this.flag = data.flag || ''
     this.routerId = data.routerId || [] // array

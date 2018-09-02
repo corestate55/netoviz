@@ -1,11 +1,13 @@
 'use strict'
 
+import {TopoBaseContainer} from './base'
 import {Network} from './network'
 import {L2Node, L3Node} from './aug-node'
 import {L2Link, L3Link} from './aug-link'
 
-class L2NetworkAttribute {
+class L2NetworkAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.name = data.name || ''
     this.flag = data.flag || [] // list
   }
@@ -27,8 +29,9 @@ export class L2Network extends Network {
   }
 }
 
-class L3NetworkAttribute {
+class L3NetworkAttribute extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.name = data.name || ''
     this.flag = data.flag || []
   }

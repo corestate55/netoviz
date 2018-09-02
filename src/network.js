@@ -1,18 +1,20 @@
 'use strict'
 
-import {BaseContainer} from './base'
+import {TopoBaseContainer} from './base'
 import {Node} from './node'
 import {Link} from './link'
 
-class SupportingNetwork {
+class SupportingNetwork extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.networkRef = data['network-ref']
     this.refPath = this.networkRef
   }
 }
 
-class NetworkTypes {
+class NetworkTypes extends TopoBaseContainer {
   constructor (data) {
+    super(data)
     this.data = data
     this.types = this.makeTypes(this.data)
   }
@@ -21,9 +23,7 @@ class NetworkTypes {
     let types = []
     for (let type in data) {
       types.push(type)
-      if (data[type]) {
-        types = types.concat(this.makeTypes(data[type]))
-      }
+      types = types.concat(this.makeTypes(data[type]))
     }
     return types
   }
@@ -33,9 +33,9 @@ class NetworkTypes {
   }
 }
 
-export class Network extends BaseContainer {
+export class Network extends TopoBaseContainer {
   constructor (data, nwNum) {
-    super()
+    super(data)
     this.networkTypes = new NetworkTypes(data['network-types'])
     this.name = data['network-id'] // name string
     this.id = nwNum * 10000 // integer

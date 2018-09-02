@@ -1,11 +1,13 @@
 'use strict'
 
+import {TopoBaseContainer} from './base'
 import {Network} from './network'
 import {L2Network, L3Network} from './aug-network'
 
-export class Networks {
+export class Networks extends TopoBaseContainer {
   constructor (topoData) {
     const nwKey = 'ietf-network:networks' // alias
+    super(topoData[nwKey])
     this.networks = topoData[nwKey].network.map((nw, nwNum) => {
       return this.newNetwork(nw, nwNum + 1)
     })
