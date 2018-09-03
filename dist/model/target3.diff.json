@@ -1,0 +1,5729 @@
+{
+  "ietf-network:networks": {
+    "_diff_state_": {
+      "forward": "kept",
+      "backward": "changed",
+      "pair": ""
+    },
+    "network": [
+      {
+        "network-types": {
+        },
+        "network-id": "target-L1",
+        "_diff_state_": {
+          "forward": "kept",
+          "backward": "changed",
+          "pair": ""
+        },
+        "node": [
+          {
+            "node-id": "R1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Fa0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Po1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R1",
+                    "tp-ref": "Fa0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  },
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R1",
+                    "tp-ref": "Fa1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node-id": "R2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Fa0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Po1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R2",
+                    "tp-ref": "Fa0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  },
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R2",
+                    "tp-ref": "Fa1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "node-id": "SW1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Fa0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "SW2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Fa0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "Fa4",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "HYP1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "eth1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "SV1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "SV2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "R1,Fa0,R2,Fa0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1",
+              "source-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Fa0,R2,Fa0"
+              }
+            },
+            "destination": {
+              "dest-node": "R2",
+              "dest-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Fa0,R2,Fa0"
+              }
+            }
+          },
+          {
+            "link-id": "R2,Fa0,R1,Fa0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2",
+              "source-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Fa0,R1,Fa0"
+              }
+            },
+            "destination": {
+              "dest-node": "R1",
+              "dest-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Fa0,R1,Fa0"
+              }
+            }
+          },
+          {
+            "link-id": "R1,Fa1,R2,Fa1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1",
+              "source-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Fa1,R2,Fa1"
+              }
+            },
+            "destination": {
+              "dest-node": "R2",
+              "dest-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Fa1,R2,Fa1"
+              }
+            }
+          },
+          {
+            "link-id": "R2,Fa1,R1,Fa1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2",
+              "source-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Fa1,R1,Fa1"
+              }
+            },
+            "destination": {
+              "dest-node": "R1",
+              "dest-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Fa1,R1,Fa1"
+              }
+            }
+          },
+          {
+            "link-id": "R1,Po1,R2,Po1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1",
+              "source-tp": "Po1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Po1,R2,Po1"
+              }
+            },
+            "destination": {
+              "dest-node": "R2",
+              "dest-tp": "Po1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Po1,R2,Po1"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R1,Fa0,R2,Fa0",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              },
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R1,Fa1,R2,Fa1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "R2,Po1,R1,Po1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2",
+              "source-tp": "Po1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Po1,R1,Po1"
+              }
+            },
+            "destination": {
+              "dest-node": "R1",
+              "dest-tp": "Po1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Po1,R1,Po1"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R2,Fa0,R1,Fa0",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              },
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R2,Fa1,R1,Fa1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "R1,Fa2,SW1,Fa1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1",
+              "source-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Fa2,SW1,Fa1"
+              }
+            },
+            "destination": {
+              "dest-node": "SW1",
+              "dest-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R1,Fa2,SW1,Fa1"
+              }
+            }
+          },
+          {
+            "link-id": "SW1,Fa1,R1,Fa2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW1",
+              "source-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW1,Fa1,R1,Fa2"
+              }
+            },
+            "destination": {
+              "dest-node": "R1",
+              "dest-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW1,Fa1,R1,Fa2"
+              }
+            }
+          },
+          {
+            "link-id": "R2,Fa2,SW2,Fa1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2",
+              "source-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Fa2,SW2,Fa1"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2",
+              "dest-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/R2,Fa2,SW2,Fa1"
+              }
+            }
+          },
+          {
+            "link-id": "SW2,Fa1,R2,Fa2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2",
+              "source-tp": "Fa1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa1,R2,Fa2"
+              }
+            },
+            "destination": {
+              "dest-node": "R2",
+              "dest-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa1,R2,Fa2"
+              }
+            }
+          },
+          {
+            "link-id": "SW1,Fa0,SW2,Fa0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW1",
+              "source-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW1,Fa0,SW2,Fa0"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2",
+              "dest-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW1,Fa0,SW2,Fa0"
+              }
+            }
+          },
+          {
+            "link-id": "SW2,Fa0,SW1,Fa0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2",
+              "source-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa0,SW1,Fa0"
+              }
+            },
+            "destination": {
+              "dest-node": "SW1",
+              "dest-tp": "Fa0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa0,SW1,Fa0"
+              }
+            }
+          },
+          {
+            "link-id": "SW1,Fa2,HYP1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW1",
+              "source-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW1,Fa2,HYP1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW1,Fa2,HYP1,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "HYP1,eth0,SW1,Fa2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/HYP1,eth0,SW1,Fa2"
+              }
+            },
+            "destination": {
+              "dest-node": "SW1",
+              "dest-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/HYP1,eth0,SW1,Fa2"
+              }
+            }
+          },
+          {
+            "link-id": "SW2,Fa2,HYP1,eth1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2",
+              "source-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa2,HYP1,eth1"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1",
+              "dest-tp": "eth1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa2,HYP1,eth1"
+              }
+            }
+          },
+          {
+            "link-id": "HYP1,eth1,SW2,Fa2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1",
+              "source-tp": "eth1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/HYP1,eth1,SW2,Fa2"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2",
+              "dest-tp": "Fa2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/HYP1,eth1,SW2,Fa2"
+              }
+            }
+          },
+          {
+            "link-id": "SW2,Fa3,SV1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2",
+              "source-tp": "Fa3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa3,SV1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "SV1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa3,SV1,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "SV1,eth0,SW2,Fa3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SV1,eth0,SW2,Fa3"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2",
+              "dest-tp": "Fa3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SV1,eth0,SW2,Fa3"
+              }
+            }
+          },
+          {
+            "link-id": "SW2,Fa4,SV2,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2",
+              "source-tp": "Fa4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa4,SV2,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "SV2",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SW2,Fa4,SV2,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "SV2,eth0,SW2,Fa4",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV2",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SV2,eth0,SW2,Fa4"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2",
+              "dest-tp": "Fa4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1/SV2,eth0,SW2,Fa4"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "network-types": {
+        },
+        "network-id": "target-L1.5",
+        "_diff_state_": {
+          "forward": "kept",
+          "backward": "kept",
+          "pair": ""
+        },
+        "node": [
+          {
+            "node-id": "HYP1-vSW1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "HYP1",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              },
+              {
+                "tp-id": "eth1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "HYP1",
+                    "tp-ref": "eth1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              },
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "HYP1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "VM1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "HYP1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "VM2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "HYP1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "HYP1-vSW1,p1,VM1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/HYP1-vSW1,p1,VM1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "VM1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/HYP1-vSW1,p1,VM1,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "VM1,eth0,HYP1-vSW1,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/VM1,eth0,HYP1-vSW1,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/VM1,eth0,HYP1-vSW1,p1"
+              }
+            }
+          },
+          {
+            "link-id": "HYP1-vSW1,p2,VM2,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/HYP1-vSW1,p2,VM2,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "VM2",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/HYP1-vSW1,p2,VM2,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "VM2,eth0,HYP1-vSW1,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM2",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/VM2,eth0,HYP1-vSW1,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L1.5/VM2,eth0,HYP1-vSW1,p2"
+              }
+            }
+          }
+        ],
+        "supporting-network": [
+          {
+            "network-ref": "target-L1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": null,
+              "pair": "support"
+            }
+          }
+        ]
+      },
+      {
+        "network-types": {
+          "ietf-l2-topology:l2-network": {
+          }
+        },
+        "network-id": "target-L2",
+        "_diff_state_": {
+          "forward": "kept",
+          "backward": "changed",
+          "pair": ""
+        },
+        "node": [
+          {
+            "node-id": "R1-GRT",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "R1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l2-topology:l2-node-attributes": {
+              "name": "R1-GRT",
+              "description": "L2 of R1-GRT",
+              "management-address": [
+                "192.168.10.253",
+                "192.168.20.253"
+              ],
+              "sys-mac-address": "",
+              "management-vid": 10,
+              "flag": [
+
+              ],
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "R1-BR",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R1",
+                    "tp-ref": "Po1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R1",
+                    "tp-ref": "Fa2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "R1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "R2-GRT",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "R2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l2-topology:l2-node-attributes": {
+              "name": "R2-GRT",
+              "description": "L2 of R2-GRT",
+              "management-address": [
+                "192.168.10.252",
+                "192.168.20.252"
+              ],
+              "sys-mac-address": "",
+              "management-vid": 10,
+              "flag": [
+
+              ],
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "R2-BR",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R2",
+                    "tp-ref": "Po1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "R2",
+                    "tp-ref": "Fa2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "R2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "SW1-BR",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW1",
+                    "tp-ref": "Fa1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW1",
+                    "tp-ref": "Fa0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW1",
+                    "tp-ref": "Fa2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "SW1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l2-topology:l2-node-attributes": {
+              "name": "SW1-BR",
+              "description": "L2 bridge of SW1",
+              "management-address": [
+                "192.168.10.1"
+              ],
+              "sys-mac-address": "",
+              "management-vid": 10,
+              "flag": [
+
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "SW2-BR",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW2",
+                    "tp-ref": "Fa1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "changed",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW2",
+                    "tp-ref": "Fa0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": "attribute"
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": "attribute"
+                      }
+                    },
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": "attribute"
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "changed",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW2",
+                    "tp-ref": "Fa2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p4",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW2",
+                    "tp-ref": "Fa3",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "",
+                  "port-vlan-id": 10,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p5",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW2",
+                    "tp-ref": "Fa4",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p6",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SW2",
+                    "tp-ref": "Fa4",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "SW2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l2-topology:l2-node-attributes": {
+              "name": "SW2-BR",
+              "description": "L2 bridge of SW2",
+              "management-address": [
+                "192.168.10.2"
+              ],
+              "sys-mac-address": "",
+              "management-vid": 10,
+              "flag": [
+
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "HYP1-vSW1-BR",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "HYP1-vSW1",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "HYP1-vSW1",
+                    "tp-ref": "eth1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "HYP1-vSW1",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "",
+                  "port-vlan-id": 10,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p4",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "HYP1-vSW1",
+                    "tp-ref": "p2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p5",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "HYP1-vSW1",
+                    "tp-ref": "p2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1.5",
+                "node-ref": "HYP1-vSW1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "VM1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "VM1",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "",
+                  "port-vlan-id": 10,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1.5",
+                "node-ref": "VM1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "VM2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0.20",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "VM2",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "eth0.30",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1.5",
+                    "node-ref": "VM2",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1.5",
+                "node-ref": "VM2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "SV1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "changed",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SV1",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "",
+                  "port-vlan-id": 10,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "deleted",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    },
+                    {
+                      "vlan-id": 10,
+                      "vlan-name": "Seg.A",
+                      "_diff_state_": {
+                        "forward": "added",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "changed",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "SV1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          },
+          {
+            "node-id": "SV2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0.20",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SV2",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 20,
+                      "vlan-name": "Seg.B",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "eth0.30",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L1",
+                    "node-ref": "SV2",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l2-topology:l2-termination-point-attributes": {
+                  "description": "",
+                  "maximum-frame-size": 1500,
+                  "mac-address": "",
+                  "eth-encapsulation": "802.1q",
+                  "port-vlan-id": 0,
+                  "vlan-id-name": [
+                    {
+                      "vlan-id": 30,
+                      "vlan-name": "Seg.C",
+                      "_diff_state_": {
+                        "forward": "kept",
+                        "backward": null,
+                        "pair": ""
+                      }
+                    }
+                  ],
+                  "tp-state": "in-use",
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "SV2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "R1-GRT,p1,R1-BR,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1-GRT",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-GRT,p1,R1-BR,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "R1-BR",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-GRT,p1,R1-BR,p1"
+              }
+            }
+          },
+          {
+            "link-id": "R1-BR,p1,R1-GRT,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1-BR",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-BR,p1,R1-GRT,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "R1-GRT",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-BR,p1,R1-GRT,p1"
+              }
+            }
+          },
+          {
+            "link-id": "R2-GRT,p1,R1-BR,p1",
+            "_diff_state_": {
+              "forward": "deleted",
+              "backward": null,
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-GRT",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "deleted",
+                "backward": null,
+                "pair": ""
+              }
+            },
+            "destination": {
+              "dest-node": "R2-BR",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "deleted",
+                "backward": null,
+                "pair": ""
+              }
+            }
+          },
+          {
+            "link-id": "R2-BR,p1,R2-GRT,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-BR",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R2-BR,p1,R2-GRT,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "R2-GRT",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R2-BR,p1,R2-GRT,p1"
+              }
+            }
+          },
+          {
+            "link-id": "R1-BR,p2,R2-BR,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1-BR",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-BR,p2,R2-BR,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "R2-BR",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-BR,p2,R2-BR,p2"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R1,Po1,R2,Po1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "R2-BR,p2,R1-BR,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-BR",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R2-BR,p2,R1-BR,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "R1-BR",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R2-BR,p2,R1-BR,p2"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R2,Po1,R1,Po1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "R1-BR,p3,SW1-BR,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1-BR",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-BR,p3,SW1-BR,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "SW1-BR",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R1-BR,p3,SW1-BR,p1"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R1,Fa2,SW1,Fa1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW1-BR,p1,R1-BR,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW1-BR",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW1-BR,p1,R1-BR,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "R1-BR",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW1-BR,p1,R1-BR,p3"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW1,Fa1,R1,Fa2",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "R2-BR,p3,SW2-BR,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-BR",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R2-BR,p3,SW2-BR,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2-BR",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/R2-BR,p3,SW2-BR,p1"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "R2,Fa2,SW2,Fa1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW2-BR,p1,R2-BR,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2-BR",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p1,R2-BR,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "R2-BR",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p1,R2-BR,p3"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW2,Fa1,R2,Fa2",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW1-BR,p2,SW2-BR,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW1-BR",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW1-BR,p2,SW2-BR,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2-BR",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW1-BR,p2,SW2-BR,p2"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW1,Fa0,SW2,Fa0",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW2-BR,p2,SW1-BR,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2-BR",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p2,SW1-BR,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "SW1-BR",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p2,SW1-BR,p2"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW2,Fa0,SW1,Fa0",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW1-BR,p3,HYP1-vSW1-BR,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW1-BR",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW1-BR,p3,HYP1-vSW1-BR,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1-BR",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW1-BR,p3,HYP1-vSW1-BR,p1"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW1,Fa2,HYP1,eth0",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "HYP1-vSW1-BR,p1,SW1-BR,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1-BR",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p1,SW1-BR,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "SW1-BR",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p1,SW1-BR,p3"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "HYP1,eth0,SW1,Fa2",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW2-BR,p3,HYP1-vSW1-BR,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2-BR",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p3,HYP1-vSW1-BR,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1-BR",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p3,HYP1-vSW1-BR,p2"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW2,Fa2,HYP1,eth1",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "HYP1-vSW1-BR,p2,SW2-BR,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1-BR",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p2,SW2-BR,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2-BR",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p2,SW2-BR,p3"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "HYP1,eth1,SW2,Fa2",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SW2-BR,p4,SV1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2-BR",
+              "source-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p4,SV1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "SV1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p4,SV1,eth0"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SW2,Fa3,SV1,eth0",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "SV1,eth0,SW2-BR,p4",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SV1,eth0,SW2-BR,p4"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2-BR",
+              "dest-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SV1,eth0,SW2-BR,p4"
+              }
+            },
+            "supporting-link": [
+              {
+                "network-ref": "target-L1",
+                "link-ref": "SV1,eth0,SW2,Fa3",
+                "_diff_state_": {
+                  "forward": "deleted",
+                  "backward": null,
+                  "pair": ""
+                }
+              }
+            ]
+          },
+          {
+            "link-id": "HYP1-vSW1-BR,p3,VM1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1-BR",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p3,VM1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "VM1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p3,VM1,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "VM1,eth0,HYP1-vSW1-BR,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/VM1,eth0,HYP1-vSW1-BR,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1-BR",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/VM1,eth0,HYP1-vSW1-BR,p3"
+              }
+            }
+          },
+          {
+            "link-id": "HYP1-vSW1-BR,p4,VM2,eth0.20",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1-BR",
+              "source-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p4,VM2,eth0.20"
+              }
+            },
+            "destination": {
+              "dest-node": "VM2",
+              "dest-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p4,VM2,eth0.20"
+              }
+            }
+          },
+          {
+            "link-id": "VM2,eth0.20,HYP1-vSW1-BR,p4",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM2",
+              "source-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/VM2,eth0.20,HYP1-vSW1-BR,p4"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1-BR",
+              "dest-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/VM2,eth0.20,HYP1-vSW1-BR,p4"
+              }
+            }
+          },
+          {
+            "link-id": "SW2-BR,p5,SV2,eth0.20",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2-BR",
+              "source-tp": "p5",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p5,SV2,eth0.20"
+              }
+            },
+            "destination": {
+              "dest-node": "SV2",
+              "dest-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p5,SV2,eth0.20"
+              }
+            }
+          },
+          {
+            "link-id": "SV2,eth0.20,SW2-BR,p5",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV2",
+              "source-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SV2,eth0.20,SW2-BR,p5"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2-BR",
+              "dest-tp": "p5",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SV2,eth0.20,SW2-BR,p5"
+              }
+            }
+          },
+          {
+            "link-id": "HYP1-vSW1-BR,p5,VM2,eth0.30",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "HYP1-vSW1-BR",
+              "source-tp": "p5",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p5,VM2,eth0.30"
+              }
+            },
+            "destination": {
+              "dest-node": "VM2",
+              "dest-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/HYP1-vSW1-BR,p5,VM2,eth0.30"
+              }
+            }
+          },
+          {
+            "link-id": "VM2,eth0.30,HYP1-vSW1-BR,p5",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM2",
+              "source-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/VM2,eth0.30,HYP1-vSW1-BR,p5"
+              }
+            },
+            "destination": {
+              "dest-node": "HYP1-vSW1-BR",
+              "dest-tp": "p5",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/VM2,eth0.30,HYP1-vSW1-BR,p5"
+              }
+            }
+          },
+          {
+            "link-id": "SW2-BR,p6,SV2,eth0.30",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SW2-BR",
+              "source-tp": "p6",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p6,SV2,eth0.30"
+              }
+            },
+            "destination": {
+              "dest-node": "SV2",
+              "dest-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SW2-BR,p6,SV2,eth0.30"
+              }
+            }
+          },
+          {
+            "link-id": "SV2,eth0.30,SW2-BR,p6",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV2",
+              "source-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SV2,eth0.30,SW2-BR,p6"
+              }
+            },
+            "destination": {
+              "dest-node": "SW2-BR",
+              "dest-tp": "p6",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L2/SV2,eth0.30,SW2-BR,p6"
+              }
+            }
+          },
+          {
+            "link-id": "R2-GRT,p1,R2-BR,p1",
+            "_diff_state_": {
+              "forward": "added",
+              "backward": null,
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-GRT",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "added",
+                "backward": null,
+                "pair": ""
+              }
+            },
+            "destination": {
+              "dest-node": "R2-BR",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "added",
+                "backward": null,
+                "pair": ""
+              }
+            }
+          }
+        ],
+        "supporting-network": [
+          {
+            "network-ref": "target-L1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": null,
+              "pair": "support"
+            }
+          },
+          {
+            "network-ref": "target-L1.5",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": null,
+              "pair": "support"
+            }
+          }
+        ],
+        "ietf-l2-topology:l2-network-attributes": {
+          "name": "L2 of target network",
+          "flag": [
+            "layer2"
+          ],
+          "_diff_state_": {
+            "forward": "changed",
+            "backward": null,
+            "pair": "attribute"
+          }
+        }
+      },
+      {
+        "network-types": {
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
+        },
+        "network-id": "target-L3",
+        "_diff_state_": {
+          "forward": "kept",
+          "backward": "changed",
+          "pair": ""
+        },
+        "node": [
+          {
+            "node-id": "GRT-vRT",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "R1-GRT",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  },
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "R2-GRT",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.10.254"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "R1-GRT",
+                    "tp-ref": "p2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  },
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "R2-GRT",
+                    "tp-ref": "p2",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.20.254"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L3",
+                "node-ref": "R1-GRT",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L3",
+                "node-ref": "R2-GRT",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "fhrp-virtual-router",
+                "default-gateway",
+                "pseudo-node"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "deleted",
+                    "backward": null,
+                    "pair": ""
+                  }
+                },
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                },
+                {
+                  "prefix": "192.168,10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "added",
+                    "backward": null,
+                    "pair": ""
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "R1-GRT",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "R1-GRT",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.10.253"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "R1-GRT",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.20.253"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "R1-GRT",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+
+              ],
+              "router-id": [
+                "192.168.0.1"
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "deleted",
+                    "backward": null,
+                    "pair": ""
+                  }
+                },
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                },
+                {
+                  "prefix": "192.168,10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "added",
+                    "backward": null,
+                    "pair": ""
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "R2-GRT",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "R2-GRT",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.10.252"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "R2-GRT",
+                    "tp-ref": "p1",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.20.252"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "R2-GRT",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+
+              ],
+              "router-id": [
+                "192.168.0.2"
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "deleted",
+                    "backward": null,
+                    "pair": ""
+                  }
+                },
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                },
+                {
+                  "prefix": "192.168,10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "added",
+                    "backward": null,
+                    "pair": ""
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "Seg.A",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "HYP1-vSW1-BR",
+                    "tp-ref": "p3",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              },
+              {
+                "tp-id": "p4",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SW2-BR",
+                    "tp-ref": "p4",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "R1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "R2-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SW1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SW2-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "HYP1-vSW1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "l3-segment",
+                "pseudo-node"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "deleted",
+                    "backward": null,
+                    "pair": ""
+                  }
+                },
+                {
+                  "prefix": "192.168,10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "added",
+                    "backward": null,
+                    "pair": ""
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "Seg.B",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                }
+              },
+              {
+                "tp-id": "p3",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "HYP1-vSW1-BR",
+                    "tp-ref": "p3",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              },
+              {
+                "tp-id": "p4",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "changed",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SW2-BR",
+                    "tp-ref": "p4",
+                    "_diff_state_": {
+                      "forward": "deleted",
+                      "backward": null,
+                      "pair": ""
+                    }
+                  },
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SW2-BR",
+                    "tp-ref": "p5",
+                    "_diff_state_": {
+                      "forward": "added",
+                      "backward": null,
+                      "pair": ""
+                    }
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "R1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "R2-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SW1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SW2-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "HYP1-vSW1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "l3-segment",
+                "pseudo-node"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "Seg.C",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "HYP1-vSW1-BR",
+                    "tp-ref": "p4",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              },
+              {
+                "tp-id": "p2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SW2-BR",
+                    "tp-ref": "p6",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SW1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SW2-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              },
+              {
+                "network-ref": "target-L2",
+                "node-ref": "HYP1-vSW1-BR",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "l3-segment",
+                "pseudo-node"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.30.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "VM1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "VM1",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.10.11"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "VM1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "deleted",
+                    "backward": null,
+                    "pair": ""
+                  }
+                },
+                {
+                  "prefix": "192.168,10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "added",
+                    "backward": null,
+                    "pair": ""
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "VM2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0.20",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "VM2",
+                    "tp-ref": "eth0.20",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.20.2"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "eth0.30",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "VM2",
+                    "tp-ref": "eth0.30",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.30.2"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "VM2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                },
+                {
+                  "prefix": "192.168.30.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "SV1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SV1",
+                    "tp-ref": "eth0",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.10.31"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SV1",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "deleted",
+                    "backward": null,
+                    "pair": ""
+                  }
+                },
+                {
+                  "prefix": "192.168,10.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "added",
+                    "backward": null,
+                    "pair": ""
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          },
+          {
+            "node-id": "SV2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "changed",
+              "pair": ""
+            },
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0.20",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SV2",
+                    "tp-ref": "eth0.20",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.20.4"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              },
+              {
+                "tp-id": "eth0.30",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": "kept",
+                  "pair": ""
+                },
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L2",
+                    "node-ref": "SV2",
+                    "tp-ref": "eth0.30",
+                    "_diff_state_": {
+                      "forward": "kept",
+                      "backward": null,
+                      "pair": "support"
+                    }
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "192.168.30.4"
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "target-L2",
+                "node-ref": "SV2",
+                "_diff_state_": {
+                  "forward": "kept",
+                  "backward": null,
+                  "pair": "support"
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "192.168.20.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                },
+                {
+                  "prefix": "192.168.30.0/24",
+                  "metric": 100,
+                  "flag": [
+
+                  ],
+                  "_diff_state_": {
+                    "forward": "kept",
+                    "backward": null,
+                    "pair": "attribute"
+                  }
+                }
+              ],
+              "_diff_state_": {
+                "forward": "changed",
+                "backward": null,
+                "pair": "attribute"
+              }
+            }
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "GRT-vRT,p1,Seg.A,p0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "GRT-vRT",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/GRT-vRT,p1,Seg.A,p0"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.A",
+              "dest-tp": "p0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/GRT-vRT,p1,Seg.A,p0"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.A,p0,GRT-vRT,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.A",
+              "source-tp": "p0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p0,GRT-vRT,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "GRT-vRT",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p0,GRT-vRT,p1"
+              }
+            }
+          },
+          {
+            "link-id": "GRT-vRT,p2,Seg.B,p0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "GRT-vRT",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/GRT-vRT,p2,Seg.B,p0"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.B",
+              "dest-tp": "p0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/GRT-vRT,p2,Seg.B,p0"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.B,p0,GRT-vRT,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.B",
+              "source-tp": "p0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p0,GRT-vRT,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "GRT-vRT",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p0,GRT-vRT,p2"
+              }
+            }
+          },
+          {
+            "link-id": "R1-GRT,p1,Seg.A,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1-GRT",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R1-GRT,p1,Seg.A,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.A",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R1-GRT,p1,Seg.A,p1"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.A,p1,R1-GRT,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.A",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p1,R1-GRT,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "R1-GRT",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p1,R1-GRT,p1"
+              }
+            }
+          },
+          {
+            "link-id": "R1-GRT,p2,Seg.B,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R1-GRT",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R1-GRT,p2,Seg.B,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.B",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R1-GRT,p2,Seg.B,p1"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.B,p1,R1-GRT,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.B",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p1,R1-GRT,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "R1-GRT",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p1,R1-GRT,p2"
+              }
+            }
+          },
+          {
+            "link-id": "R2-GRT,p1,Seg.A,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-GRT",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R2-GRT,p1,Seg.A,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.A",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R2-GRT,p1,Seg.A,p2"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.A,p2,R2-GRT,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.A",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p2,R2-GRT,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "R2-GRT",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p2,R2-GRT,p1"
+              }
+            }
+          },
+          {
+            "link-id": "R2-GRT,p2,Seg.B,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "R2-GRT",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R2-GRT,p2,Seg.B,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.B",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/R2-GRT,p2,Seg.B,p2"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.B,p2,R2-GRT,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.B",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p2,R2-GRT,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "R2-GRT",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p2,R2-GRT,p2"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.A,p3,VM1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.A",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p3,VM1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "VM1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p3,VM1,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "VM1,eth0,Seg.A,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/VM1,eth0,Seg.A,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.A",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/VM1,eth0,Seg.A,p3"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.B,p3,VM2,eth0.20",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.B",
+              "source-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p3,VM2,eth0.20"
+              }
+            },
+            "destination": {
+              "dest-node": "VM2",
+              "dest-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p3,VM2,eth0.20"
+              }
+            }
+          },
+          {
+            "link-id": "VM2,eth0.20,Seg.B,p3",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM2",
+              "source-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/VM2,eth0.20,Seg.B,p3"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.B",
+              "dest-tp": "p3",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/VM2,eth0.20,Seg.B,p3"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.A,p4,SV1,eth0",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.A",
+              "source-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p4,SV1,eth0"
+              }
+            },
+            "destination": {
+              "dest-node": "SV1",
+              "dest-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.A,p4,SV1,eth0"
+              }
+            }
+          },
+          {
+            "link-id": "SV1,eth0,Seg.A,p4",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV1",
+              "source-tp": "eth0",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/SV1,eth0,Seg.A,p4"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.A",
+              "dest-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/SV1,eth0,Seg.A,p4"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.B,p4,SV2,eth0.20",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.B",
+              "source-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p4,SV2,eth0.20"
+              }
+            },
+            "destination": {
+              "dest-node": "SV2",
+              "dest-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.B,p4,SV2,eth0.20"
+              }
+            }
+          },
+          {
+            "link-id": "SV2,eth0.20,Seg.B,p4",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV2",
+              "source-tp": "eth0.20",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/SV2,eth0.20,Seg.B,p4"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.B",
+              "dest-tp": "p4",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/SV2,eth0.20,Seg.B,p4"
+              }
+            }
+          },
+          {
+            "link-id": "VM2,eth0.30,Seg.C,p1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "VM2",
+              "source-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/VM2,eth0.30,Seg.C,p1"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.C",
+              "dest-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/VM2,eth0.30,Seg.C,p1"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.C,p1,VM2,eth0.30",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.C",
+              "source-tp": "p1",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.C,p1,VM2,eth0.30"
+              }
+            },
+            "destination": {
+              "dest-node": "VM2",
+              "dest-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.C,p1,VM2,eth0.30"
+              }
+            }
+          },
+          {
+            "link-id": "SV2,eth0.30,Seg.C,p2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "SV2",
+              "source-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/SV2,eth0.30,Seg.C,p2"
+              }
+            },
+            "destination": {
+              "dest-node": "Seg.C",
+              "dest-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/SV2,eth0.30,Seg.C,p2"
+              }
+            }
+          },
+          {
+            "link-id": "Seg.C,p2,SV2,eth0.30",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": "kept",
+              "pair": ""
+            },
+            "source": {
+              "source-node": "Seg.C",
+              "source-tp": "p2",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.C,p2,SV2,eth0.30"
+              }
+            },
+            "destination": {
+              "dest-node": "SV2",
+              "dest-tp": "eth0.30",
+              "_diff_state_": {
+                "forward": "kept",
+                "backward": null,
+                "pair": "target-L3/Seg.C,p2,SV2,eth0.30"
+              }
+            }
+          }
+        ],
+        "supporting-network": [
+          {
+            "network-ref": "target-L1.5",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": null,
+              "pair": "support"
+            }
+          },
+          {
+            "network-ref": "target-L2",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": null,
+              "pair": "support"
+            }
+          },
+          {
+            "network-ref": "target-L1",
+            "_diff_state_": {
+              "forward": "kept",
+              "backward": null,
+              "pair": "support"
+            }
+          }
+        ],
+        "ietf-l3-unicast-topology:l3-topology-attributes": {
+          "name": "L3 of target network",
+          "flag": [
+            "layer3",
+            "unicast"
+          ],
+          "_diff_state_": {
+            "forward": "added",
+            "backward": null,
+            "pair": "attribute"
+          }
+        }
+      }
+    ]
+  }
+}

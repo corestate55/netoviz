@@ -1,5 +1,25 @@
 // color selection
-// https://www.colorcombos.com/color-schemes/175/ColorCombo175.html
+// https://www.w3schools.com/colors/
+
+// fill color
+// normal color
+$fill_normal1: #FEF6EB; // node center circle
+$fill_normal2: lightgray; // node outer circle
+// color for object selection (node outer circle)
+$fill_select_child: #BDD2FA;
+$fill_select_parent: #5E92F2;
+$fill_select: #33CCFF;
+$fill_select_ready: #66FFFF;
+// color for diff state (tp and node center circle)
+$fill_diff_changed: #FDED3A;
+$fill_diff_deleted: #FE7367;
+$fill_diff_added: #92D364;
+
+// stroke color
+$stroke_normal: #303030; // for line and circle
+$stroke_diff_changed: #CBCB01;
+$stroke_diff_deleted: #B71001;
+$stroke_diff_added: #66B032;
 
 select {
   font-size: 20px;
@@ -8,19 +28,30 @@ select {
 svg {
   border: solid 1px;
   margin: 10px;
+
+  &.network {
+    &.changed {
+      border: solid 3pt $stroke_diff_changed;
+    }
+    &.added {
+      border: solid 3pt $stroke_diff_added;
+    }
+    &.deleted {
+      border: solid 3pt $stroke_diff_deleted;
+    }
+  }
 }
 
 text {
-  fill: #303030;
+  fill: $stroke_normal;
   &.selectready {
-    fill: #E4001B;
-    stroke-width: 1px;
+    font-weight: bold;
   }
 }
 
 %circlebase {
-  fill: #FEF6EB;
-  stroke: #6B824A;
+  fill: $fill_normal1;
+  stroke: $stroke_normal;
   stroke-width: 1px;
 }
 
@@ -28,30 +59,34 @@ circle {
   // node circle: core(center) circle
   &.node {
     @extend %circlebase;
-  }
 
-  // fill color
-  $select_child_color: #FFC3CE;
-  $select_parent_color: coral;
-  $select_color: #6B824A;
-  $select_ready_color: #E4001B;
+    &.changed {
+      fill: $fill_diff_changed;
+    }
+    &.added {
+      fill: $fill_diff_added;
+    }
+    &.deleted {
+      fill: $fill_diff_deleted;
+    }
+  }
 
   // node circle: outer circle
   &.nodecircle {
-    fill: #c1d590;
+    fill: $fill_normal2;
     stroke: none;
 
     &.selectedchildren {
-      fill: $select_child_color;
+      fill: $fill_select_child;
     }
     &.selectedparents {
-      fill: $select_parent_color;
+      fill: $fill_select_parent;
     }
     &.selected {
-      fill: $select_color;
+      fill: $fill_select;
     }
     &.selectready {
-      fill: $select_ready_color;
+      fill: $fill_select_ready;
       opacity: 0.5;
     }
   }
@@ -60,26 +95,50 @@ circle {
   &.tp {
     @extend %circlebase;
 
+    &.changed {
+      fill: $fill_diff_changed;
+    }
+    &.added {
+      fill: $fill_diff_added;
+    }
+    &.deleted {
+      fill: $fill_diff_deleted;
+    }
+
     &.selectedchildren {
-      fill: $select_child_color;
+      fill: $fill_select_child;
     }
     &.selectedparents {
-      fill: $select_parent_color;
+      fill: $fill_select_parent;
     }
     &.selected {
-      fill: $select_color;
+      fill: $fill_select;
     }
     &.selectready {
-      stroke: $select_ready_color;
-      stroke-opacity: 0.5;
-      stroke-width: 10px;
+      fill: $fill_select_ready;
     }
   }
 }
 
-.link {
-  stroke: #636563;
+%linkbase {
+  stroke: $stroke_normal;
   stroke-width: 1px;
+}
+line.link {
+  @extend %linkbase;
+
+  &.changed {
+    stroke: $stroke_diff_changed;
+    stroke-width: 3pt;
+  }
+  &.added {
+    stroke: $stroke_diff_added;
+    stroke-width: 3pt;
+  }
+  &.deleted {
+    stroke: $stroke_diff_deleted;
+    stroke-width: 3pt;
+  }
 }
 
 div {

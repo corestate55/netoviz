@@ -2,9 +2,14 @@
 
 export class DiffState {
   constructor (data) {
-    this.forward = data['forward'] || 'kept'
-    this.backward = data['backward'] || 'kept'
-    this.pair = data['pair'] || {}
+    this.forward = 'kept'
+    this.backward = 'kept'
+    this.pair = {}
+    if (data !== {}) {
+      this.forward = data['forward'] || 'kept'
+      this.backward = data['backward'] || 'kept'
+      this.pair = data['pair'] || {}
+    }
   }
 
   detect () {

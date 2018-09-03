@@ -41,9 +41,8 @@ export class SingleGraphVisualizer {
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-      .append('g') // topology graph container
       .attr('id', this.graph.name)
-      .attr('class', 'network')
+      .attr('class', ['network', this.graph.diffState.detect()].join(' '))
   }
 
   makeClearButton () {
@@ -57,12 +56,13 @@ export class SingleGraphVisualizer {
 
   makeLinkObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'link')
+      .attr('class', 'links')
       .selectAll('line')
       .data(this.graph.links)
       .enter()
       .append('line')
       .attr('id', d => d.path)
+      .attr('class', d => ['link', d.diffState.detect()].join(' '))
   }
 
   makeTpObjects () {
@@ -72,7 +72,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.tpTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', 'tp')
+      .attr('class', d => ['tp', d.diffState.detect()].join(' '))
       .attr('id', d => d.path)
   }
 
@@ -83,7 +83,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', 'node')
+      .attr('class', d => ['node', d.diffState.detect()].join(' '))
       .attr('id', d => d.path)
   }
 
@@ -94,7 +94,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', 'nodecircle')
+      .attr('class', d => ['nodecircle', d.diffState.detect()].join(' '))
       .attr('id', d => `${d.path}.bg`) // background
   }
 

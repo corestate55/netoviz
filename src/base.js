@@ -25,7 +25,7 @@ export class TopoBaseContainer extends BaseContainer {
     if (dsKey in data) {
       this.diffState = new DiffState(data[dsKey])
     } else {
-      this.diffState = null
+      this.diffState = new DiffState({}) // empty diff state
     }
   }
 }
