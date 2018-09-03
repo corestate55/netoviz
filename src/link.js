@@ -46,7 +46,8 @@ export class Link extends TopoBaseContainer {
       'targetPath': this.destination.refPath,
       'name': this.name,
       'path': this.path,
-      'attribute': this.attribute || {}
+      'attribute': this.attribute || {},
+      'diffState': this.diffState
     })
   }
 }

@@ -46,7 +46,8 @@ export class TermPoint extends TopoBaseContainer {
       'id': this.id,
       'path': this.path,
       'children': this.makeChildren(),
-      'attribute': this.attribute
+      'attribute': this.attribute,
+      'diffState': this.diffState
     })
   }
 
@@ -60,7 +61,8 @@ export class TermPoint extends TopoBaseContainer {
       'targetPath': this.path,
       'name': linkName,
       'path': [pathList, linkName].join('/'),
-      'attribute': {} // Notice (Link attribute does not implemented yet)
+      'attribute': {}, // Notice (Link attribute does not implemented yet)
+      'diffState': this.diffState
     })
   }
 }

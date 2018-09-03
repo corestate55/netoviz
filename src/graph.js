@@ -5,6 +5,7 @@ export class Graph {
     this.name = nw.name
     this.nodes = nw.makeGraphNodes()
     this.links = nw.makeGraphLinks()
+    this.diffState = nw.diffState
   }
 
   tpTypeNodes () {
@@ -25,6 +26,7 @@ export class GraphNode {
     this.children = data.children || [] // array of path(string)
     this.parents = data.parents || [] // array of path(string)
     this.attribute = data.attribute || {}
+    this.diffState = data.diffState || {}
   }
 
   addParent (path) {
@@ -43,5 +45,6 @@ export class GraphLink {
     this.sourceId = data.sourceId || 0
     this.targetId = data.targetId || 0
     this.attribute = data.attribute || {}
+    this.diffState = data.diffState || {}
   }
 }

@@ -63,7 +63,8 @@ export class Node extends TopoBaseContainer {
       'id': this.id,
       'path': this.path,
       'children': this.makeChildren(),
-      'attribute': this.attribute
+      'attribute': this.attribute,
+      'diffState': this.diffState
     })
   }
 }
