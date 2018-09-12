@@ -106,6 +106,11 @@ function drawJsonModel (file) {
 // Entry point
 const modelFiles = [
   {
+    'selected': false,
+    'value': 'diff_test.json',
+    'label': 'diff viewer test data'
+  },
+  {
     'selected': true,
     'value': 'target3.diff.json',
     'label': 'target3 diff data'
