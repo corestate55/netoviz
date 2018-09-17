@@ -144,6 +144,9 @@ line.link {
 div {
   &.networklayer {
     float: left;
+    p {
+      margin: 0.3em;
+    }
   }
 
   &.tooltip {

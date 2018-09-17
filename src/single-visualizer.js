@@ -34,6 +34,7 @@ export class SingleGraphVisualizer {
       .select('div#visualizer')
       .append('div')
       .attr('class', 'networklayer')
+      .html(`<p>${this.graph.name}</p>`)
   }
 
   makeNetworkLayer () {

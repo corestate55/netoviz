@@ -4,6 +4,7 @@
   "description": "RFC8345-based network topology model exercise",
   "main": "src/index.js",
   "dependencies": {
+    "clone": "^2.1.2",
     "d3": "^4.13.0"
   },
   "devDependencies": {
