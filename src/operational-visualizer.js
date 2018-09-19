@@ -11,7 +11,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     this.setEventCallBack(
       [this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel]
     )
-    this.setClearButtonEventCallback()
+    this.setButtonEventCallback()
   }
 
   setEventCallBack (objs) {
@@ -137,28 +137,54 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
   }
 
-  setClearButtonEventCallback () {
-    function clearHighlight () {
+  setButtonEventCallback () {
+    // click callbacks
+    // NOTICE: bind 'this': this = OperationalVisualizer
+    const clearHighlight = () => {
       // clear all highlighted object
-      const element = document.getElementById('visualizer')
+      const visualizer = document.getElementById('visualizer')
       const classList = ['selectedchildren', 'selectedparents', 'selected']
       for (const d of classList) {
-        const selectedElements = element.getElementsByClassName(d)
+        const selectedElements = visualizer.getElementsByClassName(d)
         for (const element of Array.from(selectedElements)) {
           element.classList.remove(d)
         }
       }
     }
 
+    const toggleDiffInactive = () => {
+      console.log(`toggle curr:${this.currentInactive}`)
+      const visualizer = document.getElementById('visualizer')
+      const currInactiveElements = visualizer.getElementsByClassName(this.currentInactive)
+      for (const element of Array.from(currInactiveElements)) {
+        element.classList.remove('inactive')
+      }
+      this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
+      const nextInactiveElements = visualizer.getElementsByClassName(this.currentInactive)
+      for (const element of Array.from(nextInactiveElements)) {
+        element.classList.add('inactive')
+      }
+    }
+
+    // add class to highlight 'button' text when mouse-over/out
+    // NOTICE: dont bind `this`
+    function mouseOverFunc () {
+      this.classList.add('selectready')
+    }
+    function mouseOutFunc () {
+      this.classList.remove('selectready')
+    }
+
     // set event callback for clear button
-    // NOTICE: `this`
     this.clearBtn
       .on('click', clearHighlight)
-      .on('mouseover', function () {
-        this.classList.add('selectready')
-      })
-      .on('mouseout', function () {
-        this.classList.remove('selectready')
-      })
+      .on('mouseover', mouseOverFunc)
+      .on('mouseout', mouseOutFunc)
+
+    // set event callback for diff active/inactive
+    this.toggleBtn
+      .on('click', toggleDiffInactive)
+      .on('mouseover', mouseOverFunc)
+      .on('mouseout', mouseOutFunc)
   }
 }

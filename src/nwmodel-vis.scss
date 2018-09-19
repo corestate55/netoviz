@@ -21,6 +21,10 @@ $stroke_diff_changed: #CBCB01;
 $stroke_diff_deleted: #B71001;
 $stroke_diff_added: #66B032;
 
+// inactive
+$inactive_fill: 0.2;
+$inactive_stroke: 0.05;
+
 select {
   font-size: 20px;
 }
@@ -60,6 +64,10 @@ circle {
   &.node {
     @extend %circlebase;
 
+    &.inactive {
+      fill-opacity: $inactive_fill;
+      stroke-opacity: $inactive_stroke;
+    }
     &.changed {
       fill: $fill_diff_changed;
     }
@@ -76,6 +84,10 @@ circle {
     fill: $fill_normal2;
     stroke: none;
 
+    &.inactive {
+      fill-opacity: $inactive_fill;
+      stroke-opacity: $inactive_stroke;
+    }
     &.selectedchildren {
       fill: $fill_select_child;
     }
@@ -95,6 +107,10 @@ circle {
   &.tp {
     @extend %circlebase;
 
+    &.inactive {
+      fill-opacity: $inactive_fill;
+      stroke-opacity: $inactive_stroke;
+    }
     &.changed {
       fill: $fill_diff_changed;
     }
@@ -127,6 +143,9 @@ circle {
 line.link {
   @extend %linkbase;
 
+  &.inactive {
+    stroke-opacity: $inactive_stroke;
+  }
   &.changed {
     stroke: $stroke_diff_changed;
     stroke-width: 3pt;
@@ -184,11 +203,19 @@ div {
 }
 
 // node/termination-point label
-.tplabel {
-  font-size: 15px;
+text {
   dominant-baseline: central;
-}
-.nodelabel {
-  font-size: 20px;
-  dominant-baseline: central;
+
+  &.tplabel {
+    font-size: 15px;
+    &.inactive {
+      fill-opacity: $inactive_fill;
+    }
+  }
+  &.nodelabel {
+    font-size: 20px;
+    &.inactive {
+      fill-opacity: $inactive_fill;
+    }
+  }
 }

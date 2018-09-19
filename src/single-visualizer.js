@@ -10,17 +10,29 @@ export class SingleGraphVisualizer {
     this.findGraphNodeByPath = findAllNodeFunc
     // rename link key
     this.renameLinkKey()
+    // diff view mode default
+    this.currentInactive = 'deleted'
     // make each objects
     this.visContainer = this.makeVisContainer()
     this.nwLayer = this.makeNetworkLayer()
     this.tooltip = this.makeToolTip()
     this.clearBtn = this.makeClearButton()
+    this.toggleBtn = this.makeDiffInactiveToggleButton()
     this.link = this.makeLinkObjects()
     this.nodeCircle = this.makeNodeCircleObjects()
     this.node = this.makeNodeObjects()
     this.tp = this.makeTpObjects()
     this.tpLabel = this.makeTpLabelObjects()
     this.nodeLabel = this.makeNodeLabelObjects()
+  }
+
+  objClassDef (obj, classString) {
+    const objState = obj.diffState.detect()
+    const list = [classString, objState]
+    if (objState === this.currentInactive) {
+      list.push('inactive')
+    }
+    return list.join(' ')
   }
 
   makeToolTip () {
@@ -43,7 +55,7 @@ export class SingleGraphVisualizer {
       .attr('width', this.width)
       .attr('height', this.height)
       .attr('id', this.graph.name)
-      .attr('class', ['network', this.graph.diffState.detect()].join(' '))
+      .attr('class', this.objClassDef(this.graph, 'network'))
   }
 
   makeClearButton () {
@@ -55,6 +67,15 @@ export class SingleGraphVisualizer {
       .text('[clear all selection/highlight]')
   }
 
+  makeDiffInactiveToggleButton () {
+    return this.nwLayer.append('g')
+      .attr('class', 'difftoggle')
+      .append('text')
+      .attr('x', 10)
+      .attr('y', 40)
+      .text('[toggle diff added/deleted]')
+  }
+
   makeLinkObjects () {
     return this.nwLayer.append('g')
       .attr('class', 'links')
@@ -63,7 +84,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('line')
       .attr('id', d => d.path)
-      .attr('class', d => ['link', d.diffState.detect()].join(' '))
+      .attr('class', d => this.objClassDef(d, 'link'))
   }
 
   makeTpObjects () {
@@ -73,7 +94,8 @@ export class SingleGraphVisualizer {
       .data(this.graph.tpTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => ['tp', d.diffState.detect()].join(' '))
+      .attr('class', d => this.objClassDef(d, 'tp'))
+      // d => ['tp', d.diffState.detect()].join(' ')
       .attr('id', d => d.path)
   }
 
@@ -84,7 +106,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => ['node', d.diffState.detect()].join(' '))
+      .attr('class', d => this.objClassDef(d, 'node'))
       .attr('id', d => d.path)
   }
 
@@ -95,7 +117,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => ['nodecircle', d.diffState.detect()].join(' '))
+      .attr('class', d => this.objClassDef(d, 'nodecircle'))
       .attr('id', d => `${d.path}.bg`) // background
   }
 
@@ -106,7 +128,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.tpTypeNodes())
       .enter()
       .append('text')
-      .attr('class', 'tplabel')
+      .attr('class', d => this.objClassDef(d, 'tplabel'))
       .attr('id', d => `${d.path}.tplb`) // tp label
       .text(d => d.name)
   }
@@ -118,7 +140,7 @@ export class SingleGraphVisualizer {
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('text')
-      .attr('class', 'nodelabel')
+      .attr('class', d => this.objClassDef(d, 'nodelabel'))
       .attr('id', d => `${d.path}.ndlb`) // node label
       .text(d => d.name)
   }

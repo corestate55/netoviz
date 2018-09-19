@@ -15,14 +15,16 @@ export class GraphVisualizer extends Graphs {
     const callback = path => this.findGraphNodeByPath(path)
     // entry-point: draw each layer
     for (const graph of this.graphs) {
-      // const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
-      // singleGraphVisualizer.startSimulation()
+      // single-diff-view
+      const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
+      singleGraphVisualizer.startSimulation()
 
-      const diffSelectedGraphs = this.selectByDiffState(graph)
-      for (const graph of diffSelectedGraphs) {
-        const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
-        singleGraphVisualizer.startSimulation()
-      }
+      // old/new-diff-view
+      // const diffSelectedGraphs = this.selectByDiffState(graph)
+      // for (const graph of diffSelectedGraphs) {
+      //   const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
+      //   singleGraphVisualizer.startSimulation()
+      // }
     }
   }
 
