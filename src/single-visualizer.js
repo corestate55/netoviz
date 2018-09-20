@@ -24,6 +24,8 @@ export class SingleGraphVisualizer {
     this.tp = this.makeTpObjects()
     this.tpLabel = this.makeTpLabelObjects()
     this.nodeLabel = this.makeNodeLabelObjects()
+    // set style of initial inactive objects
+    this.setStyleOfInactiveObjects()
   }
 
   objClassDef (obj, classString) {
@@ -159,6 +161,13 @@ export class SingleGraphVisualizer {
       this.width = 800
       this.height = 800
     }
+  }
+
+  setStyleOfInactiveObjects () {
+    d3.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', true)
+      .style('fill-opacity', 0.2)
+      .style('stroke-opacity', 0.1)
   }
 
   renameLinkKey () {

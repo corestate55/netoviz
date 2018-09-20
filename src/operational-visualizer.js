@@ -142,28 +142,26 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     // NOTICE: bind 'this': this = OperationalVisualizer
     const clearHighlight = () => {
       // clear all highlighted object
-      const visualizer = document.getElementById('visualizer')
       const classList = ['selectedchildren', 'selectedparents', 'selected']
-      for (const d of classList) {
-        const selectedElements = visualizer.getElementsByClassName(d)
-        for (const element of Array.from(selectedElements)) {
-          element.classList.remove(d)
-        }
+      for (const cls of classList) {
+        d3.selectAll(`.${cls}`).classed(cls, false)
       }
     }
 
     const toggleDiffInactive = () => {
-      console.log(`toggle curr:${this.currentInactive}`)
-      const visualizer = document.getElementById('visualizer')
-      const currInactiveElements = visualizer.getElementsByClassName(this.currentInactive)
-      for (const element of Array.from(currInactiveElements)) {
-        element.classList.remove('inactive')
-      }
+      d3.selectAll(`.${this.currentInactive}`)
+        .classed('inactive', false)
+        .transition()
+        .style('fill-opacity', 1.0)
+        .style('stroke-opacity', 1.0)
+        .duration(500)
       this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-      const nextInactiveElements = visualizer.getElementsByClassName(this.currentInactive)
-      for (const element of Array.from(nextInactiveElements)) {
-        element.classList.add('inactive')
-      }
+      d3.selectAll(`.${this.currentInactive}`)
+        .classed('inactive', true)
+        .transition()
+        .style('fill-opacity', 0.2)
+        .style('stroke-opacity', 0.1)
+        .duration(500)
     }
 
     // add class to highlight 'button' text when mouse-over/out
