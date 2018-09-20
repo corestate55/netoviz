@@ -144,19 +144,21 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       // clear all highlighted object
       const classList = ['selectedchildren', 'selectedparents', 'selected']
       for (const cls of classList) {
-        d3.selectAll(`.${cls}`).classed(cls, false)
+        d3.selectAll('div#visualizer').selectAll(`.${cls}`)
+          .classed(cls, false)
       }
     }
 
     const toggleDiffInactive = () => {
-      d3.selectAll(`.${this.currentInactive}`)
+      const visualizer = d3.selectAll('div#visualizer')
+      visualizer.selectAll(`.${this.currentInactive}`)
         .classed('inactive', false)
         .transition()
         .style('fill-opacity', 1.0)
         .style('stroke-opacity', 1.0)
         .duration(500)
       this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-      d3.selectAll(`.${this.currentInactive}`)
+      visualizer.selectAll(`.${this.currentInactive}`)
         .classed('inactive', true)
         .transition()
         .style('fill-opacity', 0.2)
