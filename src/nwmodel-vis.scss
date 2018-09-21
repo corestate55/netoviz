@@ -44,12 +44,12 @@ svg {
 
 text {
   fill: $stroke_normal;
-  &.selectready {
+  &.select-ready {
     font-weight: bold;
   }
 }
 
-%circlebase {
+%circle-base {
   fill: $fill_normal1;
   stroke: $stroke_normal;
   stroke-width: 1px;
@@ -58,7 +58,7 @@ text {
 circle {
   // node circle: core(center) circle
   &.node {
-    @extend %circlebase;
+    @extend %circle-base;
 
     &.changed {
       fill: $fill_diff_changed;
@@ -72,20 +72,20 @@ circle {
   }
 
   // node circle: outer circle
-  &.nodecircle {
+  &.node-circle {
     fill: $fill_normal2;
     stroke: none;
 
-    &.selectedchildren {
+    &.selected-children {
       fill: $fill_select_child;
     }
-    &.selectedparents {
+    &.selected-parents {
       fill: $fill_select_parent;
     }
     &.selected {
       fill: $fill_select;
     }
-    &.selectready {
+    &.select-ready {
       fill: $fill_select_ready;
       opacity: 0.5;
     }
@@ -93,7 +93,7 @@ circle {
 
   // termination point circle
   &.tp {
-    @extend %circlebase;
+    @extend %circle-base;
 
     &.changed {
       fill: $fill_diff_changed;
@@ -105,27 +105,27 @@ circle {
       fill: $fill_diff_deleted;
     }
 
-    &.selectedchildren {
+    &.selected-children {
       fill: $fill_select_child;
     }
-    &.selectedparents {
+    &.selected-parents {
       fill: $fill_select_parent;
     }
     &.selected {
       fill: $fill_select;
     }
-    &.selectready {
+    &.select-ready {
       fill: $fill_select_ready;
     }
   }
 }
 
-%linkbase {
+%link-base {
   stroke: $stroke_normal;
   stroke-width: 1px;
 }
 line.link {
-  @extend %linkbase;
+  @extend %link-base;
 
   &.changed {
     stroke: $stroke_diff_changed;
@@ -142,7 +142,7 @@ line.link {
 }
 
 div {
-  &.networklayer {
+  &.network-layer {
     float: left;
     p {
       margin: 0.3em;
@@ -187,10 +187,10 @@ div {
 text {
   dominant-baseline: central;
 
-  &.tplabel {
+  &.tp-label {
     font-size: 15px;
   }
-  &.nodelabel {
+  &.node-label {
     font-size: 20px;
   }
 }

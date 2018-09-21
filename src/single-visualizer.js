@@ -48,7 +48,7 @@ export class SingleGraphVisualizer {
     return d3.select('body')
       .select('div#visualizer')
       .append('div')
-      .attr('class', 'networklayer')
+      .attr('class', 'network-layer')
       .html(`<p>${this.graph.name}</p>`)
   }
 
@@ -69,7 +69,7 @@ export class SingleGraphVisualizer {
 
   makeClearButton () {
     return this.nwLayerSvg.append('g')
-      .attr('class', 'clearbutton')
+      .attr('class', 'clear-button')
       .append('text')
       .attr('x', 10)
       .attr('y', 20)
@@ -78,7 +78,7 @@ export class SingleGraphVisualizer {
 
   makeDiffInactiveToggleButton () {
     return this.nwLayerSvg.append('g')
-      .attr('class', 'difftoggle')
+      .attr('class', 'diff-toggle-button')
       .append('text')
       .attr('x', 10)
       .attr('y', 40)
@@ -98,7 +98,7 @@ export class SingleGraphVisualizer {
 
   makeTpObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'terminalpoints')
+      .attr('class', 'term-points')
       .selectAll('circle.tp')
       .data(this.graph.tpTypeNodes())
       .enter()
@@ -121,35 +121,35 @@ export class SingleGraphVisualizer {
 
   makeNodeCircleObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'nodecircles')
-      .selectAll('circle.nodecircle')
+      .attr('class', 'node-circles')
+      .selectAll('circle.node-circle')
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => this.objClassDef(d, 'nodecircle'))
+      .attr('class', d => this.objClassDef(d, 'node-circle'))
       .attr('id', d => `${d.path}.bg`) // background
   }
 
   makeTpLabelObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'tplabels')
-      .selectAll('text.tplabel')
+      .attr('class', 'tp-labels')
+      .selectAll('text.tp-label')
       .data(this.graph.tpTypeNodes())
       .enter()
       .append('text')
-      .attr('class', d => this.objClassDef(d, 'tplabel'))
+      .attr('class', d => this.objClassDef(d, 'tp-label'))
       .attr('id', d => `${d.path}.tplb`) // tp label
       .text(d => d.name)
   }
 
   makeNodeLabelObjects () {
     return this.nwLayer.append('g')
-      .attr('class', 'nodelabels')
-      .selectAll('text.nodelabel')
+      .attr('class', 'node-labels')
+      .selectAll('text.node-label')
       .data(this.graph.nodeTypeNodes())
       .enter()
       .append('text')
-      .attr('class', d => this.objClassDef(d, 'nodelabel'))
+      .attr('class', d => this.objClassDef(d, 'node-label'))
       .attr('id', d => `${d.path}.ndlb`) // node label
       .text(d => d.name)
   }

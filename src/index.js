@@ -7,10 +7,10 @@ import './nwmodel-vis.scss'
 function drawLegend () {
   const styles = [
     { 'class': 'normal', 'label': 'normal' },
-    { 'class': 'selectready', 'label': 'select' },
+    { 'class': 'select-ready', 'label': 'select' },
     { 'class': 'selected', 'label': 'click' },
-    { 'class': 'selectedchildren', 'label': 'child' },
-    { 'class': 'selectedparents', 'label': 'parent' }
+    { 'class': 'selected-children', 'label': 'child' },
+    { 'class': 'selected-parents', 'label': 'parent' }
   ]
   const objSize = 40
   const xdp = 30
@@ -26,14 +26,14 @@ function drawLegend () {
     return xdp + objSize / 2 + (xdp + objSize) * i
   }
 
-  legend.selectAll('circle.nodecircle')
+  legend.selectAll('circle.node-circle')
     .data(styles)
     .enter()
     .append('circle')
     .attr('r', objSize / 2)
     .attr('cx', nodeCircleX)
     .attr('cy', nodeY)
-    .attr('class', d => ['nodecircle', d.class].join(' '))
+    .attr('class', d => ['node-circle', d.class].join(' '))
   legend.selectAll('circle.node')
     .data(styles)
     .enter()
@@ -65,14 +65,14 @@ function drawLegend () {
 
 function drawSelection () {
   const modelSelector = d3.select('body')
-    .select('div#modelselector')
+    .select('div#model-selector')
     .append('select')
-    .attr('id', 'modelselect')
+    .attr('id', 'model-select')
     .on('change', () => {
       const selectValue = d3.select('select').property('value')
       d3.select('body') // clear all graphs
         .select('div#visualizer')
-        .selectAll('div.networklayer')
+        .selectAll('div.network-layer')
         .remove()
       drawJsonModel(selectValue)
     })

@@ -27,7 +27,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     ]
 
     function clearElementHighlight (element) {
-      const classList = ['selectedchildren', 'selectedparents', 'selected']
+      const classList = ['selected-children', 'selected-parents', 'selected']
       for (const d of classList) {
         element.classList.remove(d)
       }
@@ -64,9 +64,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       for (const element of highlightElementsByPath(path)) {
         clearElementHighlight(element)
         if (direction === 'children') {
-          element.classList.add('selectedchildren')
+          element.classList.add('selected-children')
         } else if (direction === 'parents') {
-          element.classList.add('selectedparents')
+          element.classList.add('selected-parents')
         } else {
           element.classList.add('selected')
         }
@@ -100,7 +100,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       const path = pathBody(element.id)
       // set highlight style
       for (const elm of highlightElementsByPath(path)) {
-        elm.classList.add('selectready')
+        elm.classList.add('select-ready')
         // enable tooltip
         let tooltipBody = path // tooltip header
         const node = self.findGraphNodeByPath(path)
@@ -123,7 +123,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       const path = pathBody(element.id)
       // remove highlight style
       for (const elm of highlightElementsByPath(path)) {
-        elm.classList.remove('selectready')
+        elm.classList.remove('select-ready')
         // disable tooltip
         self.tooltip
           .style('visibility', 'hidden')
@@ -151,7 +151,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     // NOTICE: bind 'this': this = OperationalVisualizer
     const clearHighlight = () => {
       // clear all highlighted object
-      const classList = ['selectedchildren', 'selectedparents', 'selected']
+      const classList = ['selected-children', 'selected-parents', 'selected']
       for (const cls of classList) {
         d3.selectAll('div#visualizer').selectAll(`.${cls}`)
           .classed(cls, false)
@@ -178,10 +178,10 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     // add class to highlight 'button' text when mouse-over/out
     // NOTICE: dont bind `this`
     function mouseOverFunc () {
-      this.classList.add('selectready')
+      this.classList.add('select-ready')
     }
     function mouseOutFunc () {
-      this.classList.remove('selectready')
+      this.classList.remove('select-ready')
     }
 
     // set event callback for clear button
