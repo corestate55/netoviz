@@ -7,15 +7,24 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
 
-    // set event callback for tp/node
-    this.setEventCallBack(
-      [this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel]
-    )
+    // set event callback
+    this.setZoomEvnetCallback()
+    this.setGraphNodeEventCallBack()
     this.setButtonEventCallback()
   }
 
-  setEventCallBack (objs) {
+  setZoomEvnetCallback () {
+    this.nwLayerSvg.call(d3.zoom()
+      .scaleExtent([1 / 4, 5])
+      .on('zoom', () => this.nwLayer.attr('transform', d3.event.transform))
+    )
+  }
+
+  setGraphNodeEventCallBack () {
     const self = this // alias to use event callback closure
+    const objs = [
+      this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel
+    ]
 
     function clearElementHighlight (element) {
       const classList = ['selectedchildren', 'selectedparents', 'selected']

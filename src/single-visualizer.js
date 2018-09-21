@@ -14,6 +14,7 @@ export class SingleGraphVisualizer {
     this.currentInactive = 'deleted'
     // make each objects
     this.visContainer = this.makeVisContainer()
+    this.nwLayerSvg = this.makeNetworkLayerSVG()
     this.nwLayer = this.makeNetworkLayer()
     this.tooltip = this.makeToolTip()
     this.clearBtn = this.makeClearButton()
@@ -51,7 +52,7 @@ export class SingleGraphVisualizer {
       .html(`<p>${this.graph.name}</p>`)
   }
 
-  makeNetworkLayer () {
+  makeNetworkLayerSVG () {
     return this.visContainer
       .append('svg')
       .attr('width', this.width)
@@ -60,8 +61,14 @@ export class SingleGraphVisualizer {
       .attr('class', this.objClassDef(this.graph, 'network'))
   }
 
+  makeNetworkLayer () {
+    return this.nwLayerSvg
+      .append('g')
+      .attr('id', `${this.graph.name}.group`)
+  }
+
   makeClearButton () {
-    return this.nwLayer.append('g')
+    return this.nwLayerSvg.append('g')
       .attr('class', 'clearbutton')
       .append('text')
       .attr('x', 10)
@@ -70,7 +77,7 @@ export class SingleGraphVisualizer {
   }
 
   makeDiffInactiveToggleButton () {
-    return this.nwLayer.append('g')
+    return this.nwLayerSvg.append('g')
       .attr('class', 'difftoggle')
       .append('text')
       .attr('x', 10)
