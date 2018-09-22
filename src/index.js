@@ -12,14 +12,14 @@ function drawLegend () {
     { 'class': 'selected-children', 'label': 'child' },
     { 'class': 'selected-parents', 'label': 'parent' }
   ]
-  const objSize = 40
-  const xdp = 30
-  const ydp = 10
+  const objSize = 20
+  const xdp = 40
+  const ydp = 5
   const legend = d3.select('body')
     .select('div#legend')
     .append('svg')
     .attr('width', xdp + (xdp + objSize) * styles.length)
-    .attr('height', ydp + objSize + ydp + objSize / 2 + ydp * 3)
+    .attr('height', objSize * 2 + ydp * 5)
   const nodeY = ydp + objSize / 2
 
   const nodeCircleX = (d, i) => {

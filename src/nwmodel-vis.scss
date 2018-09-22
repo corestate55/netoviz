@@ -14,15 +14,16 @@ $fill_select_ready: #66FFFF;
 $fill_diff_changed: #FDED3A;
 $fill_diff_deleted: #FE7367;
 $fill_diff_added: #92D364;
-
 // stroke color
 $stroke_normal: #303030; // for line and circle
 $stroke_diff_changed: #CBCB01;
 $stroke_diff_deleted: #B71001;
 $stroke_diff_added: #66B032;
+// defaults
+$default_font_size: 10pt;
 
-select {
-  font-size: 20px;
+body {
+  font-size: $default_font_size;
 }
 
 svg {
@@ -154,7 +155,7 @@ div {
     background: rgba(0, 0, 0, 0.7);
     border-radius: 8px;
     color: #fff;
-    font-size: 16px;
+    font-size: $default_font_size;
     height: auto;
     line-height: 1.1;
     min-height: 25px; // text font size * 1.5
@@ -186,11 +187,13 @@ div {
 // node/termination-point label
 text {
   dominant-baseline: central;
+  font-size: $default_font_size;
 
   &.tp-label {
-    font-size: 15px;
+    font-size: 8px;
+    fill-opacity: 0.5;
   }
   &.node-label {
-    font-size: 20px;
+    font-size: 10px;
   }
 }

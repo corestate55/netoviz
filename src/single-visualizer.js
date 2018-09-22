@@ -68,20 +68,20 @@ export class SingleGraphVisualizer {
   }
 
   makeClearButton () {
-    return this.nwLayerSvg.append('g')
-      .attr('class', 'clear-button')
+    return this.nwLayerSvg
       .append('text')
       .attr('x', 10)
       .attr('y', 20)
+      .attr('class', 'clear-button')
       .text('[clear all selection/highlight]')
   }
 
   makeDiffInactiveToggleButton () {
-    return this.nwLayerSvg.append('g')
-      .attr('class', 'diff-toggle-button')
+    return this.nwLayerSvg
       .append('text')
       .attr('x', 10)
       .attr('y', 40)
+      .attr('class', 'diff-toggle-button')
       .text('[toggle diff added/deleted]')
   }
 
@@ -156,17 +156,18 @@ export class SingleGraphVisualizer {
 
   setCavasSize () {
     const graphSize = this.graph.nodes.length
-    // small
-    this.width = 400
-    this.height = 400
     if (graphSize > 50) {
       // large
-      this.width = 2000
-      this.height = 1000
+      this.width = 600
+      this.height = 600
     } else if (graphSize >= 20 && graphSize < 50) {
       // medium
-      this.width = 800
-      this.height = 800
+      this.width = 450
+      this.height = 450
+    } else {
+      // small
+      this.width = 300
+      this.height = 300
     }
   }
 
