@@ -3,6 +3,7 @@
 import {Graphs} from './graphs'
 import {OperationalVisualizer} from './operational-visualizer'
 import * as cln from 'clone'
+import * as d3 from 'd3'
 
 export class GraphVisualizer extends Graphs {
   constructor (topoData) {
@@ -10,6 +11,7 @@ export class GraphVisualizer extends Graphs {
   }
 
   drawGraphs () {
+    // clear
     // hand-over the operation through all layers
     // NOTICE: BIND `this`
     const callback = path => this.findGraphNodeByPath(path)
@@ -26,6 +28,27 @@ export class GraphVisualizer extends Graphs {
       //   singleGraphVisualizer.startSimulation()
       // }
     }
+  }
+
+  drawLayerSelector () {
+    const layerList = d3.select('div#layer-selector').append('ul')
+    const nameFunc = d => `display-${d.name}`
+    layerList.selectAll('li')
+      .data(this.graphs)
+      .enter()
+      .append('li')
+      .append('input')
+      .attr('type', 'checkbox')
+      .attr('name', nameFunc)
+      .attr('checked', true)
+      .on('click', function (d) {
+        document.getElementById(`${d.name}-container`)
+          .style.display = this.checked ? 'block' : 'none'
+      })
+    layerList.selectAll('li')
+      .append('label')
+      .attr('for', nameFunc)
+      .text(d => d.name)
   }
 
   selectByDiffState (graph) {

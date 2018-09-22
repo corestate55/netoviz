@@ -42,20 +42,20 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
     function pathBody (path) {
       // remove each id(path) suffix
-      return path.replace(/\.(bg|ndlb|tplb)$/, '')
+      return path.replace(/-(bg|ndlb|tplb)$/, '')
     }
 
     function highlightElementsByPath (path) {
       if (pathObjType(path) === 'tp') {
         return [
           document.getElementById(path),
-          document.getElementById(`${path}.tplb`)
+          document.getElementById(`${path}-tplb`)
         ]
       }
       // pathObjType === 'node'
       return [
-        document.getElementById(`${path}.bg`),
-        document.getElementById(`${path}.ndlb`)
+        document.getElementById(`${path}-bg`),
+        document.getElementById(`${path}-ndlb`)
       ]
     }
 

@@ -15,8 +15,7 @@ function drawLegend () {
   const objSize = 20
   const xdp = 40
   const ydp = 5
-  const legend = d3.select('body')
-    .select('div#legend')
+  const legend = d3.select('div#legend')
     .append('svg')
     .attr('width', xdp + (xdp + objSize) * styles.length)
     .attr('height', objSize * 2 + ydp * 5)
@@ -70,10 +69,6 @@ function drawSelection () {
     .attr('id', 'model-select')
     .on('change', () => {
       const selectValue = d3.select('select').property('value')
-      d3.select('body') // clear all graphs
-        .select('div#visualizer')
-        .selectAll('div.network-layer')
-        .remove()
       drawJsonModel(selectValue)
     })
   const options = modelSelector.selectAll('option')
@@ -89,6 +84,18 @@ function drawSelection () {
     .attr('selected', true)
 }
 
+function clearGraphs () {
+  d3.select('div#visualizer') // clear all graphs
+    .selectAll('div.network-layer')
+    .remove()
+}
+
+function clearLayerSelector () {
+  d3.select('div#layer-selector') // clear all layers
+    .selectAll('li')
+    .remove()
+}
+
 function drawJsonModel (file) {
   d3.json(`/model/${file}`, (error, topoData) => {
     if (error) {
@@ -99,6 +106,9 @@ function drawJsonModel (file) {
     console.log('topology : ', visualizer.topoModel)
     console.log('graphs   : ', visualizer.graphs)
     // draw
+    clearLayerSelector()
+    visualizer.drawLayerSelector()
+    clearGraphs()
     visualizer.drawGraphs()
   })
 }

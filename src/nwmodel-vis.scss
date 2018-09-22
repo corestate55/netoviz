@@ -143,6 +143,28 @@ line.link {
 }
 
 div {
+  &.control {
+    padding: $default_font_size;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &#model-selector {
+    width: 20%;
+  }
+
+  &#layer-selector {
+    width: 20%;
+  }
+
+  &#legend {
+    width: 50%;
+  }
+
+  &#visualizer {
+    clear: both;
+  }
+
   &.network-layer {
     float: left;
     p {

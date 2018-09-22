@@ -49,6 +49,8 @@ export class SingleGraphVisualizer {
       .select('div#visualizer')
       .append('div')
       .attr('class', 'network-layer')
+      .attr('id', `${this.graph.name}-container`)
+      .style('display', 'block')
       .html(`<p>${this.graph.name}</p>`)
   }
 
@@ -64,7 +66,7 @@ export class SingleGraphVisualizer {
   makeNetworkLayer () {
     return this.nwLayerSvg
       .append('g')
-      .attr('id', `${this.graph.name}.group`)
+      .attr('id', `${this.graph.name}-group`)
   }
 
   makeClearButton () {
@@ -127,7 +129,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('circle')
       .attr('class', d => this.objClassDef(d, 'node-circle'))
-      .attr('id', d => `${d.path}.bg`) // background
+      .attr('id', d => `${d.path}-bg`) // background
   }
 
   makeTpLabelObjects () {
@@ -138,7 +140,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('text')
       .attr('class', d => this.objClassDef(d, 'tp-label'))
-      .attr('id', d => `${d.path}.tplb`) // tp label
+      .attr('id', d => `${d.path}-tplb`) // tp label
       .text(d => d.name)
   }
 
@@ -150,7 +152,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('text')
       .attr('class', d => this.objClassDef(d, 'node-label'))
-      .attr('id', d => `${d.path}.ndlb`) // node label
+      .attr('id', d => `${d.path}-ndlb`) // node label
       .text(d => d.name)
   }
 
