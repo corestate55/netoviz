@@ -207,7 +207,7 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "p1",
+                "tp-id": "p0",
                 "_diff_state_": {
                   "forward": "kept",
                   "backward": "kept",
@@ -215,7 +215,7 @@
                 }
               },
               {
-                "tp-id": "p2",
+                "tp-id": "p1",
                 "_diff_state_": {
                   "forward": "deleted",
                   "backward": null,
@@ -290,7 +290,7 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "p1",
+                "tp-id": "p0",
                 "_diff_state_": {
                   "forward": "kept",
                   "backward": "kept",
@@ -298,7 +298,7 @@
                 }
               },
               {
-                "tp-id": "p2",
+                "tp-id": "p1",
                 "_diff_state_": {
                   "forward": "kept",
                   "backward": "kept",
@@ -373,7 +373,7 @@
             },
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "p1",
+                "tp-id": "p0",
                 "_diff_state_": {
                   "forward": "kept",
                   "backward": "kept",
@@ -381,7 +381,7 @@
                 }
               },
               {
-                "tp-id": "p2",
+                "tp-id": "p1",
                 "_diff_state_": {
                   "forward": "added",
                   "backward": null,
@@ -534,7 +534,7 @@
             "supporting-node": [
               {
                 "network-ref": "layer1",
-                "node-ref": "sv2",
+                "node-ref": "sv1",
                 "_diff_state_": {
                   "forward": "deleted",
                   "backward": null,
@@ -720,7 +720,7 @@
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "seg_a,p1,vm1,eth0",
+            "link-id": "seg_a,p0,vm1,eth0",
             "_diff_state_": {
               "forward": "kept",
               "backward": "kept",
@@ -728,11 +728,11 @@
             },
             "source": {
               "source-node": "seg_a",
-              "source-tp": "p1",
+              "source-tp": "p0",
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/seg_a,p1,vm1,eth0"
+                "pair": "layer3/seg_a,p0,vm1,eth0"
               }
             },
             "destination": {
@@ -741,12 +741,12 @@
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/seg_a,p1,vm1,eth0"
+                "pair": "layer3/seg_a,p0,vm1,eth0"
               }
             }
           },
           {
-            "link-id": "vm1,eth0,seg_a,p1",
+            "link-id": "vm1,eth0,seg_a,p0",
             "_diff_state_": {
               "forward": "kept",
               "backward": "kept",
@@ -758,21 +758,21 @@
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/vm1,eth0,seg_a,p1"
+                "pair": "layer3/vm1,eth0,seg_a,p0"
               }
             },
             "destination": {
               "dest-node": "seg_a",
-              "dest-tp": "p1",
+              "dest-tp": "p0",
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/vm1,eth0,seg_a,p1"
+                "pair": "layer3/vm1,eth0,seg_a,p0"
               }
             }
           },
           {
-            "link-id": "seg_a,p2,vm2,eth0",
+            "link-id": "seg_a,p1,vm2,eth0",
             "_diff_state_": {
               "forward": "deleted",
               "backward": null,
@@ -780,7 +780,7 @@
             },
             "source": {
               "source-node": "seg_a",
-              "source-tp": "p2",
+              "source-tp": "p1",
               "_diff_state_": {
                 "forward": "deleted",
                 "backward": null,
@@ -798,7 +798,7 @@
             }
           },
           {
-            "link-id": "vm2,eth0,seg_a,p2",
+            "link-id": "vm2,eth0,seg_a,p1",
             "_diff_state_": {
               "forward": "deleted",
               "backward": null,
@@ -815,7 +815,7 @@
             },
             "destination": {
               "dest-node": "seg_a",
-              "dest-tp": "p2",
+              "dest-tp": "p1",
               "_diff_state_": {
                 "forward": "deleted",
                 "backward": null,
@@ -824,7 +824,7 @@
             }
           },
           {
-            "link-id": "seg_b,p1,vm2,eth1",
+            "link-id": "seg_b,p0,vm2,eth1",
             "_diff_state_": {
               "forward": "deleted",
               "backward": null,
@@ -832,7 +832,7 @@
             },
             "source": {
               "source-node": "seg_b",
-              "source-tp": "p1",
+              "source-tp": "p0",
               "_diff_state_": {
                 "forward": "deleted",
                 "backward": null,
@@ -850,7 +850,7 @@
             }
           },
           {
-            "link-id": "vm2,eth1,seg_b,p1",
+            "link-id": "vm2,eth1,seg_b,p0",
             "_diff_state_": {
               "forward": "deleted",
               "backward": null,
@@ -867,7 +867,7 @@
             },
             "destination": {
               "dest-node": "seg_b",
-              "dest-tp": "p1",
+              "dest-tp": "p0",
               "_diff_state_": {
                 "forward": "deleted",
                 "backward": null,
@@ -876,7 +876,7 @@
             }
           },
           {
-            "link-id": "seg_b,p2,vm3,eth0",
+            "link-id": "seg_b,p1,vm3,eth0",
             "_diff_state_": {
               "forward": "kept",
               "backward": "kept",
@@ -884,11 +884,11 @@
             },
             "source": {
               "source-node": "seg_b",
-              "source-tp": "p2",
+              "source-tp": "p1",
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/seg_b,p2,vm3,eth0"
+                "pair": "layer3/seg_b,p1,vm3,eth0"
               }
             },
             "destination": {
@@ -897,12 +897,12 @@
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/seg_b,p2,vm3,eth0"
+                "pair": "layer3/seg_b,p1,vm3,eth0"
               }
             }
           },
           {
-            "link-id": "vm3,eth0,seg_b,p2",
+            "link-id": "vm3,eth0,seg_b,p1",
             "_diff_state_": {
               "forward": "kept",
               "backward": "kept",
@@ -914,21 +914,21 @@
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/vm3,eth0,seg_b,p2"
+                "pair": "layer3/vm3,eth0,seg_b,p1"
               }
             },
             "destination": {
               "dest-node": "seg_b",
-              "dest-tp": "p2",
+              "dest-tp": "p1",
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/vm3,eth0,seg_b,p2"
+                "pair": "layer3/vm3,eth0,seg_b,p1"
               }
             }
           },
           {
-            "link-id": "seg_c,p1,vm3,eth1",
+            "link-id": "seg_c,p0,vm3,eth1",
             "_diff_state_": {
               "forward": "kept",
               "backward": "kept",
@@ -936,11 +936,11 @@
             },
             "source": {
               "source-node": "seg_c",
-              "source-tp": "p1",
+              "source-tp": "p0",
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/seg_c,p1,vm3,eth1"
+                "pair": "layer3/seg_c,p0,vm3,eth1"
               }
             },
             "destination": {
@@ -949,12 +949,12 @@
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/seg_c,p1,vm3,eth1"
+                "pair": "layer3/seg_c,p0,vm3,eth1"
               }
             }
           },
           {
-            "link-id": "vm3,eth1,seg_c,p1",
+            "link-id": "vm3,eth1,seg_c,p0",
             "_diff_state_": {
               "forward": "kept",
               "backward": "kept",
@@ -966,21 +966,21 @@
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/vm3,eth1,seg_c,p1"
+                "pair": "layer3/vm3,eth1,seg_c,p0"
               }
             },
             "destination": {
               "dest-node": "seg_c",
-              "dest-tp": "p1",
+              "dest-tp": "p0",
               "_diff_state_": {
                 "forward": "kept",
                 "backward": null,
-                "pair": "layer3/vm3,eth1,seg_c,p1"
+                "pair": "layer3/vm3,eth1,seg_c,p0"
               }
             }
           },
           {
-            "link-id": "seg_b,p1,vm1,eth1",
+            "link-id": "seg_b,p0,vm1,eth1",
             "_diff_state_": {
               "forward": "added",
               "backward": null,
@@ -988,7 +988,7 @@
             },
             "source": {
               "source-node": "seg_b",
-              "source-tp": "p1",
+              "source-tp": "p0",
               "_diff_state_": {
                 "forward": "added",
                 "backward": null,
@@ -1006,7 +1006,7 @@
             }
           },
           {
-            "link-id": "vm1,eth1,seg_b,p1",
+            "link-id": "vm1,eth1,seg_b,p0",
             "_diff_state_": {
               "forward": "added",
               "backward": null,
@@ -1023,7 +1023,7 @@
             },
             "destination": {
               "dest-node": "seg_b",
-              "dest-tp": "p1",
+              "dest-tp": "p0",
               "_diff_state_": {
                 "forward": "added",
                 "backward": null,
@@ -1032,7 +1032,7 @@
             }
           },
           {
-            "link-id": "seg_c,p2,vm4,eth0",
+            "link-id": "seg_c,p1,vm4,eth0",
             "_diff_state_": {
               "forward": "added",
               "backward": null,
@@ -1040,7 +1040,7 @@
             },
             "source": {
               "source-node": "seg_c",
-              "source-tp": "p2",
+              "source-tp": "p1",
               "_diff_state_": {
                 "forward": "added",
                 "backward": null,
@@ -1058,7 +1058,7 @@
             }
           },
           {
-            "link-id": "vm4,eth0,seg_c,p2",
+            "link-id": "vm4,eth0,seg_c,p1",
             "_diff_state_": {
               "forward": "added",
               "backward": null,
@@ -1075,7 +1075,7 @@
             },
             "destination": {
               "dest-node": "seg_c",
-              "dest-tp": "p2",
+              "dest-tp": "p1",
               "_diff_state_": {
                 "forward": "added",
                 "backward": null,
