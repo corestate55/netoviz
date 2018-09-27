@@ -57,6 +57,9 @@ text {
 }
 
 circle {
+  &.fixed {
+    stroke: red;
+  }
   // node circle: core(center) circle
   &.node {
     @extend %circle-base;

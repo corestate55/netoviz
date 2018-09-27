@@ -20,7 +20,7 @@ export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
     // Set event callbacks for node/tp object (mouse dragging)
     // notice use arrow-function `() => {}' NOT `function(){}`
     // TO BIND `this`
-    this.ticked = () => {
+    const ticked = () => {
       this.link
         .attr('x1', d => d.source.x)
         .attr('y1', d => d.source.y)
@@ -52,27 +52,6 @@ export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
         .attr('y', d => d.y)
     }
 
-    this.dragstarted = d => {
-      if (!d3.event.active) {
-        this.simulation.alphaTarget(0.3).restart()
-      }
-      d.fx = d.x
-      d.fy = d.y
-    }
-
-    this.dragged = d => {
-      d.fx = d3.event.x
-      d.fy = d3.event.y
-    }
-
-    this.dragended = d => {
-      if (!d3.event.active) {
-        this.simulation.alphaTarget(0)
-      }
-      d.fx = null
-      d.fy = null
-    }
-
     // make simulation
     this.simulation = d3.forceSimulation()
       .force('link',
@@ -91,7 +70,7 @@ export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
 
     this.simulation
       .nodes(this.graph.nodes)
-      .on('tick', this.ticked)
+      .on('tick', ticked)
       .force('link')
       .links(this.graph.links)
 

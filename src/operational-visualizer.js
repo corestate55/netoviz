@@ -18,6 +18,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       .scaleExtent([1 / 4, 5])
       .on('zoom', () => this.nwLayer.attr('transform', d3.event.transform))
     )
+    this.nwLayerSvg.on('dblclick.zoom', null)
   }
 
   setGraphNodeEventCallBack () {
@@ -130,6 +131,32 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
+    function dblclick (d) {
+      this.classList.remove('fixed')
+      d.fx = null
+      d.fy = null
+    }
+
+    function dragstarted (d) {
+      this.classList.add('fixed')
+      if (!d3.event.active) {
+        self.simulation.alphaTarget(0.3).restart()
+      }
+      d.fx = d.x
+      d.fy = d.y
+    }
+
+    function dragged (d) {
+      d.fx = d3.event.x
+      d.fy = d3.event.y
+    }
+
+    function dragended (d) {
+      if (!d3.event.active) {
+        self.simulation.alphaTarget(0)
+      }
+    }
+
     // set event callbacks
     for (const obj of objs) {
       // use `function() {}` NOT arrow-function `() => {}`.
@@ -139,10 +166,11 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .on('mouseover', function () { mouseOver(this) })
         .on('mousemove', function () { mouseMove(this) })
         .on('mouseout', function () { mouseOut(this) })
+        .on('dblclick', dblclick)
         .call(d3.drag()
-          .on('start', self.dragstarted)
-          .on('drag', self.dragged)
-          .on('end', self.dragended))
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended))
     }
   }
 
