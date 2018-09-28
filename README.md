@@ -1,25 +1,26 @@
-# nwmodel-exercise
+# Netoviz
 
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Exercise of Network Topology Model ([RFC 8345 \- A YANG Data Model for Network Topologies](https://datatracker.ietf.org/doc/rfc8345/))
+Netoviz (**Ne**twork **To**pology **Vis**ualizer) is a tool to visualize network topology data that based on
+[RFC8345](https://datatracker.ietf.org/doc/rfc8345/).
 
-See also [the topology data checker](https://github.com/corestate55/nwmodel-checker).
-
-## Directory
-
-* `src`: Source code files of visualizer.
-  * Codes are packed by `webpack` and stored in `dist` as `main.js`.
-* `dist`: Distributed files. (`devServer`'s document-root)
-* `dist/model`: Topology data files (json)
-
-This visualizer depends on [D3.js v4](https://d3js.org/), [Webpack](https://webpack.js.org/), [Node.js](https://nodejs.org/ja/) and [NPM](https://www.npmjs.com/).
+See also [Netomox (Netwrok topology modeling toolbox)](https://github.com/corestate55/netomox), the tool to construct RFC8345 based network topology data.
 
 ## Demo
 
 The visualizer works on Heroku.
 
-* https://nwmodel-vis.herokuapp.com/
+* https://netoviz.herokuapp.com/
+
+## Directory
+
+* `src`: Source code files of visualizer.
+  * Codes are packed by webpack and stored in `dist` as `main.js`.
+* `dist`: Distributed files. (`devServer`'s document-root)
+* `dist/model`: Topology data files (json)
+
+This visualizer depends on [D3.js v4](https://d3js.org/), [Webpack](https://webpack.js.org/), [Node.js](https://nodejs.org/ja/) and [NPM](https://www.npmjs.com/).
 
 ## Installation
 
