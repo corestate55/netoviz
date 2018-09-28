@@ -131,14 +131,36 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
+    function fixElementsByPath (path) {
+      const elements = highlightElementsByPath(path)
+      if (pathObjType(path) === 'node') {
+        elements.push(document.getElementById(path))
+      }
+      return elements
+    }
+
+    function classifyNodeAsFixed (element) {
+      const path = pathBody(element.getAttribute('id'))
+      for (const elm of fixElementsByPath(path)) {
+        elm.classList.add('fixed')
+      }
+    }
+
+    function unclassifyNodeAsFixed (element) {
+      const path = pathBody(element.getAttribute('id'))
+      for (const elm of fixElementsByPath(path)) {
+        elm.classList.remove('fixed')
+      }
+    }
+
     function dblclick (d) {
-      this.classList.remove('fixed')
+      unclassifyNodeAsFixed(this)
       d.fx = null
       d.fy = null
     }
 
     function dragstarted (d) {
-      this.classList.add('fixed')
+      classifyNodeAsFixed(this)
       if (!d3.event.active) {
         self.simulation.alphaTarget(0.3).restart()
       }

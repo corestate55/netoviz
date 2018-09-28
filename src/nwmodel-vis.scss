@@ -57,9 +57,6 @@ text {
 }
 
 circle {
-  &.fixed {
-    stroke: red;
-  }
   // node circle: core(center) circle
   &.node {
     @extend %circle-base;
@@ -73,6 +70,10 @@ circle {
     &.deleted {
       fill: $fill_diff_deleted;
     }
+  }
+
+  &.fixed {
+    stroke: crimson;
   }
 
   // node circle: outer circle
