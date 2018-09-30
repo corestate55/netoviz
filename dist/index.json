@@ -1,0 +1,27 @@
+[
+  {
+    "selected": true,
+    "value": "diff_test.json",
+    "label": "diff viewer test data"
+  },
+  {
+    "selected": false,
+    "value": "target3.diff.json",
+    "label": "target3 diff data"
+  },
+  {
+    "selected": false,
+    "value": "target3.json",
+    "label": "L2 Aggregated Model"
+  },
+  {
+    "selected": false,
+    "value": "target2.json",
+    "label": "L2 Compact Model"
+  },
+  {
+    "selected": false,
+    "value": "target.json",
+    "label": "L2 Verbose Model"
+  }
+]

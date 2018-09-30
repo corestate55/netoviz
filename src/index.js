@@ -62,7 +62,7 @@ function drawLegend () {
     .text(d => d.label)
 }
 
-function drawModelSelector () {
+function drawModelSelector (modelList) {
   const modelSelector = d3.select('body')
     .select('div#model-selector')
     .append('select')
@@ -72,14 +72,14 @@ function drawModelSelector () {
       drawJsonModel(selectValue)
     })
   const options = modelSelector.selectAll('option')
-    .data(modelFiles)
+    .data(modelList)
     .enter()
     .append('option')
     .attr('value', d => d.value)
     .text(d => d.label)
 
   // set default selection
-  const selectedFile = modelFiles.find(d => d.selected)
+  const selectedFile = modelList.find(d => d.selected)
   options.filter(d => d.value === selectedFile.value)
     .attr('selected', true)
 }
@@ -100,33 +100,11 @@ function drawJsonModel (file) {
 }
 
 // Entry point
-const modelFiles = [
-  {
-    'selected': true,
-    'value': 'diff_test.json',
-    'label': 'diff viewer test data'
-  },
-  {
-    'selected': false,
-    'value': 'target3.diff.json',
-    'label': 'target3 diff data'
-  },
-  {
-    'selected': false,
-    'value': 'target3.json',
-    'label': 'L2 Aggregated Model'
-  },
-  {
-    'selected': false,
-    'value': 'target2.json',
-    'label': 'L2 Compact Model'
-  },
-  {
-    'selected': false,
-    'value': 'target.json',
-    'label': 'L2 Verbose Model'
-  }
-]
 drawLegend()
-drawModelSelector()
-drawJsonModel(modelFiles.find(d => d.selected).value)
+d3.json('/index.json', (error, modelList) => {
+  if (error) {
+    throw error
+  }
+  drawModelSelector(modelList)
+  drawJsonModel(modelList.find(d => d.selected).value)
+})
