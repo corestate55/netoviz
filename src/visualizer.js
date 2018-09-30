@@ -11,7 +11,11 @@ export class GraphVisualizer extends Graphs {
   }
 
   drawGraphs () {
-    // clear
+    // clear graphs
+    d3.select('div#visualizer') // clear all graphs
+      .selectAll('div.network-layer')
+      .remove()
+
     // hand-over the operation through all layers
     // NOTICE: BIND `this`
     const callback = path => this.findGraphNodeByPath(path)
@@ -31,23 +35,33 @@ export class GraphVisualizer extends Graphs {
   }
 
   drawLayerSelector () {
+    // clear layer selector
+    d3.select('div#layer-selector') // clear all layers
+      .selectAll('li')
+      .remove()
+
     const layerList = d3.select('div#layer-selector').append('ul')
-    const nameFunc = d => `display-${d.name}`
+    const idFunc = d => `layer-selector-${d.name}`
+    function toggleLayerDisplay (d) {
+      const cBox = document.getElementById(idFunc(d))
+      document.getElementById(`${d.name}-container`)
+        .style.display = cBox.checked ? 'block' : 'none'
+    }
+
     layerList.selectAll('li')
       .data(this.graphs)
       .enter()
       .append('li')
       .append('input')
       .attr('type', 'checkbox')
-      .attr('name', nameFunc)
+      .attr('name', 'select-layer')
+      .attr('id', idFunc)
       .attr('checked', true)
-      .on('click', function (d) {
-        document.getElementById(`${d.name}-container`)
-          .style.display = this.checked ? 'block' : 'none'
-      })
+      .on('click', toggleLayerDisplay)
     layerList.selectAll('li')
       .append('label')
-      .attr('for', nameFunc)
+      .attr('for', idFunc)
+      .on('click', toggleLayerDisplay)
       .text(d => d.name)
   }
 

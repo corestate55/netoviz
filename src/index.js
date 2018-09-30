@@ -62,7 +62,7 @@ function drawLegend () {
     .text(d => d.label)
 }
 
-function drawSelection () {
+function drawModelSelector () {
   const modelSelector = d3.select('body')
     .select('div#model-selector')
     .append('select')
@@ -84,18 +84,6 @@ function drawSelection () {
     .attr('selected', true)
 }
 
-function clearGraphs () {
-  d3.select('div#visualizer') // clear all graphs
-    .selectAll('div.network-layer')
-    .remove()
-}
-
-function clearLayerSelector () {
-  d3.select('div#layer-selector') // clear all layers
-    .selectAll('li')
-    .remove()
-}
-
 function drawJsonModel (file) {
   d3.json(`/model/${file}`, (error, topoData) => {
     if (error) {
@@ -106,9 +94,7 @@ function drawJsonModel (file) {
     console.log('topology : ', visualizer.topoModel)
     console.log('graphs   : ', visualizer.graphs)
     // draw
-    clearLayerSelector()
     visualizer.drawLayerSelector()
-    clearGraphs()
     visualizer.drawGraphs()
   })
 }
@@ -142,5 +128,5 @@ const modelFiles = [
   }
 ]
 drawLegend()
-drawSelection()
+drawModelSelector()
 drawJsonModel(modelFiles.find(d => d.selected).value)
