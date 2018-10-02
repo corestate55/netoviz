@@ -3,6 +3,9 @@
 import * as d3 from 'd3'
 import {ForceSimulatedVisualizer} from './simulated-visualizer'
 
+// NOTE
+// arg; `d` : data binded to DOM by d3.js
+// arg: `element`: DOM object (NOT a d3.selection)
 export class OperationalVisualizer extends ForceSimulatedVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
@@ -16,6 +19,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   setInfoTableCallback () {
     const self = this
+
     function nodeInfoClick (d) {
       self.nodeInfoTable.selectAll(`.selected`).classed('selected', false)
       d3.select(this).classed('selected', true)
@@ -33,6 +37,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .append('td')
         .attr('class', 'selected')
         .html(d => d.name)
+      self.highlightNode(document.getElementById(d.path))
     }
 
     this.nodeInfoTable.selectAll('td')
@@ -46,7 +51,77 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       .scaleExtent([1 / 4, 5])
       .on('zoom', () => this.nwLayer.attr('transform', d3.event.transform))
     )
-    this.nwLayerSvg.on('dblclick.zoom', null)
+    this.nwLayerSvg.on('dblclick.zoom', null) // remove zoom-by-double-click
+  }
+
+  clearElementHighlight (element) {
+    const classList = ['selected-children', 'selected-parents', 'selected']
+    for (const d of classList) {
+      element.classList.remove(d)
+    }
+  }
+
+  pathObjType (path) {
+    if (path.match(/.+\/.+\/.+/)) {
+      return 'tp'
+    }
+    return 'node'
+  }
+
+  pathBody (path) {
+    // remove each id(path) suffix
+    return path.replace(/-(bg|ndlb|tplb)$/, '')
+  }
+
+  highlightElementsByPath (path) {
+    if (this.pathObjType(path) === 'tp') {
+      return [
+        document.getElementById(path),
+        document.getElementById(`${path}-tplb`)
+      ]
+    }
+    // pathObjType === 'node'
+    return [
+      document.getElementById(`${path}-bg`),
+      document.getElementById(`${path}-ndlb`)
+    ]
+  }
+
+  // highlight selected node
+  highlightNodeByPath (direction, path) {
+    for (const element of this.highlightElementsByPath(path)) {
+      this.clearElementHighlight(element)
+      if (direction === 'children') {
+        element.classList.add('selected-children')
+      } else if (direction === 'parents') {
+        element.classList.add('selected-parents')
+      } else {
+        element.classList.add('selected')
+      }
+    }
+  }
+
+  findSupportingObj (direction, path) {
+    // highlight DOM
+    this.highlightNodeByPath(direction, path)
+    // find nodes to highlight via through *all* layers
+    const node = this.findGraphNodeByPath(path)
+    if (node[direction]) {
+      // search children/parent recursively
+      for (const d of node[direction]) {
+        this.findSupportingObj(direction, d) // recursion
+      }
+    }
+  }
+
+  // Event callback to highlight svg node.
+  highlightNode (element) {
+    // highlight selected object and its children/parents
+    const path = this.pathBody(element.getAttribute('id'))
+    console.log('highlight_top: ', path)
+    this.findSupportingObj('children', path)
+    this.findSupportingObj('parents', path)
+    this.findSupportingObj('clicked', path) // dummy direction
   }
 
   setGraphNodeEventCallBack () {
@@ -55,80 +130,10 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel
     ]
 
-    function clearElementHighlight (element) {
-      const classList = ['selected-children', 'selected-parents', 'selected']
-      for (const d of classList) {
-        element.classList.remove(d)
-      }
-    }
-
-    function pathObjType (path) {
-      if (path.match(/.+\/.+\/.+/)) {
-        return 'tp'
-      }
-      return 'node'
-    }
-
-    function pathBody (path) {
-      // remove each id(path) suffix
-      return path.replace(/-(bg|ndlb|tplb)$/, '')
-    }
-
-    function highlightElementsByPath (path) {
-      if (pathObjType(path) === 'tp') {
-        return [
-          document.getElementById(path),
-          document.getElementById(`${path}-tplb`)
-        ]
-      }
-      // pathObjType === 'node'
-      return [
-        document.getElementById(`${path}-bg`),
-        document.getElementById(`${path}-ndlb`)
-      ]
-    }
-
-    // highlight selected node
-    function highlightNodeByPath (direction, path) {
-      for (const element of highlightElementsByPath(path)) {
-        clearElementHighlight(element)
-        if (direction === 'children') {
-          element.classList.add('selected-children')
-        } else if (direction === 'parents') {
-          element.classList.add('selected-parents')
-        } else {
-          element.classList.add('selected')
-        }
-      }
-    }
-
-    // event callback
-    function highlightNode (element) {
-      function findSupportingObj (direction, path) {
-        // highlight DOM
-        console.log('....', direction, path)
-        highlightNodeByPath(direction, path)
-        // find nodes to highlight via through *all* layers
-        const node = self.findGraphNodeByPath(path)
-        if (node[direction]) {
-          // search children/parent recursively
-          for (const d of node[direction]) {
-            findSupportingObj(direction, d)
-          }
-        }
-      }
-      // highlight selected object and its children/parents
-      const path = pathBody(element.getAttribute('id'))
-      console.log('highlight_top: ', path)
-      findSupportingObj('children', path)
-      findSupportingObj('parents', path)
-      findSupportingObj('clicked', path) // dummy direction
-    }
-
     function mouseOver (element) {
-      const path = pathBody(element.id)
+      const path = self.pathBody(element.id)
       // set highlight style
-      for (const elm of highlightElementsByPath(path)) {
+      for (const elm of self.highlightElementsByPath(path)) {
         elm.classList.add('select-ready')
         // enable tooltip
         let tooltipBody = path // tooltip header
@@ -149,9 +154,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
 
     function mouseOut (element) {
-      const path = pathBody(element.id)
+      const path = self.pathBody(element.id)
       // remove highlight style
-      for (const elm of highlightElementsByPath(path)) {
+      for (const elm of self.highlightElementsByPath(path)) {
         elm.classList.remove('select-ready')
         // disable tooltip
         self.tooltip
@@ -160,22 +165,22 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
 
     function fixElementsByPath (path) {
-      const elements = highlightElementsByPath(path)
-      if (pathObjType(path) === 'node') {
+      const elements = self.highlightElementsByPath(path)
+      if (self.pathObjType(path) === 'node') {
         elements.push(document.getElementById(path))
       }
       return elements
     }
 
     function classifyNodeAsFixed (element) {
-      const path = pathBody(element.getAttribute('id'))
+      const path = self.pathBody(element.getAttribute('id'))
       for (const elm of fixElementsByPath(path)) {
         elm.classList.add('fixed')
       }
     }
 
     function unclassifyNodeAsFixed (element) {
-      const path = pathBody(element.getAttribute('id'))
+      const path = self.pathBody(element.getAttribute('id'))
       for (const elm of fixElementsByPath(path)) {
         elm.classList.remove('fixed')
       }
@@ -212,7 +217,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
-        .on('click', function () { highlightNode(this) })
+        .on('click', function () { self.highlightNode(this) })
         .on('mouseover', function () { mouseOver(this) })
         .on('mousemove', function () { mouseMove(this) })
         .on('mouseout', function () { mouseOut(this) })
