@@ -67,7 +67,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('tr')
       .append('td')
-      .attr('id', d => `${d.name}-info`)
+      .attr('id', d => `${d.path}-info`)
       .html(d => d.name)
   }
 

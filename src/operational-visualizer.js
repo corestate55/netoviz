@@ -21,11 +21,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     const self = this
 
     function nodeInfoClick (d) {
-      self.nodeInfoTable.selectAll(`.selected`).classed('selected', false)
-      d3.select(this).classed('selected', true)
       const re = new RegExp(`^${d.path}`)
       const tpList = self.graph.tpTypeNodes().filter(d => d.path.match(re))
-      self.tpInfoTable.selectAll('tr').remove()
+      self.tpInfoTable.selectAll('tr').remove() // clear tp info table
       self.tpInfoTable
         .append('tr')
         .append('th')
@@ -35,8 +33,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .enter()
         .append('tr')
         .append('td')
-        .attr('class', 'selected')
+        .attr('id', d => `${d.path}-info`)
         .html(d => d.name)
+      // activate event callback (same as clicked svg circle.node (nodeTypeNode)
       self.highlightNode(document.getElementById(d.path))
     }
 
@@ -77,13 +76,15 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     if (this.pathObjType(path) === 'tp') {
       return [
         document.getElementById(path),
-        document.getElementById(`${path}-tplb`)
+        document.getElementById(`${path}-tplb`),
+        document.getElementById(`${path}-info`)
       ]
     }
     // pathObjType === 'node'
     return [
       document.getElementById(`${path}-bg`),
-      document.getElementById(`${path}-ndlb`)
+      document.getElementById(`${path}-ndlb`),
+      document.getElementById(`${path}-info`)
     ]
   }
 

@@ -44,12 +44,22 @@ table {
   td {
     font-size: $default_font_size;
     padding: 0.25em;
-    &.select-ready {
-      background: $fill_select_ready;
+
+    &.fixed {
+      border: 1px solid crimson;
+    }
+
+    &.selected-children {
+      background: $fill_select_child;
+    }
+    &.selected-parents {
+      background: $fill_select_parent;
     }
     &.selected {
       background: $fill_select;
-      color: white;
+    }
+    &.select-ready {
+      background: $fill_select_ready;
     }
   }
 }
