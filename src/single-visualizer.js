@@ -25,6 +25,8 @@ export class SingleGraphVisualizer {
     this.tp = this.makeTpObjects()
     this.tpLabel = this.makeTpLabelObjects()
     this.nodeLabel = this.makeNodeLabelObjects()
+    // setup info table
+    this.makeInfoTable()
     // set style of initial inactive objects
     this.setStyleOfInactiveObjects()
   }
@@ -42,6 +44,37 @@ export class SingleGraphVisualizer {
     return this.visContainer
       .append('div')
       .attr('class', 'tooltip')
+  }
+
+  makeInfoTable () {
+    const tableContainer = this.visContainer
+      .append('div')
+      .attr('class', 'info-tables')
+    this.makeNodeInfoTable(tableContainer)
+    this.makeTpInfoTable(tableContainer)
+  }
+
+  makeNodeInfoTable (tableContainer) {
+    this.nodeInfoTable = tableContainer
+      .append('table')
+      .attr('class', 'node-info-table')
+    this.nodeInfoTable
+      .append('tr') // table header
+      .append('th')
+      .html('Node')
+    this.nodeInfoTable.selectAll('td')
+      .data(this.graph.nodeTypeNodes())
+      .enter()
+      .append('tr')
+      .append('td')
+      .attr('id', d => `${d.name}-info`)
+      .html(d => d.name)
+  }
+
+  makeTpInfoTable (tableContainer) {
+    this.tpInfoTable = tableContainer
+      .append('table')
+      .attr('class', 'tp-info-table')
   }
 
   makeVisContainer () {

@@ -26,6 +26,34 @@ body {
   font-size: $default_font_size;
 }
 
+// info tables
+table {
+  &.node-info-table {
+    width: 50%;
+    float: left;
+  }
+  &.tp-info-table {
+    width: 50%;
+    float: right;
+  }
+  th {
+    font-size: $default_font_size;
+    padding: 0.25em;
+    background: palegoldenrod;
+  }
+  td {
+    font-size: $default_font_size;
+    padding: 0.25em;
+    &.select-ready {
+      background: $fill_select_ready;
+    }
+    &.selected {
+      background: $fill_select;
+      color: white;
+    }
+  }
+}
+
 svg {
   border: solid 1px;
   margin: 10px;

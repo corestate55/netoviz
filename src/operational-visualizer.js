@@ -11,6 +11,34 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     this.setZoomEvnetCallback()
     this.setGraphNodeEventCallBack()
     this.setButtonEventCallback()
+    this.setInfoTableCallback()
+  }
+
+  setInfoTableCallback () {
+    const self = this
+    function nodeInfoClick (d) {
+      self.nodeInfoTable.selectAll(`.selected`).classed('selected', false)
+      d3.select(this).classed('selected', true)
+      const re = new RegExp(`^${d.path}`)
+      const tpList = self.graph.tpTypeNodes().filter(d => d.path.match(re))
+      self.tpInfoTable.selectAll('tr').remove()
+      self.tpInfoTable
+        .append('tr')
+        .append('th')
+        .html('Term Point')
+      self.tpInfoTable.selectAll('td')
+        .data(tpList)
+        .enter()
+        .append('tr')
+        .append('td')
+        .attr('class', 'selected')
+        .html(d => d.name)
+    }
+
+    this.nodeInfoTable.selectAll('td')
+      .on('mouseover', function () { d3.select(this).classed('select-ready', true) })
+      .on('mouseout', function () { d3.select(this).classed('select-ready', false) })
+      .on('click', nodeInfoClick)
   }
 
   setZoomEvnetCallback () {
