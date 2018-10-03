@@ -47,33 +47,44 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     return path.replace(/-(bg|ndlb|tplb|ndinfo|tpinfo)$/, '')
   }
 
-  highlightElementsByPath (path) {
-    if (this.pathObjType(path) === 'tp') {
-      const nodePath = this.nodePathFromTpPath(path)
-      const list = [
-        document.getElementById(path),
-        document.getElementById(`${path}-tplb`),
-        document.getElementById(`${nodePath}-ndinfo`)
-      ]
-      // TP info table is not always present at all times.
-      // Especially for children/parent layer.
-      const tpInfo = document.getElementById(`${path}-tpinfo`)
-      if (tpInfo) {
-        list.push(tpInfo)
-      }
-      return list
-    }
-    // pathObjType === 'node'
-    return [
-      document.getElementById(`${path}-bg`),
-      document.getElementById(`${path}-ndlb`),
-      document.getElementById(`${path}-ndinfo`)
+  highlightElementsByPathOfTp (path, className) {
+    // include node info to highlight node info table when tp is select-ready
+    const list = [
+      document.getElementById(path), // tp itself
+      document.getElementById(`${path}-tplb`) // tp label
     ]
+    // add parent (node) info when tp caught mouse-over (select-ready)
+    if (className === 'select-ready') {
+      const nodePath = this.nodePathFromTpPath(path)
+      list.push(document.getElementById(`${nodePath}-ndinfo`))
+    }
+    // TP info table is not always present at all times.
+    // Especially for children/parent layer.
+    const tpInfo = document.getElementById(`${path}-tpinfo`) // tp info
+    if (tpInfo) {
+      list.push(tpInfo)
+    }
+    return list
+  }
+
+  highlightElementsByPathOfNode (path) {
+    return [
+      document.getElementById(`${path}-bg`), // node-circle of the node
+      document.getElementById(`${path}-ndlb`), // node label
+      document.getElementById(`${path}-ndinfo`) // node info
+    ]
+  }
+
+  highlightElementsByPath (path, className) {
+    if (this.pathObjType(path) === 'tp') {
+      return this.highlightElementsByPathOfTp(path, className)
+    }
+    return this.highlightElementsByPathOfNode(path)
   }
 
   // highlight selected node
   highlightNodeByPath (direction, path) {
-    for (const element of this.highlightElementsByPath(path)) {
+    for (const element of this.highlightElementsByPath(path, 'selected')) {
       this.clearElementHighlight(element)
       if (direction === 'children') {
         element.classList.add('selected-children')
@@ -130,6 +141,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .append('tr')
         .append('td')
         .attr('id', d => `${d.path}-tpinfo`)
+        .attr('class', d => document.getElementById(d.path).classList) // copy from svg tp
         .on('mouseover', function () { mouseOver(this) })
         .on('mouseout', function () { mouseOut(this) })
         .on('click', function () { self.highlightNode(this) })
@@ -145,7 +157,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
 
       // set highlight style
-      for (const elm of self.highlightElementsByPath(path)) {
+      for (const elm of self.highlightElementsByPath(path, 'select-ready')) {
         elm.classList.add('select-ready')
         // enable tooltip
         let tooltipBody = path // tooltip header
@@ -168,7 +180,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     function mouseOut (element) {
       const path = self.pathBody(element.id)
       // remove highlight style
-      for (const elm of self.highlightElementsByPath(path)) {
+      for (const elm of self.highlightElementsByPath(path, 'select-ready')) {
         elm.classList.remove('select-ready')
         // disable tooltip
         self.tooltip
@@ -177,8 +189,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
 
     function fixElementsByPath (path) {
-      const elements = self.highlightElementsByPath(path)
+      const elements = self.highlightElementsByPath(path, 'fixed')
       if (self.pathObjType(path) === 'node') {
+        // append circle of node itself to show 'fixed'
         elements.push(document.getElementById(path))
       }
       return elements

@@ -21,9 +21,12 @@ $stroke_diff_deleted: #B71001;
 $stroke_diff_added: #66B032;
 // defaults
 $default_font_size: 10pt;
+$default_font_color: #333;
+$fixed_stroke: hotpink;
 
 body {
   font-size: $default_font_size;
+  color: $default_font_color;
 }
 
 svg {
@@ -73,7 +76,8 @@ circle {
   }
 
   &.fixed {
-    stroke: crimson;
+    stroke: $fixed_stroke;
+    stroke-width: 1pt;
   }
 
   // node circle: outer circle
@@ -266,7 +270,7 @@ table {
     white-space: nowrap;
 
     &.fixed {
-      border: 1px solid crimson;
+      border: 1px solid $fixed_stroke;
     }
 
     &.selected-children {
@@ -274,12 +278,15 @@ table {
     }
     &.selected-parents {
       background: $fill_select_parent;
+      color: white;
     }
     &.selected {
       background: $fill_select;
+      color: white;
     }
     &.select-ready {
       background: $fill_select_ready;
+      color: $default_font_color;
     }
   }
 }
