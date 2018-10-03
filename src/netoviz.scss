@@ -26,44 +26,6 @@ body {
   font-size: $default_font_size;
 }
 
-// info tables
-table {
-  &.node-info-table {
-    width: 50%;
-    float: left;
-  }
-  &.tp-info-table {
-    width: 50%;
-    float: right;
-  }
-  th {
-    font-size: $default_font_size;
-    padding: 0.25em;
-    background: palegoldenrod;
-  }
-  td {
-    font-size: $default_font_size;
-    padding: 0.25em;
-
-    &.fixed {
-      border: 1px solid crimson;
-    }
-
-    &.selected-children {
-      background: $fill_select_child;
-    }
-    &.selected-parents {
-      background: $fill_select_parent;
-    }
-    &.selected {
-      background: $fill_select;
-    }
-    &.select-ready {
-      background: $fill_select_ready;
-    }
-  }
-}
-
 svg {
   border: solid 1px;
   margin: 10px;
@@ -209,11 +171,29 @@ div {
 
   &.network-layer {
     float: left;
+    width: 100%;
     p {
       margin: 0.3em;
     }
   }
 
+  &.info-tables {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &.tooltip {
+    display: inline-block;
+    vertical-align: top;
+    background: #000;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 8px;
+    color: #fff;
+    font-size: $default_font_size;
+    padding: 10px;
+  }
+
+  /*
   &.tooltip {
     background: #000;
     background: rgba(0, 0, 0, 0.7);
@@ -241,6 +221,7 @@ div {
       width: 0;
     }
   }
+  */
 }
 
 // styles for tooltip text
@@ -259,5 +240,46 @@ text {
   }
   &.node-label {
     font-size: 10px;
+  }
+}
+
+// info tables
+table {
+  display: inline-block;
+  margin: 0.25em;
+
+  &.node-info-table {
+    float: left;
+  }
+  &.tp-info-table {
+    float: right;
+  }
+  th {
+    font-size: $default_font_size;
+    padding: 0.25em;
+    background: palegoldenrod;
+    white-space: nowrap;
+  }
+  td {
+    font-size: $default_font_size;
+    padding: 0.25em;
+    white-space: nowrap;
+
+    &.fixed {
+      border: 1px solid crimson;
+    }
+
+    &.selected-children {
+      background: $fill_select_child;
+    }
+    &.selected-parents {
+      background: $fill_select_parent;
+    }
+    &.selected {
+      background: $fill_select;
+    }
+    &.select-ready {
+      background: $fill_select_ready;
+    }
   }
 }

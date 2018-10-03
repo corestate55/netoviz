@@ -16,7 +16,6 @@ export class SingleGraphVisualizer {
     this.visContainer = this.makeVisContainer()
     this.nwLayerSvg = this.makeNetworkLayerSVG()
     this.nwLayer = this.makeNetworkLayer()
-    this.tooltip = this.makeToolTip()
     this.clearBtn = this.makeClearButton()
     this.toggleBtn = this.makeDiffInactiveToggleButton()
     this.link = this.makeLinkObjects()
@@ -27,6 +26,8 @@ export class SingleGraphVisualizer {
     this.nodeLabel = this.makeNodeLabelObjects()
     // setup info table
     this.makeInfoTable()
+    // add tool tip
+    this.tooltip = this.makeToolTip()
     // set style of initial inactive objects
     this.setStyleOfInactiveObjects()
   }
@@ -44,6 +45,7 @@ export class SingleGraphVisualizer {
     return this.visContainer
       .append('div')
       .attr('class', 'tooltip')
+      .style('visibility', 'hidden')
   }
 
   makeInfoTable () {
@@ -67,7 +69,7 @@ export class SingleGraphVisualizer {
       .enter()
       .append('tr')
       .append('td')
-      .attr('id', d => `${d.path}-info`)
+      .attr('id', d => `${d.path}-ndinfo`)
       .html(d => d.name)
   }
 

@@ -14,35 +14,6 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     this.setZoomEvnetCallback()
     this.setGraphNodeEventCallBack()
     this.setButtonEventCallback()
-    this.setInfoTableCallback()
-  }
-
-  setInfoTableCallback () {
-    const self = this
-
-    function nodeInfoClick (d) {
-      const re = new RegExp(`^${d.path}`)
-      const tpList = self.graph.tpTypeNodes().filter(d => d.path.match(re))
-      self.tpInfoTable.selectAll('tr').remove() // clear tp info table
-      self.tpInfoTable
-        .append('tr')
-        .append('th')
-        .html('Term Point')
-      self.tpInfoTable.selectAll('td')
-        .data(tpList)
-        .enter()
-        .append('tr')
-        .append('td')
-        .attr('id', d => `${d.path}-info`)
-        .html(d => d.name)
-      // activate event callback (same as clicked svg circle.node (nodeTypeNode)
-      self.highlightNode(document.getElementById(d.path))
-    }
-
-    this.nodeInfoTable.selectAll('td')
-      .on('mouseover', function () { d3.select(this).classed('select-ready', true) })
-      .on('mouseout', function () { d3.select(this).classed('select-ready', false) })
-      .on('click', nodeInfoClick)
   }
 
   setZoomEvnetCallback () {
@@ -67,24 +38,36 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     return 'node'
   }
 
+  nodePathFromTpPath (path) {
+    return path.replace(/\/[.\w]+$/, '') // remove tp name
+  }
+
   pathBody (path) {
     // remove each id(path) suffix
-    return path.replace(/-(bg|ndlb|tplb)$/, '')
+    return path.replace(/-(bg|ndlb|tplb|ndinfo|tpinfo)$/, '')
   }
 
   highlightElementsByPath (path) {
     if (this.pathObjType(path) === 'tp') {
-      return [
+      const nodePath = this.nodePathFromTpPath(path)
+      const list = [
         document.getElementById(path),
         document.getElementById(`${path}-tplb`),
-        document.getElementById(`${path}-info`)
+        document.getElementById(`${nodePath}-ndinfo`)
       ]
+      // TP info table is not always present at all times.
+      // Especially for children/parent layer.
+      const tpInfo = document.getElementById(`${path}-tpinfo`)
+      if (tpInfo) {
+        list.push(tpInfo)
+      }
+      return list
     }
     // pathObjType === 'node'
     return [
       document.getElementById(`${path}-bg`),
       document.getElementById(`${path}-ndlb`),
-      document.getElementById(`${path}-info`)
+      document.getElementById(`${path}-ndinfo`)
     ]
   }
 
@@ -104,6 +87,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   findSupportingObj (direction, path) {
     // highlight DOM
+    console.log('....', direction, path)
     this.highlightNodeByPath(direction, path)
     // find nodes to highlight via through *all* layers
     const node = this.findGraphNodeByPath(path)
@@ -127,12 +111,39 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   setGraphNodeEventCallBack () {
     const self = this // alias to use event callback closure
-    const objs = [
-      this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel
-    ]
+
+    function makeTpInfoTable (path) {
+      // path is always points node itself or parent of tp
+      if (self.pathObjType(path) === 'tp') {
+        path = self.nodePathFromTpPath(path)
+      }
+      const re = new RegExp(`^${path}`)
+      const tpList = self.graph.tpTypeNodes().filter(d => d.path.match(re))
+      self.tpInfoTable.selectAll('tr').remove() // clear tp info table
+      self.tpInfoTable
+        .append('tr')
+        .append('th')
+        .html('Term Point')
+      self.tpInfoTable.selectAll('td')
+        .data(tpList)
+        .enter()
+        .append('tr')
+        .append('td')
+        .attr('id', d => `${d.path}-tpinfo`)
+        .on('mouseover', function () { mouseOver(this) })
+        .on('mouseout', function () { mouseOut(this) })
+        .on('click', function () { self.highlightNode(this) })
+        .html(d => d.name)
+    }
 
     function mouseOver (element) {
       const path = self.pathBody(element.id)
+
+      // avoid loop: DO NOT make tp info table when the element is in tp info
+      if (!(element.id.match(/-tpinfo$/))) {
+        makeTpInfoTable(path)
+      }
+
       // set highlight style
       for (const elm of self.highlightElementsByPath(path)) {
         elm.classList.add('select-ready')
@@ -213,8 +224,13 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
-    // set event callbacks
-    for (const obj of objs) {
+    // objects need to set event handler
+    const nodeRelateObjs = [
+      this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel
+    ]
+
+    // set event callbacks for circle/labels that means node/tp
+    for (const obj of nodeRelateObjs) {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
@@ -228,6 +244,12 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
           .on('drag', dragged)
           .on('end', dragended))
     }
+
+    // set event callbacks for node info table
+    this.nodeInfoTable.selectAll('td')
+      .on('click', function () { self.highlightNode(this) })
+      .on('mouseover', function () { mouseOver(this) })
+      .on('mouseout', function () { mouseOut(this) })
   }
 
   setButtonEventCallback () {
