@@ -1,5 +1,10 @@
-const MODE = 'development'
-const enableSourceMap = (MODE === 'development')
+let MODE = 'production'
+if (process.argv.includes('--debug')
+  || process.argv.includes('--mode=development')) {
+  MODE = 'development'
+}
+console.log('MODE: ', MODE)
+const DEBUG = MODE === 'development'
 
 module.exports = {
   entry: `./src/index.js`,
@@ -19,7 +24,15 @@ module.exports = {
   },
   output: {
     path: `${__dirname}/dist`,
-    filename: 'main.js'
+    filename: '[name].bundle.js',
+    chunkFilename: '[name].bundle.js'
+  },
+  devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
+  optimization: {
+    splitChunks: {
+      name: 'main',
+      chunks: 'all'
+    }
   },
   module: {
     rules: [
@@ -44,14 +57,14 @@ module.exports = {
             options: {
               url: false,
               minimize: true,
-              sourceMap: enableSourceMap,
+              sourceMap: DEBUG,
               importLoaders: 2 // postcss-loader, sass-loader
             }
           },
           {
             loader: 'sass-loader',
             options: {
-              sourceMap: enableSourceMap
+              sourceMap: DEBUG
             }
           }
         ]
