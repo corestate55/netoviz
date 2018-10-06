@@ -1,8 +1,8 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {Network} from './network'
-import {L2Network, L3Network} from './aug-network'
+import { TopoBaseContainer } from './base'
+import { Network } from './network'
+import { L2Network, L3Network } from './aug-network'
 
 export class Networks extends TopoBaseContainer {
   constructor (topoData) {

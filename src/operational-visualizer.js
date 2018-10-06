@@ -1,7 +1,7 @@
 'use strict'
 
 import * as d3 from 'd3'
-import {ForceSimulatedVisualizer} from './simulated-visualizer'
+import { ForceSimulatedVisualizer } from './simulated-visualizer'
 
 // NOTE
 // arg; `d` : data binded to DOM by d3.js

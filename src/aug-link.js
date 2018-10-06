@@ -1,7 +1,7 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {Link} from './link'
+import { TopoBaseContainer } from './base'
+import { Link } from './link'
 
 class L2LinkAttribute extends TopoBaseContainer {
   constructor (data) {

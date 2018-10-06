@@ -1,7 +1,7 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {GraphNode, GraphLink} from './graph'
+import { TopoBaseContainer } from './base'
+import { GraphNode, GraphLink } from './graph'
 
 class SupportingTermPoint {
   constructor (data) {

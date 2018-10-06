@@ -1,7 +1,7 @@
 'use strict'
 
 import * as d3 from 'd3'
-import {GraphVisualizer} from './visualizer'
+import { GraphVisualizer } from './visualizer'
 import './netoviz.scss'
 
 function drawLegend () {

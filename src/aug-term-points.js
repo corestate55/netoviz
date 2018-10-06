@@ -1,7 +1,7 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {TermPoint} from './term-point'
+import { TopoBaseContainer } from './base'
+import { TermPoint } from './term-point'
 
 class VlanIdName extends TopoBaseContainer {
   constructor (data) {

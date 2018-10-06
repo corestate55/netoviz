@@ -1,7 +1,7 @@
 'use strict'
 
-import {Graphs} from './graphs'
-import {OperationalVisualizer} from './operational-visualizer'
+import { Graphs } from './graphs'
+import { OperationalVisualizer } from './operational-visualizer'
 import * as cln from 'clone'
 import * as d3 from 'd3'
 

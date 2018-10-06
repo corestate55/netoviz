@@ -1,8 +1,8 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {L3TermPoint, L2TermPoint} from './aug-term-points'
-import {Node} from './node'
+import { TopoBaseContainer } from './base'
+import { L3TermPoint, L2TermPoint } from './aug-term-points'
+import { Node } from './node'
 
 class L2NodeAttribute extends TopoBaseContainer {
   constructor (data) {

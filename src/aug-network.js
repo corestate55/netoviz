@@ -1,9 +1,9 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {Network} from './network'
-import {L2Node, L3Node} from './aug-node'
-import {L2Link, L3Link} from './aug-link'
+import { TopoBaseContainer } from './base'
+import { Network } from './network'
+import { L2Node, L3Node } from './aug-node'
+import { L2Link, L3Link } from './aug-link'
 
 class L2NetworkAttribute extends TopoBaseContainer {
   constructor (data) {

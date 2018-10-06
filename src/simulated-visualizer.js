@@ -1,7 +1,7 @@
 'use strict'
 
 import * as d3 from 'd3'
-import {SingleGraphVisualizer} from './single-visualizer'
+import { SingleGraphVisualizer } from './single-visualizer'
 
 export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {

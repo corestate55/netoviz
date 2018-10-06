@@ -20,7 +20,9 @@ The visualizer works on Heroku.
 * `dist`: Distributed files. (`devServer`'s document-root)
 * `dist/model`: Topology data files (json)
 
-This visualizer depends on [D3.js v4](https://d3js.org/), [Webpack](https://webpack.js.org/), [Node.js](https://nodejs.org/ja/) and [NPM](https://www.npmjs.com/).
+This visualizer depends on [D3.js v4](https://d3js.org/),
+[Webpack](https://webpack.js.org/),
+[Node.js](https://nodejs.org/ja/) and [NPM](https://www.npmjs.com/).
 
 ## Installation
 
@@ -34,18 +36,30 @@ npm install
 ```
 
 ### Run web server
-Run `webpack-dev-server`.
+To develop application, Use
 ```
 npm run start
 ```
-Then, it opens dist/index.html with browser.
+Then, it builds app as development mode,
+run `webpack-dev-server` and opens `dist/index.html` with browser.
+
+Or
+```
+npm run release-start
+```
+runs simple `Express` http server with built application.
 
 ### Build
 
-Run `webpack`
+Run `webpack` for development
 ```
 npm run build
 ```
+or 
+```
+npm run release-build
+```
+for production.
 
 ### Lint
 
@@ -53,6 +67,11 @@ Run `eslint`.
 ```
 npm run lint
 ```
+or
+```
+npm run lintfix
+```
+runs `eslint` with `--fix` option.
 
 ## Structure
 
@@ -63,7 +82,7 @@ npm run lint
                                         +-----------+                   +-----------+            +-----------+
               +-------------------------| networks  |-------------------|  graphs   |<|----------|visualizer |
               |                         +-----+-----+                   +-----+-----+ whole      +-----+-----+
-        +-----+-----+                         |                               |       layerrs          |
+        +-----+-----+                         |                               |       layers           |
         |   L2/L3   |                   +-----+-----+                   +-----+-----+            +-----+-----+
         |  network  |-----------------|>| network   |                   |  graph    | single     |operational|
         +-----+-----+                   +-----+-----+                   +-----+-----+ layer      |visualizer | event

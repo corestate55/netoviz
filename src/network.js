@@ -1,8 +1,8 @@
 'use strict'
 
-import {TopoBaseContainer} from './base'
-import {Node} from './node'
-import {Link} from './link'
+import { TopoBaseContainer } from './base'
+import { Node } from './node'
+import { Link } from './link'
 
 class SupportingNetwork extends TopoBaseContainer {
   constructor (data) {

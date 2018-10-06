@@ -1,8 +1,8 @@
 'use strict'
 
-import {BaseContainer} from './base'
-import {Networks} from './networks'
-import {Graph} from './graph'
+import { BaseContainer } from './base'
+import { Networks } from './networks'
+import { Graph } from './graph'
 
 export class Graphs extends BaseContainer {
   constructor (topoData) {

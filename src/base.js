@@ -1,6 +1,6 @@
 'use strict'
 
-import {DiffState} from './diff-state'
+import { DiffState } from './diff-state'
 
 export class BaseContainer {
   constructor () {
