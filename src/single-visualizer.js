@@ -211,8 +211,6 @@ export class SingleGraphVisualizer {
   setStyleOfInactiveObjects () {
     d3.selectAll(`.${this.currentInactive}`)
       .classed('inactive', true)
-      .style('fill-opacity', 0.2)
-      .style('stroke-opacity', 0.1)
   }
 
   renameLinkKey () {

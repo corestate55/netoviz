@@ -46,10 +46,27 @@ svg {
   }
 }
 
+%inactive {
+  fill-opacity: 0.2;
+  stroke-opacity: 0.1;
+  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
+}
+%active {
+  fill-opacity: 1.0;
+  stroke-opacity: 1.0;
+  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
+}
+
 text {
   fill: $stroke_normal;
   &.select-ready {
     font-weight: bold;
+  }
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
   }
 }
 
@@ -60,6 +77,18 @@ text {
 }
 
 circle {
+  // operation
+  &.fixed {
+    stroke: $fixed_stroke;
+    stroke-width: 2pt;
+  }
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
+
   // node circle: core(center) circle
   &.node {
     @extend %circle-base;
@@ -73,11 +102,6 @@ circle {
     &.deleted {
       fill: $fill_diff_deleted;
     }
-  }
-
-  &.fixed {
-    stroke: $fixed_stroke;
-    stroke-width: 2pt;
   }
 
   // node circle: outer circle
@@ -134,8 +158,16 @@ circle {
   stroke: $stroke_normal;
   stroke-width: 1px;
 }
+
 line.link {
   @extend %link-base;
+
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
 
   &.changed {
     stroke: $stroke_diff_changed;

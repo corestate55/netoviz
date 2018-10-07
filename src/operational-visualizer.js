@@ -283,17 +283,11 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       const visualizer = d3.selectAll('div#visualizer')
       visualizer.selectAll(`.${this.currentInactive}`)
         .classed('inactive', false)
-        .transition()
-        .style('fill-opacity', 1.0)
-        .style('stroke-opacity', 1.0)
-        .duration(500)
+        .classed('active', true)
       this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
       visualizer.selectAll(`.${this.currentInactive}`)
         .classed('inactive', true)
-        .transition()
-        .style('fill-opacity', 0.2)
-        .style('stroke-opacity', 0.1)
-        .duration(500)
+        .classed('active', false)
     }
 
     // add class to highlight 'button' text when mouse-over/out
