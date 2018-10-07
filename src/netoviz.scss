@@ -120,7 +120,7 @@ circle {
     }
     &.select-ready {
       fill: $fill_select_ready;
-      transition: all .2s ease-in-out;
+      transition: fill .2s ease-in-out;
     }
   }
 
@@ -149,7 +149,7 @@ circle {
     }
     &.select-ready {
       fill: $fill_select_ready;
-      transition: all .2s ease-in-out;
+      transition: fill .2s ease-in-out;
     }
   }
 }

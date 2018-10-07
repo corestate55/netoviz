@@ -145,6 +145,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .on('mouseover', function () { mouseOver(this) })
         .on('mouseout', function () { mouseOut(this) })
         .on('click', function () { self.highlightNode(this) })
+        .on('dblclick', dblclick)
         .html(d => d.name)
     }
 
@@ -213,19 +214,24 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
+    function restartSimulation () {
+      if (!d3.event.active) {
+        self.simulation.alphaTarget(0.3).restart()
+      }
+    }
+
     function dblclick (d) {
       unclassifyNodeAsFixed(this)
       d.fx = null
       d.fy = null
+      restartSimulation()
     }
 
     function dragstarted (d) {
       classifyNodeAsFixed(this)
-      if (!d3.event.active) {
-        self.simulation.alphaTarget(0.3).restart()
-      }
       d.fx = d.x
       d.fy = d.y
+      restartSimulation()
     }
 
     function dragged (d) {
@@ -265,6 +271,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       .on('click', function () { self.highlightNode(this) })
       .on('mouseover', function () { mouseOver(this) })
       .on('mouseout', function () { mouseOut(this) })
+      .on('dblclick', dblclick)
   }
 
   setButtonEventCallback () {
