@@ -44,8 +44,8 @@ export class SingleGraphVisualizer {
   makeToolTip () {
     return this.visContainer
       .append('div')
-      .attr('class', 'tooltip')
-      .style('visibility', 'hidden')
+      .classed('tooltip', true)
+      .classed('pop-down', true)
   }
 
   makeInfoTable () {

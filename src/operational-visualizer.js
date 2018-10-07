@@ -166,7 +166,8 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
           tooltipBody = tooltipBody + node.attribute.toHtml()
         }
         self.tooltip
-          .style('visibility', 'visible')
+          .classed('pop-up', true)
+          .classed('pop-down', false)
           .html(tooltipBody)
       }
     }
@@ -184,7 +185,8 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         elm.classList.remove('select-ready')
         // disable tooltip
         self.tooltip
-          .style('visibility', 'hidden')
+          .classed('pop-up', false)
+          .classed('pop-down', true)
       }
     }
 

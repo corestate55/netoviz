@@ -187,14 +187,25 @@ div {
   }
 
   &.tooltip {
-    display: inline-block;
-    vertical-align: top;
     background: #000;
     background: rgba(0, 0, 0, 0.7);
     border-radius: 8px;
     color: #fff;
+    display: inline-block;
     font-size: $default_font_size;
     padding: 10px;
+    vertical-align: top;
+
+    &.pop-down {
+      opacity: 0;
+      transition: visibility 0s .2s, opacity .2s ease-in-out;
+      visibility: hidden;
+    }
+    &.pop-up {
+      opacity: 1;
+      transition: all .2s ease-in-out;
+      visibility: visible;
+    }
   }
 
   /*
