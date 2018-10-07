@@ -77,7 +77,7 @@ circle {
 
   &.fixed {
     stroke: $fixed_stroke;
-    stroke-width: 1pt;
+    stroke-width: 2pt;
   }
 
   // node circle: outer circle
@@ -96,7 +96,7 @@ circle {
     }
     &.select-ready {
       fill: $fill_select_ready;
-      opacity: 0.5;
+      transition: all .2s ease-in-out;
     }
   }
 
@@ -125,6 +125,7 @@ circle {
     }
     &.select-ready {
       fill: $fill_select_ready;
+      transition: all .2s ease-in-out;
     }
   }
 }
@@ -279,9 +280,10 @@ table {
     font-size: $default_font_size;
     padding: 0.25em;
     white-space: nowrap;
+    transition: all .2s ease-in-out;
 
     &.fixed {
-      border: 1px solid $fixed_stroke;
+      border: 2px solid $fixed_stroke;
     }
 
     &.selected-children {
@@ -298,6 +300,7 @@ table {
     &.select-ready {
       background: $fill_select_ready;
       color: $default_font_color;
+      transition: all .2s ease-in-out;
     }
   }
 }

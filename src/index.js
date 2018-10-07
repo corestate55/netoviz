@@ -7,8 +7,9 @@ import './netoviz.scss'
 function drawLegend () {
   const styles = [
     { 'class': 'normal', 'label': 'normal' },
-    { 'class': 'select-ready', 'label': 'select' },
-    { 'class': 'selected', 'label': 'click' },
+    { 'class': 'fixed', 'label': 'fixed' },
+    { 'class': 'select-ready', 'label': 'ready' },
+    { 'class': 'selected', 'label': 'selected' },
     { 'class': 'selected-children', 'label': 'child' },
     { 'class': 'selected-parents', 'label': 'parent' }
   ]
@@ -57,8 +58,9 @@ function drawLegend () {
     .data(styles)
     .enter()
     .append('text')
-    .attr('x', (d, i) => nodeCircleX(d, i) - objSize / 2)
+    .attr('x', (d, i) => nodeCircleX(d, i))
     .attr('y', textY)
+    .attr('text-anchor', 'middle')
     .text(d => d.label)
 }
 
