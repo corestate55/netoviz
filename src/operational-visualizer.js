@@ -10,6 +10,8 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
 
+    // click to double-click delay
+    this.delayedClick = null
     // set event callback
     this.setZoomEvnetCallback()
     this.setGraphNodeEventCallBack()
@@ -98,7 +100,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   findSupportingObj (direction, path) {
     // highlight DOM
-    console.log('....', direction, path)
+    // console.log('....', direction, path)
     this.highlightNodeByPath(direction, path)
     // find nodes to highlight via through *all* layers
     const node = this.findGraphNodeByPath(path)
@@ -114,7 +116,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   highlightNode (element) {
     // highlight selected object and its children/parents
     const path = this.pathBody(element.getAttribute('id'))
-    console.log('highlight_top: ', path)
+    // console.log('highlight_top: ', path)
     this.findSupportingObj('children', path)
     this.findSupportingObj('parents', path)
     this.findSupportingObj('clicked', path) // dummy direction
@@ -144,8 +146,8 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .attr('class', d => document.getElementById(d.path).classList) // copy from svg tp
         .on('mouseover', function () { mouseOver(this) })
         .on('mouseout', function () { mouseOut(this) })
-        .on('click', function () { self.highlightNode(this) })
-        .on('dblclick', dblclick)
+        .on('click', click)
+        .on('dblclick', dblClick)
         .html(d => d.name)
     }
 
@@ -220,11 +222,37 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
-    function dblclick (d) {
-      unclassifyNodeAsFixed(this)
+    function fireClick (element) {
+      console.log('fire click')
+      self.highlightNode(element)
+    }
+
+    function click () {
+      console.log('## click')
+      const element = this
+      // exec click event with 300ms delay
+      if (self.delayedClick) {
+        self.delayedClick.stop()
+      }
+      self.delayedClick = d3.timeout(() => fireClick(element), 300)
+    }
+
+    function fireDblClick (d, element) {
+      console.log('fire double click')
+      unclassifyNodeAsFixed(element)
       d.fx = null
       d.fy = null
       restartSimulation()
+    }
+
+    function dblClick (d) {
+      console.log('## double click')
+      // cancel click event
+      if (self.delayedClick) {
+        self.delayedClick.stop()
+        self.delayedClick = null
+      }
+      fireDblClick(d, this)
     }
 
     function dragstarted (d) {
@@ -255,11 +283,11 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
-        .on('click', function () { self.highlightNode(this) })
+        .on('click', click)
+        .on('dblclick', dblClick)
         .on('mouseover', function () { mouseOver(this) })
         .on('mousemove', function () { mouseMove(this) })
         .on('mouseout', function () { mouseOut(this) })
-        .on('dblclick', dblclick)
         .call(d3.drag()
           .on('start', dragstarted)
           .on('drag', dragged)
@@ -268,10 +296,10 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
     // set event callbacks for node info table
     this.nodeInfoTable.selectAll('td')
-      .on('click', function () { self.highlightNode(this) })
+      .on('click', click)
+      .on('dblclick', dblClick)
       .on('mouseover', function () { mouseOver(this) })
       .on('mouseout', function () { mouseOut(this) })
-      .on('dblclick', dblclick)
   }
 
   setButtonEventCallback () {
