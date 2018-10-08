@@ -6,11 +6,16 @@ import { SingleGraphVisualizer } from './single-visualizer'
 export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
+    // params for simulation
+    this.delayedSimStop = null // stop simulation timer
+    this.stopSimDelay = 8000 // time to stop simulation (msec)
+    this.simAlpha = 0.3 // alpha target for force simulation
+    // params for objects to draw/simulation
     const tpSize = 5 // tp circle radius
     const nodeSize = 20 // node width/height
 
     // functions to set parameters for simulation
-    function linkDistance (d) {
+    const linkDistance = (d) => {
       if (d.type === 'node-tp') {
         return nodeSize
       }
@@ -79,10 +84,23 @@ export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   }
 
   startSimulation () {
-    this.simulation.restart()
+    this.simulation.alphaTarget(this.simAlpha).restart()
   }
 
   stopSimulation () {
     this.simulation.stop()
+  }
+
+  restartSimulation () {
+    // d3.event is null when initialized this app
+    if (d3.event === null || !d3.event.active) {
+      this.startSimulation()
+      // cancel before timer
+      if (this.delayedSimStop) {
+        this.delayedSimStop.stop()
+      }
+      // stop simulation after delay
+      this.delayedSimStop = d3.timeout(() => this.stopSimulation(), this.stopSimDelay)
+    }
   }
 }

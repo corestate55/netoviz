@@ -216,42 +216,33 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
-    function restartSimulation () {
-      if (!d3.event.active) {
-        self.simulation.alphaTarget(0.3).restart()
-      }
-    }
-
-    function fireClick (element) {
-      console.log('fire click')
-      self.highlightNode(element)
-    }
-
-    function click () {
-      console.log('## click')
-      const element = this
-      // exec click event with 300ms delay
-      if (self.delayedClick) {
-        self.delayedClick.stop()
-      }
-      self.delayedClick = d3.timeout(() => fireClick(element), 300)
-    }
-
-    function fireDblClick (d, element) {
-      console.log('fire double click')
-      unclassifyNodeAsFixed(element)
-      d.fx = null
-      d.fy = null
-      restartSimulation()
-    }
-
-    function dblClick (d) {
-      console.log('## double click')
-      // cancel click event
+    function cancelClickEvent () {
       if (self.delayedClick) {
         self.delayedClick.stop()
         self.delayedClick = null
       }
+    }
+
+    function fireClick (element) {
+      self.highlightNode(element)
+    }
+
+    function click () {
+      cancelClickEvent()
+      const element = this
+      // exec click event with 300ms delay
+      self.delayedClick = d3.timeout(() => fireClick(element), 300)
+    }
+
+    function fireDblClick (d, element) {
+      unclassifyNodeAsFixed(element)
+      d.fx = null
+      d.fy = null
+      self.restartSimulation()
+    }
+
+    function dblClick (d) {
+      cancelClickEvent()
       fireDblClick(d, this)
     }
 
@@ -259,7 +250,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       classifyNodeAsFixed(this)
       d.fx = d.x
       d.fy = d.y
-      restartSimulation()
+      self.restartSimulation()
     }
 
     function dragged (d) {

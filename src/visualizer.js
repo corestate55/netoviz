@@ -23,7 +23,7 @@ export class GraphVisualizer extends Graphs {
     for (const graph of this.graphs) {
       // single-diff-view
       const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
-      singleGraphVisualizer.startSimulation()
+      singleGraphVisualizer.restartSimulation()
 
       // old/new-diff-view
       // const diffSelectedGraphs = this.selectByDiffState(graph)
