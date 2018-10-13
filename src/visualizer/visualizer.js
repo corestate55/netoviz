@@ -1,13 +1,21 @@
 'use strict'
 
-import { Graphs } from './graphs'
 import { OperationalVisualizer } from './operational-visualizer'
 import * as cln from 'clone'
 import * as d3 from 'd3'
+const BaseContainer = require('../base')
+const DiffState = require('../diff-state')
 
-export class GraphVisualizer extends Graphs {
-  constructor (topoData) {
-    super(topoData)
+export class GraphVisualizer extends BaseContainer {
+  constructor (graphData) {
+    super()
+    this.graphs = graphData
+  }
+
+  findGraphNodeByPath (path) {
+    const listOfNodes = this.graphs.map(graph => graph.nodes)
+    const nodes = this.flatten(listOfNodes)
+    return nodes.find(d => d.path === path)
   }
 
   drawGraphs () {
@@ -67,7 +75,8 @@ export class GraphVisualizer extends Graphs {
 
   selectByDiffState (graph) {
     const selectedGraphs = []
-    if ('diffState' in graph && graph.diffState.detect() === 'changed') {
+    const diffState = new DiffState(graph.diffState)
+    if ('diffState' in graph && diffState.detect() === 'changed') {
       const deletedGraph = this.pickGraphObjBy(graph, 'deleted')
       selectedGraphs.push(deletedGraph)
       const addedGraph = this.pickGraphObjBy(graph, 'added')
@@ -85,10 +94,16 @@ export class GraphVisualizer extends Graphs {
     const pickStates = ['changed', 'kept', pickState]
     // pick-up node/link objects
     const nodes = graph.nodes.filter(
-      node => pickStates.includes(node.diffState.detect())
+      node => {
+        const diffState = new DiffState(node.diffState)
+        return pickStates.includes(diffState.detect())
+      }
     )
     const links = graph.links.filter(
-      link => pickStates.includes(link.diffState.detect())
+      link => {
+        const diffState = new DiffState(link.diffState)
+        return pickStates.includes(diffState.detect())
+      }
     )
     // set nodes/links and return graph object
     dupGraph.nodes = nodes

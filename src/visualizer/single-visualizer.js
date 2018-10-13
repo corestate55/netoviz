@@ -1,6 +1,7 @@
 'use strict'
 
 import * as d3 from 'd3'
+const DiffState = require('../diff-state')
 
 export class SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {
@@ -32,8 +33,17 @@ export class SingleGraphVisualizer {
     this.setStyleOfInactiveObjects()
   }
 
+  tpTypeNodes () {
+    return this.graph.nodes.filter(d => d.type === 'tp')
+  }
+
+  nodeTypeNodes () {
+    return this.graph.nodes.filter(d => d.type === 'node')
+  }
+
   objClassDef (obj, classString) {
-    const objState = obj.diffState.detect()
+    const diffState = new DiffState(obj.diffState)
+    const objState = diffState.detect()
     const list = [classString, objState]
     if (objState === this.currentInactive) {
       list.push('inactive')
@@ -65,7 +75,7 @@ export class SingleGraphVisualizer {
       .append('th')
       .html('Node')
     this.nodeInfoTable.selectAll('td')
-      .data(this.graph.nodeTypeNodes())
+      .data(this.nodeTypeNodes())
       .enter()
       .append('tr')
       .append('td')
@@ -137,7 +147,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'term-points')
       .selectAll('circle.tp')
-      .data(this.graph.tpTypeNodes())
+      .data(this.tpTypeNodes())
       .enter()
       .append('circle')
       .attr('class', d => this.objClassDef(d, 'tp'))
@@ -149,7 +159,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
-      .data(this.graph.nodeTypeNodes())
+      .data(this.nodeTypeNodes())
       .enter()
       .append('circle')
       .attr('class', d => this.objClassDef(d, 'node'))
@@ -160,7 +170,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'node-circles')
       .selectAll('circle.node-circle')
-      .data(this.graph.nodeTypeNodes())
+      .data(this.nodeTypeNodes())
       .enter()
       .append('circle')
       .attr('class', d => this.objClassDef(d, 'node-circle'))
@@ -171,7 +181,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'tp-labels')
       .selectAll('text.tp-label')
-      .data(this.graph.tpTypeNodes())
+      .data(this.tpTypeNodes())
       .enter()
       .append('text')
       .attr('class', d => this.objClassDef(d, 'tp-label'))
@@ -183,7 +193,7 @@ export class SingleGraphVisualizer {
     return this.nwLayer.append('g')
       .attr('class', 'node-labels')
       .selectAll('text.node-label')
-      .data(this.graph.nodeTypeNodes())
+      .data(this.nodeTypeNodes())
       .enter()
       .append('text')
       .attr('class', d => this.objClassDef(d, 'node-label'))

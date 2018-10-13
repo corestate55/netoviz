@@ -1,7 +1,7 @@
 'use strict'
 
 import * as d3 from 'd3'
-import { GraphVisualizer } from './visualizer'
+import { GraphVisualizer } from './visualizer/visualizer'
 import './netoviz.scss'
 
 function drawLegend () {
@@ -87,13 +87,12 @@ function drawModelSelector (modelList) {
 }
 
 function drawJsonModel (file) {
-  d3.json(`/model/${file}`, (error, topoData) => {
+  d3.json(`/draw/${file}`, (error, graphData) => {
     if (error) {
       throw error
     }
-    const visualizer = new GraphVisualizer(topoData)
+    const visualizer = new GraphVisualizer(graphData)
     // for debug
-    console.log('topology : ', visualizer.topoModel)
     console.log('graphs   : ', visualizer.graphs)
     // draw
     visualizer.drawLayerSelector()

@@ -1,10 +1,11 @@
 'use strict'
 
-import { TopoBaseContainer } from './base'
-import { Network } from './network'
-import { L2Network, L3Network } from './aug-network'
+const TopoBaseContainer = require('./topo-base')
+const Network = require('./network')
+const L2Network = require('./l2network')
+const L3Network = require('./l3network')
 
-export class Networks extends TopoBaseContainer {
+module.exports = class Networks extends TopoBaseContainer {
   constructor (topoData) {
     const nwKey = 'ietf-network:networks' // alias
     super(topoData[nwKey])
