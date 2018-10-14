@@ -1,6 +1,9 @@
 'use strict'
 
-import * as d3 from 'd3'
+import { zoom } from 'd3-zoom'
+import { event, selectAll } from 'd3-selection'
+import { timeout } from 'd3-timer'
+import { drag } from 'd3-drag'
 import { ForceSimulatedVisualizer } from './simulated-visualizer'
 const AttrClassOf = {
   'L2LinkAttribute': require('../model/link-l2attr'),
@@ -29,9 +32,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   setZoomEvnetCallback () {
-    this.nwLayerSvg.call(d3.zoom()
+    this.nwLayerSvg.call(zoom()
       .scaleExtent([1 / 4, 5])
-      .on('zoom', () => this.nwLayer.attr('transform', d3.event.transform))
+      .on('zoom', () => this.nwLayer.attr('transform', event.transform))
     )
     this.nwLayerSvg.on('dblclick.zoom', null) // remove zoom-by-double-click
   }
@@ -189,8 +192,8 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
     function mouseMove (element) {
       self.tooltip
-        .style('top', `${d3.event.pageY - 20}px`)
-        .style('left', `${d3.event.pageX + 30}px`)
+        .style('top', `${event.pageY - 20}px`)
+        .style('left', `${event.pageX + 30}px`)
     }
 
     function mouseOut (element) {
@@ -243,7 +246,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       cancelClickEvent()
       const element = this
       // exec click event with 300ms delay
-      self.delayedClick = d3.timeout(() => fireClick(element), 300)
+      self.delayedClick = timeout(() => fireClick(element), 300)
     }
 
     function fireDblClick (d, element) {
@@ -266,12 +269,12 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
 
     function dragged (d) {
-      d.fx = d3.event.x
-      d.fy = d3.event.y
+      d.fx = event.x
+      d.fy = event.y
     }
 
     function dragended (d) {
-      if (!d3.event.active) {
+      if (!event.active) {
         self.simulation.alphaTarget(0)
       }
     }
@@ -291,7 +294,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
         .on('mouseover', function () { mouseOver(this) })
         .on('mousemove', function () { mouseMove(this) })
         .on('mouseout', function () { mouseOut(this) })
-        .call(d3.drag()
+        .call(drag()
           .on('start', dragstarted)
           .on('drag', dragged)
           .on('end', dragended))
@@ -312,13 +315,13 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       // clear all highlighted object
       const classList = ['selected-children', 'selected-parents', 'selected']
       for (const cls of classList) {
-        d3.selectAll('div#visualizer').selectAll(`.${cls}`)
+        selectAll('div#visualizer').selectAll(`.${cls}`)
           .classed(cls, false)
       }
     }
 
     const toggleDiffInactive = () => {
-      const visualizer = d3.selectAll('div#visualizer')
+      const visualizer = selectAll('div#visualizer')
       visualizer.selectAll(`.${this.currentInactive}`)
         .classed('inactive', false)
         .classed('active', true)

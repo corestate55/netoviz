@@ -1,6 +1,8 @@
 'use strict'
 
-import * as d3 from 'd3'
+import * as d3 from 'd3-force'
+import { event } from 'd3-selection'
+import { timeout } from 'd3-timer'
 import { SingleGraphVisualizer } from './single-visualizer'
 
 export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
@@ -93,14 +95,14 @@ export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
 
   restartSimulation () {
     // d3.event is null when initialized this app
-    if (d3.event === null || !d3.event.active) {
+    if (event === null || !event.active) {
       this.startSimulation()
       // cancel before timer
       if (this.delayedSimStop) {
         this.delayedSimStop.stop()
       }
       // stop simulation after delay
-      this.delayedSimStop = d3.timeout(() => this.stopSimulation(), this.stopSimDelay)
+      this.delayedSimStop = timeout(() => this.stopSimulation(), this.stopSimDelay)
     }
   }
 }

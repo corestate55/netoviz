@@ -5,7 +5,12 @@
   "main": "src/index.js",
   "dependencies": {
     "clone": "^2.1.2",
-    "d3": "^4.13.0",
+    "d3-drag": "^1.2.3",
+    "d3-force": "^1.1.2",
+    "d3-request": "^1.0.6",
+    "d3-selection": "^1.3.2",
+    "d3-timer": "^1.0.9",
+    "d3-zoom": "^1.7.3",
     "express": "^4.16.3"
   },
   "devDependencies": {
@@ -26,11 +31,13 @@
     "style-loader": "^0.22.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.16.5",
+    "webpack-bundle-analyzer": "^3.0.2",
     "webpack-cli": "^3.1.0",
     "webpack-dev-middleware": "^3.4.0",
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
+    "analyze": "webpack --mode production --json --display-modules > stats.json && webpack-bundle-analyzer stats.json dist",
     "build": "webpack --mode development",
     "start": "NODE_ENV='development' node server.js",
     "lint": "eslint ./*.js src/",

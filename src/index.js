@@ -1,6 +1,7 @@
 'use strict'
 
-import * as d3 from 'd3'
+import { select } from 'd3-selection'
+import { json } from 'd3-request'
 import { GraphVisualizer } from './visualizer/visualizer'
 import './netoviz.scss'
 
@@ -16,7 +17,7 @@ function drawLegend () {
   const objSize = 20
   const xdp = 40
   const ydp = 5
-  const legend = d3.select('div#legend')
+  const legend = select('div#legend')
     .append('svg')
     .attr('width', xdp + (xdp + objSize) * styles.length)
     .attr('height', objSize * 2 + ydp * 5)
@@ -65,12 +66,12 @@ function drawLegend () {
 }
 
 function drawModelSelector (modelList) {
-  const modelSelector = d3.select('body')
+  const modelSelector = select('body')
     .select('div#model-selector')
     .append('select')
     .attr('id', 'model-select')
     .on('change', () => {
-      const selectValue = d3.select('select').property('value')
+      const selectValue = select('select').property('value')
       drawJsonModel(selectValue)
     })
   const options = modelSelector.selectAll('option')
@@ -87,7 +88,7 @@ function drawModelSelector (modelList) {
 }
 
 function drawJsonModel (file) {
-  d3.json(`/draw/${file}`, (error, graphData) => {
+  json(`/draw/${file}`, (error, graphData) => {
     if (error) {
       throw error
     }
@@ -102,7 +103,7 @@ function drawJsonModel (file) {
 
 // Entry point
 drawLegend()
-d3.json('/index.json', (error, modelList) => {
+json('/index.json', (error, modelList) => {
   if (error) {
     throw error
   }

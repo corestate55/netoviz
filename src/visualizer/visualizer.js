@@ -2,7 +2,7 @@
 
 import { OperationalVisualizer } from './operational-visualizer'
 import * as cln from 'clone'
-import * as d3 from 'd3'
+import { select } from 'd3-selection'
 const BaseContainer = require('../base')
 const DiffState = require('../diff-state')
 
@@ -20,7 +20,7 @@ export class GraphVisualizer extends BaseContainer {
 
   drawGraphs () {
     // clear graphs
-    d3.select('div#visualizer') // clear all graphs
+    select('div#visualizer') // clear all graphs
       .selectAll('div.network-layer')
       .remove()
 
@@ -44,11 +44,11 @@ export class GraphVisualizer extends BaseContainer {
 
   drawLayerSelector () {
     // clear layer selector
-    d3.select('div#layer-selector') // clear all layers
+    select('div#layer-selector') // clear all layers
       .selectAll('li')
       .remove()
 
-    const layerList = d3.select('div#layer-selector').append('ul')
+    const layerList = select('div#layer-selector').append('ul')
     const idFunc = d => `layer-selector-${d.name}`
     function toggleLayerDisplay (d) {
       const cBox = document.getElementById(idFunc(d))

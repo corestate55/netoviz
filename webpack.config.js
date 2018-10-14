@@ -1,7 +1,7 @@
 module.exports = (env, argv) => {
   const MODE = argv.mode || 'development'
   const DEBUG = MODE === 'development'
-  console.log(`MODE: ${MODE}`)
+  // console.log(`MODE: ${MODE}`)
   const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
   return {

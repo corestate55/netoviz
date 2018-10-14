@@ -1,6 +1,6 @@
 'use strict'
 
-import * as d3 from 'd3'
+import { select, selectAll } from 'd3-selection'
 const DiffState = require('../diff-state')
 
 export class SingleGraphVisualizer {
@@ -90,7 +90,7 @@ export class SingleGraphVisualizer {
   }
 
   makeVisContainer () {
-    return d3.select('body')
+    return select('body')
       .select('div#visualizer')
       .append('div')
       .attr('class', 'network-layer')
@@ -219,7 +219,7 @@ export class SingleGraphVisualizer {
   }
 
   setStyleOfInactiveObjects () {
-    d3.selectAll(`.${this.currentInactive}`)
+    selectAll(`.${this.currentInactive}`)
       .classed('inactive', true)
   }
 
