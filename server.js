@@ -1,7 +1,10 @@
+const fs = require('fs')
 const express = require('express')
+const Graphs = require('./src/graph/graphs')
+
 const app = express()
 const port = process.env.PORT || 8080 // process.env.PORT for Heroku
-const fs = require('fs')
+const timeStampOf = {}
 
 console.log('ARGV: ', process.argv)
 if (process.env.NODE_ENV !== 'production') {
@@ -17,13 +20,31 @@ app.use('/', express.static('dist'))
 app.get('/', function (req, res) {
   res.redirect(302, '/index.html')
 })
-app.get('/draw/:fileName', function (req, res) {
-  const fileName = req.params.fileName
-  console.log('Requested Path: ', fileName)
-  const topoData = JSON.parse(fs.readFileSync(`dist/model/${fileName}`, 'utf8'))
-  const Graphs = require('./src/graph/graphs')
-  const graphs = new Graphs(topoData)
-  res.json(graphs.graphs)
+app.get('/draw/:jsonName', function (req, res) {
+  const jsonName = req.params.jsonName
+  const jsonPath = `dist/model/${jsonName}`
+  const cacheJsonPath = `dist/${jsonName}.cache`
+  console.log('Requested: ', jsonPath)
+
+  const timeStamp = fs.statSync(jsonPath)
+  let resJsonString = '' // stringified json (NOT object)
+  if (timeStampOf[jsonPath] && timeStampOf[jsonPath] === timeStamp.mtimeMs) {
+    // the json file has not been modified.
+    console.log('use cache: ', cacheJsonPath)
+    resJsonString = fs.readFileSync(cacheJsonPath, 'utf8')
+  } else {
+    // the json file was changed.
+    timeStampOf[jsonPath] = timeStamp.mtimeMs
+    // read data from the json file
+    const topoData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
+    const graphs = new Graphs(topoData)
+    console.log('create cache: ', cacheJsonPath)
+    resJsonString = JSON.stringify(graphs.graphs)
+    // save cache
+    fs.writeFileSync(cacheJsonPath, resJsonString)
+  }
+  res.type('json')
+  res.send(resJsonString)
 })
 
 const server = app.listen(app.get('port'), function () {

@@ -32,11 +32,11 @@
   },
   "scripts": {
     "build": "webpack --mode development",
-    "start": "webpack-dev-server --color --mode development",
+    "start": "NODE_ENV='development' node server.js",
     "lint": "eslint ./*.js src/",
     "lintfix": "eslint --fix ./*.js src/",
     "release-build": "webpack --mode production",
-    "release-start": "node server.js",
+    "release-start": "NODE_ENV='production' node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
