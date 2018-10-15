@@ -6,8 +6,8 @@ const app = express()
 const port = process.env.PORT || 8080 // process.env.PORT for Heroku
 const timeStampOf = {}
 
-console.log('ARGV: ', process.argv)
 if (process.env.NODE_ENV !== 'production') {
+  console.log('MODE = development')
   const webpack = require('webpack')
   const webpackDevMiddleware = require('webpack-dev-middleware')
   const config = require('./webpack.config')

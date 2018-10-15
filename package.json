@@ -4,7 +4,6 @@
   "description": "RFC8345-based network topology visualizer",
   "main": "src/index.js",
   "dependencies": {
-    "clone": "^2.1.2",
     "d3-drag": "^1.2.3",
     "d3-force": "^1.1.2",
     "d3-request": "^1.0.6",

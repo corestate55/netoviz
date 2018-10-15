@@ -90,6 +90,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     ]
   }
 
+  // return element list to highlight according to target object type
   highlightElementsByPath (path, className) {
     if (this.pathObjType(path) === 'tp') {
       return this.highlightElementsByPathOfTp(path, className)
@@ -133,6 +134,41 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     this.findSupportingObj('children', path)
     this.findSupportingObj('parents', path)
     this.findSupportingObj('clicked', path) // dummy direction
+  }
+
+  // return element list to show 'fixed' according to target object type
+  fixElementsByPath (path) {
+    const elements = this.highlightElementsByPath(path, 'fixed')
+    if (this.pathObjType(path) === 'node') {
+      // append circle of node itself to show 'fixed'
+      elements.push(document.getElementById(path))
+    }
+    return elements
+  }
+
+  classifyNodeAsFixed (element) {
+    const path = this.pathBody(element.getAttribute('id'))
+    for (const elm of this.fixElementsByPath(path)) {
+      elm.classList.add('fixed')
+    }
+  }
+
+  unclassifyNodeAsFixed (element) {
+    const path = this.pathBody(element.getAttribute('id'))
+    for (const elm of this.fixElementsByPath(path)) {
+      elm.classList.remove('fixed')
+    }
+  }
+
+  fireClick (element) {
+    this.highlightNode(element)
+  }
+
+  fireDblClick (d, element) {
+    this.unclassifyNodeAsFixed(element)
+    d.fx = null
+    d.fy = null
+    this.restartSimulation()
   }
 
   setGraphNodeEventCallBack () {
@@ -208,29 +244,6 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
-    function fixElementsByPath (path) {
-      const elements = self.highlightElementsByPath(path, 'fixed')
-      if (self.pathObjType(path) === 'node') {
-        // append circle of node itself to show 'fixed'
-        elements.push(document.getElementById(path))
-      }
-      return elements
-    }
-
-    function classifyNodeAsFixed (element) {
-      const path = self.pathBody(element.getAttribute('id'))
-      for (const elm of fixElementsByPath(path)) {
-        elm.classList.add('fixed')
-      }
-    }
-
-    function unclassifyNodeAsFixed (element) {
-      const path = self.pathBody(element.getAttribute('id'))
-      for (const elm of fixElementsByPath(path)) {
-        elm.classList.remove('fixed')
-      }
-    }
-
     function cancelClickEvent () {
       if (self.delayedClick) {
         self.delayedClick.stop()
@@ -238,31 +251,20 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       }
     }
 
-    function fireClick (element) {
-      self.highlightNode(element)
-    }
-
     function click () {
       cancelClickEvent()
       const element = this
       // exec click event with 300ms delay
-      self.delayedClick = timeout(() => fireClick(element), 300)
-    }
-
-    function fireDblClick (d, element) {
-      unclassifyNodeAsFixed(element)
-      d.fx = null
-      d.fy = null
-      self.restartSimulation()
+      self.delayedClick = timeout(() => self.fireClick(element), 300)
     }
 
     function dblClick (d) {
       cancelClickEvent()
-      fireDblClick(d, this)
+      self.fireDblClick(d, this)
     }
 
     function dragstarted (d) {
-      classifyNodeAsFixed(this)
+      self.classifyNodeAsFixed(this)
       d.fx = d.x
       d.fy = d.y
       self.restartSimulation()

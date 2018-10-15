@@ -1,10 +1,8 @@
 'use strict'
 
 import { OperationalVisualizer } from './operational-visualizer'
-import * as cln from 'clone'
 import { select } from 'd3-selection'
 const BaseContainer = require('../base')
-const DiffState = require('../diff-state')
 
 export class GraphVisualizer extends BaseContainer {
   constructor (graphData) {
@@ -32,13 +30,6 @@ export class GraphVisualizer extends BaseContainer {
       // single-diff-view
       const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
       singleGraphVisualizer.restartSimulation()
-
-      // old/new-diff-view
-      // const diffSelectedGraphs = this.selectByDiffState(graph)
-      // for (const graph of diffSelectedGraphs) {
-      //   const singleGraphVisualizer = new OperationalVisualizer(graph, callback)
-      //   singleGraphVisualizer.startSimulation()
-      // }
     }
   }
 
@@ -71,43 +62,5 @@ export class GraphVisualizer extends BaseContainer {
       .attr('for', idFunc)
       .on('click', toggleLayerDisplay)
       .text(d => d.name)
-  }
-
-  selectByDiffState (graph) {
-    const selectedGraphs = []
-    const diffState = new DiffState(graph.diffState)
-    if ('diffState' in graph && diffState.detect() === 'changed') {
-      const deletedGraph = this.pickGraphObjBy(graph, 'deleted')
-      selectedGraphs.push(deletedGraph)
-      const addedGraph = this.pickGraphObjBy(graph, 'added')
-      selectedGraphs.push(addedGraph)
-    } else {
-      // if graph does not have diffState
-      // or graph has diffState that is added/deleted/kept.
-      selectedGraphs.push(graph)
-    }
-    return selectedGraphs
-  }
-
-  pickGraphObjBy (graph, pickState) {
-    let dupGraph = cln.clonePrototype(graph) // copy (deep clone with prototype)
-    const pickStates = ['changed', 'kept', pickState]
-    // pick-up node/link objects
-    const nodes = graph.nodes.filter(
-      node => {
-        const diffState = new DiffState(node.diffState)
-        return pickStates.includes(diffState.detect())
-      }
-    )
-    const links = graph.links.filter(
-      link => {
-        const diffState = new DiffState(link.diffState)
-        return pickStates.includes(diffState.detect())
-      }
-    )
-    // set nodes/links and return graph object
-    dupGraph.nodes = nodes
-    dupGraph.links = links
-    return dupGraph
   }
 }
