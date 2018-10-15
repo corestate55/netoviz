@@ -5,6 +5,9 @@ import { json } from 'd3-request'
 import { GraphVisualizer } from './visualizer/visualizer'
 import './netoviz.scss'
 
+// visualizer
+const visualizer = new GraphVisualizer()
+
 function drawLegend () {
   const styles = [
     { 'class': 'normal', 'label': 'normal' },
@@ -71,8 +74,8 @@ function drawModelSelector (modelList) {
     .append('select')
     .attr('id', 'model-select')
     .on('change', () => {
-      const selectValue = select('select').property('value')
-      drawJsonModel(selectValue)
+      const jsonName = select('select').property('value')
+      visualizer.drawJsonModel(jsonName)
     })
   const options = modelSelector.selectAll('option')
     .data(modelList)
@@ -87,20 +90,6 @@ function drawModelSelector (modelList) {
     .attr('selected', true)
 }
 
-function drawJsonModel (file) {
-  json(`/draw/${file}`, (error, graphData) => {
-    if (error) {
-      throw error
-    }
-    const visualizer = new GraphVisualizer(graphData)
-    // for debug
-    console.log('graphs   : ', visualizer.graphs)
-    // draw
-    visualizer.drawLayerSelector()
-    visualizer.drawGraphs()
-  })
-}
-
 // Entry point
 drawLegend()
 json('/index.json', (error, modelList) => {
@@ -108,5 +97,6 @@ json('/index.json', (error, modelList) => {
     throw error
   }
   drawModelSelector(modelList)
-  drawJsonModel(modelList.find(d => d.selected).value)
+  const jsonName = modelList.find(d => d.selected).value
+  visualizer.drawJsonModel(jsonName)
 })
