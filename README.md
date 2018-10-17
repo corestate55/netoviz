@@ -78,9 +78,9 @@ runs `eslint` with `--fix` option.
 ```
  augmented topology data model        topology data structure       graph object structure        visualizer
  (RFC8346,                            (RFC8345)
- draft-ietf-i2rs-yang-l2-network-topology)
-                                        +-----------+                   +-----------+            +-----------+
-              +-------------------------| networks  |-------------------|  graphs   |<|----------|visualizer |
+ draft-ietf-i2rs-yang-l2-network-topology)                                               object
+                                        +-----------+                   +-----------+    data    +-----------+
+              +-------------------------| networks  |-------------------|  graphs   | =========> |visualizer |
               |                         +-----+-----+                   +-----+-----+ whole      +-----+-----+
         +-----+-----+                         |                               |       layers           |
         |   L2/L3   |                   +-----+-----+                   +-----+-----+            +-----+-----+

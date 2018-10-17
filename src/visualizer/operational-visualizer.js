@@ -24,10 +24,11 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     super(graph, findAllNodeFunc)
 
     // click to double-click delay
-    this.delayedClick = null
+    this.delayedClickCallback = null
     // set event callback
     this.setZoomEvnetCallback()
-    this.setGraphNodeEventCallBack()
+    this.setGraphNodeEventCallback()
+    this.setNoeInfoTableEventCallback()
     this.setButtonEventCallback()
   }
 
@@ -171,143 +172,168 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     this.restartSimulation()
   }
 
-  setGraphNodeEventCallBack () {
+  classifyNodeAsSelectReady (element) {
+    element.classList.add('select-ready')
+  }
+
+  unclassifyNodeAsSelectReady (element) {
+    element.classList.remove('select-ready')
+  }
+
+  enableTooltip (path) {
+    // tooltip header
+    let tooltipBody = path
+    // tooltip body
+    const node = this.findGraphNodeByPath(path)
+    if (node && Object.keys(node.attribute).length > 0) {
+      const AttrClass = AttrClassOf[node.attribute.class]
+      const attr = new AttrClass(node.attribute)
+      tooltipBody = tooltipBody + attr.toHtml()
+    }
+    this.tooltip
+      .classed('pop-up', true)
+      .classed('pop-down', false)
+      .html(tooltipBody)
+  }
+
+  disableTooltip () {
+    this.tooltip
+      .classed('pop-up', false)
+      .classed('pop-down', true)
+  }
+
+  mouseOver (element) {
+    const path = this.pathBody(element.id)
+    // avoid loop: DO NOT make tp info table when the element is in tp info
+    if (!(element.id.match(/-tpinfo$/))) {
+      this.reMakeTpInfoTable(path)
+    }
+    // set highlight style
+    for (const elm of this.highlightElementsByPath(path, 'select-ready')) {
+      this.classifyNodeAsSelectReady(elm)
+      this.enableTooltip(path)
+    }
+  }
+
+  mouseMove (element) {
+    this.tooltip
+      .style('top', `${event.pageY - 20}px`)
+      .style('left', `${event.pageX + 30}px`)
+  }
+
+  mouseOut (element) {
+    const path = this.pathBody(element.id)
+    // remove highlight style
+    for (const elm of this.highlightElementsByPath(path, 'select-ready')) {
+      this.unclassifyNodeAsSelectReady(elm)
+      this.disableTooltip()
+    }
+  }
+
+  cancelClickEvent () {
+    if (this.delayedClickCallback) {
+      this.delayedClickCallback.stop()
+      this.delayedClickCallback = null
+    }
+  }
+
+  click (element) {
+    this.cancelClickEvent()
+    // exec click event with 300ms delay
+    this.delayedClickCallback = timeout(() => this.fireClick(element), 300)
+  }
+
+  dblClick (d, element) {
+    this.cancelClickEvent()
+    this.fireDblClick(d, element)
+  }
+
+  dragStarted (d, element) {
+    this.classifyNodeAsFixed(element)
+    d.fx = d.x
+    d.fy = d.y
+    this.restartSimulation()
+  }
+
+  dragged (d) {
+    d.fx = event.x
+    d.fy = event.y
+  }
+
+  dragFinished (d) {
+    if (!event.active) {
+      this.simulation.alphaTarget(0)
+    }
+  }
+
+  clearTpInfoTable () {
+    this.tpInfoTable.selectAll('tr').remove() // clear tp info table
+  }
+
+  addTpInfoTableRecord (tpList) {
+    const self = this
+
+    this.tpInfoTable
+      .append('tr')
+      .append('th')
+      .html('Term Point')
+    this.tpInfoTable.selectAll('td')
+      .data(tpList)
+      .enter()
+      .append('tr')
+      .append('td')
+      .attr('id', d => `${d.path}-tpinfo`)
+      .attr('class', d => document.getElementById(d.path).classList) // copy from svg tp
+      .on('mouseover', function () { self.mouseOver(this) })
+      .on('mouseout', function () { self.mouseOut(this) })
+      .on('click', function () { self.click(this) })
+      .on('dblclick', function (d) { self.dblClick(d, this) })
+      .html(d => d.name)
+  }
+
+  reMakeTpInfoTable (path) {
+    // path is always points node itself or parent of tp
+    if (this.pathObjType(path) === 'tp') {
+      path = this.nodePathFromTpPath(path)
+    }
+    this.clearTpInfoTable()
+    const re = new RegExp(`^${path}`)
+    const tpList = this.tpTypeNodes().filter(d => d.path.match(re))
+    this.addTpInfoTableRecord(tpList)
+  }
+
+  setGraphNodeEventCallback () {
     const self = this // alias to use event callback closure
-
-    function makeTpInfoTable (path) {
-      // path is always points node itself or parent of tp
-      if (self.pathObjType(path) === 'tp') {
-        path = self.nodePathFromTpPath(path)
-      }
-      const re = new RegExp(`^${path}`)
-      const tpList = self.tpTypeNodes().filter(d => d.path.match(re))
-      self.tpInfoTable.selectAll('tr').remove() // clear tp info table
-      self.tpInfoTable
-        .append('tr')
-        .append('th')
-        .html('Term Point')
-      self.tpInfoTable.selectAll('td')
-        .data(tpList)
-        .enter()
-        .append('tr')
-        .append('td')
-        .attr('id', d => `${d.path}-tpinfo`)
-        .attr('class', d => document.getElementById(d.path).classList) // copy from svg tp
-        .on('mouseover', function () { mouseOver(this) })
-        .on('mouseout', function () { mouseOut(this) })
-        .on('click', click)
-        .on('dblclick', dblClick)
-        .html(d => d.name)
-    }
-
-    function mouseOver (element) {
-      const path = self.pathBody(element.id)
-
-      // avoid loop: DO NOT make tp info table when the element is in tp info
-      if (!(element.id.match(/-tpinfo$/))) {
-        makeTpInfoTable(path)
-      }
-
-      // set highlight style
-      for (const elm of self.highlightElementsByPath(path, 'select-ready')) {
-        elm.classList.add('select-ready')
-        // enable tooltip
-        let tooltipBody = path // tooltip header
-        const node = self.findGraphNodeByPath(path)
-        if (node && Object.keys(node.attribute).length > 0) {
-          const AttrClass = AttrClassOf[node.attribute.class]
-          const attr = new AttrClass(node.attribute)
-          tooltipBody = tooltipBody + attr.toHtml()
-        }
-        self.tooltip
-          .classed('pop-up', true)
-          .classed('pop-down', false)
-          .html(tooltipBody)
-      }
-    }
-
-    function mouseMove (element) {
-      self.tooltip
-        .style('top', `${event.pageY - 20}px`)
-        .style('left', `${event.pageX + 30}px`)
-    }
-
-    function mouseOut (element) {
-      const path = self.pathBody(element.id)
-      // remove highlight style
-      for (const elm of self.highlightElementsByPath(path, 'select-ready')) {
-        elm.classList.remove('select-ready')
-        // disable tooltip
-        self.tooltip
-          .classed('pop-up', false)
-          .classed('pop-down', true)
-      }
-    }
-
-    function cancelClickEvent () {
-      if (self.delayedClick) {
-        self.delayedClick.stop()
-        self.delayedClick = null
-      }
-    }
-
-    function click () {
-      cancelClickEvent()
-      const element = this
-      // exec click event with 300ms delay
-      self.delayedClick = timeout(() => self.fireClick(element), 300)
-    }
-
-    function dblClick (d) {
-      cancelClickEvent()
-      self.fireDblClick(d, this)
-    }
-
-    function dragstarted (d) {
-      self.classifyNodeAsFixed(this)
-      d.fx = d.x
-      d.fy = d.y
-      self.restartSimulation()
-    }
-
-    function dragged (d) {
-      d.fx = event.x
-      d.fy = event.y
-    }
-
-    function dragended (d) {
-      if (!event.active) {
-        self.simulation.alphaTarget(0)
-      }
-    }
 
     // objects need to set event handler
     const nodeRelateObjs = [
       this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel
     ]
-
     // set event callbacks for circle/labels that means node/tp
     for (const obj of nodeRelateObjs) {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
-        .on('click', click)
-        .on('dblclick', dblClick)
-        .on('mouseover', function () { mouseOver(this) })
-        .on('mousemove', function () { mouseMove(this) })
-        .on('mouseout', function () { mouseOut(this) })
+        .on('click', function () { self.click(this) })
+        .on('dblclick', function (d) { self.dblClick(d, this) })
+        .on('mouseover', function () { self.mouseOver(this) })
+        .on('mousemove', function () { self.mouseMove(this) })
+        .on('mouseout', function () { self.mouseOut(this) })
         .call(drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended))
+          .on('start', function (d) { self.dragStarted(d, this) })
+          .on('drag', function (d) { self.dragged(d) })
+          .on('end', function (d) { self.dragFinished(d) }))
     }
+  }
 
+  setNoeInfoTableEventCallback () {
+    const self = this // alias to use event callback closure
     // set event callbacks for node info table
     this.nodeInfoTable.selectAll('td')
-      .on('click', click)
-      .on('dblclick', dblClick)
-      .on('mouseover', function () { mouseOver(this) })
-      .on('mouseout', function () { mouseOut(this) })
+      .on('click', function () { self.click(this) })
+      .on('dblclick', function (d) { self.dblClick(d, this) })
+      .on('mouseover', function () { self.mouseOver(this) })
+      .on('mouseout', function () { self.mouseOut(this) })
   }
 
   setButtonEventCallback () {
