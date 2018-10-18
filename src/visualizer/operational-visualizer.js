@@ -47,7 +47,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
   }
 
-  pathObjType (path) {
+  typeOfPath (path) {
     if (path.match(/.+\/.+\/.+/)) {
       return 'tp'
     }
@@ -58,9 +58,9 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
     return path.replace(/\/[.\w]+$/, '') // remove tp name
   }
 
-  pathBody (path) {
-    // remove each id(path) suffix
-    return path.replace(/-(bg|ndlb|tplb|ndinfo|tpinfo)$/, '')
+  pathFromElement (element) {
+    // remove id(path) suffix
+    return element.id.replace(/-(bg|ndlb|tplb|ndinfo|tpinfo)$/, '')
   }
 
   highlightElementsByPathOfTp (path, className) {
@@ -93,7 +93,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   // return element list to highlight according to target object type
   highlightElementsByPath (path, className) {
-    if (this.pathObjType(path) === 'tp') {
+    if (this.typeOfPath(path) === 'tp') {
       return this.highlightElementsByPathOfTp(path, className)
     }
     return this.highlightElementsByPathOfNode(path)
@@ -130,7 +130,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   // Event callback to highlight svg node.
   highlightNode (element) {
     // highlight selected object and its children/parents
-    const path = this.pathBody(element.getAttribute('id'))
+    const path = this.pathFromElement(element)
     // console.log('highlight_top: ', path)
     this.findSupportingObj('children', path)
     this.findSupportingObj('parents', path)
@@ -140,7 +140,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   // return element list to show 'fixed' according to target object type
   fixElementsByPath (path) {
     const elements = this.highlightElementsByPath(path, 'fixed')
-    if (this.pathObjType(path) === 'node') {
+    if (this.typeOfPath(path) === 'node') {
       // append circle of node itself to show 'fixed'
       elements.push(document.getElementById(path))
     }
@@ -148,14 +148,14 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   classifyNodeAsFixed (element) {
-    const path = this.pathBody(element.getAttribute('id'))
+    const path = this.pathFromElement(element)
     for (const elm of this.fixElementsByPath(path)) {
       elm.classList.add('fixed')
     }
   }
 
   unclassifyNodeAsFixed (element) {
-    const path = this.pathBody(element.getAttribute('id'))
+    const path = this.pathFromElement(element)
     for (const elm of this.fixElementsByPath(path)) {
       elm.classList.remove('fixed')
     }
@@ -203,7 +203,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   mouseOver (element) {
-    const path = this.pathBody(element.id)
+    const path = this.pathFromElement(element)
     // avoid loop: DO NOT make tp info table when the element is in tp info
     if (!(element.id.match(/-tpinfo$/))) {
       this.reMakeTpInfoTable(path)
@@ -222,7 +222,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   mouseOut (element) {
-    const path = this.pathBody(element.id)
+    const path = this.pathFromElement(element)
     // remove highlight style
     for (const elm of this.highlightElementsByPath(path, 'select-ready')) {
       this.unclassifyNodeAsSelectReady(elm)
@@ -293,7 +293,7 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   reMakeTpInfoTable (path) {
     // path is always points node itself or parent of tp
-    if (this.pathObjType(path) === 'tp') {
+    if (this.typeOfPath(path) === 'tp') {
       path = this.nodePathFromTpPath(path)
     }
     this.clearTpInfoTable()
@@ -336,31 +336,28 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
       .on('mouseout', function () { self.mouseOut(this) })
   }
 
+  clearHighlight () {
+    // clear all highlighted object
+    const classList = ['selected-children', 'selected-parents', 'selected']
+    for (const cls of classList) {
+      selectAll('div#visualizer').selectAll(`.${cls}`)
+        .classed(cls, false)
+    }
+  }
+
+  toggleActiveDiff () {
+    const visualizer = selectAll('div#visualizer')
+    visualizer.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', false)
+      .classed('active', true)
+    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
+    visualizer.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', true)
+      .classed('active', false)
+  }
+
   setButtonEventCallback () {
-    // click callbacks
-    // NOTICE: bind 'this': this = OperationalVisualizer
-    const clearHighlight = () => {
-      // clear all highlighted object
-      const classList = ['selected-children', 'selected-parents', 'selected']
-      for (const cls of classList) {
-        selectAll('div#visualizer').selectAll(`.${cls}`)
-          .classed(cls, false)
-      }
-    }
-
-    const toggleDiffInactive = () => {
-      const visualizer = selectAll('div#visualizer')
-      visualizer.selectAll(`.${this.currentInactive}`)
-        .classed('inactive', false)
-        .classed('active', true)
-      this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-      visualizer.selectAll(`.${this.currentInactive}`)
-        .classed('inactive', true)
-        .classed('active', false)
-    }
-
     // add class to highlight 'button' text when mouse-over/out
-    // NOTICE: dont bind `this`
     function mouseOverFunc () {
       this.classList.add('select-ready')
     }
@@ -370,13 +367,13 @@ export class OperationalVisualizer extends ForceSimulatedVisualizer {
 
     // set event callback for clear button
     this.clearBtn
-      .on('click', clearHighlight)
+      .on('click', this.clearHighlight)
       .on('mouseover', mouseOverFunc)
       .on('mouseout', mouseOutFunc)
 
     // set event callback for diff active/inactive
     this.toggleBtn
-      .on('click', toggleDiffInactive)
+      .on('click', this.toggleActiveDiff)
       .on('mouseover', mouseOverFunc)
       .on('mouseout', mouseOutFunc)
   }
