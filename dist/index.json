@@ -1,6 +1,31 @@
 [
   {
     "selected": true,
+    "value": "target3b.json",
+    "label": "[3b] L2 Aggr, L3.5 and L2 separate"
+  },
+  {
+    "selected": false,
+    "value": "target3a.json",
+    "label": "[3a] L2 Aggr and L3.5"
+  },
+  {
+    "selected": false,
+    "value": "target3.json",
+    "label": "[3] L2 Aggregated Model"
+  },
+  {
+    "selected": false,
+    "value": "target2.json",
+    "label": "[2] L2 Compact Model"
+  },
+  {
+    "selected": false,
+    "value": "target.json",
+    "label": "[1] L2 Verbose Model"
+  },
+  {
+    "selected": false,
     "value": "diff_test.json",
     "label": "diff viewer test data"
   },
@@ -8,20 +33,5 @@
     "selected": false,
     "value": "target3.diff.json",
     "label": "target3 diff data"
-  },
-  {
-    "selected": false,
-    "value": "target3.json",
-    "label": "L2 Aggregated Model"
-  },
-  {
-    "selected": false,
-    "value": "target2.json",
-    "label": "L2 Compact Model"
-  },
-  {
-    "selected": false,
-    "value": "target.json",
-    "label": "L2 Verbose Model"
   }
 ]
