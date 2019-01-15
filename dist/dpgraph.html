@@ -13,6 +13,20 @@
             fill: #5E92F2;
             stroke: none;
         }
+        text {
+            fill: #303030;
+            font-size: 10pt;
+        }
+        text.layer {
+            text-anchor: end;
+        }
+        text.node {
+            text-anchor: start;
+        }
+        text.tp {
+            fill: darkgray;
+            text-anchor: middle;
+        }
     </style>
 </head>
 <body>
@@ -27,22 +41,42 @@
     console.log(graphData)
 
     const svg = d3.select('body').select('div#depGraph').append('svg')
+    const fontSize = 12
+
+    // for each layer
     svg
       .attr('width', 1500)
       .attr('height', 800)
+    const layerLabelGroup = svg.append('g')
+      .attr('class', 'layer-labels')
+
+    // layer label
+    layerLabelGroup.selectAll('text')
+      .data(graphData)
+      .enter()
+      .append('text')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y + d.height / 2)
+      .attr('class', 'layer')
+      .text(d => d.name)
+
+    // for each node/tp
     for (const layer of graphData) {
-      const layerGroup = svg.append('g')
-      layerGroup.selectAll('rect')
+      const layerObjGroup = svg.append('g')
+        .attr('class', 'layer-objects')
+      layerObjGroup.selectAll('rect')
         .data(layer.nodes)
         .enter()
         .append('rect')
         .attr('x', d => d.x)
         .attr('y', d => d.y)
+        .attr('rx', 5)
+        .attr('ry', 5)
         .attr('width', d => d.width)
         .attr('height', d => d.height)
         .append('title')
         .text(d => d.path)
-      layerGroup.selectAll('circle')
+      layerObjGroup.selectAll('circle')
         .data(layer.tps)
         .enter()
         .append('circle')
@@ -51,6 +85,26 @@
         .attr('r', d => d.r)
         .append('title')
         .text(d => d.path)
+
+      // label
+      layerObjGroup.selectAll('text.node')
+        .data(layer.nodes)
+        .enter()
+        .append('text')
+        .attr('x', d => d.x)
+        .attr('y', d => d.y + d.height)
+        .attr('dy', fontSize)
+        .text('class', 'node')
+        .text(d => d.name)
+      layerObjGroup.selectAll('text.tp')
+        .data(layer.tps)
+        .enter()
+        .append('text')
+        .attr('x', d => d.cx)
+        .attr('y', d => d.cy + d.r)
+        .attr('dy', fontSize)
+        .attr('class', 'tp')
+        .text(d => d.name)
     }
   })
 </script>

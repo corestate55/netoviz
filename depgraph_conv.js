@@ -2,23 +2,26 @@ const fs = require('fs')
 
 class DepGraphConsts {
   constructor () {
-    const ratio = 0.8
+    const ratio = 0.75
     // tp
     this.tpR = 20 * ratio
-    this.tpXPad1 = 10 * ratio
-    this.tpXPad2 = 10 * ratio
-    this.tpYPad1 = 10 * ratio
+    this.tpXPad1 = 12 * ratio
+    this.tpXPad2 = 12 * ratio
+    this.tpYPad1 = 12 * ratio
     this.tpYPad2 = 24 * ratio
     // node
-    this.nodeXPad1 = 10 * ratio
-    this.nodeXPad2 = 10 * ratio
-    this.nodeYPad1 = 10 * ratio
+    this.nodeXPad1 = 15 * ratio
+    this.nodeXPad2 = 15 * ratio
+    this.nodeYPad1 = 15 * ratio
     this.nodeYPad2 = 24 * ratio
-    this.nodeDy = this.tpYPad1 + 2 * this.tpR + this.tpYPad2
     // layer
     this.layerXPad1 = 100 * ratio
     this.layerYPad1 = 50 * ratio
     this.layerYPad2 = 30 * ratio
+  }
+
+  nodeHeight () {
+    return this.tpYPad1 + 2 * this.tpR + this.tpYPad2 // fixed value
   }
 }
 
@@ -88,7 +91,7 @@ class DepGraphNode extends DepGraphNodeBase {
     this.y = ny
   }
 
-  nodeDx () {
+  nodeWidth () {
     const numOfTp = this.tpList.length
     return this.tpXPad1 * 2 + 2 * this.tpR * numOfTp + this.tpXPad2 * (numOfTp - 1)
   }
@@ -104,8 +107,8 @@ class DepGraphNode extends DepGraphNodeBase {
       'number': this.number,
       'x': this.x,
       'y': this.y,
-      'width': this.nodeDx(),
-      'height': this.nodeDy,
+      'width': this.nodeWidth(),
+      'height': this.nodeHeight(),
       'name': this.name,
       'path': this.path,
       'parents': this.parents,
@@ -134,9 +137,12 @@ class DepGraphLayer extends DepGraphConsts {
     return this.layerXPad1
   }
 
+  layerHeight () {
+    return this.nodeYPad1 + this.nodeHeight() + this.nodeYPad2
+  }
+
   calcY () {
-    const layerDy = this.nodeYPad1 + this.nodeDy + this.nodeYPad2
-    return this.layerYPad1 + (layerDy + this.layerYPad2) * (this.number - 1)
+    return this.layerYPad1 + (this.layerHeight() + this.layerYPad2) * (this.number - 1)
   }
 
   setNodes (graphData) {
@@ -146,7 +152,7 @@ class DepGraphLayer extends DepGraphConsts {
       const dgNode = new DepGraphNode(node)
       dgNode.setPos(nx, this.y + this.nodeYPad1)
       this.nodes.push(dgNode)
-      nx += dgNode.nodeDx() + this.nodeXPad2
+      nx += dgNode.nodeWidth() + this.nodeXPad2
     }
   }
 
@@ -177,6 +183,7 @@ class DepGraphLayer extends DepGraphConsts {
       'number': this.number,
       'x': this.x,
       'y': this.y,
+      'height': this.layerHeight(),
       'name': this.name,
       'path': this.path,
       'nodes': this.nodes.map(node => node.toData()),
