@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dependency graph dev</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style type="text/css">
+        rect {
+            fill: none;
+            stroke: black;
+        }
+        circle {
+            fill: #5E92F2;
+            stroke: none;
+        }
+    </style>
+</head>
+<body>
+<div id="depGraph"></div>
+<script>
+  // run at first:
+  // $ nodejs depgraph_conv.js > dist/target3b_dp.json
+  d3.json('target3b_dp.json', (error, graphData) => {
+    if (error) {
+      throw error
+    }
+    console.log(graphData)
+
+    const svg = d3.select('body').select('div#depGraph').append('svg')
+    svg
+      .attr('width', 1500)
+      .attr('height', 800)
+    for (const layer of graphData) {
+      const layerGroup = svg.append('g')
+      layerGroup.selectAll('rect')
+        .data(layer.nodes)
+        .enter()
+        .append('rect')
+        .attr('x', d => d.x)
+        .attr('y', d => d.y)
+        .attr('width', d => d.width)
+        .attr('height', d => d.height)
+        .append('title')
+        .text(d => d.path)
+      layerGroup.selectAll('circle')
+        .data(layer.tps)
+        .enter()
+        .append('circle')
+        .attr('cx', d => d.cx)
+        .attr('cy', d => d.cy)
+        .attr('r', d => d.r)
+        .append('title')
+        .text(d => d.path)
+    }
+  })
+</script>
+</body>
+</html>
