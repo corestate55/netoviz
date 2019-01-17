@@ -1,25 +1,24 @@
 'use strict'
 
 import { json } from 'd3-request'
-import { GraphVisualizer } from './visualizer/visualizer'
+import { GraphVisualizer } from './topology-visualizer/visualizer'
 import { DependencyGraphVisualizer } from './dependency-visualizer/visualizer'
 import { select } from 'd3-selection'
-import { drawLegend } from './visualizer/legend'
+import { drawLegend } from './topology-visualizer/legend'
 import './netoviz.scss'
 
 class VisualizerControl {
   constructor () {
-    this.visualizerTable = {
+    this.visualizerOf = {
       'topology': new GraphVisualizer(),
       'dependency': new DependencyGraphVisualizer()
     }
-    this.visualizer = undefined // default
+    this.visualizerKey = undefined
     this.jsonName = ''
   }
 
   drawGraph () {
-    console.log(this.visualizer)
-    this.visualizerTable[this.visualizer].drawJsonModel(this.jsonName)
+    this.visualizerOf[this.visualizerKey].drawJsonModel(this.jsonName)
   }
 
   drawModelSelector (modelList) {
@@ -46,6 +45,7 @@ class VisualizerControl {
   }
 
   drawVisualizerSelector () {
+    // 'value' is used for this.visualizerkey
     const visSelectorData = [
       {
         'checked': true,
@@ -74,7 +74,7 @@ class VisualizerControl {
       .attr('id', d => d.id)
       .attr('value', d => d.value)
       .on('change', (elm) => {
-        this.visualizer = elm.value
+        this.visualizerKey = elm.value
         this.drawGraph()
       })
     visSelector.selectAll('li')
@@ -84,7 +84,7 @@ class VisualizerControl {
 
     // default selection
     const checkedSelector = visSelectorData.find(d => d.checked)
-    this.visualizer = checkedSelector.value
+    this.visualizerKey = checkedSelector.value
     visSelector.selectAll(`input#${checkedSelector.id}`)
       .attr('checked', true)
   }

@@ -1,7 +1,7 @@
 const fs = require('fs')
 const express = require('express')
 const Graphs = require('./src/graph/graphs')
-const DepGraphConverter = require('./src/dependency-visualizer/depgraph_conv')
+const DepGraphConverter = require('./src/dependency-visualizer/dep--graph-converter')
 
 const app = express()
 const port = process.env.PORT || 8080 // process.env.PORT for Heroku
