@@ -5,7 +5,8 @@ import { GraphVisualizer } from './topology-visualizer/visualizer'
 import { DependencyGraphVisualizer } from './dependency-visualizer/visualizer'
 import { select } from 'd3-selection'
 import { drawLegend } from './topology-visualizer/legend'
-import './netoviz.scss'
+import './topo-graph.scss'
+import './dep-graph.scss'
 
 class VisualizerControl {
   constructor () {

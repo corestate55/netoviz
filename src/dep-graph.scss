@@ -1,0 +1,25 @@
+rect.dep {
+  fill: none;
+  stroke: black;
+}
+
+circle.dep {
+  fill: #5E92F2;
+  stroke: none;
+}
+
+text.dep {
+  fill: #303030;
+  font-size: 10pt;
+
+  &.layer {
+    text-anchor: end;
+  }
+  &.node {
+    text-anchor: start;
+  }
+  &.tp {
+    fill: darkgray;
+    text-anchor: middle;
+  }
+}
