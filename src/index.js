@@ -1,10 +1,10 @@
 'use strict'
 
 import { json } from 'd3-request'
-import { GraphVisualizer } from './topology-visualizer/visualizer'
-import { DependencyGraphVisualizer } from './dependency-visualizer/visualizer'
+import { GraphVisualizer } from './topo-graph/visualizer'
+import { DependencyGraphVisualizer } from './dep-graph/visualizer'
 import { select } from 'd3-selection'
-import { drawLegend } from './topology-visualizer/legend'
+import { drawLegend } from './topo-graph/legend'
 import './topo-graph.scss'
 import './dep-graph.scss'
 
