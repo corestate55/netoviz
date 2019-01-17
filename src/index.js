@@ -1,72 +1,13 @@
 'use strict'
 
-import { select } from 'd3-selection'
 import { json } from 'd3-request'
 import { GraphVisualizer } from './visualizer/visualizer'
+import { select } from 'd3-selection'
+import { drawLegend } from './visualizer/legend'
 import './netoviz.scss'
 
 // visualizer
 const visualizer = new GraphVisualizer()
-
-function drawLegend () {
-  const styles = [
-    { 'class': 'normal', 'label': 'normal' },
-    { 'class': 'fixed', 'label': 'fixed' },
-    { 'class': 'select-ready', 'label': 'ready' },
-    { 'class': 'selected', 'label': 'selected' },
-    { 'class': 'selected-children', 'label': 'child' },
-    { 'class': 'selected-parents', 'label': 'parent' }
-  ]
-  const objSize = 20
-  const xdp = 40
-  const ydp = 5
-  const legend = select('div#legend')
-    .append('svg')
-    .attr('width', xdp + (xdp + objSize) * styles.length)
-    .attr('height', objSize * 2 + ydp * 5)
-  const nodeY = ydp + objSize / 2
-
-  const nodeCircleX = (d, i) => {
-    return xdp + objSize / 2 + (xdp + objSize) * i
-  }
-
-  legend.selectAll('circle.node-circle')
-    .data(styles)
-    .enter()
-    .append('circle')
-    .attr('r', objSize / 2)
-    .attr('cx', nodeCircleX)
-    .attr('cy', nodeY)
-    .attr('class', d => ['node-circle', d.class].join(' '))
-  legend.selectAll('circle.node')
-    .data(styles)
-    .enter()
-    .append('circle')
-    .attr('r', 0.7 * objSize / 2)
-    .attr('cx', nodeCircleX)
-    .attr('cy', nodeY)
-    .attr('class', d => ['node', d.class].join(' '))
-
-  const tpY = nodeY + objSize / 2 + ydp + objSize / 4
-  legend.selectAll('circle.tp')
-    .data(styles)
-    .enter()
-    .append('circle')
-    .attr('r', objSize / 4)
-    .attr('cx', nodeCircleX)
-    .attr('cy', tpY)
-    .attr('class', d => ['tp', d.class].join(' '))
-
-  const textY = tpY + objSize / 4 + ydp * 2
-  legend.selectAll('text')
-    .data(styles)
-    .enter()
-    .append('text')
-    .attr('x', (d, i) => nodeCircleX(d, i))
-    .attr('y', textY)
-    .attr('text-anchor', 'middle')
-    .text(d => d.label)
-}
 
 function drawModelSelector (modelList) {
   const modelSelector = select('body')
@@ -90,12 +31,57 @@ function drawModelSelector (modelList) {
     .attr('selected', true)
 }
 
+function drawVisualizerSelector () {
+  const visSelectorData = [
+    {
+      'checked': true,
+      'id': 'topology-graph-selector',
+      'value': 'topology',
+      'label': 'Topology graph'
+    },
+    {
+      'checked': false,
+      'id': 'dependency-graph-selector',
+      'value': 'dependency',
+      'label': 'Dependency graph'
+    }
+  ]
+
+  const changeVisualizer = (elm) => {
+    console.log(elm)
+  }
+
+  const visSelector = select('body')
+    .select('div#visualizer-selector')
+    .append('ul')
+  visSelector.selectAll('li')
+    .data(visSelectorData)
+    .enter()
+    .append('li')
+    .append('input')
+    .attr('type', 'radio')
+    .attr('name', 'visualizer-select')
+    .attr('id', d => d.id)
+    .attr('value', d => d.value)
+    .on('change', changeVisualizer)
+  visSelector.selectAll('li')
+    .append('label')
+    .attr('for', d => d.id)
+    .text(d => d.label)
+
+  // default selection
+  const checkedSelector = visSelectorData.find(d => d.checked)
+  visSelector.selectAll(`input#${checkedSelector.id}`)
+    .attr('checked', true)
+}
+
 // Entry point
-drawLegend()
+drawVisualizerSelector()
 json('/index.json', (error, modelList) => {
   if (error) {
     throw error
   }
+  drawLegend()
   drawModelSelector(modelList)
   const jsonName = modelList.find(d => d.selected).value
   visualizer.drawJsonModel(jsonName)

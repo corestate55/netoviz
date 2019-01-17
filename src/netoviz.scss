@@ -188,6 +188,11 @@ div {
     padding: $default_font_size;
     display: inline-block;
     vertical-align: top;
+
+    ul {
+      list-style: none;
+      padding-left: 1em;
+    }
   }
 
   &#model-selector {
@@ -198,8 +203,12 @@ div {
     width: 20%;
   }
 
+  &#visualizer-selector {
+    width: 20%;
+  }
+
   &#legend {
-    width: 50%;
+    width: 30%;
   }
 
   &#visualizer {
