@@ -1,6 +1,7 @@
 const fs = require('fs')
 const express = require('express')
 const Graphs = require('./src/graph/graphs')
+const DepGraphConverter = require('./src/dependency-visualizer/depgraph_conv')
 
 const app = express()
 const port = process.env.PORT || 8080 // process.env.PORT for Heroku
@@ -15,12 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(webpackDevMiddleware(compiler))
 }
 
-app.set('port', port)
-app.use('/', express.static('dist'))
-app.get('/', function (req, res) {
-  res.redirect(302, '/index.html')
-})
-app.get('/draw/:jsonName', function (req, res) {
+function convertTopoGraphData (req) {
   const jsonName = req.params.jsonName
   const jsonPath = `dist/model/${jsonName}`
   const cacheJsonPath = `dist/${jsonName}.cache`
@@ -43,8 +39,27 @@ app.get('/draw/:jsonName', function (req, res) {
     // save cache
     fs.writeFileSync(cacheJsonPath, resJsonString)
   }
+  return resJsonString
+}
+
+function convertDependencyGraphData (req) {
+  const topoJsonString = convertTopoGraphData(req)
+  const depGraph = new DepGraphConverter(JSON.parse(topoJsonString))
+  return JSON.stringify(depGraph.toData())
+}
+
+app.set('port', port)
+app.use('/', express.static('dist'))
+app.get('/', function (req, res) {
+  res.redirect(302, '/index.html')
+})
+app.get('/draw/:jsonName', function (req, res) {
   res.type('json')
-  res.send(resJsonString)
+  res.send(convertTopoGraphData(req))
+})
+app.get('/draw-dep-graph/:jsonName', function (req, res) {
+  res.type('json')
+  res.send(convertDependencyGraphData(req))
 })
 
 const server = app.listen(app.get('port'), function () {

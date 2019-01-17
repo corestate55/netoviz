@@ -1,46 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>dependency graph dev</title>
-    <script src="https://d3js.org/d3.v4.min.js"></script>
-    <style type="text/css">
-        rect {
-            fill: none;
-            stroke: black;
-        }
-        circle {
-            fill: #5E92F2;
-            stroke: none;
-        }
-        text {
-            fill: #303030;
-            font-size: 10pt;
-        }
-        text.layer {
-            text-anchor: end;
-        }
-        text.node {
-            text-anchor: start;
-        }
-        text.tp {
-            fill: darkgray;
-            text-anchor: middle;
-        }
-    </style>
-</head>
-<body>
-<div id="depGraph"></div>
-<script>
-  // run at first:
-  // $ nodejs depgraph_conv.js > dist/target3b_dp.json
-  d3.json('target3b_dp.json', (error, graphData) => {
-    if (error) {
-      throw error
-    }
-    console.log(graphData)
+import { json } from 'd3-request'
+import { select } from 'd3-selection'
 
-    const svg = d3.select('body').select('div#depGraph').append('svg')
+export class DependencyGraphVisualizer {
+  constructor () {
+  }
+
+  drawJsonModel (jsonName) {
+    // URL draw-dep-graph/:jsonName is the API
+    // that convert topology json (model/:jsonName)
+    // to graph object data by json format.
+    json(`draw-dep-graph/${jsonName}`, (error, graphData) => {
+      if (error) {
+        throw error
+      }
+      this.clearCanvas()
+      this.makeNodes(graphData)
+    })
+  }
+
+  clearCanvas () {
+    // clear graphs
+    select('div#visualizer') // clear all graphs
+      .selectAll('div.network-layer')
+      .remove()
+  }
+
+  makeNodes (graphData) {
+    const svg = select('body').select('div#visualizer')
+      .append('div') // to keep compatibility with topology visualizer
+      .attr('class', 'network-layer')
+      .append('svg')
     const fontSize = 12
 
     // for each layer
@@ -106,7 +95,5 @@
         .attr('class', 'tp')
         .text(d => d.name)
     }
-  })
-</script>
-</body>
-</html>
+  }
+}

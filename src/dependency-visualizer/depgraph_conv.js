@@ -1,5 +1,3 @@
-const fs = require('fs')
-
 class DepGraphConsts {
   constructor () {
     const ratio = 0.75
@@ -192,7 +190,7 @@ class DepGraphLayer extends DepGraphConsts {
   }
 }
 
-class DepGraph {
+module.exports = class DepGraphConverter {
   constructor (graphData) {
     this.setLayers(graphData)
   }
@@ -211,8 +209,8 @@ class DepGraph {
   }
 }
 
-const jsonPath = 'dist/target3b.json.cache'
-const graphData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-const depGraph = new DepGraph(graphData)
-const resJsonString = JSON.stringify(depGraph.toData())
-console.log(resJsonString)
+// const jsonPath = 'dist/target3b.json.cache'
+// const graphData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
+// const depGraph = new DepGraph(graphData)
+// const resJsonString = JSON.stringify(depGraph.toData())
+// console.log(resJsonString)
