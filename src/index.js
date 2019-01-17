@@ -1,10 +1,10 @@
 'use strict'
 
 import { json } from 'd3-request'
-import { GraphVisualizer } from './topo-graph/visualizer'
-import { DependencyGraphVisualizer } from './dep-graph/visualizer'
 import { select } from 'd3-selection'
 import { drawLegend } from './topo-graph/legend'
+import { GraphVisualizer } from './topo-graph/visualizer'
+import { DepGraphVisualizer } from './dep-graph/visualizer'
 import './topo-graph.scss'
 import './dep-graph.scss'
 
@@ -12,7 +12,7 @@ class VisualizerControl {
   constructor () {
     this.visualizerOf = {
       'topology': new GraphVisualizer(),
-      'dependency': new DependencyGraphVisualizer()
+      'dependency': new DepGraphVisualizer()
     }
     this.visualizerKey = undefined
     this.jsonName = ''
