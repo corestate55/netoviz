@@ -49,13 +49,13 @@ class VisualizerControl {
     // 'value' is used for this.visualizerkey
     const visSelectorData = [
       {
-        'checked': true,
+        'checked': false,
         'id': 'topology-graph-selector',
         'value': 'topology',
         'label': 'Topology graph'
       },
       {
-        'checked': false,
+        'checked': true,
         'id': 'dependency-graph-selector',
         'value': 'dependency',
         'label': 'Dependency graph'
