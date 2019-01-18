@@ -31,8 +31,15 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .attr('class', 'layer-labels')
   }
 
-  makeLayerLabel (graphData) {
-    return this.layerLabelGroup.selectAll('text')
+  makeClearButton () {
+    return this.svg.append('text')
+      .attr('x', this.fontSize / 2)
+      .attr('y', this.fontSize)
+      .text('[clear highlight]')
+  }
+
+  makeLayerLabel (graphData, origin) {
+    return origin.selectAll('text')
       .data(graphData)
       .enter()
       .append('text')
@@ -47,8 +54,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .attr('class', 'layer-objects')
   }
 
-  makeLayerNode (layer, layerObjGroup) {
-    return layerObjGroup.selectAll('rect')
+  makeLayerNode (layer, origin) {
+    return origin.selectAll('rect')
       .data(layer.nodes)
       .enter()
       .append('rect')
@@ -64,8 +71,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       // .text(d => d.path)
   }
 
-  makeLayerNodeTp (layer, layerObjGroup) {
-    return layerObjGroup.selectAll('circle')
+  makeLayerNodeTp (layer, origin) {
+    return origin.selectAll('circle')
       .data(layer.tps)
       .enter()
       .append('circle')
@@ -78,8 +85,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       // .text(d => d.path)
   }
 
-  makeLayerNodeLabel (layer, layerObjGroup) {
-    return layerObjGroup.selectAll('text.node')
+  makeLayerNodeLabel (layer, origin) {
+    return origin.selectAll('text.node')
       .data(layer.nodes)
       .enter()
       .append('text')
@@ -91,8 +98,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .text(d => d.name)
   }
 
-  makeLayerNodeTpLabel (layer, layerObjGroup) {
-    return layerObjGroup.selectAll('text.tp')
+  makeLayerNodeTpLabel (layer, origin) {
+    return origin.selectAll('text.tp')
       .data(layer.tps)
       .enter()
       .append('text')
@@ -106,9 +113,10 @@ export class SingleDepGraphVisualizer extends BaseContainer {
 
   makeGraphObjects (graphData) {
     this.svg = this.makeCanvas()
+    this.clearButton = this.makeClearButton()
     // for each layer
-    this.layerLabelGroup = this.makeLayerGroup()
-    this.makeLayerLabel(graphData)
+    const layerLabelGroup = this.makeLayerGroup()
+    this.makeLayerLabel(graphData, layerLabelGroup)
 
     // for each node/tp
     for (const layer of graphData) {

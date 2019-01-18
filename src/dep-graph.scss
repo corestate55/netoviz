@@ -2,22 +2,33 @@ rect.dep {
   fill: none;
   stroke: gray;
 
+  &.select-ready {
+    fill: lightgoldenrodyellow;
+    stroke: #FE7367;
+    transition: fill .2s ease-in-out;
+  }
   &.selected {
-    fill: #FEF6EB;
+    fill: #CEF6CE;
     stroke: #FE7367;
     stroke-width: 2px;
+    transition: fill .2s ease-in-out;
   }
 }
 
 circle.dep {
-  fill: #5E92F2;
-  fill-opacity: 0.2;
+  fill: #CEE3F6;
   stroke: none;
 
+  &.select-ready {
+    fill: #58FAF4;
+    stroke: #FE7367;
+    transition: fill .2s ease-in-out;
+  }
   &.selected {
+    fill: #819FF7;
     stroke: #FE7367;
     stroke-width: 2px;
-    fill-opacity: 1.0;
+    transition: fill .2s ease-in-out;
   }
 }
 

@@ -21,20 +21,63 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       }
     }
 
-    const clickEventHandler = (d) => {
-      console.log(`click: ${d.path}`)
-      const parentsTree = this.getParentsTree(d)
+    const runParentsAndChildren = (selfObj, action) => {
+      // without sort-uniq,
+      // parents/children tree contains duplicated element.
+      // when toggle odd times the element, highlight was disabled.
+      const parentsTree = this.sortUniq(this.getParentsTree(selfObj))
       // console.log('parent tree :', parentsTree)
-      const childrenTree = this.getChildrenTree(d)
+      const childrenTree = this.sortUniq(this.getChildrenTree(selfObj))
       // console.log('children tree :', childrenTree)
 
-      for (const target of this.flatten([d.path, parentsTree, childrenTree])) {
-        toggleHighlightByPath(target)
+      for (const target of this.flatten([selfObj.path, parentsTree, childrenTree])) {
+        action(target)
       }
+    }
+
+    const clickEventHandler = (d) => {
+      // console.log(`click: ${d.path}`)
+      runParentsAndChildren(d, toggleHighlightByPath)
+    }
+
+    const selectReadyByPath = (path, turnOn) => {
+      const elm = document.getElementById(path)
+      if (turnOn) {
+        elm.classList.add('select-ready')
+      } else {
+        elm.classList.remove('select-ready')
+      }
+    }
+
+    const setSelectReadyByPath = (path) => {
+      selectReadyByPath(path, true)
+    }
+
+    const unsetSelectReadyByPath = (path) => {
+      selectReadyByPath(path, false)
+    }
+
+    const mouseOverHandler = (d) => {
+      // console.log(`mouseover: ${d.path}`)
+      runParentsAndChildren(d, setSelectReadyByPath)
+    }
+
+    const mouseOutHandler = (d) => {
+      // console.log(`mouseout: ${d.path}`)
+      runParentsAndChildren(d, unsetSelectReadyByPath)
     }
 
     this.allTargetObj
       .on('click', clickEventHandler)
+      .on('mouseover', mouseOverHandler)
+      .on('mouseout', mouseOutHandler)
+
+    const clearHighlight = () => {
+      this.svg.selectAll('.selected')
+        .classed('selected', false)
+    }
+    this.clearButton
+      .on('click', clearHighlight)
   }
 
   findGraphObjByPath (path) {

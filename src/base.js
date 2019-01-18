@@ -4,6 +4,10 @@ module.exports = class BaseContainer {
   constructor () {
   }
 
+  sortUniq (list) {
+    return Array.from(new Set(list)).sort()
+  }
+
   flatten (list) {
     // common class method
     // (to avoid monkey patch to Array.prototype)
