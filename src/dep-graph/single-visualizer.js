@@ -60,8 +60,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .attr('ry', 5)
       .attr('width', d => d.width)
       .attr('height', d => d.height)
-      .append('title')
-      .text(d => d.path)
+      // .append('title')
+      // .text(d => d.path)
   }
 
   makeLayerNodeTp (layer, layerObjGroup) {
@@ -74,8 +74,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .attr('cx', d => d.cx)
       .attr('cy', d => d.cy)
       .attr('r', d => d.r)
-      .append('title')
-      .text(d => d.path)
+      // .append('title')
+      // .text(d => d.path)
   }
 
   makeLayerNodeLabel (layer, layerObjGroup) {

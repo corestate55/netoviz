@@ -1,11 +1,24 @@
 rect.dep {
   fill: none;
-  stroke: black;
+  stroke: gray;
+
+  &.selected {
+    fill: #FEF6EB;
+    stroke: #FE7367;
+    stroke-width: 2px;
+  }
 }
 
 circle.dep {
   fill: #5E92F2;
+  fill-opacity: 0.2;
   stroke: none;
+
+  &.selected {
+    stroke: #FE7367;
+    stroke-width: 2px;
+    fill-opacity: 1.0;
+  }
 }
 
 text.dep {
