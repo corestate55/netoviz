@@ -16,6 +16,7 @@ export class DepGraphVisualizer extends OperationalDepGraphVisualizer {
       }
       this.clearCanvas()
       this.makeGraphObjects(graphData)
+      this.setOperationHandler(graphData)
     })
   }
 }

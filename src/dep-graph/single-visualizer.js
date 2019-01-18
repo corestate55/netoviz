@@ -1,7 +1,9 @@
 import { select } from 'd3-selection'
+const BaseContainer = require('../base')
 
-export class SingleDepGraphVisualizer {
+export class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
+    super()
     // canvas size
     this.width = 1500
     this.height = 800
