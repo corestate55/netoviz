@@ -2,7 +2,7 @@ module.exports = (env, argv) => {
   const MODE = argv.mode || 'development'
   const DEBUG = MODE === 'development'
   // console.log(`MODE: ${MODE}`)
-  const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+  const TerserPlugin = require('terser-webpack-plugin');
 
   return {
     entry: `./src/index.js`,
@@ -28,8 +28,8 @@ module.exports = (env, argv) => {
     devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
     optimization: {
       minimizer: DEBUG ? [] : [
-        new UglifyJSPlugin({
-          uglifyOptions: { compress: { drop_console: true } }
+        new TerserPlugin({
+          terserOptions: { compress: { drop_console: true } }
         })
       ],
       splitChunks: {
@@ -61,6 +61,15 @@ module.exports = (env, argv) => {
                 url: false,
                 sourceMap: DEBUG,
                 importLoaders: 2 // postcss-loader, sass-loader
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: DEBUG,
+                plugins: [
+                  require('cssnano')({ preset: 'default' })
+                ]
               }
             },
             {
