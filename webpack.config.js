@@ -59,7 +59,6 @@ module.exports = (env, argv) => {
               loader: 'css-loader',
               options: {
                 url: false,
-                minimize: true,
                 sourceMap: DEBUG,
                 importLoaders: 2 // postcss-loader, sass-loader
               }
