@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
   console.log('MODE = development')
   const webpack = require('webpack')
   const webpackDevMiddleware = require('webpack-dev-middleware')
-  const config = require('./webpack.dev')
+  const config = require('./config/webpack.dev')
   const compiler = webpack(config)
   app.use(webpackDevMiddleware(compiler))
 }

@@ -41,9 +41,9 @@
     "webpack-merge": "^4.2.1"
   },
   "scripts": {
-    "analyze": "webpack --config webpack.prod.js --json --display-modules > stats.json && webpack-bundle-analyzer stats.json dist",
-    "build:dev": "webpack --config webpack.dev.js",
-    "build:prod": "webpack --config webpack.prod.js",
+    "analyze": "webpack --config config/webpack.prod.js --json --display-modules > stats.json && webpack-bundle-analyzer stats.json dist",
+    "build:dev": "webpack --config config/webpack.dev.js",
+    "build:prod": "webpack --config config/webpack.prod.js",
     "start:dev": "NODE_ENV='development' node server.js",
     "start:prod": "NODE_ENV='production' node server.js",
     "lint": "eslint ./*.js src/",
