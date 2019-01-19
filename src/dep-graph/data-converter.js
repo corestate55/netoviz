@@ -29,6 +29,7 @@ class DepGraphNodeBase extends DepGraphConsts {
     this.path = graphData.path
     this.children = graphData.children
     this.parents = graphData.parents
+    this.type = graphData.type
   }
 }
 
@@ -70,6 +71,7 @@ class DepGraphTp extends DepGraphNodeBase {
       'r': this.tpR,
       'name': this.name,
       'path': this.path,
+      'type': this.type,
       'parents': this.parents,
       'children': this.children
     }
@@ -108,6 +110,7 @@ class DepGraphNode extends DepGraphNodeBase {
       'height': this.nodeHeight(),
       'name': this.name,
       'path': this.path,
+      'type': this.type,
       'parents': this.parents,
       'children': this.children
     }

@@ -7,6 +7,37 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     super()
   }
 
+  clearDependencyLines () {
+    this.svgGrp.selectAll('.dep-lines').remove()
+  }
+
+  makeDependencyLines (lines) {
+    const lineGrp = this.svgGrp.append('g')
+      .attr('class', 'dep-lines')
+
+    for (const line of lines) {
+      if (line.src.type !== line.dst.type) {
+        continue
+      }
+      if (line.src.type === 'tp') {
+        lineGrp.append('line')
+          .attr('class', 'dep tp')
+          .attr('x1', line.src.cx)
+          .attr('y1', line.src.cy)
+          .attr('x2', line.dst.cx)
+          .attr('y2', line.dst.cy)
+      }
+      if (line.src.type === 'node') {
+        lineGrp.append('line')
+          .attr('class', 'dep node')
+          .attr('x1', line.src.x + line.src.width / 2)
+          .attr('y1', line.src.y + line.src.height / 2)
+          .attr('x2', line.dst.x + line.dst.width / 2)
+          .attr('y2', line.dst.y + line.dst.height / 2)
+      }
+    }
+  }
+
   setOperationHandler (graphData) {
     this.graphData = graphData
     this.allTargetObj = this.svgGrp
@@ -27,12 +58,24 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       // without sort-uniq,
       // parents/children tree contains duplicated element.
       // when toggle odd times the element, highlight was disabled.
-      const parentsTree = this.sortUniq(this.getParentsTree(selfObj))
-      // console.log('parent tree :', parentsTree)
-      const childrenTree = this.sortUniq(this.getChildrenTree(selfObj))
-      // console.log('children tree :', childrenTree)
+      const parentPairs = this.getParentsTree(selfObj)
+      const parentPaths = this.sortUniq(
+        this.flatten([selfObj.path, parentPairs.map(d => d.dst.path)])
+      )
+      // console.log('parent pairs:', parentPairs)
+      // console.log('parent paths:', parentPaths)
+      this.makeDependencyLines(parentPairs)
 
-      for (const target of this.flatten([selfObj.path, parentsTree, childrenTree])) {
+      const childPairs = this.getChildrenTree(selfObj)
+      const childPaths = this.sortUniq(
+        this.flatten([selfObj.path, childPairs.map(d => d.dst.path)])
+      )
+      // console.log('child pairs:', childPairs)
+      // console.log('child paths:', childPaths)
+      this.makeDependencyLines(childPairs)
+
+      // action for each parent/child
+      for (const target of this.flatten([selfObj.path, parentPaths, childPaths])) {
         action(target)
       }
     }
@@ -77,6 +120,7 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     const clearHighlight = () => {
       this.svgGrp.selectAll('.selected')
         .classed('selected', false)
+      this.clearDependencyLines()
     }
 
     this.clearButton
@@ -106,8 +150,11 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     for (const parentPath of objData.parents) {
       const parentObj = this.findGraphObjByPath(parentPath)
       if (parentObj) {
-        // console.log(`curr: ${objData.path}, parent: ${parentObj.path}`)
-        pathList.push(parentObj.path) // origin is not contained
+        pathList.push({ // push myself and parent
+          'src': objData,
+          'dst': parentObj
+        })
+        // push parent and parents of parent
         pathList.push(this.getParentsTree(parentObj))
       }
     }
@@ -119,8 +166,11 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     for (const childPath of objData.children) {
       const childObj = this.findGraphObjByPath(childPath)
       if (childObj) {
-        // console.log(`curr: ${objData.path}, child: ${childObj.path}`)
-        pathList.push(childObj.path) // origin is not contained
+        pathList.push({ // push myself and child
+          'src': objData,
+          'dst': childObj
+        })
+        // push child and children of child
         pathList.push(this.getChildrenTree(childObj))
       }
     }

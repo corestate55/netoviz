@@ -47,3 +47,15 @@ text.dep {
     text-anchor: middle;
   }
 }
+
+line.dep {
+  stroke-width: 5px;
+  stroke-opacity: .2;
+  &.node {
+    stroke: lawngreen;
+  }
+  &.tp {
+    stroke: skyblue;
+  }
+  transition: stroke .2s ease-in-out;
+}
