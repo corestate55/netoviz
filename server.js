@@ -6,20 +6,22 @@ const DepGraphConverter = require('./src/dep-graph/data-converter')
 const app = express()
 const port = process.env.PORT || 8080 // process.env.PORT for Heroku
 const timeStampOf = {}
+const distDir = 'dist'
+const modelDir = `${distDir}/model`
 
 if (process.env.NODE_ENV !== 'production') {
   console.log('MODE = development')
   const webpack = require('webpack')
   const webpackDevMiddleware = require('webpack-dev-middleware')
-  const config = require('./webpack.config')
-  const compiler = webpack(config(process.env, process.argv))
+  const config = require('./webpack.dev')
+  const compiler = webpack(config)
   app.use(webpackDevMiddleware(compiler))
 }
 
 function convertTopoGraphData (req) {
   const jsonName = req.params.jsonName
-  const jsonPath = `dist/model/${jsonName}`
-  const cacheJsonPath = `dist/${jsonName}.cache`
+  const jsonPath = `${modelDir}/${jsonName}`
+  const cacheJsonPath = `${distDir}/${jsonName}.cache`
   console.log('Requested: ', jsonPath)
 
   const timeStamp = fs.statSync(jsonPath)

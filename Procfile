@@ -1,1 +1,1 @@
-web: npm run release-start
+web: npm run start:prod

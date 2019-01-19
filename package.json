@@ -37,16 +37,17 @@
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.1",
     "webpack-dev-middleware": "^3.5.1",
-    "webpack-dev-server": "^3.1.14"
+    "webpack-dev-server": "^3.1.14",
+    "webpack-merge": "^4.2.1"
   },
   "scripts": {
-    "analyze": "webpack --mode production --json --display-modules > stats.json && webpack-bundle-analyzer stats.json dist",
-    "build": "webpack --mode development",
-    "start": "NODE_ENV='development' node server.js",
+    "analyze": "webpack --config webpack.prod.js --json --display-modules > stats.json && webpack-bundle-analyzer stats.json dist",
+    "build:dev": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.prod.js",
+    "start:dev": "NODE_ENV='development' node server.js",
+    "start:prod": "NODE_ENV='production' node server.js",
     "lint": "eslint ./*.js src/",
     "lintfix": "eslint --fix ./*.js src/",
-    "release-build": "webpack --mode production",
-    "release-start": "NODE_ENV='production' node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
