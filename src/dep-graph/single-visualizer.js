@@ -5,7 +5,7 @@ export class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
     super()
     // canvas size
-    this.width = 1500
+    this.width = 1200
     this.height = 800
     this.fontSize = 12
   }
@@ -17,7 +17,7 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .remove()
   }
 
-  makeCanvas () {
+  makeDepGraphSVG () {
     return select('body').select('div#visualizer')
       .append('div') // to keep compatibility with topology visualizer
       .attr('class', 'network-layer')
@@ -26,13 +26,19 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .attr('height', this.height)
   }
 
-  makeLayerGroup () {
+  makeDepGraphSVGGroup () {
     return this.svg.append('g')
+      .attr('id', 'whole-dep-graph')
+  }
+
+  makeLayerGroup () {
+    return this.svgGrp.append('g')
       .attr('class', 'layer-labels')
   }
 
   makeClearButton () {
     return this.svg.append('text')
+      .attr('class', 'dep')
       .attr('x', this.fontSize / 2)
       .attr('y', this.fontSize)
       .text('[clear highlight]')
@@ -50,7 +56,7 @@ export class SingleDepGraphVisualizer extends BaseContainer {
   }
 
   makeLayerObjGroup () {
-    return this.svg.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'layer-objects')
   }
 
@@ -112,7 +118,8 @@ export class SingleDepGraphVisualizer extends BaseContainer {
   }
 
   makeGraphObjects (graphData) {
-    this.svg = this.makeCanvas()
+    this.svg = this.makeDepGraphSVG()
+    this.svgGrp = this.makeDepGraphSVGGroup()
     this.clearButton = this.makeClearButton()
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()

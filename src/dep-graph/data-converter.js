@@ -1,21 +1,20 @@
 class DepGraphConsts {
   constructor () {
-    const ratio = 0.75
     // tp
-    this.tpR = 20 * ratio
-    this.tpXPad1 = 12 * ratio
-    this.tpXPad2 = 12 * ratio
-    this.tpYPad1 = 12 * ratio
-    this.tpYPad2 = 24 * ratio
+    this.tpR = 20
+    this.tpXPad1 = 12
+    this.tpXPad2 = 12
+    this.tpYPad1 = 12
+    this.tpYPad2 = 24
     // node
-    this.nodeXPad1 = 15 * ratio
-    this.nodeXPad2 = 15 * ratio
-    this.nodeYPad1 = 15 * ratio
-    this.nodeYPad2 = 24 * ratio
+    this.nodeXPad1 = 15
+    this.nodeXPad2 = 15
+    this.nodeYPad1 = 15
+    this.nodeYPad2 = 24
     // layer
-    this.layerXPad1 = 100 * ratio
-    this.layerYPad1 = 50 * ratio
-    this.layerYPad2 = 30 * ratio
+    this.layerXPad1 = 100
+    this.layerYPad1 = 50
+    this.layerYPad2 = 30
   }
 
   nodeHeight () {

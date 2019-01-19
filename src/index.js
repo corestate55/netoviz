@@ -5,8 +5,8 @@ import { select } from 'd3-selection'
 import { drawLegend } from './topo-graph/legend'
 import { GraphVisualizer } from './topo-graph/visualizer'
 import { DepGraphVisualizer } from './dep-graph/visualizer'
-import './topo-graph.scss'
-import './dep-graph.scss'
+import './css/topo-graph.scss'
+import './css/dep-graph.scss'
 
 class VisualizerControl {
   constructor () {

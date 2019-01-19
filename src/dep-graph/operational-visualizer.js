@@ -1,3 +1,5 @@
+import { zoom } from 'd3-zoom'
+import { event } from 'd3-selection'
 import { SingleDepGraphVisualizer } from './single-visualizer'
 
 export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
@@ -7,7 +9,7 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
 
   setOperationHandler (graphData) {
     this.graphData = graphData
-    this.allTargetObj = this.svg
+    this.allTargetObj = this.svgGrp
       .selectAll('g.layer-objects')
       .selectAll('.dep')
 
@@ -73,11 +75,17 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       .on('mouseout', mouseOutHandler)
 
     const clearHighlight = () => {
-      this.svg.selectAll('.selected')
+      this.svgGrp.selectAll('.selected')
         .classed('selected', false)
     }
+
     this.clearButton
       .on('click', clearHighlight)
+
+    this.svg.call(zoom()
+      .scaleExtent([1 / 4, 5])
+      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    )
   }
 
   findGraphObjByPath (path) {
