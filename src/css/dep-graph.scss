@@ -59,3 +59,13 @@ line.dep {
   }
   transition: stroke .2s ease-in-out;
 }
+
+marker.dep {
+  stroke-opacity: .3;
+  &.node {
+    fill: lawngreen;
+  }
+  &.tp {
+    fill: skyblue;
+  }
+}

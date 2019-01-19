@@ -117,10 +117,37 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       .text(d => d.name)
   }
 
+  makeArrowEnd (defs, arrowId, arrowClass) {
+    defs.append('marker')
+      .attr('id', arrowId)
+      .attr('class', arrowClass)
+      .attr('refX', 4)
+      .attr('refY', 2)
+      .attr('markerWidth', 4)
+      .attr('markerHeight', 4)
+      .attr('orient', 'auto')
+      .append('path')
+      .attr('d', 'M 0,0 V 4 L4,2 Z')
+  }
+
+  makeDepArrowEndDefs () {
+    const defs = this.svg.append('defs')
+    this.makeArrowEnd(defs, 'node-dep-arrow-end', 'dep node')
+    this.makeArrowEnd(defs, 'tp-dep-arrow-end', 'dep tp')
+  }
+
+  makeDepLineGroup () {
+    return this.svgGrp.append('g')
+      .attr('class', 'dep-lines')
+  }
+
   makeGraphObjects (graphData) {
     this.svg = this.makeDepGraphSVG()
     this.svgGrp = this.makeDepGraphSVGGroup()
     this.clearButton = this.makeClearButton()
+    // for dependency line
+    this.depLineGrp = this.makeDepLineGroup()
+    this.makeDepArrowEndDefs()
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()
     this.makeLayerLabel(graphData, layerLabelGroup)

@@ -8,32 +8,31 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
   }
 
   clearDependencyLines () {
-    this.svgGrp.selectAll('.dep-lines').remove()
+    this.depLineGrp.selectAll('line').remove()
   }
 
   makeDependencyLines (lines) {
-    const lineGrp = this.svgGrp.append('g')
-      .attr('class', 'dep-lines')
-
     for (const line of lines) {
       if (line.src.type !== line.dst.type) {
         continue
       }
       if (line.src.type === 'tp') {
-        lineGrp.append('line')
+        this.depLineGrp.append('line')
           .attr('class', 'dep tp')
           .attr('x1', line.src.cx)
           .attr('y1', line.src.cy)
           .attr('x2', line.dst.cx)
           .attr('y2', line.dst.cy)
+          .attr('marker-end', 'url(#tp-dep-arrow-end)')
       }
       if (line.src.type === 'node') {
-        lineGrp.append('line')
+        this.depLineGrp.append('line')
           .attr('class', 'dep node')
           .attr('x1', line.src.x + line.src.width / 2)
-          .attr('y1', line.src.y + line.src.height / 2)
+          .attr('y1', line.src.y < line.dst.y ? line.src.y + line.src.height : line.src.y)
           .attr('x2', line.dst.x + line.dst.width / 2)
-          .attr('y2', line.dst.y + line.dst.height / 2)
+          .attr('y2', line.src.y < line.dst.y ? line.dst.y : line.dst.y + line.dst.height)
+          .attr('marker-end', 'url(#node-dep-arrow-end)')
       }
     }
   }
