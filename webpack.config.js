@@ -2,7 +2,8 @@ module.exports = (env, argv) => {
   const MODE = argv.mode || 'development'
   const DEBUG = MODE === 'development'
   // console.log(`MODE: ${MODE}`)
-  const TerserPlugin = require('terser-webpack-plugin');
+  const TerserPlugin = require('terser-webpack-plugin')
+  const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 
   return {
     entry: `./src/index.js`,
@@ -53,8 +54,9 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.scss$/,
+          exclude: /node_modules/,
           use: [
-            'style-loader',
+            MiniCSSExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: {
@@ -81,6 +83,9 @@ module.exports = (env, argv) => {
           ]
         }
       ]
-    }
+    },
+    plugins: [
+      new MiniCSSExtractPlugin({ filename: 'netoviz.css' })
+    ]
   }
 }
