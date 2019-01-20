@@ -7,34 +7,57 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     super()
   }
 
-  clearDependencyLines () {
-    this.depLineGrp.selectAll('line').remove()
+  clearHighlight () {
+    this.svgGrp.selectAll('.selected')
+      .classed('selected', false)
   }
 
-  makeDependencyLines (lines) {
+  clearDependencyLines (lineClass) {
+    const selector = lineClass ? `line.${lineClass}` : 'line'
+    this.depLineGrp.selectAll(selector)
+      .remove()
+  }
+
+  makeTpDepLine (lineClass, src, dst) {
+    this.depLineGrp.append('line')
+      .attr('class', `dep tp ${lineClass}`)
+      .attr('x1', src.cx)
+      .attr('y1', src.cy < dst.cy ? src.cy + src.r : src.cy - src.r)
+      .attr('x2', dst.cx)
+      .attr('y2', src.cy < dst.cy ? dst.cy - dst.r : dst.cy + dst.r)
+      .attr('marker-end', 'url(#tp-dep-arrow-end)')
+  }
+
+  makeNodeDepLine (lineClass, src, dst) {
+    this.depLineGrp.append('line')
+      .attr('class', `dep node ${lineClass}`)
+      .attr('x1', src.x + src.width / 2)
+      .attr('y1', src.y < dst.y ? src.y + src.height : src.y)
+      .attr('x2', dst.x + dst.width / 2)
+      .attr('y2', src.y < dst.y ? dst.y : dst.y + dst.height)
+      .attr('marker-end', 'url(#node-dep-arrow-end)')
+  }
+
+  makeDependencyLines (lines, lineClass) {
     for (const line of lines) {
       if (line.src.type !== line.dst.type) {
         continue
       }
       if (line.src.type === 'tp') {
-        this.depLineGrp.append('line')
-          .attr('class', 'dep tp')
-          .attr('x1', line.src.cx)
-          .attr('y1', line.src.cy)
-          .attr('x2', line.dst.cx)
-          .attr('y2', line.dst.cy)
-          .attr('marker-end', 'url(#tp-dep-arrow-end)')
-      }
-      if (line.src.type === 'node') {
-        this.depLineGrp.append('line')
-          .attr('class', 'dep node')
-          .attr('x1', line.src.x + line.src.width / 2)
-          .attr('y1', line.src.y < line.dst.y ? line.src.y + line.src.height : line.src.y)
-          .attr('x2', line.dst.x + line.dst.width / 2)
-          .attr('y2', line.src.y < line.dst.y ? line.dst.y : line.dst.y + line.dst.height)
-          .attr('marker-end', 'url(#node-dep-arrow-end)')
+        this.makeTpDepLine(lineClass, line.src, line.dst)
+      } else if (line.src.type === 'node') {
+        this.makeNodeDepLine(lineClass, line.src, line.dst)
       }
     }
+  }
+
+  pathsFromPairs (selfObj, pairs) {
+    // without sort-uniq,
+    // parents/children tree contains duplicated element.
+    // when toggle odd times the element, highlight was disabled.
+    return this.sortUniq(
+      this.flatten([selfObj.path, pairs.map(d => d.dst.path)])
+    )
   }
 
   setOperationHandler (graphData) {
@@ -43,45 +66,33 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       .selectAll('g.layer-objects')
       .selectAll('.dep')
 
-    const toggleHighlightByPath = (path) => {
-      const elm = document.getElementById(path)
-      // console.log('highlight : ', elm)
-      if (elm.classList.contains('selected')) {
-        elm.classList.remove('selected')
-      } else {
+    const setHighlightByPath = (paths) => {
+      this.clearHighlight()
+      for (const path of paths) {
+        const elm = document.getElementById(path)
         elm.classList.add('selected')
       }
     }
 
-    const runParentsAndChildren = (selfObj, action) => {
-      // without sort-uniq,
-      // parents/children tree contains duplicated element.
-      // when toggle odd times the element, highlight was disabled.
+    const runParentsAndChildren = (selfObj, actionForPairs, actionForTargets) => {
       const parentPairs = this.getParentsTree(selfObj)
-      const parentPaths = this.sortUniq(
-        this.flatten([selfObj.path, parentPairs.map(d => d.dst.path)])
-      )
-      // console.log('parent pairs:', parentPairs)
-      // console.log('parent paths:', parentPaths)
-      this.makeDependencyLines(parentPairs)
-
+      const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
       const childPairs = this.getChildrenTree(selfObj)
-      const childPaths = this.sortUniq(
-        this.flatten([selfObj.path, childPairs.map(d => d.dst.path)])
-      )
-      // console.log('child pairs:', childPairs)
-      // console.log('child paths:', childPaths)
-      this.makeDependencyLines(childPairs)
+      const childPaths = this.pathsFromPairs(selfObj, childPairs)
 
+      // action for each pairs(line: src/dst)
+      actionForPairs(parentPairs.concat(childPairs))
       // action for each parent/child
-      for (const target of this.flatten([selfObj.path, parentPaths, childPaths])) {
-        action(target)
-      }
+      actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
+    }
+
+    const makeSelectDepLines = (pairs) => {
+      this.clearDependencyLines('')
+      this.makeDependencyLines(pairs, 'selected')
     }
 
     const clickEventHandler = (d) => {
-      // console.log(`click: ${d.path}`)
-      runParentsAndChildren(d, toggleHighlightByPath)
+      runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
     }
 
     const selectReadyByPath = (path, turnOn) => {
@@ -93,22 +104,34 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       }
     }
 
-    const setSelectReadyByPath = (path) => {
-      selectReadyByPath(path, true)
+    const makeSelectReadyDepLines = (pairs) => {
+      this.makeDependencyLines(pairs, 'select-ready')
     }
 
-    const unsetSelectReadyByPath = (path) => {
-      selectReadyByPath(path, false)
+    const clearSelectReadyDepLines = (pairs) => {
+      this.clearDependencyLines('select-ready')
+    }
+
+    const setSelectReadyByPath = (paths) => {
+      for (const path of paths) {
+        selectReadyByPath(path, true)
+      }
+    }
+
+    const unsetSelectReadyByPath = (paths) => {
+      for (const path of paths) {
+        selectReadyByPath(path, false)
+      }
     }
 
     const mouseOverHandler = (d) => {
       // console.log(`mouseover: ${d.path}`)
-      runParentsAndChildren(d, setSelectReadyByPath)
+      runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
     }
 
     const mouseOutHandler = (d) => {
       // console.log(`mouseout: ${d.path}`)
-      runParentsAndChildren(d, unsetSelectReadyByPath)
+      runParentsAndChildren(d, clearSelectReadyDepLines, unsetSelectReadyByPath)
     }
 
     this.allTargetObj
@@ -116,14 +139,11 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       .on('mouseover', mouseOverHandler)
       .on('mouseout', mouseOutHandler)
 
-    const clearHighlight = () => {
-      this.svgGrp.selectAll('.selected')
-        .classed('selected', false)
-      this.clearDependencyLines()
-    }
-
     this.clearButton
-      .on('click', clearHighlight)
+      .on('click', () => {
+        this.clearHighlight()
+        this.clearDependencyLines('')
+      })
 
     this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])
@@ -166,8 +186,8 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       const childObj = this.findGraphObjByPath(childPath)
       if (childObj) {
         pathList.push({ // push myself and child
-          'src': objData,
-          'dst': childObj
+          'dst': objData,
+          'src': childObj
         })
         // push child and children of child
         pathList.push(this.getChildrenTree(childObj))

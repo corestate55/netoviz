@@ -145,9 +145,6 @@ export class SingleDepGraphVisualizer extends BaseContainer {
     this.svg = this.makeDepGraphSVG()
     this.svgGrp = this.makeDepGraphSVGGroup()
     this.clearButton = this.makeClearButton()
-    // for dependency line
-    this.depLineGrp = this.makeDepLineGroup()
-    this.makeDepArrowEndDefs()
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()
     this.makeLayerLabel(graphData, layerLabelGroup)
@@ -160,5 +157,9 @@ export class SingleDepGraphVisualizer extends BaseContainer {
       this.makeLayerNodeLabel(layer, layerObjGroup)
       this.makeLayerNodeTpLabel(layer, layerObjGroup)
     }
+    // for dependency line
+    // NOTICE priority: lines at upper object
+    this.depLineGrp = this.makeDepLineGroup()
+    this.makeDepArrowEndDefs()
   }
 }
