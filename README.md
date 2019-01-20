@@ -38,26 +38,24 @@ npm install
 ### Run web server
 To develop application, Use
 ```
-npm run start
+npm run start:dev
 ```
-Then, it builds app as development mode,
-run `webpack-dev-server` and opens `dist/index.html` with browser.
+Then, it builds app as development mode.
 
-Or
+In production environment, use
 ```
-npm run release-start
+npm run start:prod
 ```
-runs simple `Express` http server with built application.
 
 ### Build
 
 Run `webpack` for development
 ```
-npm run build
+npm run build:dev
 ```
 or 
 ```
-npm run release-build
+npm run build:prod
 ```
 for production.
 
