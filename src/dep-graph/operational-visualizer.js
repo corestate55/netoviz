@@ -60,12 +60,19 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     )
   }
 
-  setOperationHandler (graphData) {
-    this.graphData = graphData
-    this.allTargetObj = this.svgGrp
-      .selectAll('g.layer-objects')
-      .selectAll('.dep')
+  runParentsAndChildren (selfObj, actionForPairs, actionForTargets) {
+    const parentPairs = this.getParentsTree(selfObj)
+    const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
+    const childPairs = this.getChildrenTree(selfObj)
+    const childPaths = this.pathsFromPairs(selfObj, childPairs)
 
+    // action for each pairs(line: src/dst)
+    actionForPairs(parentPairs.concat(childPairs))
+    // action for each parent/child
+    actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
+  }
+
+  setMouseEventsToGraphObject () {
     const setHighlightByPath = (paths) => {
       this.clearHighlight()
       for (const path of paths) {
@@ -74,25 +81,9 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       }
     }
 
-    const runParentsAndChildren = (selfObj, actionForPairs, actionForTargets) => {
-      const parentPairs = this.getParentsTree(selfObj)
-      const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
-      const childPairs = this.getChildrenTree(selfObj)
-      const childPaths = this.pathsFromPairs(selfObj, childPairs)
-
-      // action for each pairs(line: src/dst)
-      actionForPairs(parentPairs.concat(childPairs))
-      // action for each parent/child
-      actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
-    }
-
     const makeSelectDepLines = (pairs) => {
       this.clearDependencyLines('')
       this.makeDependencyLines(pairs, 'selected')
-    }
-
-    const clickEventHandler = (d) => {
-      runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
     }
 
     const selectReadyByPath = (path, turnOn) => {
@@ -124,31 +115,50 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       }
     }
 
+    const clickEventHandler = (d) => {
+      this.runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
+    }
+
     const mouseOverHandler = (d) => {
       // console.log(`mouseover: ${d.path}`)
-      runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
+      this.runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
     }
 
     const mouseOutHandler = (d) => {
       // console.log(`mouseout: ${d.path}`)
-      runParentsAndChildren(d, clearSelectReadyDepLines, unsetSelectReadyByPath)
+      this.runParentsAndChildren(d, clearSelectReadyDepLines, unsetSelectReadyByPath)
     }
 
     this.allTargetObj
       .on('click', clickEventHandler)
       .on('mouseover', mouseOverHandler)
       .on('mouseout', mouseOutHandler)
+  }
 
+  setMouseEventToClearButton () {
     this.clearButton
       .on('click', () => {
         this.clearHighlight()
         this.clearDependencyLines('')
       })
+  }
 
+  setZoomEventToCanvas () {
     this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])
       .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
+  }
+
+  setOperationHandler (graphData) {
+    this.graphData = graphData
+    this.allTargetObj = this.svgGrp
+      .selectAll('g.layer-objects')
+      .selectAll('.dep')
+
+    this.setMouseEventsToGraphObject()
+    this.setMouseEventToClearButton()
+    this.setZoomEventToCanvas()
   }
 
   findGraphObjByPath (path) {
@@ -186,8 +196,8 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       const childObj = this.findGraphObjByPath(childPath)
       if (childObj) {
         pathList.push({ // push myself and child
-          'dst': objData,
-          'src': childObj
+          'src': objData,
+          'dst': childObj
         })
         // push child and children of child
         pathList.push(this.getChildrenTree(childObj))
