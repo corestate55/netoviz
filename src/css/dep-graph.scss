@@ -4,13 +4,26 @@ rect.dep {
 
   &.select-ready {
     fill: lightgoldenrodyellow;
+    stroke: darkkhaki;
+    stroke-width: 2px;
+    transition: fill .2s ease-in-out;
+  }
+  &.select-ready-origin {
+    fill: lightgoldenrodyellow;
     stroke: #FE7367;
+    stroke-width: 5px;
     transition: fill .2s ease-in-out;
   }
   &.selected {
     fill: #CEF6CE;
-    stroke: #FE7367;
+    stroke: lime;
     stroke-width: 2px;
+    transition: fill .2s ease-in-out;
+  }
+  &.selected-origin {
+    fill: #CEF6CE;
+    stroke: #FE7367;
+    stroke-width: 5px;
     transition: fill .2s ease-in-out;
   }
 }
@@ -20,14 +33,26 @@ circle.dep {
   stroke: none;
 
   &.select-ready {
-    fill: #58FAF4;
+    fill: lightskyblue;
+    stroke: #58FAF4;
+    stroke-width: 2px;
+    transition: fill .2s ease-in-out;
+  }
+  &.select-ready-origin {
     stroke: #FE7367;
+    stroke-width: 5px;
     transition: fill .2s ease-in-out;
   }
   &.selected {
+    fill: #58FAF4;
+    stroke: #819FF7;
+    stroke-width: 2px;
+    transition: fill .2s ease-in-out;
+  }
+  &.selected-origin {
     fill: #819FF7;
     stroke: #FE7367;
-    stroke-width: 2px;
+    stroke-width: 5px;
     transition: fill .2s ease-in-out;
   }
 }

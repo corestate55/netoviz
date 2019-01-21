@@ -10,6 +10,8 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
   clearHighlight () {
     this.svgGrp.selectAll('.selected')
       .classed('selected', false)
+    this.svgGrp.selectAll('.selected-origin')
+      .classed('selected-origin', false)
   }
 
   clearDependencyLines (lineClass) {
@@ -60,7 +62,7 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     )
   }
 
-  runParentsAndChildren (selfObj, actionForPairs, actionForTargets) {
+  runParentsAndChildren (selfObj, actionForPairs, actionForOrigin, actionForTargets) {
     const parentPairs = this.getParentsTree(selfObj)
     const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
     const childPairs = this.getChildrenTree(selfObj)
@@ -68,31 +70,28 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
 
     // action for each pairs(line: src/dst)
     actionForPairs(parentPairs.concat(childPairs))
-    // action for each parent/child
-    actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
+    // action for mouse event origin
+    actionForOrigin(selfObj.path)
+    // action for each parents/children
+    actionForTargets(this.flatten([parentPaths, childPaths]))
   }
 
   setMouseEventsToGraphObject () {
-    const setHighlightByPath = (paths) => {
-      this.clearHighlight()
+    const setHighlightToTargets = (paths) => {
       for (const path of paths) {
         const elm = document.getElementById(path)
         elm.classList.add('selected')
       }
     }
 
+    const setHighlightToOrigin = (path) => {
+      document.getElementById(path)
+        .classList.add('selected-origin')
+    }
+
     const makeSelectDepLines = (pairs) => {
       this.clearDependencyLines('')
       this.makeDependencyLines(pairs, 'selected')
-    }
-
-    const selectReadyByPath = (path, turnOn) => {
-      const elm = document.getElementById(path)
-      if (turnOn) {
-        elm.classList.add('select-ready')
-      } else {
-        elm.classList.remove('select-ready')
-      }
     }
 
     const makeSelectReadyDepLines = (pairs) => {
@@ -103,30 +102,57 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       this.clearDependencyLines('select-ready')
     }
 
-    const setSelectReadyByPath = (paths) => {
+    const setSelectReadyToTargets = (paths) => {
       for (const path of paths) {
-        selectReadyByPath(path, true)
+        const elm = document.getElementById(path)
+        elm.classList.add('select-ready')
       }
     }
 
-    const unsetSelectReadyByPath = (paths) => {
+    const setSelectReadyToOrigin = (path) => {
+      document.getElementById(path)
+        .classList.add('select-ready-origin')
+    }
+
+    const unsetSelectReadyToTargets = (paths) => {
       for (const path of paths) {
-        selectReadyByPath(path, false)
+        const elm = document.getElementById(path)
+        elm.classList.remove('select-ready')
       }
+    }
+
+    const unsetSelectReadyOfOrigin = (path) => {
+      document.getElementById(path)
+        .classList.remove('select-ready-origin')
     }
 
     const clickEventHandler = (d) => {
-      this.runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
+      this.clearHighlight()
+      this.runParentsAndChildren(d,
+        makeSelectDepLines,
+        setHighlightToOrigin,
+        setHighlightToTargets
+      )
     }
 
     const mouseOverHandler = (d) => {
       // console.log(`mouseover: ${d.path}`)
-      this.runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
+      this.runParentsAndChildren(
+        d,
+        makeSelectReadyDepLines,
+        setSelectReadyToOrigin,
+        setSelectReadyToTargets
+      )
     }
 
     const mouseOutHandler = (d) => {
       // console.log(`mouseout: ${d.path}`)
-      this.runParentsAndChildren(d, clearSelectReadyDepLines, unsetSelectReadyByPath)
+      this.runParentsAndChildren(
+        d,
+        clearSelectReadyDepLines,
+        unsetSelectReadyOfOrigin,
+        unsetSelectReadyToTargets
+      )
     }
 
     this.allTargetObj
