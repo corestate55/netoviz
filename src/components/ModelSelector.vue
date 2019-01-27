@@ -1,6 +1,6 @@
 <template>
   <div id="model-selector">
-    <el-select v-model="modelFile" placeholder="Select">
+    <el-select size="large" v-model="modelFile" placeholder="Select">
       <el-option
         v-for="item in options"
         :key="item.value"
