@@ -16,60 +16,53 @@ The visualizer works on Heroku.
 ## Directory
 
 * `src`: Source code files of visualizer.
-  * Codes are packed by webpack and stored in `dist` as `main.js`.
-* `dist`: Distributed files. (`devServer`'s document-root)
-* `dist/model`: Topology data files (json)
-
-This visualizer depends on [D3.js v4](https://d3js.org/),
-[Webpack](https://webpack.js.org/),
-[Node.js](https://nodejs.org/ja/) and [NPM](https://www.npmjs.com/).
+* `public`: Distributed files.
+  * `public/model`: Topology data files (json)
+* `srv`: Server (API)
 
 ## Installation
+### Environment setup
+This application depends on:
+* [Node.js](https://nodejs.org/ja/) (v8.10 or later)
+* [NPM](https://www.npmjs.com/) (v6.6 or later)
 
-### Install packages
+### Project setup
+This application depends on:
+* [D3.js v4](https://d3js.org/)
+* [Vue-CLI v3](https://cli.vuejs.org/)
 
-Install Node.js and NPM at first in your system.
-
-Install packages used by this visualizer (according to `package.json`).
 ```
 npm install
 ```
 
-### Run web server
-To develop application, Use
+## Run web server
+### for development
+Run API server for development (using [vue-cli-plugin-express](https://www.npmjs.com/package/vue-cli-plugin-express))
 ```
-npm run start:dev
+npm run express
 ```
-Then, it builds app as development mode.
+and application (Compiles and hot-reloads for development).
+```
+npm run serve
+```
 
-In production environment, use
+### for production
+Build (compile and minify) script for production,
 ```
-npm run start:prod
+npm run build
+```
+and run API/application server.
+```
+npm run express:run
 ```
 
-### Build
-
-Run `webpack` for development
-```
-npm run build:dev
-```
-or 
-```
-npm run build:prod
-```
-for production.
-
-### Lint
-
-Run `eslint`.
+## Lints and fixes files
 ```
 npm run lint
 ```
-or
-```
-npm run lintfix
-```
-runs `eslint` with `--fix` option.
+
+## Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Structure
 
