@@ -1,63 +1,38 @@
 {
   "name": "netoviz",
-  "version": "0.0.1",
-  "description": "RFC8345-based network topology visualizer",
-  "main": "src/index.js",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "express": "vue-cli-service express:watch",
+    "express:run": "vue-cli-service express:run"
+  },
   "dependencies": {
     "d3-drag": "^1.2.3",
     "d3-force": "^2.0.0",
     "d3-request": "^1.0.6",
-    "d3-selection": "^1.3.2",
+    "d3-selection": "^1.4.0",
     "d3-timer": "^1.0.9",
     "d3-zoom": "^1.7.3",
+    "element-ui": "^2.5.0",
     "express": "^4.16.4",
-    "localStorage": "^1.0.4"
+    "localStorage": "^1.0.4",
+    "vue": "^2.5.21",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^8.0.5",
-    "css-loader": "^2.1.0",
-    "cssnano": "^4.1.8",
-    "eslint": "^5.12.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-loader": "^2.1.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "mini-css-extract-plugin": "^0.5.0",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-service": "^3.3.0",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0",
     "node-sass": "^4.11.0",
-    "postcss-loader": "^3.0.0",
     "sass-loader": "^7.1.0",
-    "style-loader": "^0.23.1",
-    "terser-webpack-plugin": "^1.2.1",
-    "webpack": "^4.28.4",
-    "webpack-bundle-analyzer": "^3.0.3",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-middleware": "^3.5.1",
-    "webpack-dev-server": "^3.1.14",
-    "webpack-merge": "^4.2.1"
-  },
-  "scripts": {
-    "analyze": "webpack --config config/webpack.prod.js --json --display-modules > stats.json && webpack-bundle-analyzer stats.json dist",
-    "build:dev": "webpack --config config/webpack.dev.js",
-    "build:prod": "webpack --config config/webpack.prod.js",
-    "start:dev": "NODE_ENV='development' node server.js",
-    "start:prod": "NODE_ENV='production' node server.js",
-    "lint": "eslint ./*.js src/",
-    "lintfix": "eslint --fix ./*.js src/",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/corestate55/netoviz.git"
-  },
-  "author": "corestate55",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/corestate55/netoviz/issues"
-  },
-  "homepage": "https://github.com/corestate55/netoviz#readme"
+    "vue-cli-plugin-express": "0.0.4",
+    "vue-template-compiler": "^2.5.21"
+  }
 }

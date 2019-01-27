@@ -5,7 +5,7 @@ import { PositionCache } from './position-cache'
 import { select } from 'd3-selection'
 import { json } from 'd3-request'
 import { interval } from 'd3-timer'
-const BaseContainer = require('../base')
+import { BaseContainer } from '../base'
 
 export class GraphVisualizer extends BaseContainer {
   constructor () {
@@ -31,7 +31,6 @@ export class GraphVisualizer extends BaseContainer {
         this.posCache.saveGraphs(this.storageKey, this.graphs)
       }, 5000)
       // draw
-      this.drawLayerSelector()
       this.drawGraphs()
     })
   }
@@ -58,36 +57,5 @@ export class GraphVisualizer extends BaseContainer {
       this.posCache.loadToGraph(this.storageKey, graph, graphVisualizer)
       graphVisualizer.restartSimulation()
     }
-  }
-
-  drawLayerSelector () {
-    // clear layer selector
-    select('div#layer-selector') // clear all layers
-      .selectAll('li')
-      .remove()
-
-    const layerList = select('div#layer-selector').append('ul')
-    const idFunc = d => `layer-selector-${d.name}`
-    function toggleLayerDisplay (d) {
-      const cBox = document.getElementById(idFunc(d))
-      document.getElementById(`${d.name}-container`)
-        .style.display = cBox.checked ? 'block' : 'none'
-    }
-
-    layerList.selectAll('li')
-      .data(this.graphs)
-      .enter()
-      .append('li')
-      .append('input')
-      .attr('type', 'checkbox')
-      .attr('name', 'select-layer')
-      .attr('id', idFunc)
-      .attr('checked', true)
-      .on('click', toggleLayerDisplay)
-    layerList.selectAll('li')
-      .append('label')
-      .attr('for', idFunc)
-      .on('click', toggleLayerDisplay)
-      .text(d => d.name)
   }
 }

@@ -1,11 +1,8 @@
 'use strict'
 
-const localStorage = require('localStorage')
+import localStorage from 'localStorage'
 
 export class PositionCache {
-  constructor () {
-  }
-
   // save node position in all graphs
   saveGraphs (key, graphs) {
     let positionData = { 'graphs': [] }

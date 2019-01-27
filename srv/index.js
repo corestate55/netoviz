@@ -1,27 +1,19 @@
 const fs = require('fs')
 const express = require('express')
-const Graphs = require('./src/graph/graphs')
-const DepGraphConverter = require('./src/dep-graph/data-converter')
+const Graphs = require('./graph/graphs')
+const DepGraphConverter = require('./data-converter')
 
-const app = express()
-const port = process.env.PORT || 8080 // process.env.PORT for Heroku
+const port = process.env.PORT || 3000 // process.env.PORT for Heroku
 const timeStampOf = {}
-const distDir = 'dist'
+const prodDistDir = 'dist'
+const devDistDir = 'public'
+const distDir = process.env.NODE_ENV === 'production' ? prodDistDir : devDistDir
 const modelDir = `${distDir}/model`
-
-if (process.env.NODE_ENV !== 'production') {
-  console.log('MODE = development')
-  const webpack = require('webpack')
-  const webpackDevMiddleware = require('webpack-dev-middleware')
-  const config = require('./config/webpack.dev')
-  const compiler = webpack(config)
-  app.use(webpackDevMiddleware(compiler))
-}
 
 function convertTopoGraphData (req) {
   const jsonName = req.params.jsonName
   const jsonPath = `${modelDir}/${jsonName}`
-  const cacheJsonPath = `${distDir}/${jsonName}.cache`
+  const cacheJsonPath = `${prodDistDir}/${jsonName}.cache` // always use prod dist dir
   console.log('Requested: ', jsonPath)
 
   const timeStamp = fs.statSync(jsonPath)
@@ -50,22 +42,19 @@ function convertDependencyGraphData (req) {
   return JSON.stringify(depGraph.toData())
 }
 
-app.set('port', port)
-app.use('/', express.static('dist'))
-app.get('/', function (req, res) {
-  res.redirect(302, '/index.html')
-})
-app.get('/draw/:jsonName', function (req, res) {
-  res.type('json')
-  res.send(convertTopoGraphData(req))
-})
-app.get('/draw-dep-graph/:jsonName', function (req, res) {
-  res.type('json')
-  res.send(convertDependencyGraphData(req))
-})
-
-const server = app.listen(app.get('port'), function () {
-  const host = server.address().address
-  const port = server.address().port
-  console.log(`Start app at http://${host}:${port}`)
-})
+export default app => {
+  app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*') // CORS config
+    next()
+  })
+  app.use(express.json())
+  app.set('port', port)
+  app.get('/draw/:jsonName', function (req, res) {
+    res.type('json')
+    res.send(convertTopoGraphData(req))
+  })
+  app.get('/draw-dep-graph/:jsonName', function (req, res) {
+    res.type('json')
+    res.send(convertDependencyGraphData(req))
+  })
+}

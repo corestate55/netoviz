@@ -3,15 +3,9 @@ import { event } from 'd3-selection'
 import { SingleDepGraphVisualizer } from './single-visualizer'
 
 export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
-  constructor () {
-    super()
-  }
-
   clearHighlight () {
     this.svgGrp.selectAll('.selected')
       .classed('selected', false)
-    this.svgGrp.selectAll('.selected-origin')
-      .classed('selected-origin', false)
   }
 
   clearDependencyLines (lineClass) {
@@ -62,36 +56,48 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
     )
   }
 
-  runParentsAndChildren (selfObj, actionForPairs, actionForOrigin, actionForTargets) {
-    const parentPairs = this.getParentsTree(selfObj)
-    const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
-    const childPairs = this.getChildrenTree(selfObj)
-    const childPaths = this.pathsFromPairs(selfObj, childPairs)
+  setOperationHandler (graphData) {
+    this.graphData = graphData
+    this.allTargetObj = this.svgGrp
+      .selectAll('g.layer-objects')
+      .selectAll('.dep')
 
-    // action for each pairs(line: src/dst)
-    actionForPairs(parentPairs.concat(childPairs))
-    // action for mouse event origin
-    actionForOrigin(selfObj.path)
-    // action for each parents/children
-    actionForTargets(this.flatten([parentPaths, childPaths]))
-  }
-
-  setMouseEventsToGraphObject () {
-    const setHighlightToTargets = (paths) => {
+    const setHighlightByPath = (paths) => {
+      this.clearHighlight()
       for (const path of paths) {
         const elm = document.getElementById(path)
         elm.classList.add('selected')
       }
     }
 
-    const setHighlightToOrigin = (path) => {
-      document.getElementById(path)
-        .classList.add('selected-origin')
+    const runParentsAndChildren = (selfObj, actionForPairs, actionForTargets) => {
+      const parentPairs = this.getParentsTree(selfObj)
+      const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
+      const childPairs = this.getChildrenTree(selfObj)
+      const childPaths = this.pathsFromPairs(selfObj, childPairs)
+
+      // action for each pairs(line: src/dst)
+      actionForPairs(parentPairs.concat(childPairs))
+      // action for each parent/child
+      actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
     }
 
     const makeSelectDepLines = (pairs) => {
       this.clearDependencyLines('')
       this.makeDependencyLines(pairs, 'selected')
+    }
+
+    const clickEventHandler = (d) => {
+      runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
+    }
+
+    const selectReadyByPath = (path, turnOn) => {
+      const elm = document.getElementById(path)
+      if (turnOn) {
+        elm.classList.add('select-ready')
+      } else {
+        elm.classList.remove('select-ready')
+      }
     }
 
     const makeSelectReadyDepLines = (pairs) => {
@@ -102,89 +108,43 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       this.clearDependencyLines('select-ready')
     }
 
-    const setSelectReadyToTargets = (paths) => {
+    const setSelectReadyByPath = (paths) => {
       for (const path of paths) {
-        const elm = document.getElementById(path)
-        elm.classList.add('select-ready')
+        selectReadyByPath(path, true)
       }
     }
 
-    const setSelectReadyToOrigin = (path) => {
-      document.getElementById(path)
-        .classList.add('select-ready-origin')
-    }
-
-    const unsetSelectReadyToTargets = (paths) => {
+    const unsetSelectReadyByPath = (paths) => {
       for (const path of paths) {
-        const elm = document.getElementById(path)
-        elm.classList.remove('select-ready')
+        selectReadyByPath(path, false)
       }
-    }
-
-    const unsetSelectReadyOfOrigin = (path) => {
-      document.getElementById(path)
-        .classList.remove('select-ready-origin')
-    }
-
-    const clickEventHandler = (d) => {
-      this.clearHighlight()
-      this.runParentsAndChildren(d,
-        makeSelectDepLines,
-        setHighlightToOrigin,
-        setHighlightToTargets
-      )
     }
 
     const mouseOverHandler = (d) => {
       // console.log(`mouseover: ${d.path}`)
-      this.runParentsAndChildren(
-        d,
-        makeSelectReadyDepLines,
-        setSelectReadyToOrigin,
-        setSelectReadyToTargets
-      )
+      runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
     }
 
     const mouseOutHandler = (d) => {
       // console.log(`mouseout: ${d.path}`)
-      this.runParentsAndChildren(
-        d,
-        clearSelectReadyDepLines,
-        unsetSelectReadyOfOrigin,
-        unsetSelectReadyToTargets
-      )
+      runParentsAndChildren(d, clearSelectReadyDepLines, unsetSelectReadyByPath)
     }
 
     this.allTargetObj
       .on('click', clickEventHandler)
       .on('mouseover', mouseOverHandler)
       .on('mouseout', mouseOutHandler)
-  }
 
-  setMouseEventToClearButton () {
     this.clearButton
       .on('click', () => {
         this.clearHighlight()
         this.clearDependencyLines('')
       })
-  }
 
-  setZoomEventToCanvas () {
     this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])
       .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
-  }
-
-  setOperationHandler (graphData) {
-    this.graphData = graphData
-    this.allTargetObj = this.svgGrp
-      .selectAll('g.layer-objects')
-      .selectAll('.dep')
-
-    this.setMouseEventsToGraphObject()
-    this.setMouseEventToClearButton()
-    this.setZoomEventToCanvas()
   }
 
   findGraphObjByPath (path) {
@@ -222,8 +182,8 @@ export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
       const childObj = this.findGraphObjByPath(childPath)
       if (childObj) {
         pathList.push({ // push myself and child
-          'src': objData,
-          'dst': childObj
+          'dst': objData,
+          'src': childObj
         })
         // push child and children of child
         pathList.push(this.getChildrenTree(childObj))

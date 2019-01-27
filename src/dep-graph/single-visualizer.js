@@ -1,5 +1,5 @@
 import { select } from 'd3-selection'
-const BaseContainer = require('../base')
+import { BaseContainer } from '../base'
 
 export class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
