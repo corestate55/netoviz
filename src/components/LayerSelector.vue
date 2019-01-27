@@ -1,9 +1,9 @@
 <template>
   <div id="layer-selector">
-    <el-checkbox-group v-model="selectedLayers" size="medium">
-      <el-checkbox-button v-for="layer in wholeLayers" :label="layer" :key="layer">
+    <el-checkbox-group v-model="selectedLayers" size="small">
+      <el-checkbox border v-for="layer in wholeLayers" :label="layer" :key="layer">
         {{layer}}
-      </el-checkbox-button>
+      </el-checkbox>
     </el-checkbox-group>
   </div>
 </template>

@@ -3,15 +3,15 @@
     <table>
       <tr>
         <td class="label">Visualizer</td>
-        <td><VisualizerSelector class="component"></VisualizerSelector></td>
+        <td class="component"><VisualizerSelector></VisualizerSelector></td>
       </tr>
       <tr>
         <td class="label">Topology Data</td>
-        <td><ModelSelector class="component"></ModelSelector></td>
+        <td class="component"><ModelSelector></ModelSelector></td>
       </tr>
       <tr>
         <td class="label">Layer</td>
-        <td><LayerSelector class="component"></LayerSelector></td>
+        <td class="component"><LayerSelector></LayerSelector></td>
       </tr>
     </table>
     <Visualizer class="component"></Visualizer>
@@ -39,11 +39,20 @@ export default {
   #app {
     margin: 0.5em;
   }
-  td.label {
-    text-align: right;
-    font-weight: bold;
+  input.el-input__inner {
+    width: 30em;
   }
-  div.component {
-    margin: 5px;
+  td {
+    &.label {
+      text-align: right;
+      font-weight: bold;
+    }
+    &.component {
+      padding: 5px;
+      white-space: nowrap;
+      label {
+        margin: 0px;
+      }
+    }
   }
 </style>
