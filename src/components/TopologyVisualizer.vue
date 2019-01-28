@@ -1,6 +1,6 @@
 <template>
   <div id="visualizer">
-    <div  v-bind:style="{display: debug}">Topology model: {{ model }}</div>
+    <div  v-bind:style="{display: debug}">Topology model: {{ modelFile }}</div>
     <!-- entry point of d3 graph(s) -->
   </div>
 </template>
@@ -14,14 +14,24 @@ const visualizer = new GraphVisualizer()
 export default {
   data () {
     return {
-      debug: 'none' // block to appear debug container
+      debug: 'block' // 'none' or 'block' to appear debug container
     }
   },
-  props: ['model'],
+  computed: {
+    modelFile () {
+      return this.$store.getters.modelFile
+    },
+    selectedLayers () {
+      return this.$store.getters.selectedLayers
+    },
+    wholeLayers () {
+      return this.$store.getters.wholeLayers
+    }
+  },
   methods: {
     drawJsonModel () {
-      if (this.model) {
-        visualizer.drawJsonModel(this.model)
+      if (this.modelFile) {
+        visualizer.drawJsonModel(this.modelFile)
       }
     }
   },

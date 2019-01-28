@@ -10,8 +10,8 @@
         </ul>
       </ul>
     </div>
-    <TopologyVisualizer v-bind:model="modelFile" v-if="visualizer === 'Topology'"/>
-    <DependencyVisualizer v-bind:model="modelFile" v-else-if="visualizer === 'Dependency'" />
+    <TopologyVisualizer v-if="visualizer === 'Topology'"/>
+    <DependencyVisualizer v-else-if="visualizer === 'Dependency'" />
   </div>
 </template>
 
