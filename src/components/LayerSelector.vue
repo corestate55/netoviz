@@ -2,7 +2,7 @@
   <div id="layer-selector">
     <el-checkbox-group v-model="selectedLayers" v-bind:disabled="useDepGraph" size="small">
       <el-checkbox border v-for="layer in wholeLayers" :label="layer" :key="layer">
-        {{layer}}
+        {{ layer }}
       </el-checkbox>
     </el-checkbox-group>
   </div>

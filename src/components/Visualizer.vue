@@ -1,6 +1,6 @@
 <template>
   <div id="visualizer-container">
-    <div id="visualizer-state-debug" v-bind:style="{display: debug}">
+    <div id="visualizer-state-debug" v-bind:style="{ display: debug }">
       <p>Visualizer Component (UI Debug)</p>
       <ul>
         <li>Visualizer = {{ visualizer }}</li>

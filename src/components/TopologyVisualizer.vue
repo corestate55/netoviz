@@ -1,6 +1,6 @@
 <template>
   <div id="visualizer">
-    <div  v-bind:style="{display: debug}">
+    <div  v-bind:style="{ display: debug }">
       <ul>
         <li>Topology model: {{ modelFile }}</li>
         <li>Whole layers: {{ wholeLayers }}</li>

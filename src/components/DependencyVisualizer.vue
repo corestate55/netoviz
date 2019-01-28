@@ -1,6 +1,6 @@
 <template>
   <div id="visualizer">
-    <div v-bind:style="{display: debug}">Dependency model: {{ modelFile }}</div>
+    <div v-bind:style="{ display: debug }">Dependency model: {{ modelFile }}</div>
     <!-- entry point of d3 graph(s) -->
   </div>
 </template>
