@@ -1,6 +1,13 @@
 <template>
   <div id="visualizer">
-    <div  v-bind:style="{display: debug}">Topology model: {{ modelFile }}</div>
+    <div  v-bind:style="{display: debug}">
+      <ul>
+        <li>Topology model: {{ modelFile }}</li>
+        <li>Whole layers: {{ wholeLayers }}</li>
+        <li>Selected layers: {{ selectedLayers }}</li>
+        <li>NOT selected layers: {{ notSelectedLayers }}</li>
+      </ul>
+    </div>
     <!-- entry point of d3 graph(s) -->
   </div>
 </template>
@@ -14,7 +21,8 @@ const visualizer = new GraphVisualizer()
 export default {
   data () {
     return {
-      debug: 'block' // 'none' or 'block' to appear debug container
+      debug: 'none', // 'none' or 'block' to appear debug container
+      oldModelFile: ''
     }
   },
   computed: {
@@ -26,13 +34,30 @@ export default {
     },
     wholeLayers () {
       return this.$store.getters.wholeLayers
+    },
+    notSelectedLayers () {
+      return this.wholeLayers.filter(
+        // <0: index not found: not exist in selected layers
+        layer => this.selectedLayers.indexOf(layer) < 0
+      )
     }
   },
   methods: {
-    drawJsonModel () {
-      if (this.modelFile) {
-        visualizer.drawJsonModel(this.modelFile)
+    setLayerDisplayStyle (layers, display) {
+      for (const layer of layers) {
+        document.getElementById(`${layer}-container`)
+          .style.display = display
       }
+    },
+    drawJsonModel () {
+      // redraw whole graph ONLY when model file changed.
+      if (this.modelFile !== this.oldModelFile) {
+        visualizer.drawJsonModel(this.modelFile)
+        this.oldModelFile = this.modelFile
+      }
+      // set display style of selecte(or not) layers
+      this.setLayerDisplayStyle(this.selectedLayers, 'block')
+      this.setLayerDisplayStyle(this.notSelectedLayers, 'none')
     }
   },
   updated () { this.drawJsonModel() },

@@ -22,7 +22,7 @@ import DependencyVisualizer from './DependencyVisualizer'
 export default {
   data () {
     return {
-      debug: 'none' // block to appear debug container
+      debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   components: {

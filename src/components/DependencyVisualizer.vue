@@ -14,7 +14,7 @@ const visualizer = new DepGraphVisualizer()
 export default {
   data () {
     return {
-      debug: 'block' // 'none' or 'block' to appear debug container
+      debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   computed: {
