@@ -1,6 +1,6 @@
 <template>
   <div id="layer-selector">
-    <el-checkbox-group v-model="selectedLayers" size="small">
+    <el-checkbox-group v-model="selectedLayers" v-bind:disabled="useDepGraph" size="small">
       <el-checkbox border v-for="layer in wholeLayers" :label="layer" :key="layer">
         {{layer}}
       </el-checkbox>
@@ -11,9 +11,11 @@
 <script>
 export default {
   computed: {
+    useDepGraph: {
+      get () { return this.$store.getters.visualizer === 'Dependency' }
+    },
     wholeLayers: {
-      get () { return this.$store.getters.wholeLayers },
-      set (value) { this.$store.commit('setWholeLayers', value) }
+      get () { return this.$store.getters.wholeLayers }
     },
     selectedLayers: {
       get () { return this.$store.getters.selectedLayers },
