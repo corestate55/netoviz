@@ -47,8 +47,7 @@ export default new Vuex.Store({
     },
     initializeLayersFromModelFile ({ getters, commit }, payload) {
       const modelFile = getters.modelFile
-      // TODO: port/url selection by MODE
-      json(`http://localhost:3000/draw/${modelFile}`, (error, modelData) => {
+      json(`/draw/${modelFile}`, (error, modelData) => {
         if (error) {
           throw error
         }
