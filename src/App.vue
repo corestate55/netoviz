@@ -3,18 +3,18 @@
     <table>
       <tr>
         <td class="label">Visualizer</td>
-        <td class="component"><VisualizerSelector></VisualizerSelector></td>
+        <td class="component"><VisualizerSelector /></td>
       </tr>
       <tr>
         <td class="label">Topology Data</td>
-        <td class="component"><ModelSelector></ModelSelector></td>
+        <td class="component"><ModelSelector /></td>
       </tr>
       <tr>
         <td class="label">Layer</td>
-        <td class="component"><LayerSelector></LayerSelector></td>
+        <td class="component"><LayerSelector /></td>
       </tr>
     </table>
-    <Visualizer class="component"></Visualizer>
+    <Visualizer class="component" />
   </div>
 </template>
 
