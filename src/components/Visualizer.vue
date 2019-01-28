@@ -1,6 +1,6 @@
 <template>
   <div id="visualizer-container">
-    <div id="visualizer-state-debug">
+    <div id="visualizer-state-debug" v-bind:style="{display: debug}">
       <p>Visualizer Component (UI Debug)</p>
       <ul>
         <li>Visualizer = {{ visualizer }}</li>
@@ -20,6 +20,11 @@ import TopologyVisualizer from './TopologyVisualizer'
 import DependencyVisualizer from './DependencyVisualizer'
 
 export default {
+  data () {
+    return {
+      debug: 'none' // block to appear debug container
+    }
+  },
   components: {
     TopologyVisualizer,
     DependencyVisualizer

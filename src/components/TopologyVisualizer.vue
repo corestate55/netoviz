@@ -1,6 +1,6 @@
 <template>
   <div id="visualizer">
-    Topology model: {{model}}
+    <div  v-bind:style="{display: debug}">Topology model: {{ model }}</div>
     <!-- entry point of d3 graph(s) -->
   </div>
 </template>
@@ -12,6 +12,11 @@ import '../css/topo-graph.scss'
 const visualizer = new GraphVisualizer()
 
 export default {
+  data () {
+    return {
+      debug: 'none' // block to appear debug container
+    }
+  },
   props: ['model'],
   methods: {
     drawJsonModel () {
@@ -20,8 +25,8 @@ export default {
       }
     }
   },
-  updated: function () { this.drawJsonModel() },
-  created: function () { this.drawJsonModel() }
+  updated () { this.drawJsonModel() },
+  mounted () { this.drawJsonModel() }
 }
 </script>
 
