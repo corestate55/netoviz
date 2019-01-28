@@ -45,8 +45,10 @@ export default {
   methods: {
     setLayerDisplayStyle (layers, display) {
       for (const layer of layers) {
-        document.getElementById(`${layer}-container`)
-          .style.display = display
+        const elm = document.getElementById(`${layer}-container`)
+        if (elm) {
+          elm.style.display = display
+        }
       }
     },
     drawJsonModel () {
