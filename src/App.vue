@@ -14,7 +14,7 @@
         <td class="component"><LayerSelector /></td>
       </tr>
     </table>
-    <Visualizer class="component" />
+    <Visualizer />
   </div>
 </template>
 

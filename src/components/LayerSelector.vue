@@ -11,11 +11,11 @@
 <script>
 export default {
   computed: {
-    useDepGraph: {
-      get () { return this.$store.getters.visualizer === 'Dependency' }
+    useDepGraph () {
+      return this.$store.getters.visualizer === 'Dependency'
     },
-    wholeLayers: {
-      get () { return this.$store.getters.wholeLayers }
+    wholeLayers () {
+      return this.$store.getters.wholeLayers
     },
     selectedLayers: {
       get () { return this.$store.getters.selectedLayers },
