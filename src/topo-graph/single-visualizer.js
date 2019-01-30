@@ -1,7 +1,7 @@
 'use strict'
 
 import { select, selectAll } from 'd3-selection'
-import DiffState from '../diff-state'
+import DiffState from '../../srv/diff-state'
 
 export default class SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {

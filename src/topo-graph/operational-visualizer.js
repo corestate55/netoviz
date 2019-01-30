@@ -5,18 +5,25 @@ import { event, selectAll } from 'd3-selection'
 import { timeout } from 'd3-timer'
 import { drag } from 'd3-drag'
 import ForceSimulatedVisualizer from './simulated-visualizer'
-// TODO: suspend attribute operation
-// const AttrClassOf = {
-//   'L2LinkAttribute': require('../../srv/model/link-l2attr'),
-//   'L3LinkAttribute': require('../../srv/model/link-l3attr'),
-//   'L2NetworkAttribute': require('../../srv/model/network-l2attr'),
-//   'L3NetworkAttribute': require('../../srv/model/network-l3attr'),
-//   'L2NodeAttribute': require('../../srv/model/node-l2attr'),
-//   'L3NodeAttribute': require('../../srv/model/node-l3attr'),
-//   'L2TPAttribute': require('../../srv/model/term-point-l2attr'),
-//   'L3TPAttribute': require('../../srv/model/term-point-l3attr')
-// }
+import L2LinkAttribute from '../../srv/model/link-l2attr'
+import L3LinkAttribute from '../../srv/model/link-l3attr'
+import L2NetworkAttribute from '../../srv/model/network-l2attr'
+import L3NetworkAttribute from '../../srv/model/network-l3attr'
+import L2NodeAttribute from '../../srv/model/node-l2attr'
+import L3NodeAttribute from '../../srv/model/node-l3attr'
+import L2TPAttribute from '../../srv/model/term-point-l2attr'
+import L3TPAttribute from '../../srv/model/term-point-l3attr'
 
+const AttrClassOf = {
+  'L2LinkAttribute': L2LinkAttribute,
+  'L3LinkAttribute': L3LinkAttribute,
+  'L2NetworkAttribute': L2NetworkAttribute,
+  'L3NetworkAttribute': L3NetworkAttribute,
+  'L2NodeAttribute': L2NodeAttribute,
+  'L3NodeAttribute': L3NodeAttribute,
+  'L2TPAttribute': L2TPAttribute,
+  'L3TPAttribute': L3TPAttribute
+}
 // NOTE
 // arg; `d` : data binded to DOM by d3.js
 // arg: `element`: DOM object (NOT a d3.selection)
@@ -182,20 +189,19 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   enableTooltip (path) {
-    // TODO: suspend attribute operation
-    // // tooltip header
-    // let tooltipBody = path
-    // // tooltip body
-    // const node = this.findGraphNodeByPath(path)
-    // if (node && Object.keys(node.attribute).length > 0) {
-    //   const AttrClass = AttrClassOf[node.attribute.class]
-    //   const attr = new AttrClass(node.attribute)
-    //   tooltipBody = tooltipBody + attr.toHtml()
-    // }
-    // this.tooltip
-    //   .classed('pop-up', true)
-    //   .classed('pop-down', false)
-    //   .html(tooltipBody)
+    // tooltip header
+    let tooltipBody = path
+    // tooltip body
+    const node = this.findGraphNodeByPath(path)
+    if (node && Object.keys(node.attribute).length > 0) {
+      const AttrClass = AttrClassOf[node.attribute.class]
+      const attr = new AttrClass(node.attribute)
+      tooltipBody = tooltipBody + attr.toHtml()
+    }
+    this.tooltip
+      .classed('pop-up', true)
+      .classed('pop-down', false)
+      .html(tooltipBody)
   }
 
   disableTooltip () {
