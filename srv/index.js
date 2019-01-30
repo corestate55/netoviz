@@ -43,10 +43,6 @@ function convertDependencyGraphData (req) {
 }
 
 export default app => {
-  app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*') // CORS config
-    next()
-  })
   app.use(express.json())
   app.set('port', port)
   app.get('/draw/:jsonName', function (req, res) {
