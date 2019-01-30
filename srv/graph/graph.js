@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = class Graph {
+export default class Graph {
   constructor (nw) {
     this.name = nw.name
     this.nodes = nw.makeGraphNodes()

@@ -1,8 +1,8 @@
 'use strict'
 
-const TopoBaseContainer = require('./topo-base')
-const TermPoint = require('./term-point')
-const GraphNode = require('../graph/graph-node')
+import TopoBaseContainer from './topo-base'
+import TermPoint from './term-point'
+import GraphNode from '../graph/graph-node'
 
 class SupportingNode extends TopoBaseContainer {
   constructor (data) {
@@ -13,7 +13,7 @@ class SupportingNode extends TopoBaseContainer {
   }
 }
 
-module.exports = class Node extends TopoBaseContainer {
+export default class Node extends TopoBaseContainer {
   constructor (data, nwPath, nwId, nodeNum) {
     super(data)
     this.name = data['node-id'] // name string

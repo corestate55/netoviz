@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = class GraphLink {
+export default class GraphLink {
   constructor (data) {
     this.name = data.name
     this.path = data.path

@@ -1,7 +1,7 @@
-const fs = require('fs')
-const express = require('express')
-const Graphs = require('./graph/graphs')
-const DepGraphConverter = require('./data-converter')
+import fs from 'fs'
+import express from 'express'
+import Graphs from './graph/graphs'
+import DepGraphConverter from './data-converter'
 
 const port = process.env.PORT || 3000 // process.env.PORT for Heroku
 const timeStampOf = {}

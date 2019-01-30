@@ -1,10 +1,10 @@
 'use strict'
 
-const BaseContainer = require('../base')
-const Networks = require('../model/networks')
-const Graph = require('./graph')
+import BaseContainer from '../base'
+import Networks from '../model/networks'
+import Graph from './graph'
 
-module.exports = class Graphs extends BaseContainer {
+export default class Graphs extends BaseContainer {
   constructor (topoData) {
     super()
     this.topoModel = new Networks(topoData)

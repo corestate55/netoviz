@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = class GraphNode {
+export default class GraphNode {
   constructor (data) {
     this.type = data.type
     this.name = data.name

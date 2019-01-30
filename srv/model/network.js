@@ -1,8 +1,8 @@
 'use strict'
 
-const TopoBaseContainer = require('./topo-base')
-const Node = require('./node')
-const Link = require('./link')
+import TopoBaseContainer from './topo-base'
+import Node from './node'
+import Link from './link'
 
 class SupportingNetwork extends TopoBaseContainer {
   constructor (data) {
@@ -33,7 +33,7 @@ class NetworkTypes extends TopoBaseContainer {
   }
 }
 
-module.exports = class Network extends TopoBaseContainer {
+export default class Network extends TopoBaseContainer {
   constructor (data, nwNum) {
     super(data)
     this.networkTypes = new NetworkTypes(data['network-types'])

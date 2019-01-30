@@ -1,11 +1,11 @@
 'use strict'
 
-const Network = require('./network')
-const L2Node = require('./l2node')
-const L2Link = require('./l2link')
-const L2NetworkAttribute = require('./network-l2attr')
+import Network from './network'
+import L2Node from './l2node'
+import L2Link from './l2link'
+import L2NetworkAttribute from './network-l2attr'
 
-module.exports = class L2Network extends Network {
+export default class L2Network extends Network {
   constructor (data, nwNum) {
     super(data, nwNum)
     const attrKey = 'ietf-l2-topology:l2-topology-attributes'

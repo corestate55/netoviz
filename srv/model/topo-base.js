@@ -1,9 +1,9 @@
 'use strict'
 
-const DiffState = require('../diff-state')
-const BaseContainer = require('../base')
+import DiffState from '../diff-state'
+import BaseContainer from '../base'
 
-module.exports = class TopoBaseContainer extends BaseContainer {
+export default class TopoBaseContainer extends BaseContainer {
   constructor (data) {
     super()
     this.constructDiffState(data)

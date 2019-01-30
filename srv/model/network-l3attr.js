@@ -1,8 +1,8 @@
 'use strict'
 
-const TopoBaseContainer = require('./topo-base')
+import TopoBaseContainer from './topo-base'
 
-module.exports = class L3NetworkAttribute extends TopoBaseContainer {
+export default class L3NetworkAttribute extends TopoBaseContainer {
   constructor (data) {
     super(data)
     this.class = 'L3NetworkAttribute'

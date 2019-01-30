@@ -1,11 +1,11 @@
 'use strict'
 
-const Network = require('./network')
-const L3Node = require('./l3node')
-const L3Link = require('./l3link')
-const L3NetworkAttribute = require('./network-l3attr')
+import Network from './network'
+import L3Node from './l3node'
+import L3Link from './l3link'
+import L3NetworkAttribute from './network-l3attr'
 
-module.exports = class L3Network extends Network {
+export default class L3Network extends Network {
   constructor (data, nwNum) {
     super(data, nwNum)
     const attrKey = 'ietf-l3-unicast-topology:l3-topology-attributes'

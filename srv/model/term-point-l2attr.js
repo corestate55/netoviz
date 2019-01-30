@@ -1,6 +1,6 @@
 'use strict'
 
-const TopoBaseContainer = require('./topo-base')
+import TopoBaseContainer from './topo-base'
 
 class VlanIdName extends TopoBaseContainer {
   constructor (data) {
@@ -17,7 +17,7 @@ class VlanIdName extends TopoBaseContainer {
   }
 }
 
-module.exports = class L2TPAttribute extends TopoBaseContainer {
+export default class L2TPAttribute extends TopoBaseContainer {
   // NOTICE: Attribute for type VLAN
   constructor (data) {
     super(data)

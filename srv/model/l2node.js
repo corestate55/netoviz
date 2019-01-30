@@ -1,10 +1,10 @@
 'use strict'
 
-const Node = require('./node')
-const L2TermPoint = require('./l2term-point')
-const L2NodeAttribute = require('./node-l2attr')
+import Node from './node'
+import L2TermPoint from './l2term-point'
+import L2NodeAttribute from './node-l2attr'
 
-module.exports = class L2Node extends Node {
+export default class L2Node extends Node {
   constructor (data, nwPath, nwId, nodeNum) {
     super(data, nwPath, nwId, nodeNum)
     const attrKey = 'ietf-l2-topology:l2-node-attributes' // alias
