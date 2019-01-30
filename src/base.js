@@ -1,6 +1,6 @@
 'use strict'
 
-export class BaseContainer {
+export default class BaseContainer {
   sortUniq (list) {
     return Array.from(new Set(list)).sort()
   }

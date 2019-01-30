@@ -1,6 +1,6 @@
 import { select } from 'd3-selection'
 
-export function drawLegend () {
+export default function drawLegend () {
   const styles = [
     { 'class': 'normal', 'label': 'normal' },
     { 'class': 'fixed', 'label': 'fixed' },

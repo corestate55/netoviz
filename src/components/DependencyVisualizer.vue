@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { DepGraphVisualizer } from '../dep-graph/visualizer'
+import DepGraphVisualizer from '../dep-graph/visualizer'
 import '../css/dep-graph.scss'
 
 const visualizer = new DepGraphVisualizer()

@@ -1,7 +1,7 @@
 import { select } from 'd3-selection'
-import { BaseContainer } from '../base'
+import BaseContainer from '../base'
 
-export class SingleDepGraphVisualizer extends BaseContainer {
+export default class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
     super()
     // canvas size

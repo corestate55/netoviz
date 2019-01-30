@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { GraphVisualizer } from '../topo-graph/visualizer'
+import GraphVisualizer from '../topo-graph/visualizer'
 import '../css/topo-graph.scss'
 
 const visualizer = new GraphVisualizer()

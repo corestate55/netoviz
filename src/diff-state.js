@@ -1,6 +1,6 @@
 'use strict'
 
-export class DiffState {
+export default class DiffState {
   constructor (data) {
     this.forward = 'kept'
     this.backward = 'kept'

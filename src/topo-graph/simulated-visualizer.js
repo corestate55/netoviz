@@ -3,9 +3,9 @@
 import * as d3 from 'd3-force'
 import { event } from 'd3-selection'
 import { timeout } from 'd3-timer'
-import { SingleGraphVisualizer } from './single-visualizer'
+import SingleGraphVisualizer from './single-visualizer'
 
-export class ForceSimulatedVisualizer extends SingleGraphVisualizer {
+export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
     // params for simulation

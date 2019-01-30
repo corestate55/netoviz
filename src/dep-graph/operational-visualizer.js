@@ -1,8 +1,8 @@
 import { zoom } from 'd3-zoom'
 import { event } from 'd3-selection'
-import { SingleDepGraphVisualizer } from './single-visualizer'
+import SingleDepGraphVisualizer from './single-visualizer'
 
-export class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
+export default class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
   clearHighlight () {
     this.svgGrp.selectAll('.selected')
       .classed('selected', false)

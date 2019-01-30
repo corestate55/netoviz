@@ -4,7 +4,7 @@ import { zoom } from 'd3-zoom'
 import { event, selectAll } from 'd3-selection'
 import { timeout } from 'd3-timer'
 import { drag } from 'd3-drag'
-import { ForceSimulatedVisualizer } from './simulated-visualizer'
+import ForceSimulatedVisualizer from './simulated-visualizer'
 // TODO: suspend attribute operation
 // const AttrClassOf = {
 //   'L2LinkAttribute': require('../../srv/model/link-l2attr'),
@@ -20,7 +20,7 @@ import { ForceSimulatedVisualizer } from './simulated-visualizer'
 // NOTE
 // arg; `d` : data binded to DOM by d3.js
 // arg: `element`: DOM object (NOT a d3.selection)
-export class OperationalVisualizer extends ForceSimulatedVisualizer {
+export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   constructor (graph, findAllNodeFunc) {
     super(graph, findAllNodeFunc)
 

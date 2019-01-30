@@ -1,7 +1,7 @@
 import { json } from 'd3-request'
-import { OperationalDepGraphVisualizer } from './operational-visualizer'
+import OperationalDepGraphVisualizer from './operational-visualizer'
 
-export class DepGraphVisualizer extends OperationalDepGraphVisualizer {
+export default class DepGraphVisualizer extends OperationalDepGraphVisualizer {
   drawJsonModel (jsonName) {
     // URL draw-dep-graph/:jsonName is the API
     // that convert topology json (model/:jsonName)

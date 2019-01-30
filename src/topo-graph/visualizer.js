@@ -1,13 +1,13 @@
 'use strict'
 
-import { OperationalVisualizer } from './operational-visualizer'
-import { PositionCache } from './position-cache'
+import OperationalVisualizer from './operational-visualizer'
+import PositionCache from './position-cache'
 import { select } from 'd3-selection'
 import { json } from 'd3-request'
 import { interval } from 'd3-timer'
-import { BaseContainer } from '../base'
+import BaseContainer from '../base'
 
-export class GraphVisualizer extends BaseContainer {
+export default class GraphVisualizer extends BaseContainer {
   constructor () {
     super()
     this.posCache = new PositionCache()

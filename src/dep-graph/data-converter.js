@@ -192,7 +192,7 @@ class DepGraphLayer extends DepGraphConsts {
   }
 }
 
-module.exports = class DepGraphConverter {
+export default default class DepGraphConverter {
   constructor (graphData) {
     this.setLayers(graphData)
   }

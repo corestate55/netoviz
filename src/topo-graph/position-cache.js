@@ -2,7 +2,7 @@
 
 import localStorage from 'localStorage'
 
-export class PositionCache {
+export default class PositionCache {
   // save node position in all graphs
   saveGraphs (key, graphs) {
     let positionData = { 'graphs': [] }
