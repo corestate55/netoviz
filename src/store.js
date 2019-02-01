@@ -43,9 +43,12 @@ export default new Vuex.Store({
     updateModelFile ({ commit, dispatch }, payload) {
       // payload = model (json) file name
       commit('setModelFile', payload)
-      dispatch('initializeLayersFromModelFile', payload)
+      dispatch('initializeLayersFromModelFile')
     },
-    initializeLayersFromModelFile ({ getters, commit }, payload) {
+    selectAllLayers ({ getters, commit }) {
+      commit('setSelectedLayers', getters.wholeLayers)
+    },
+    initializeLayersFromModelFile ({ getters, commit }) {
       const modelFile = getters.modelFile
       json(`/draw/${modelFile}`, (error, modelData) => {
         if (error) {

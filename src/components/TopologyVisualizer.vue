@@ -55,6 +55,13 @@ export default {
       // redraw whole graph ONLY when model file changed.
       if (this.modelFile !== this.oldModelFile) {
         visualizer.drawJsonModel(this.modelFile)
+        // When the visualizer draws topology graph,
+        // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
+        // so, these setLayerDisplayStyle() could not found target layer container
+        // WORKAROUND :
+        //   FORCE to select all layers
+        //   to avoid mismatch between UI (layer selector) and Graph.
+        this.$store.dispatch('selectAllLayers')
         this.oldModelFile = this.modelFile
       }
       // set display style of selecte(or not) layers
