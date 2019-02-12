@@ -2,10 +2,18 @@
   <div id="visualizer">
     <div  v-bind:style="{ display: debug }">
       <ul>
-        <li>Topology model: {{ modelFile }}</li>
-        <li>Whole layers: {{ wholeLayers }}</li>
-        <li>Selected layers: {{ selectedLayers }}</li>
-        <li>NOT selected layers: {{ notSelectedLayers }}</li>
+        <li>
+          Topology model: {{ modelFile }}
+        </li>
+        <li>
+          Whole layers: {{ wholeLayers }}
+        </li>
+        <li>
+          Selected layers: {{ selectedLayers }}
+        </li>
+        <li>
+          NOT selected layers: {{ notSelectedLayers }}
+        </li>
       </ul>
     </div>
     <!-- entry point of d3 graph(s) -->
@@ -13,6 +21,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import GraphVisualizer from '../topo-graph/visualizer'
 import '../css/topo-graph.scss'
 
@@ -26,15 +35,7 @@ export default {
     }
   },
   computed: {
-    modelFile () {
-      return this.$store.getters.modelFile
-    },
-    selectedLayers () {
-      return this.$store.getters.selectedLayers
-    },
-    wholeLayers () {
-      return this.$store.getters.wholeLayers
-    },
+    ...mapGetters(['modelFile', 'selectedLayers', 'wholeLayers']),
     notSelectedLayers () {
       return this.wholeLayers.filter(
         // <0: index not found: not exist in selected layers

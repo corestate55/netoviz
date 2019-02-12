@@ -1,22 +1,39 @@
 <template>
   <div id="app">
-    <AppTable />
-    <AlertTable />
-    <Visualizer />
+    <el-collapse v-model="activeNames">
+      <el-collapse-item
+        title="Graph Type & Topology Data Selector"
+        name="AppSelectDataTable"
+      >
+        <AppSelectDataTable />
+      </el-collapse-item>
+      <el-collapse-item
+        title="Alert Table"
+        name="AlertTable"
+      >
+        <AlertTable />
+      </el-collapse-item>
+    </el-collapse>
+    <VisualizeDiagram />
   </div>
 </template>
 
 <script>
-import AppTable from './components/AppMenu'
+import AppSelectDataTable from './components/AppSelectDataTable'
 import AlertTable from './components/AlertTable'
-import Visualizer from './components/Visualizer'
+import VisualizeDiagram from './components/VisualizeDiagram'
 
 export default {
   name: 'app',
+  data () {
+    return {
+      activeNames: ['AppSelectDataTable', 'AlertTable']
+    }
+  },
   components: {
-    AppTable,
+    AppSelectDataTable,
     AlertTable,
-    Visualizer
+    VisualizeDiagram
   }
 }
 </script>

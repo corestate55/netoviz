@@ -2,21 +2,27 @@
   <div>
     <table>
       <tr>
-        <td class="label">Visualizer</td>
+        <td class="label">
+          Visualizer
+        </td>
         <td class="component">
-          <VisualizerSelector />
+          <AppSelectVisualizer />
         </td>
       </tr>
       <tr>
-        <td class="label">Topology Data</td>
+        <td class="label">
+          Topology Data
+        </td>
         <td class="component">
-          <ModelSelector />
+          <AppSelectModel />
         </td>
       </tr>
       <tr>
-        <td class="label">Layer</td>
+        <td class="label">
+          Layer
+        </td>
         <td class="component">
-          <LayerSelector />
+          <AppSelectLayer />
         </td>
       </tr>
     </table>
@@ -24,15 +30,15 @@
 </template>
 
 <script>
-import VisualizerSelector from './VisualizerSelector'
-import ModelSelector from './ModelSelector'
-import LayerSelector from './LayerSelector'
+import AppSelectVisualizer from './AppSelectVisualizer'
+import AppSelectModel from './AppSelectModel'
+import AppSelectLayer from './AppSelectLayer'
 
 export default {
   components: {
-    VisualizerSelector,
-    ModelSelector,
-    LayerSelector
+    AppSelectVisualizer,
+    AppSelectModel,
+    AppSelectLayer
   }
 }
 </script>

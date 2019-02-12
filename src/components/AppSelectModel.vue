@@ -1,6 +1,10 @@
 <template>
   <div id="model-selector">
-    <el-select size="small" v-model="modelFile" placeholder="Select">
+    <el-select
+      size="small"
+      v-model="modelFile"
+      placeholder="Select"
+    >
       <el-option
         v-for="item in options"
         :key="item.value"

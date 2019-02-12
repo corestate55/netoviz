@@ -1,8 +1,17 @@
 <template>
   <div id="visualizer-selector">
-    <el-radio-group v-model="visualizer" size="small">
-      <el-radio border label="Topology"></el-radio>
-      <el-radio border label="Dependency" ></el-radio>
+    <el-radio-group
+      v-model="visualizer"
+      size="small"
+    >
+      <el-radio
+        border
+        label="Topology"
+      />
+      <el-radio
+        border
+        label="Dependency"
+      />
     </el-radio-group>
   </div>
 </template>
