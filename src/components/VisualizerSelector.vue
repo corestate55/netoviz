@@ -19,4 +19,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-radio {
+  margin: 0;
+}
 </style>
