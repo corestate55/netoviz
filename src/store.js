@@ -9,7 +9,8 @@ export default new Vuex.Store({
     visualizer: 'Dependency',
     modelFile: '', // not selected
     wholeLayers: [],
-    selectedLayers: []
+    selectedLayers: [],
+    currentAlertRow: null
   },
   mutations: {
     setVisualizer (state, payload) {
@@ -23,6 +24,9 @@ export default new Vuex.Store({
     },
     setWholeLayers (state, payload) {
       state.wholeLayers = payload
+    },
+    setCurrentAlertRow (state, payload) {
+      state.currentAlertRow = payload
     }
   },
   getters: {
@@ -37,6 +41,9 @@ export default new Vuex.Store({
     },
     wholeLayers (state) {
       return state.wholeLayers
+    },
+    currentAlertRow (state) {
+      return state.currentAlertRow
     }
   },
   actions: {

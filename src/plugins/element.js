@@ -3,7 +3,8 @@ import {
   RadioGroup, Radio,
   CheckboxGroup, Checkbox,
   Select, Option,
-  Table, TableColumn
+  Table, TableColumn,
+  Button
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ja'
 import locale from 'element-ui/lib/locale'
@@ -19,3 +20,4 @@ Vue.use(Select)
 Vue.use(Option)
 Vue.use(Table)
 Vue.use(TableColumn)
+Vue.use(Button)
