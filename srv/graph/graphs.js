@@ -1,7 +1,7 @@
 'use strict'
 
 import BaseContainer from '../base'
-import Networks from '../model/networks'
+import Networks from '../topo-model/networks'
 import Graph from './graph'
 
 export default class Graphs extends BaseContainer {

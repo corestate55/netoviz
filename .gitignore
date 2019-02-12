@@ -1,5 +1,8 @@
 *.cache
 
+# DB file
+*.sqlite3
+
 .DS_Store
 node_modules
 /dist
