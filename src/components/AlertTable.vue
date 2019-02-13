@@ -1,5 +1,17 @@
 <template>
   <div>
+    <el-input-number
+      size="small"
+      v-model="alertLimit"
+      v-bind:min="1"
+      v-bind:max="15"
+    />
+    <el-button
+      size="small"
+      v-on:click="setCurrent()"
+    >
+      Clear selection
+    </el-button>
     <el-table
       ref="alertTable"
       highlight-current-row
@@ -27,11 +39,10 @@
         label="Message"
       />
       <el-table-column
-        prop="created_at"
-        label="Created at"
+        prop="date"
+        label="Date"
       />
     </el-table>
-    <el-button v-on:click="setCurrent()">Clear selection</el-button>
   </div>
 </template>
 
@@ -39,11 +50,16 @@
 import { mapMutations } from 'vuex'
 
 export default {
+  data () {
+    return {
+      alertLimit: 8
+    }
+  },
   computed: {
     alerts () {
       const req = new XMLHttpRequest()
       let alerts
-      req.open('GET', '/alert/8', false)
+      req.open('GET', `/alert/${this.alertLimit}`, false)
       // TODO: error handling
       req.onload = () => {
         alerts = JSON.parse(req.responseText)

@@ -4,7 +4,7 @@ import {
   CheckboxGroup, Checkbox,
   Select, Option,
   Table, TableColumn,
-  Button,
+  Button, InputNumber,
   Collapse, CollapseItem
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ja'
@@ -22,5 +22,6 @@ Vue.use(Option)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Button)
+Vue.use(InputNumber)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
