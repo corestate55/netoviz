@@ -18,9 +18,20 @@ export default app => {
     })
     res.send('Log message received.')
   })
+  app.get('/alert/:number', (req, res) => {
+    console.log(`requested ${req.params.number} logs`)
+    db.alert.findAll({
+      limit: req.params.number,
+      order: [['id', 'DESC']]
+    }).then((instances) => {
+      res.send(instances)
+    })
+  })
   app.get('/alert/all', (req, res) => {
     console.log('all logs requested')
-    db.alert.findAll({}).then((instances) => {
+    db.alert.findAll({
+      order: [['id', 'DESC']]
+    }).then((instances) => {
       res.send(instances)
     })
   })

@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-table
-      border
       ref="alertTable"
       highlight-current-row
       v-bind:data="alerts"
@@ -44,7 +43,7 @@ export default {
     alerts () {
       const req = new XMLHttpRequest()
       let alerts
-      req.open('GET', '/alert/all', false)
+      req.open('GET', '/alert/8', false)
       // TODO: error handling
       req.onload = () => {
         alerts = JSON.parse(req.responseText)
@@ -56,8 +55,10 @@ export default {
   methods: {
     ...mapMutations(['setCurrentAlertRow']),
     tableClassSelector (row) {
-      if (row.row.severity === 'error') {
-        return 'error-row'
+      const severity = row.row.severity
+      const severities = ['fatal', 'error', 'warn', 'info', 'debug']
+      if (severities.find(d => d === severity)) {
+        return `${severity}-row`
       }
       return 'unknown-row'
     },
@@ -73,11 +74,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-table /deep/ .error-row {
-  background-color: lightpink;
-}
-.el-table /deep/ .current-row {
-  font-weight: bold;
-  text-decoration: underline;
+.el-table /deep/ {
+  table {
+    border-collapse: collapse;
+  }
+  th, td {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
+  .fatal-row {
+    background-color: #FDC168;
+  }
+  .error-row {
+    background-color: #FDE58B;
+  }
+  .warn-row {
+    background-color: #FFFFAE;
+  }
+  .info-row {
+    background-color: azure;
+  }
+  .debug-row {
+    background-color: #E8E8E8;
+  }
+  .unknown-row {
+    background-color: #ffe6e6;
+  }
+  .current-row {
+    td {
+      background-color: inherit;
+    }
+    border: 2px solid #B71001;
+    font-weight: bold;
+    text-decoration: underline;
+  }
 }
 </style>
