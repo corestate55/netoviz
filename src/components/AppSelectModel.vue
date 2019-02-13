@@ -43,6 +43,10 @@ export default {
       }]
     }
   },
+  mounted () {
+    // select head model at first
+    this.modelFile = this.options[0].value
+  },
   computed: {
     modelFile: {
       get () { return this.$store.getters.modelFile },

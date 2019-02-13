@@ -43,10 +43,6 @@ export default {
       }
     }
   },
-  updated () {
-    // console.log('## updated ##')
-    this.drawJsonModel()
-  },
   mounted () {
     // console.log('## mounted ##')
     this.drawJsonModel()
