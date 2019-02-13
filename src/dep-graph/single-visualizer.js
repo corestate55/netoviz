@@ -5,8 +5,8 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
     super()
     // canvas size
-    this.width = 1200
-    this.height = 800
+    this.width = 800
+    this.height = 600
     this.fontSize = 12
   }
 

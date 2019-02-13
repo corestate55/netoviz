@@ -56,12 +56,24 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     )
   }
 
-  setOperationHandler (graphData) {
-    this.graphData = graphData
-    this.allTargetObj = this.svgGrp
-      .selectAll('g.layer-objects')
-      .selectAll('.dep')
+  runParentsAndChildren (selfObj, actionForPairs, actionForTargets) {
+    const parentPairs = this.getParentsTree(selfObj)
+    const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
+    const childPairs = this.getChildrenTree(selfObj)
+    const childPaths = this.pathsFromPairs(selfObj, childPairs)
 
+    // action for each pairs(line: src/dst)
+    actionForPairs(parentPairs.concat(childPairs))
+    // action for each parent/child
+    actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
+  }
+
+  clickEventHandler (d) {
+    console.log('clickevent: ', d)
+    const makeSelectDepLines = (pairs) => {
+      this.clearDependencyLines('')
+      this.makeDependencyLines(pairs, 'selected')
+    }
     const setHighlightByPath = (paths) => {
       this.clearHighlight()
       for (const path of paths) {
@@ -69,71 +81,58 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
         elm.classList.add('selected')
       }
     }
+    this.runParentsAndChildren(d,
+      makeSelectDepLines, setHighlightByPath)
+  }
 
-    const runParentsAndChildren = (selfObj, actionForPairs, actionForTargets) => {
-      const parentPairs = this.getParentsTree(selfObj)
-      const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
-      const childPairs = this.getChildrenTree(selfObj)
-      const childPaths = this.pathsFromPairs(selfObj, childPairs)
-
-      // action for each pairs(line: src/dst)
-      actionForPairs(parentPairs.concat(childPairs))
-      // action for each parent/child
-      actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
+  selectReadyByPath (path, turnOn) {
+    const elm = document.getElementById(path)
+    if (turnOn) {
+      elm.classList.add('select-ready')
+    } else {
+      elm.classList.remove('select-ready')
     }
+  }
 
-    const makeSelectDepLines = (pairs) => {
-      this.clearDependencyLines('')
-      this.makeDependencyLines(pairs, 'selected')
-    }
-
-    const clickEventHandler = (d) => {
-      runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
-    }
-
-    const selectReadyByPath = (path, turnOn) => {
-      const elm = document.getElementById(path)
-      if (turnOn) {
-        elm.classList.add('select-ready')
-      } else {
-        elm.classList.remove('select-ready')
-      }
-    }
-
+  mouseOverHandler (d) {
+    // console.log(`mouseover: ${d.path}`)
     const makeSelectReadyDepLines = (pairs) => {
       this.makeDependencyLines(pairs, 'select-ready')
     }
+    const setSelectReadyByPath = (paths) => {
+      for (const path of paths) {
+        this.selectReadyByPath(path, true)
+      }
+    }
+    this.runParentsAndChildren(d,
+      makeSelectReadyDepLines, setSelectReadyByPath)
+  }
 
+  mouseOutHandler (d) {
+    // console.log(`mouseout: ${d.path}`)
     const clearSelectReadyDepLines = (pairs) => {
       this.clearDependencyLines('select-ready')
     }
-
-    const setSelectReadyByPath = (paths) => {
-      for (const path of paths) {
-        selectReadyByPath(path, true)
-      }
-    }
-
     const unsetSelectReadyByPath = (paths) => {
       for (const path of paths) {
-        selectReadyByPath(path, false)
+        this.selectReadyByPath(path, false)
       }
     }
+    this.runParentsAndChildren(d,
+      clearSelectReadyDepLines, unsetSelectReadyByPath)
+  }
 
-    const mouseOverHandler = (d) => {
-      // console.log(`mouseover: ${d.path}`)
-      runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
-    }
+  setOperationHandler (graphData) {
+    this.graphData = graphData
+    this.allTargetObj = this.svgGrp
+      .selectAll('g.layer-objects')
+      .selectAll('.dep')
 
-    const mouseOutHandler = (d) => {
-      // console.log(`mouseout: ${d.path}`)
-      runParentsAndChildren(d, clearSelectReadyDepLines, unsetSelectReadyByPath)
-    }
-
+    const self = this
     this.allTargetObj
-      .on('click', clickEventHandler)
-      .on('mouseover', mouseOverHandler)
-      .on('mouseout', mouseOutHandler)
+      .on('click', d => self.clickEventHandler(d))
+      .on('mouseover', d => self.mouseOverHandler(d))
+      .on('mouseout', d => self.mouseOutHandler(d))
 
     this.clearButton
       .on('click', () => {
