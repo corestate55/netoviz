@@ -72,7 +72,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
   }
 
   clickEventHandler (d) {
-    console.log('click event: ', d)
+    // console.log('click event: ', d)
     const makeSelectDepLines = (pairs) => {
       this.clearDependencyLines('')
       this.makeDependencyLines(pairs, 'selected')

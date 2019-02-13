@@ -3,6 +3,7 @@
     <el-input-number
       size="small"
       v-model="alertLimit"
+      v-on:change="changeTableLineNumber"
       v-bind:min="1"
       v-bind:max="15"
     />
@@ -52,11 +53,28 @@ import { mapMutations } from 'vuex'
 export default {
   data () {
     return {
-      alertLimit: 8
+      alerts: [],
+      alertLimit: 8,
+      alertCheckTimer: null
     }
   },
-  computed: {
-    alerts () {
+  mounted () {
+    this.alerts = this.getAlertData() // initial value
+    this.alertCheckTimer = setInterval(() => {
+      // const now = new Date()
+      // console.log('check alerts: ' + now.toISOString())
+      this.alerts = this.getAlertData()
+    }, 10000) // 10sec
+  },
+  beforeDestroy () {
+    clearInterval(this.alertCheckTimer)
+  },
+  methods: {
+    ...mapMutations(['setCurrentAlertRow']),
+    changeTableLineNumber () {
+      this.alerts = this.getAlertData()
+    },
+    getAlertData () {
       const req = new XMLHttpRequest()
       let alerts
       req.open('GET', `/alert/${this.alertLimit}`, false)
@@ -66,10 +84,7 @@ export default {
       }
       req.send()
       return alerts
-    }
-  },
-  methods: {
-    ...mapMutations(['setCurrentAlertRow']),
+    },
     tableClassSelector (row) {
       const severity = row.row.severity
       const severities = ['fatal', 'error', 'warn', 'info', 'debug']
