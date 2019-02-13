@@ -4,6 +4,9 @@ import SingleDepGraphVisualizer from './single-visualizer'
 
 export default class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
   clearHighlight () {
+    if (!this.svgGrp) {
+      return // return if not ready svg (initial)
+    }
     this.svgGrp.selectAll('.selected')
       .classed('selected', false)
   }
@@ -69,7 +72,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
   }
 
   clickEventHandler (d) {
-    console.log('clickevent: ', d)
+    console.log('click event: ', d)
     const makeSelectDepLines = (pairs) => {
       this.clearDependencyLines('')
       this.makeDependencyLines(pairs, 'selected')

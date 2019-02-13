@@ -65,7 +65,7 @@ export default {
       this.$refs.alertTable.setCurrentRow(row)
     },
     handleCurrentChange (row) {
-      console.log('handle current change: ', row)
+      // console.log('handle current change: ', row)
       this.setCurrentAlertRow(row)
     }
   }

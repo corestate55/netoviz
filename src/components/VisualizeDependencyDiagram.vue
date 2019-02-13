@@ -4,12 +4,14 @@
       v-bind:style="{ display: debug }"
     >
       Dependency model: {{ modelFile }}
+      Alert Row: {{ currentAlertRow ? currentAlertRow.id : 'NOT selected'}}
     </div>
     <!-- entry point of d3 graph(s) -->
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import DepGraphVisualizer from '../dep-graph/visualizer'
 import '../css/dep-graph.scss'
 
@@ -22,6 +24,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['currentAlertRow']),
     modelFile () {
       return this.$store.getters.modelFile
     }
@@ -29,12 +32,30 @@ export default {
   methods: {
     drawJsonModel () {
       if (this.modelFile) {
-        visualizer.drawJsonModel(this.modelFile)
+        visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
+      }
+    },
+    highlightByAlert (alertRow) {
+      if (alertRow) {
+        visualizer.highlightByAlert(alertRow)
+      } else {
+        visualizer.clearHighlight()
       }
     }
   },
-  updated () { this.drawJsonModel() },
-  mounted () { this.drawJsonModel() }
+  updated () {
+    // console.log('## updated ##')
+    this.drawJsonModel()
+  },
+  mounted () {
+    // console.log('## mounted ##')
+    this.drawJsonModel()
+    // set watcher for alert selection change
+    this.$store.watch(
+      state => state.currentAlertRow,
+      (newRow, oldRow) => { this.highlightByAlert(newRow) }
+    )
+  }
 }
 </script>
 
