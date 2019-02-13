@@ -8,11 +8,36 @@
       v-bind:max="15"
     />
     <el-button
+      round
       size="small"
+      type="info"
+      icon="el-icon-delete"
       v-on:click="setCurrent()"
     >
       Clear selection
     </el-button>
+    <!-- time start/stop : toggle (exclusive) button -->
+    <el-button
+      round
+      size="small"
+      type="warning"
+      icon="el-icon-warning"
+      v-bind:disabled="!alertCheckTimer"
+      v-on:click="stopAlertCheckTimer"
+    >
+      Stop Timer
+    </el-button>
+    <el-button
+      round
+      size="small"
+      type="success"
+      icon="el-icon-success"
+      v-bind:disabled="!!alertCheckTimer"
+      v-on:click="startAlertCheckTimer()"
+    >
+      Start Timer
+    </el-button>
+    <!-- alert data table -->
     <el-table
       ref="alertTable"
       highlight-current-row
@@ -54,23 +79,34 @@ export default {
   data () {
     return {
       alerts: [],
-      alertLimit: 8,
+      alertLimit: 5,
       alertCheckTimer: null
     }
   },
   mounted () {
-    this.alerts = this.getAlertData() // initial value
-    this.alertCheckTimer = setInterval(() => {
-      // const now = new Date()
-      // console.log('check alerts: ' + now.toISOString())
-      this.alerts = this.getAlertData()
-    }, 10000) // 10sec
+    this.updateAlerts() // initial data
+    this.startAlertCheckTimer()
   },
   beforeDestroy () {
-    clearInterval(this.alertCheckTimer)
+    this.stopAlertCheckTimer()
   },
   methods: {
     ...mapMutations(['setCurrentAlertRow']),
+    stopAlertCheckTimer () {
+      clearInterval(this.alertCheckTimer)
+      this.alertCheckTimer = null
+    },
+    startAlertCheckTimer () {
+      this.alertCheckTimer = setInterval(() => {
+        // const now = new Date()
+        // console.log('check alerts: ' + now.toISOString())
+        this.updateAlerts()
+      }, 10000) // 10sec
+    },
+    updateAlerts () {
+      this.alerts = this.getAlertData()
+      this.setCurrent(this.alerts[0]) // always select head data
+    },
     changeTableLineNumber () {
       this.alerts = this.getAlertData()
     },
@@ -105,6 +141,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-button {
+  margin-left: 10px;
+}
 .el-table /deep/ {
   table {
     border-collapse: collapse;
