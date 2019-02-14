@@ -23,10 +23,10 @@
         </ul>
       </ul>
     </div>
-    <VisualizeTopologyDiagram
+    <VisualizeDiagramTopology
       v-if="visualizer === 'Topology'"
     />
-    <VisualizeDependencyDiagram
+    <VisualizeDiagramDependency
       v-else-if="visualizer === 'Dependency'"
     />
   </div>
@@ -34,8 +34,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import VisualizeTopologyDiagram from './VisualizeTopologyDiagram'
-import VisualizeDependencyDiagram from './VisualizeDependencyDiagram'
+import VisualizeDiagramTopology from './VisualizeDiagramTopology'
+import VisualizeDiagramDependency from './VisualizeDiagramDependency'
 
 export default {
   data () {
@@ -44,8 +44,8 @@ export default {
     }
   },
   components: {
-    VisualizeTopologyDiagram,
-    VisualizeDependencyDiagram
+    VisualizeDiagramTopology,
+    VisualizeDiagramDependency
   },
   computed: {
     ...mapGetters(['visualizer', 'modelFile', 'selectedLayers'])

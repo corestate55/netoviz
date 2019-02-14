@@ -1,19 +1,15 @@
 <template>
-  <div id="visualizer-selector">
-    <el-radio-group
-      v-model="visualizer"
-      size="small"
-    >
-      <el-radio
-        border
-        label="Topology"
-      />
-      <el-radio
-        border
-        label="Dependency"
-      />
-    </el-radio-group>
-  </div>
+  <el-radio-group
+    v-model="visualizer"
+    size="small"
+  >
+    <el-radio-button
+      label="Topology"
+    />
+    <el-radio-button
+      label="Dependency"
+    />
+  </el-radio-group>
 </template>
 
 <script>
@@ -28,7 +24,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-radio {
-  margin: 0;
-}
 </style>

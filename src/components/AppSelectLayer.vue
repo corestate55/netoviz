@@ -1,20 +1,18 @@
 <template>
-  <div id="layer-selector">
-    <el-checkbox-group
-      v-model="selectedLayers"
-      v-bind:disabled="useDependencyGraph"
-      size="small"
+  <el-checkbox-group
+    v-model="selectedLayers"
+    v-bind:disabled="useDependencyGraph"
+    size="small"
+  >
+    <el-checkbox-button
+      border
+      v-for="layer in wholeLayers"
+      v-bind:label="layer"
+      v-bind:key="layer"
     >
-      <el-checkbox
-        border
-        v-for="layer in wholeLayers"
-        v-bind:label="layer"
-        v-bind:key="layer"
-      >
-        {{ layer }}
-      </el-checkbox>
-    </el-checkbox-group>
-  </div>
+      {{ layer }}
+    </el-checkbox-button>
+  </el-checkbox-group>
 </template>
 
 <script>
@@ -35,7 +33,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-checkbox {
-  margin: 0;
-}
 </style>

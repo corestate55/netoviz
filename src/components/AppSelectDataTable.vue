@@ -1,31 +1,29 @@
 <template>
   <div>
-    <table>
-      <tr>
-        <td class="label">
-          Visualizer
-        </td>
-        <td class="component">
-          <AppSelectVisualizer />
-        </td>
-      </tr>
-      <tr>
-        <td class="label">
-          Topology Data
-        </td>
-        <td class="component">
-          <AppSelectModel />
-        </td>
-      </tr>
-      <tr>
-        <td class="label">
-          Layer
-        </td>
-        <td class="component">
-          <AppSelectLayer />
-        </td>
-      </tr>
-    </table>
+    <el-row>
+      <el-col v-bind:span="3">
+        <div class="item">Visualizer</div>
+      </el-col>
+      <el-col v-bind:span="12">
+        <AppSelectVisualizer />
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col v-bind:span="3">
+        <div class="item">Topology Data</div>
+      </el-col>
+      <el-col v-bind:span="12">
+        <AppSelectModel />
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col v-bind:span="3">
+        <div class="item">Layer</div>
+      </el-col>
+      <el-col v-bind:span="21">
+        <AppSelectLayer />
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -44,17 +42,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-td {
-  &.label {
-    text-align: right;
-    font-weight: bold;
-  }
-  &.component {
-    padding: 5px;
-    white-space: nowrap;
-    label {
-      margin: 0;
-    }
-  }
+.el-row {
+  margin: 10px 0;
+}
+div.item {
+  padding: 0.2em 1em;
+  text-align: right;
 }
 </style>
