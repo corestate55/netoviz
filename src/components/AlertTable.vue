@@ -12,7 +12,8 @@
       size="small"
       type="info"
       icon="el-icon-delete"
-      v-on:click="setCurrent()"
+      v-bind:disabled="!currentAlertRow"
+      v-on:click="setAlertTableCurrentRow()"
     >
       Clear selection
     </el-button>
@@ -43,7 +44,7 @@
       highlight-current-row
       v-bind:data="alerts"
       v-bind:row-class-name="tableClassSelector"
-      v-on:current-change="handleCurrentChange"
+      v-on:current-change="handleAlertTableCurrentChange"
     >
       <el-table-column
         prop="id"
@@ -73,7 +74,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 
 export default {
   data () {
@@ -82,6 +83,9 @@ export default {
       alertLimit: 5,
       alertCheckTimer: null
     }
+  },
+  computed: {
+    ...mapGetters(['currentAlertRow'])
   },
   mounted () {
     this.updateAlerts() // initial data
@@ -105,7 +109,7 @@ export default {
     },
     updateAlerts () {
       this.alerts = this.getAlertData()
-      this.setCurrent(this.alerts[0]) // always select head data
+      this.setAlertTableCurrentRow(this.alerts[0]) // always select head data
     },
     changeTableLineNumber () {
       this.alerts = this.getAlertData()
@@ -129,10 +133,10 @@ export default {
       }
       return 'unknown-row'
     },
-    setCurrent (row) {
+    setAlertTableCurrentRow (row) {
       this.$refs.alertTable.setCurrentRow(row)
     },
-    handleCurrentChange (row) {
+    handleAlertTableCurrentChange (row) {
       // console.log('handle current change: ', row)
       this.setCurrentAlertRow(row)
     }

@@ -39,6 +39,7 @@ export default {
       if (alertRow) {
         visualizer.highlightByAlert(alertRow)
       } else {
+        visualizer.clearDependencyLines()
         visualizer.clearHighlight()
       }
     }
