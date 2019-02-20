@@ -108,22 +108,20 @@ export default {
       }, 10000) // 10sec
     },
     updateAlerts () {
-      this.alerts = this.getAlertData()
-      this.setAlertTableCurrentRow(this.alerts[0]) // always select head data
+      // update alerts and select head data
+      this.requestAlertData()
+        .then(() => this.setAlertTableCurrentRow(this.alerts[0]))
     },
     changeTableLineNumber () {
-      this.alerts = this.getAlertData()
+      this.requestAlertData()
     },
-    getAlertData () {
-      const req = new XMLHttpRequest()
-      let alerts
-      req.open('GET', `/alert/${this.alertLimit}`, false)
-      // TODO: error handling
-      req.onload = () => {
-        alerts = JSON.parse(req.responseText)
+    async requestAlertData () {
+      try {
+        const response = await fetch(`/alert/${this.alertLimit}`)
+        this.alerts = await response.json()
+      } catch (error) {
+        console.error('fetch alert failed: ', error)
       }
-      req.send()
-      return alerts
     },
     tableClassSelector (row) {
       const severity = row.row.severity

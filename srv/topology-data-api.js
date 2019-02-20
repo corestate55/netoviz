@@ -32,7 +32,12 @@ export default class TopoogyDataAPI {
 
   writeCache (resJsonString) {
     console.log('create cache: ', this.cacheJsonPath)
-    fs.writeFileSync(this.cacheJsonPath, resJsonString)
+    fs.writeFile(this.cacheJsonPath, resJsonString, 'utf8', (error) => {
+      if (error) {
+        throw error
+      }
+      console.log(`cache saved: ${this.cacheJsonPath}`)
+    })
   }
 
   updateStatsOfTopoJSON (req) {
