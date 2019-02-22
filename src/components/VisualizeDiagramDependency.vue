@@ -24,10 +24,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow']),
-    modelFile () {
-      return this.$store.getters.modelFile
-    }
+    ...mapGetters(['currentAlertRow', 'modelFile'])
   },
   methods: {
     drawJsonModel () {

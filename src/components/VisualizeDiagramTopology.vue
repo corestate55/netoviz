@@ -22,10 +22,10 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import GraphVisualizer from '../topo-graph/visualizer'
+import TopoGraphVisualizer from '../topo-graph/visualizer'
 import '../css/topo-graph.scss'
 
-const visualizer = new GraphVisualizer()
+const visualizer = new TopoGraphVisualizer()
 
 export default {
   data () {
@@ -70,8 +70,13 @@ export default {
       this.setLayerDisplayStyle(this.notSelectedLayers, 'none')
     }
   },
-  updated () { this.drawJsonModel() },
-  mounted () { this.drawJsonModel() }
+  mounted () {
+    this.drawJsonModel()
+    this.$store.watch(
+      state => state.currentAlertRow,
+      (newRow, oldRow) => { visualizer.highlightByAlert(newRow) }
+    )
+  }
 }
 </script>
 

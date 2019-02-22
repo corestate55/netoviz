@@ -36,7 +36,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     // set event callback
     this.setZoomEvnetCallback()
     this.setGraphNodeEventCallback()
-    this.setNoeInfoTableEventCallback()
+    this.setNodeInfoTableEventCallback()
     this.setButtonEventCallback()
   }
 
@@ -334,7 +334,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
   }
 
-  setNoeInfoTableEventCallback () {
+  setNodeInfoTableEventCallback () {
     const self = this // alias to use event callback closure
     // set event callbacks for node info table
     this.nodeInfoTable.selectAll('td')

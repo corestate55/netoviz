@@ -11,6 +11,7 @@ export default class GraphVisualizer extends BaseContainer {
   constructor () {
     super()
     this.posCache = new PositionCache()
+    this.graphVisualizers = []
   }
 
   drawJsonModel (jsonName) {
@@ -23,8 +24,10 @@ export default class GraphVisualizer extends BaseContainer {
       }
       // graph object data to draw converted from topology json
       this.graphs = graphData
+
       // for debug
-      console.log('graphs: ', this.graphs)
+      // console.log('graphs: ', this.graphs)
+
       // set auto save fixed node position function
       this.storageKey = `netoviz-${jsonName}`
       interval(() => {
@@ -56,6 +59,27 @@ export default class GraphVisualizer extends BaseContainer {
       const graphVisualizer = new OperationalVisualizer(graph, callback)
       this.posCache.loadToGraph(this.storageKey, graph, graphVisualizer)
       graphVisualizer.restartSimulation()
+      this.graphVisualizers.push(graphVisualizer)
+    }
+  }
+
+  highlightByAlert (alert) {
+    if (!alert || !this.graphs) {
+      return
+    }
+    // clear all highlight
+    for (const graphVisualizer of this.graphVisualizers) {
+      graphVisualizer.clearHighlight()
+    }
+    // find and select (highlight) a node
+    for (const layer of this.graphs) {
+      const result = layer.nodes.find(d => d.name === alert.host)
+      if (result) {
+        const el = document.getElementById(result.path)
+        const graphVisualizer = this.graphVisualizers.find(d => d.graph.name === layer.name)
+        graphVisualizer.highlightNode(el)
+        break
+      }
     }
   }
 }
