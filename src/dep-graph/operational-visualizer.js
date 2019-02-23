@@ -20,20 +20,20 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
   makeTpDepLine (lineClass, src, dst) {
     this.depLineGrp.append('line')
       .attr('class', `dep tp ${lineClass}`)
-      .attr('x1', src.cx)
-      .attr('y1', src.cy < dst.cy ? src.cy + src.r : src.cy - src.r)
-      .attr('x2', dst.cx)
-      .attr('y2', src.cy < dst.cy ? dst.cy - dst.r : dst.cy + dst.r)
+      .attr('x1', this.scale(src.cx))
+      .attr('y1', this.scale(src.cy < dst.cy ? src.cy + src.r : src.cy - src.r))
+      .attr('x2', this.scale(dst.cx))
+      .attr('y2', this.scale(src.cy < dst.cy ? dst.cy - dst.r : dst.cy + dst.r))
       .attr('marker-end', 'url(#tp-dep-arrow-end)')
   }
 
   makeNodeDepLine (lineClass, src, dst) {
     this.depLineGrp.append('line')
       .attr('class', `dep node ${lineClass}`)
-      .attr('x1', src.x + src.width / 2)
-      .attr('y1', src.y < dst.y ? src.y + src.height : src.y)
-      .attr('x2', dst.x + dst.width / 2)
-      .attr('y2', src.y < dst.y ? dst.y : dst.y + dst.height)
+      .attr('x1', this.scale(src.x + src.width / 2))
+      .attr('y1', this.scale(src.y < dst.y ? src.y + src.height : src.y))
+      .attr('x2', this.scale(dst.x + dst.width / 2))
+      .attr('y2', this.scale(src.y < dst.y ? dst.y : dst.y + dst.height))
       .attr('marker-end', 'url(#node-dep-arrow-end)')
   }
 

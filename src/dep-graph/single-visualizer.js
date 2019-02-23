@@ -1,4 +1,5 @@
 import { select } from 'd3-selection'
+import { scaleLinear } from 'd3-scale'
 import BaseContainer from '../../srv/base'
 
 export default class SingleDepGraphVisualizer extends BaseContainer {
@@ -7,7 +8,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
     // canvas size
     this.width = 1000
     this.height = 600
-    this.fontSize = 12
+    this.fontSize = 10
   }
 
   clearCanvas () {
@@ -37,10 +38,11 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
   }
 
   makeClearButton () {
+    const clearButtonFontSize = 12
     return this.svg.append('text')
       .attr('class', 'dep')
-      .attr('x', this.fontSize / 2)
-      .attr('y', this.fontSize)
+      .attr('x', clearButtonFontSize / 2)
+      .attr('y', clearButtonFontSize)
       .text('[clear highlight]')
   }
 
@@ -49,8 +51,8 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .data(graphData)
       .enter()
       .append('text')
-      .attr('x', d => d.x)
-      .attr('y', d => d.y + d.height / 2)
+      .attr('x', d => this.scale(d.x))
+      .attr('y', d => this.scale(d.y + d.height / 2))
       .attr('class', 'dep layer')
       .text(d => d.name)
   }
@@ -67,12 +69,12 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .append('rect')
       .attr('class', 'dep')
       .attr('id', d => d.path)
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
+      .attr('x', d => this.scale(d.x))
+      .attr('y', d => this.scale(d.y))
       .attr('rx', 5)
       .attr('ry', 5)
-      .attr('width', d => d.width)
-      .attr('height', d => d.height)
+      .attr('width', d => this.scale(d.width))
+      .attr('height', d => this.scale(d.height))
       // .append('title')
       // .text(d => d.path)
   }
@@ -84,9 +86,9 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .append('circle')
       .attr('class', 'dep')
       .attr('id', d => d.path)
-      .attr('cx', d => d.cx)
-      .attr('cy', d => d.cy)
-      .attr('r', d => d.r)
+      .attr('cx', d => this.scale(d.cx))
+      .attr('cy', d => this.scale(d.cy))
+      .attr('r', d => this.scale(d.r))
       // .append('title')
       // .text(d => d.path)
   }
@@ -98,8 +100,8 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .append('text')
       .attr('class', 'dep node')
       .attr('id', d => `${d.path}-ndlb`)
-      .attr('x', d => d.x)
-      .attr('y', d => d.y + d.height)
+      .attr('x', d => this.scale(d.x))
+      .attr('y', d => this.scale(d.y + d.height))
       .attr('dy', this.fontSize)
       .text(d => d.name)
   }
@@ -111,23 +113,25 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .append('text')
       .attr('class', 'dep tp')
       .attr('id', d => `${d.path}-tplb`)
-      .attr('x', d => d.cx)
-      .attr('y', d => d.cy + d.r)
+      .attr('x', d => this.scale(d.cx))
+      .attr('y', d => this.scale(d.cy + d.r))
       .attr('dy', this.fontSize / 2)
       .text(d => d.name)
   }
 
   makeArrowEnd (defs, arrowId, arrowClass) {
+    const size = this.scale(4)
+    const linePath = `M 0,0 V ${size} L${size},${size / 2} Z`
     defs.append('marker')
       .attr('id', arrowId)
       .attr('class', arrowClass)
-      .attr('refX', 4)
-      .attr('refY', 2)
-      .attr('markerWidth', 4)
-      .attr('markerHeight', 4)
+      .attr('refX', size)
+      .attr('refY', size / 2)
+      .attr('markerWidth', size)
+      .attr('markerHeight', size)
       .attr('orient', 'auto')
       .append('path')
-      .attr('d', 'M 0,0 V 4 L4,2 Z')
+      .attr('d', linePath)
   }
 
   makeDepArrowEndDefs () {
@@ -141,10 +145,23 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .attr('class', 'dep-lines')
   }
 
+  makeScale (graphData) {
+    const lastNodes = graphData.map(layer => layer.nodes[layer.nodes.length - 1])
+    // Use single scale to use to objects,
+    // because to KEEP aspect ratio of original object.
+    // scale to fit horizontal (width) size of svg canvas.
+    const maxX = Math.max(...lastNodes.map(n => n.x + n.width))
+    return scaleLinear()
+      .domain([0, maxX])
+      .range([0, this.width])
+  }
+
   makeGraphObjects (graphData) {
     this.svg = this.makeDepGraphSVG()
     this.svgGrp = this.makeDepGraphSVGGroup()
     this.clearButton = this.makeClearButton()
+    this.scale = this.makeScale(graphData)
+
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()
     this.makeLayerLabel(graphData, layerLabelGroup)
