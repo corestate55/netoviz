@@ -15,11 +15,12 @@ import { mapGetters } from 'vuex'
 import DepGraphVisualizer from '../dep-graph/visualizer'
 import '../css/dep-graph.scss'
 
-const visualizer = new DepGraphVisualizer()
-
 export default {
   data () {
     return {
+      visualizer: null,
+      unwatchAlert: null,
+      unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
@@ -29,26 +30,45 @@ export default {
   methods: {
     drawJsonModel () {
       if (this.modelFile) {
-        visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
+        this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
       }
+    },
+    clearAllHighlight () {
+      this.visualizer.clearDependencyLines()
+      this.visualizer.clearHighlight()
     },
     highlightByAlert (alertRow) {
       if (alertRow) {
-        visualizer.highlightByAlert(alertRow)
+        this.visualizer.highlightByAlert(alertRow)
       } else {
-        visualizer.clearDependencyLines()
-        visualizer.clearHighlight()
+        this.clearAllHighlight()
       }
     }
   },
   mounted () {
-    // console.log('## mounted ##')
+    console.log('[dep] mounted')
+    this.visualizer = new DepGraphVisualizer()
+
     this.drawJsonModel()
     // set watcher for alert selection change
-    this.$store.watch(
+    this.unwatchAlert = this.$store.watch(
       state => state.currentAlertRow,
       (newRow, oldRow) => { this.highlightByAlert(newRow) }
     )
+    this.unwatchModelFile = this.$store.watch(
+      state => state.modelFile,
+      (newModelFile, oldModelFile) => {
+        console.log(`[dep] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        this.clearAllHighlight()
+        this.drawJsonModel()
+      }
+    )
+  },
+  beforeDestroy () {
+    console.log('[dep] before destroy')
+    delete this.visualizer
+    this.unwatchAlert()
+    this.unwatchModelFile()
   }
 }
 </script>

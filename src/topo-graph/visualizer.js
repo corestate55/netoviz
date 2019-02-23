@@ -63,14 +63,18 @@ export default class GraphVisualizer extends BaseContainer {
     }
   }
 
-  highlightByAlert (alert) {
-    if (!alert || !this.graphs) {
-      return
-    }
+  clearAllHighlight () {
     // clear all highlight
     for (const graphVisualizer of this.graphVisualizers) {
       graphVisualizer.clearHighlight()
     }
+  }
+
+  highlightByAlert (alert) {
+    if (!alert || !this.graphs) {
+      return
+    }
+    this.clearAllHighlight()
     // find and select (highlight) a node
     for (const layer of this.graphs) {
       const result = layer.nodes.find(d => d.name === alert.host)

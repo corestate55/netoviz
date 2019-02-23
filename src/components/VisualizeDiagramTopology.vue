@@ -21,17 +21,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import TopoGraphVisualizer from '../topo-graph/visualizer'
 import '../css/topo-graph.scss'
-
-const visualizer = new TopoGraphVisualizer()
 
 export default {
   data () {
     return {
-      debug: 'none', // 'none' or 'block' to appear debug container
-      oldModelFile: ''
+      visualizer: null,
+      unwatchAlert: null,
+      unwatchSelectedLayers: null,
+      unwatchModelFile: null,
+      debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   computed: {
@@ -44,6 +45,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['selectAllLayers']),
     setLayerDisplayStyle (layers, display) {
       for (const layer of layers) {
         const elm = document.getElementById(`${layer}-container`)
@@ -53,29 +55,60 @@ export default {
       }
     },
     drawJsonModel () {
-      // redraw whole graph ONLY when model file changed.
-      if (this.modelFile !== this.oldModelFile) {
-        visualizer.drawJsonModel(this.modelFile)
-        // When the visualizer draws topology graph,
-        // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
-        // so, these setLayerDisplayStyle() could not found target layer container
-        // WORKAROUND :
-        //   FORCE to select all layers
-        //   to avoid mismatch between UI (layer selector) and Graph.
-        this.$store.dispatch('selectAllLayers')
-        this.oldModelFile = this.modelFile
-      }
+      this.visualizer.drawJsonModel(this.modelFile)
+      // When the visualizer draws topology graph,
+      // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
+      // so, these setLayerDisplayStyle() could not found target layer container
+      // WORKAROUND :
+      //   FORCE to select all layers
+      //   to avoid mismatch between UI (layer selector) and Graph.
+      this.selectAllLayers()
+      this.displaySelectedLayers()
+    },
+    displaySelectedLayers () {
       // set display style of selecte(or not) layers
       this.setLayerDisplayStyle(this.selectedLayers, 'block')
       this.setLayerDisplayStyle(this.notSelectedLayers, 'none')
+    },
+    clearAllHighlight () {
+      this.visualizer.clearAllHighlight()
+    },
+    highlightByAlert (alertRow) {
+      if (alertRow) {
+        this.visualizer.highlightByAlert(alertRow)
+      } else {
+        this.clearAllHighlight()
+      }
     }
   },
   mounted () {
+    console.log('[topo] mounted')
+    this.visualizer = new TopoGraphVisualizer()
+
     this.drawJsonModel()
-    this.$store.watch(
+    this.unwatchAlert = this.$store.watch(
       state => state.currentAlertRow,
-      (newRow, oldRow) => { visualizer.highlightByAlert(newRow) }
+      (newRow, oldRow) => { this.highlightByAlert(newRow) }
     )
+    this.unwatchSelectedLayers = this.$store.watch(
+      state => state.selectedLayers,
+      (newLayers) => { this.displaySelectedLayers() }
+    )
+    this.unwatchModelFile = this.$store.watch(
+      state => state.modelFile,
+      (newModelFile, oldModelFile) => {
+        console.log(`[topo] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        this.clearAllHighlight()
+        this.drawJsonModel()
+      }
+    )
+  },
+  beforeDestroy () {
+    console.log('[topo] before destroy')
+    delete this.visualizer
+    this.unwatchAlert()
+    this.unwatchSelectedLayers()
+    this.unwatchModelFile()
   }
 }
 </script>
