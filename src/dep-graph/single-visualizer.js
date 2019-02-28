@@ -6,7 +6,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
     super()
     // canvas size
-    this.width = 1000
+    this.width = 800
     this.height = 600
     this.fontSize = 10
   }
@@ -149,11 +149,19 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
     const lastNodes = graphData.map(layer => layer.nodes[layer.nodes.length - 1])
     // Use single scale to use to objects,
     // because to KEEP aspect ratio of original object.
-    // scale to fit horizontal (width) size of svg canvas.
     const maxX = Math.max(...lastNodes.map(n => n.x + n.width))
-    return scaleLinear()
+    const maxY = Math.max(...lastNodes.map(n => n.y + n.height + this.fontSize * 2))
+    const scaleX = scaleLinear()
       .domain([0, maxX])
       .range([0, this.width])
+    if (scaleX(maxY) < this.height) {
+      // the last layer node did not run-off the canvas when fit by width
+      return scaleX
+    }
+    // else return scaleY (fit by height)
+    return scaleLinear()
+      .domain([0, maxY])
+      .range([0, this.height])
   }
 
   makeGraphObjects (graphData) {
