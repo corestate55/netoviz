@@ -55,20 +55,24 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     // parents/children tree contains duplicated element.
     // when toggle odd times the element, highlight was disabled.
     return this.sortUniq(
-      this.flatten([selfObj.path, pairs.map(d => d.dst.path)])
+      this.flatten([
+        selfObj.path,
+        pairs.map(d => d.src.path),
+        pairs.map(d => d.dst.path)
+      ])
     )
   }
 
-  runParentsAndChildren (selfObj, actionForPairs, actionForTargets) {
+  runParentsAndChildren (selfObj, actionForDepLine, actionForNodes) {
     const parentPairs = this.getParentsTree(selfObj)
     const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
     const childPairs = this.getChildrenTree(selfObj)
     const childPaths = this.pathsFromPairs(selfObj, childPairs)
 
     // action for each pairs(line: src/dst)
-    actionForPairs(parentPairs.concat(childPairs))
+    actionForDepLine(parentPairs.concat(childPairs))
     // action for each parent/child
-    actionForTargets(this.flatten([selfObj.path, parentPaths, childPaths]))
+    actionForNodes(this.flatten([selfObj.path, parentPaths, childPaths]))
   }
 
   clickEventHandler (d) {
