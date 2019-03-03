@@ -1,6 +1,9 @@
 import fs from 'fs'
 import Graphs from './graph/graphs'
 import DepGraphConverter from './dep-graph-converter'
+import { promisify } from 'util'
+
+const readFile = promisify(fs.readFile)
 
 export default class TopoogyDataAPI {
   constructor (mode) {
@@ -19,15 +22,20 @@ export default class TopoogyDataAPI {
     }
   }
 
-  readCache () {
+  async readCache () {
     console.log('use cache: ', this.cacheJsonPath)
-    return fs.readFileSync(this.cacheJsonPath, 'utf8')
+    return readFile(this.cacheJsonPath, 'utf8')
   }
 
-  readTopologyDataFromJSON () {
-    const topoData = JSON.parse(fs.readFileSync(this.jsonPath, 'utf8'))
-    const graphs = new Graphs(topoData)
-    return JSON.stringify(graphs.graphs)
+  async readTopologyDataFromJSON () {
+    try {
+      const data = await readFile(this.jsonPath, 'utf8')
+      const topoData = JSON.parse(data)
+      const graphs = new Graphs(topoData)
+      return JSON.stringify(graphs.graphs)
+    } catch (error) {
+      throw error
+    }
   }
 
   writeCache (resJsonString) {
@@ -56,24 +64,24 @@ export default class TopoogyDataAPI {
     this.timeStampOf[this.jsonPath] = this.timeStamp.mtimeMs
   }
 
-  convertTopoGraphData (req) {
+  async convertTopoGraphData (req) {
     this.updateStatsOfTopoJSON(req)
     console.log('Requested: ', this.jsonPath)
 
     let resJsonString = '' // stringified json (NOT object)
     if (this.foundCache()) {
-      resJsonString = this.readCache()
+      resJsonString = await this.readCache()
     } else {
       // the json file was changed.
       this.updateCacheTimeStamp()
-      resJsonString = this.readTopologyDataFromJSON()
+      resJsonString = await this.readTopologyDataFromJSON()
       this.writeCache(resJsonString)
     }
     return resJsonString
   }
 
-  convertDependencyGraphData (req) {
-    const topoJsonString = this.convertTopoGraphData(req)
+  async convertDependencyGraphData (req) {
+    const topoJsonString = await this.convertTopoGraphData(req)
     const depGraph = new DepGraphConverter(JSON.parse(topoJsonString))
     return JSON.stringify(depGraph.toData())
   }

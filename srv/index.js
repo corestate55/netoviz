@@ -18,29 +18,27 @@ export default app => {
     })
     res.send('Log message received.')
   })
-  app.get('/alert/:number', (req, res) => {
+  app.get('/alert/:number', async (req, res) => {
     console.log(`requested ${req.params.number} logs`)
-    db.alert.findAll({
+    const instances = await db.alert.findAll({
       limit: req.params.number,
       order: [['id', 'DESC']]
-    }).then((instances) => {
-      res.send(instances)
     })
+    res.send(instances)
   })
-  app.get('/alert/all', (req, res) => {
+  app.get('/alert/all', async (req, res) => {
     console.log('all logs requested')
-    db.alert.findAll({
+    const instances = await db.alert.findAll({
       order: [['id', 'DESC']]
-    }).then((instances) => {
-      res.send(instances)
     })
+    res.send(instances)
   })
-  app.get('/draw/:jsonName', (req, res) => {
+  app.get('/draw/:jsonName', async (req, res) => {
     res.type('json')
-    res.send(topoDataAPI.convertTopoGraphData(req))
+    res.send(await topoDataAPI.convertTopoGraphData(req))
   })
-  app.get('/draw-dep-graph/:jsonName', (req, res) => {
+  app.get('/draw-dep-graph/:jsonName', async (req, res) => {
     res.type('json')
-    res.send(topoDataAPI.convertDependencyGraphData(req))
+    res.send(await topoDataAPI.convertDependencyGraphData(req))
   })
 }
