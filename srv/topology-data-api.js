@@ -1,6 +1,7 @@
 import fs from 'fs'
 import Graphs from './graph/graphs'
 import DepGraphConverter from './dep-graph-converter'
+import NestedGraphConverter from './nested-graph-converter'
 import { promisify } from 'util'
 
 const readFile = promisify(fs.readFile)
@@ -82,7 +83,13 @@ export default class TopoogyDataAPI {
 
   async convertDependencyGraphData (req) {
     const topoJsonString = await this.convertTopoGraphData(req)
-    const depGraph = new DepGraphConverter(JSON.parse(topoJsonString))
-    return JSON.stringify(depGraph.toData())
+    const depGraphConverter = new DepGraphConverter(JSON.parse(topoJsonString))
+    return JSON.stringify(depGraphConverter.toData())
+  }
+
+  async convertNestedGraphData (req) {
+    const topoJsonString = await this.convertTopoGraphData(req)
+    const nestedGraphConverter = new NestedGraphConverter(JSON.parse(topoJsonString))
+    return JSON.stringify(nestedGraphConverter.toData())
   }
 }

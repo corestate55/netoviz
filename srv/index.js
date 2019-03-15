@@ -8,6 +8,7 @@ const topoDataAPI = new TopologyDataAPI(process.env.NODE_ENV)
 export default app => {
   app.use(express.json())
   app.set('port', port)
+
   app.post('/alert', (req, res) => {
     const alertData = req.body
     const date = new Date()
@@ -33,6 +34,7 @@ export default app => {
     })
     res.send(instances)
   })
+
   app.get('/draw/:jsonName', async (req, res) => {
     res.type('json')
     res.send(await topoDataAPI.convertTopoGraphData(req))
@@ -40,5 +42,9 @@ export default app => {
   app.get('/draw-dep-graph/:jsonName', async (req, res) => {
     res.type('json')
     res.send(await topoDataAPI.convertDependencyGraphData(req))
+  })
+  app.get('/draw-nested-graph/:jsonName', async (req, res) => {
+    res.type('json')
+    res.send(await topoDataAPI.convertNestedGraphData(req))
   })
 }
