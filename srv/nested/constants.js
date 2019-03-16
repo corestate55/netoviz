@@ -1,9 +1,9 @@
 export default class NestedGraphConstants {
   constructor () {
-    this.nodeXPad = 10
-    this.nodeYPad = 10
-    this.r = 5
-    this.tpInterval = 6
-    this.initialGridInterval = 200
+    this.nodeXPad = 20
+    this.nodeYPad = 20
+    this.r = 10
+    this.tpInterval = 10
+    this.initialGridInterval = 400
   }
 }

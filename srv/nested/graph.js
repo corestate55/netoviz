@@ -86,17 +86,33 @@ export default class NestedGraph extends NestedGraphConstants {
     return childrenWHList
   }
 
+  widthByTp (node) {
+    const tpNum = node.numberOfTps()
+    return this.nodeXPad * 2 + 2 * this.r * tpNum + this.tpInterval * (tpNum - 1)
+  }
+
+  heightByTp () {
+    return (this.nodeYPad + this.r) * 2
+  }
+
+  widthByChildNodes (node, childrenWHList) {
+    return this.nodeXPad * 2 +
+      childrenWHList.reduce((sum, d) => { return sum + d.width }, 0) +
+      this.nodeXPad * (this.singleParentChildNodePaths(node).length - 1)
+  }
+
+  heightByChildNodes (childrenWHList) {
+    const maxChildHeight = Math.max(...childrenWHList.map(d => d.height))
+    return this.heightByTp() + maxChildHeight + this.nodeYPad
+  }
+
   culcSubRootNodeWH (node, basePosition, childrenWHList) {
     // width
-    const sumChildWidth = childrenWHList.reduce((sum, d) => sum + d.width, 0)
-    const allTpWidth = 2 * this.r * node.numberOfTps() +
-      this.tpInterval * (node.numberOfTps() - 1) + this.nodeXPad * 2
-    let width = this.nodeXPad * (node.numberOfChildNodes() + 1)
-    width += sumChildWidth < allTpWidth ? allTpWidth : sumChildWidth
+    const widthByChildNodes = this.widthByChildNodes(node, childrenWHList)
+    const widthByTp = this.widthByTp(node)
+    const width = widthByChildNodes < widthByTp ? widthByTp : widthByChildNodes
     // height
-    const maxChildHeight = Math.max(...childrenWHList.map(d => d.height))
-    // (ny1x - ny1) + maxChildHeight
-    const height = (this.nodeYPad + this.r) * 2 + maxChildHeight
+    const height = this.heightByChildNodes(childrenWHList)
 
     node.setRect(basePosition.x, basePosition.y, width, height)
     return { width: width, height: height }
@@ -104,9 +120,8 @@ export default class NestedGraph extends NestedGraphConstants {
 
   culcLeafNodeWH (node, basePosition) {
     // console.log(`  return: ${node.path} does not have child node`)
-    const tpNum = node.numberOfTps()
-    const width = this.nodeXPad * 2 + 2 * this.r * tpNum + this.tpInterval * (tpNum - 1)
-    const height = (this.nodeYPad + this.r) * 2
+    const width = this.widthByTp(node)
+    const height = this.heightByTp()
 
     node.setRect(basePosition.x, basePosition.y, width, height)
     return { width: width, height: height }
@@ -118,7 +133,7 @@ export default class NestedGraph extends NestedGraphConstants {
     for (const tpPath of node.tpPaths()) {
       const tp = this.findNodeByPath(tpPath)
       tp.setCircle(cx11, cy1x, this.r)
-      cx11 += this.r * 2 + this.nodeXPad
+      cx11 += this.r * 2 + this.tpInterval
     }
   }
 
