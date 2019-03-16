@@ -9,6 +9,9 @@
     <el-radio-button
       label="Dependency"
     />
+    <el-radio-button
+      label="Nested"
+    />
   </el-radio-group>
 </template>
 

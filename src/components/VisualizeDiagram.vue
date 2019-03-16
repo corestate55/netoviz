@@ -29,6 +29,9 @@
     <VisualizeDiagramDependency
       v-else-if="visualizer === 'Dependency'"
     />
+    <VisualizeDiagramNested
+      v-else-if="visualizer === 'Nested'"
+    />
   </div>
 </template>
 
@@ -36,6 +39,7 @@
 import { mapGetters } from 'vuex'
 import VisualizeDiagramTopology from './VisualizeDiagramTopology'
 import VisualizeDiagramDependency from './VisualizeDiagramDependency'
+import VisualizeDiagramNested from './VisualizeDiagramNested'
 
 export default {
   data () {
@@ -45,7 +49,8 @@ export default {
   },
   components: {
     VisualizeDiagramTopology,
-    VisualizeDiagramDependency
+    VisualizeDiagramDependency,
+    VisualizeDiagramNested
   },
   computed: {
     ...mapGetters(['visualizer', 'modelFile', 'selectedLayers'])
