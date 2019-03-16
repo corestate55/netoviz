@@ -26,7 +26,35 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('height', this.height)
   }
 
+  makeNestedGraphSVGGroup () {
+    return this.svg.append('g')
+      .attr('id', 'whole-dep-graph')
+  }
+
   makeGraphObjects (graphData) {
     this.svg = this.makeNestedGraphSVG()
+    this.svgGrp = this.makeNestedGraphSVGGroup()
+
+    const nodes = graphData.nodes.filter(d => d.type === 'node')
+    const tps = graphData.nodes.filter(d => d.type === 'tp')
+
+    this.svgGrp.selectAll('rect')
+      .data(nodes)
+      .enter()
+      .append('rect')
+      .attr('id', d => d.path)
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('width', d => d.width)
+      .attr('height', d => d.height)
+
+    this.svgGrp.selectAll('circle')
+      .data(tps)
+      .enter()
+      .append('circle')
+      .attr('id', d => d.path)
+      .attr('cx', d => d.cx)
+      .attr('cy', d => d.cy)
+      .attr('r', d => d.r)
   }
 }

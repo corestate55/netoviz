@@ -1,169 +1,15 @@
-class GridOperator {
-  constructor (ni, nj, interval) {
-    this.setXGrid(ni, interval)
-    this.setYGrid(nj, interval)
-    this.currentX = 0
-    this.currentY = 0
-  }
+import NestedGraphConstants from './constants'
+import GridOperator from './grid-operator'
+import NestedGraphNode from './node'
+import NestedGraphLink from './link'
 
-  setXGrid (ni, interval) {
-    this.xGrids = []
-    for (let i = 0; i < ni; i++) {
-      this.xGrids.push((i + 1) * interval)
-    }
-  }
-
-  setYGrid (nj, interval) {
-    this.yGrids = []
-    for (let j = 0; j < nj; j++) {
-      this.yGrids.push((j + 1) * interval)
-    }
-  }
-
-  positionByOrdinal (ordinalPosition) {
-    return this.position(ordinalPosition.i, ordinalPosition.j)
-  }
-
-  position (i, j) {
-    // TODO: range error check
-    return { x: this.xGrids[i], y: this.yGrids[j] }
-  }
-
-  nextOrdinalPosition () {
-    const i = this.currentX
-    const j = this.currentY
-    this.currentX = (i + 1) % this.xGrids.length
-    if (this.currentX === 0) {
-      this.currentY = (j + 1) % this.yGrids.length
-    }
-    return { i: i, j: j }
-  }
-}
-
-class NestedGraphLink {
-  constructor (linkData) {
-    this.name = linkData.name
-    this.path = linkData.path
-    this.type = linkData.type
-    this.sourcePath = linkData.sourcePath
-    this.targetPath = linkData.targetPath
-    this.sourceId = linkData.sourceId
-    this.targetId = linkData.targetId
-    // this.attribute = linkData.attribute
-    // this.diffState = linkData.diffState
-  }
-
-  availableIn (nodes) {
-    if (this.type === 'node-tp') {
-      return false // do not use node-tp type link in Nested Graph
-    }
-    const source = nodes.find(d => d.path === this.sourcePath)
-    const target = nodes.find(d => d.path === this.targetPath)
-    return source && target
-  }
-}
-
-class NestedGraphNode {
-  constructor (nodeData) {
-    this.operative = false
-    this.type = nodeData.type
-    this.name = nodeData.name
-    this.path = nodeData.path
-    this.id = nodeData.id
-    this.parents = nodeData.parents
-    this.children = nodeData.children
-    // this.attribute = nodeData.attribute
-    // this.diffState = nodeData.diffState
-  }
-
-  isNode () {
-    return this.type === 'node'
-  }
-
-  isRootNode () {
-    return this.isNode() && this.parentNodePaths().length === 0
-  }
-
-  isTp () {
-    return this.type === 'tp'
-  }
-
-  matchTpPath (path) {
-    return path.match(/.+\/.+\/.+/)
-  }
-
-  matchNodePath (path) {
-    return !this.matchTpPath(path) && path.match(/.+\/.+/)
-  }
-
-  tpPaths () {
-    return this.filterTpPathFrom(this.parents)
-  }
-
-  numberOfTps () {
-    return this.tpPaths().length
-  }
-
-  parentNodePaths () {
-    return this.filterNodePath(this.parents)
-  }
-
-  childNodePaths () {
-    return this.filterNodePath(this.children)
-  }
-
-  numberOfParentNodes () {
-    return this.parentNodePaths().length
-  }
-
-  numberOfChildNodes () {
-    return this.childNodePaths().length
-  }
-
-  filterTpPathFrom (paths) {
-    return paths.filter(path => this.matchTpPath(path))
-  }
-
-  filterNodePath (paths) {
-    return paths.filter(path => this.matchNodePath(path))
-  }
-
-  setCircle (cx, cy, r) {
-    this.operative = true
-    this.cx = cx
-    this.cy = cy
-    this.r = r
-  }
-
-  setRect (x, y, width, height) {
-    this.operative = true
-    this.x = x
-    this.y = y
-    this.width = width
-    this.height = height
-  }
-
-  setGridPosition (ordinalPosition) {
-    this.grid = ordinalPosition // { i: N, j:M }
-  }
-}
-
-class NestedGraphConstants {
-  constructor () {
-    this.nodeXPad = 10
-    this.nodeYPad = 10
-    this.r = 5
-    this.tpInterval = 6
-  }
-}
-
-class NestedGraph extends NestedGraphConstants {
+export default class NestedGraph extends NestedGraphConstants {
   constructor (graphData) {
     super()
     this.setNodes(graphData)
     this.setLinks(graphData)
     this.setRootNodes()
-    this.grid = new GridOperator(4, 4, 100)
+    this.grid = new GridOperator(4, 4, this.initialGridInterval)
     this.culcRootNodePosition()
   }
 
@@ -292,19 +138,3 @@ class NestedGraph extends NestedGraphConstants {
     }
   }
 }
-
-export default class NestedGraphConverter {
-  constructor (graphData) {
-    this.nestedGraph = new NestedGraph(graphData)
-  }
-
-  toData () {
-    return this.nestedGraph.toData()
-  }
-}
-
-// const jsonPath = 'dist/target3b.json.cache'
-// const graphData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-// const nestedGraph = new NestedGraph(graphData)
-// const resJsonString = JSON.stringify(nestedGraph.toData())
-// console.log(resJsonString)

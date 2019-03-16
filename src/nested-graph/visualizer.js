@@ -9,6 +9,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       }
       this.clearCanvas()
       this.makeGraphObjects(graphData)
+      this.setOperationHandler(graphData)
     })
   }
 }
