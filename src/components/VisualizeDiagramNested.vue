@@ -12,6 +12,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import NestedGraphVisualizer from '../nested-graph/visualizer'
+import '../css/nested-graph.scss'
 
 export default {
   name: 'VisualizeDiagramNested.vue',
@@ -23,6 +25,18 @@ export default {
   },
   computed: {
     ...mapGetters(['currentAlertRow', 'modelFile'])
+  },
+  methods: {
+    drawJsonModel () {
+      if (this.modelFile) {
+        this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
+      }
+    }
+  },
+  mounted () {
+    console.log('[nested] mounted')
+    this.visualizer = new NestedGraphVisualizer()
+    this.drawJsonModel()
   }
 }
 </script>
