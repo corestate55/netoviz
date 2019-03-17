@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Graphs from './graph/topo-graph/graphs'
+import TopoGraphConverter from './graph/topo-graph/converter'
 import DepGraphConverter from './graph/dependency/converter'
 import NestedGraphConverter from './graph/nested/converter'
 import { promisify } from 'util'
@@ -30,10 +30,7 @@ export default class TopoogyDataAPI {
 
   async readTopologyDataFromJSON () {
     try {
-      const data = await readFile(this.jsonPath, 'utf8')
-      const topoData = JSON.parse(data)
-      const graphs = new Graphs(topoData)
-      return JSON.stringify(graphs.graphs)
+      return await readFile(this.jsonPath, 'utf8')
     } catch (error) {
       throw error
     }
@@ -75,7 +72,9 @@ export default class TopoogyDataAPI {
     } else {
       // the json file was changed.
       this.updateCacheTimeStamp()
-      resJsonString = await this.readTopologyDataFromJSON()
+      const data = await this.readTopologyDataFromJSON()
+      const topoGraphConverter = new TopoGraphConverter(JSON.parse(data))
+      resJsonString = JSON.stringify(topoGraphConverter.toData())
       this.writeCache(resJsonString)
     }
     return resJsonString
