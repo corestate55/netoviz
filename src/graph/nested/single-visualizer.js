@@ -47,6 +47,8 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('y', d => d.y)
       .attr('width', d => d.width)
       .attr('height', d => d.height)
+      .append('title')
+      .text(d => d.path)
 
     this.svgGrp.selectAll('circle')
       .data(tps)
@@ -56,5 +58,28 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('cx', d => d.cx)
       .attr('cy', d => d.cy)
       .attr('r', d => d.r)
+      .append('title')
+      .text(d => d.path)
+
+    this.svgGrp.selectAll('text.node')
+      .data(nodes)
+      .enter()
+      .append('text')
+      .attr('class', 'node')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y + d.height)
+      .attr('alignment-baseline', 'hanging')
+      .text(d => d.name)
+
+    this.svgGrp.selectAll('text.tp')
+      .data(tps)
+      .enter()
+      .append('text')
+      .attr('class', 'tp')
+      .attr('x', d => d.cx)
+      .attr('y', d => d.cy + d.r)
+      .attr('text-anchor', 'middle')
+      .attr('alignment-baseline', 'hanging')
+      .text(d => d.name)
   }
 }
