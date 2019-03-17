@@ -20,6 +20,7 @@ export default {
   data () {
     return {
       visualizer: null,
+      unwatchModelFile: null,
       debug: 'block' // 'none' or 'block' to appear debug container
     }
   },
@@ -37,6 +38,18 @@ export default {
     console.log('[nested] mounted')
     this.visualizer = new NestedGraphVisualizer()
     this.drawJsonModel()
+
+    this.unwatchModelFile = this.$store.watch(
+      state => state.modelFile,
+      (newModelFile, oldModelFile) => {
+        console.log(`[nested] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        this.drawJsonModel()
+      }
+    )
+  },
+  beforeDestroy () {
+    console.log('[nested] before destroy')
+    this.unwatchModelFile()
   }
 }
 </script>
