@@ -22,7 +22,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import TopoGraphVisualizer from '../topo-graph/visualizer'
+import TopoGraphVisualizer from '../graph/topology/visualizer'
 import '../css/topo-graph.scss'
 
 export default {

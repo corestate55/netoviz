@@ -1,5 +1,5 @@
 import { select } from 'd3-selection'
-import BaseContainer from '../../srv/base'
+import BaseContainer from '../../../srv/graph/base'
 
 export default class SingleNestedVisualizer extends BaseContainer {
   constructor () {

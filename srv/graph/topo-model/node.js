@@ -2,7 +2,7 @@
 
 import TopoBaseContainer from './topo-base'
 import TermPoint from './term-point'
-import GraphNode from '../graph/graph-node'
+import GraphNode from '../topo-graph/graph-node'
 
 class SupportingNode extends TopoBaseContainer {
   constructor (data) {

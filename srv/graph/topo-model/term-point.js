@@ -1,8 +1,8 @@
 'use strict'
 
 import TopoBaseContainer from './topo-base'
-import GraphNode from '../graph/graph-node'
-import GraphLink from '../graph/graph-link'
+import GraphNode from '../topo-graph/graph-node'
+import GraphLink from '../topo-graph/graph-link'
 
 class SupportingTermPoint {
   constructor (data) {

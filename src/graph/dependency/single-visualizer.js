@@ -1,6 +1,6 @@
 import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
-import BaseContainer from '../../srv/base'
+import BaseContainer from '../../../srv/graph/base'
 
 export default class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {

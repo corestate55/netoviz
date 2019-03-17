@@ -12,7 +12,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import NestedGraphVisualizer from '../nested-graph/visualizer'
+import NestedGraphVisualizer from '../graph/nested/visualizer'
 import '../css/nested-graph.scss'
 
 export default {

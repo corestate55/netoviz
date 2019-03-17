@@ -1,7 +1,7 @@
 import fs from 'fs'
-import Graphs from './graph/graphs'
-import DepGraphConverter from './dependency/converter'
-import NestedGraphConverter from './nested/converter'
+import Graphs from './graph/topo-graph/graphs'
+import DepGraphConverter from './graph/dependency/converter'
+import NestedGraphConverter from './graph/nested/converter'
 import { promisify } from 'util'
 
 const readFile = promisify(fs.readFile)

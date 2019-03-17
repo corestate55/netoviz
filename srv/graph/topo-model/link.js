@@ -1,7 +1,7 @@
 'use strict'
 
 import TopoBaseContainer from './topo-base'
-import GraphLink from '../graph/graph-link'
+import GraphLink from '../topo-graph/graph-link'
 
 class TpRef extends TopoBaseContainer {
   constructor (data, nwPath) {

@@ -5,7 +5,7 @@ import PositionCache from './position-cache'
 import { select } from 'd3-selection'
 import { json } from 'd3-request'
 import { interval } from 'd3-timer'
-import BaseContainer from '../../srv/base'
+import BaseContainer from '../../../srv/graph/base'
 
 export default class GraphVisualizer extends BaseContainer {
   constructor () {
