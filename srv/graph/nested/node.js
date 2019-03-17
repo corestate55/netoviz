@@ -32,7 +32,7 @@ export default class NestedGraphNode {
   }
 
   tpPaths () {
-    return this.filterTpPathFrom(this.parents)
+    return this.filterTpPath(this.parents)
   }
 
   numberOfTps () {
@@ -43,8 +43,16 @@ export default class NestedGraphNode {
     return this.filterNodePath(this.parents)
   }
 
+  parentTpPaths () {
+    return this.filterTpPath(this.parents)
+  }
+
   childNodePaths () {
     return this.filterNodePath(this.children)
+  }
+
+  childTpPaths () {
+    return this.filterTpPath(this.children)
   }
 
   numberOfParentNodes () {
@@ -55,12 +63,19 @@ export default class NestedGraphNode {
     return this.childNodePaths().length
   }
 
-  filterTpPathFrom (paths) {
+  filterTpPath (paths) {
     return paths.filter(path => this.matchTpPath(path))
   }
 
   filterNodePath (paths) {
     return paths.filter(path => this.matchNodePath(path))
+  }
+
+  linkPath () {
+    // to make link path
+    const pathElements = this.path.split('/')
+    pathElements.shift() // discard top(layer)
+    return pathElements.join(',')
   }
 
   setCircle (cx, cy, r) {

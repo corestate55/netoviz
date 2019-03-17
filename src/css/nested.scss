@@ -15,5 +15,12 @@ text {
 }
 
 line {
-  stroke: #CEE3F6;
+  stroke-width: 4pt;
+  stroke-opacity: 0.3;
+  &.tp-tp {
+    stroke: #CEE3F6;
+  }
+  &.support-tp {
+    stroke: lightcoral;
+  }
 }

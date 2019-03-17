@@ -145,11 +145,36 @@ export default class NestedGraph extends NestedGraphConstants {
     return this.links.filter(link => link.availableIn(operativeNodes))
   }
 
+  makeSupportTpLinks (operativeNodes) {
+    const supportTpLinks = []
+    for (const tp of operativeNodes.filter(d => d.isTp())) {
+      // check tp path is available in operativeNodes?
+      for (const childTpPath of tp.childTpPaths()) {
+        const childTp = operativeNodes.find(d => d.path === childTpPath)
+        if (!childTp) {
+          continue
+        }
+        const name = `${tp.linkPath()},${childTp.linkPath()}`
+        supportTpLinks.push({
+          name: name,
+          path: `inter-layer/${name}`,
+          type: 'support-tp',
+          sourcePath: tp.path,
+          targetPath: childTpPath,
+          sourceId: tp.id,
+          targetId: childTp.id
+        })
+      }
+    }
+    return supportTpLinks
+  }
+
   toData () {
     const operativeNodes = this.operativeNodes()
+    const supportTpLinks = this.makeSupportTpLinks(operativeNodes)
     return {
       nodes: operativeNodes,
-      links: this.operativeLinksIn(operativeNodes)
+      links: this.operativeLinksIn(operativeNodes).concat(supportTpLinks)
     }
   }
 }
