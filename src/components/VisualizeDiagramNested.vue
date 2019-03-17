@@ -13,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import NestedGraphVisualizer from '../graph/nested/visualizer'
-import '../css/nested-graph.scss'
+import '../css/nested.scss'
 
 export default {
   name: 'VisualizeDiagramNested.vue',

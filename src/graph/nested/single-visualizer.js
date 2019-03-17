@@ -81,5 +81,19 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('text-anchor', 'middle')
       .attr('alignment-baseline', 'hanging')
       .text(d => d.name)
+
+    const findNode = (d, id, axis) => {
+      const n = graphData.nodes.find(node => node.id === d[id])
+      return n.type === 'node' ? n[axis] : n['c' + axis]
+    }
+
+    this.svgGrp.selectAll('line')
+      .data(graphData.links)
+      .enter()
+      .append('line')
+      .attr('x1', d => findNode(d, 'sourceId', 'x'))
+      .attr('y1', d => findNode(d, 'sourceId', 'y'))
+      .attr('x2', d => findNode(d, 'targetId', 'x'))
+      .attr('y2', d => findNode(d, 'targetId', 'y'))
   }
 }

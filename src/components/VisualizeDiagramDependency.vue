@@ -13,7 +13,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import DepGraphVisualizer from '../graph/dependency/visualizer'
-import '../css/dep-graph.scss'
+import '../css/dependency.scss'
 
 export default {
   data () {
