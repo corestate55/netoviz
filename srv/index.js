@@ -35,15 +35,15 @@ export default app => {
     res.send(instances)
   })
 
-  app.get('/draw/:jsonName', async (req, res) => {
+  app.get('/graph/topology/:jsonName', async (req, res) => {
     res.type('json')
     res.send(await topoDataAPI.convertTopoGraphData(req))
   })
-  app.get('/draw-dep-graph/:jsonName', async (req, res) => {
+  app.get('/graph/dependency/:jsonName', async (req, res) => {
     res.type('json')
     res.send(await topoDataAPI.convertDependencyGraphData(req))
   })
-  app.get('/draw-nested-graph/:jsonName', async (req, res) => {
+  app.get('/graph/nested/:jsonName', async (req, res) => {
     res.type('json')
     res.send(await topoDataAPI.convertNestedGraphData(req))
   })

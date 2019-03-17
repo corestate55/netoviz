@@ -3,10 +3,7 @@ import OperationalDepGraphVisualizer from './operational-visualizer'
 
 export default class DepGraphVisualizer extends OperationalDepGraphVisualizer {
   drawJsonModel (jsonName, alert) {
-    // URL draw-dep-graph/:jsonName is the API
-    // that convert topology json (model/:jsonName)
-    // to graph object data by json format.
-    json(`draw-dep-graph/${jsonName}`, (error, graphData) => {
+    json(`graph/dependency/${jsonName}`, (error, graphData) => {
       if (error) {
         throw error
       }

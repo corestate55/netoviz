@@ -15,10 +15,7 @@ export default class GraphVisualizer extends BaseContainer {
   }
 
   drawJsonModel (jsonName) {
-    // URL draw/:jsonName is the API
-    // that convert topology json (model/:jsonName)
-    // to graph object data by json format.
-    json(`draw/${jsonName}`, (error, graphData) => {
+    json(`graph/topology/${jsonName}`, (error, graphData) => {
       if (error) {
         throw error
       }

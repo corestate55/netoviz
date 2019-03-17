@@ -58,7 +58,7 @@ export default new Vuex.Store({
     },
     initializeLayersFromModelFile ({ getters, commit }) {
       const modelFile = getters.modelFile
-      json(`/draw/${modelFile}`, (error, modelData) => {
+      json(`/graph/topology/${modelFile}`, (error, modelData) => {
         if (error) {
           throw error
         }
