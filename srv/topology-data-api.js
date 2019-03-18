@@ -25,7 +25,11 @@ export default class TopoogyDataAPI {
 
   async readCache () {
     console.log('use cache: ', this.cacheJsonPath)
-    return readFile(this.cacheJsonPath, 'utf8')
+    try {
+      return await readFile(this.cacheJsonPath, 'utf8')
+    } catch (error) {
+      throw error
+    }
   }
 
   async readTopologyDataFromJSON () {
@@ -46,10 +50,9 @@ export default class TopoogyDataAPI {
     })
   }
 
-  updateStatsOfTopoJSON (req) {
-    this.jsonName = req.params.jsonName
-    this.jsonPath = `${this.modelDir}/${this.jsonName}`
-    this.cacheJsonPath = `${this.cacheDir}/${this.jsonName}.cache`
+  updateStatsOfTopoJSON (jsonName) {
+    this.jsonPath = `${this.modelDir}/${jsonName}`
+    this.cacheJsonPath = `${this.cacheDir}/${jsonName}.cache`
     this.timeStamp = fs.statSync(this.jsonPath)
   }
 
@@ -62,8 +65,8 @@ export default class TopoogyDataAPI {
     this.timeStampOf[this.jsonPath] = this.timeStamp.mtimeMs
   }
 
-  async convertTopoGraphData (req) {
-    this.updateStatsOfTopoJSON(req)
+  async convertTopoGraphData (jsonName) {
+    this.updateStatsOfTopoJSON(jsonName)
     console.log('Requested: ', this.jsonPath)
 
     let resJsonString = '' // stringified json (NOT object)
@@ -80,15 +83,29 @@ export default class TopoogyDataAPI {
     return resJsonString
   }
 
-  async convertDependencyGraphData (req) {
-    const topoJsonString = await this.convertTopoGraphData(req)
+  async convertDependencyGraphData (jsonName) {
+    const topoJsonString = await this.convertTopoGraphData(jsonName)
     const depGraphConverter = new DepGraphConverter(JSON.parse(topoJsonString))
     return JSON.stringify(depGraphConverter.toData())
   }
 
-  async convertNestedGraphData (req) {
-    const topoJsonString = await this.convertTopoGraphData(req)
+  async convertNestedGraphData (jsonName) {
+    const topoJsonString = await this.convertTopoGraphData(jsonName)
     const nestedGraphConverter = new NestedGraphConverter(JSON.parse(topoJsonString))
     return JSON.stringify(nestedGraphConverter.toData())
+  }
+
+  async callGraphData (graphName, jsonName) {
+    try {
+      if (graphName === 'topology') {
+        return await this.convertTopoGraphData(jsonName)
+      } else if (graphName === 'dependency') {
+        return await this.convertDependencyGraphData(jsonName)
+      } else if (graphName === 'nested') {
+        return await this.convertNestedGraphData(jsonName)
+      }
+    } catch (error) {
+      throw error
+    }
   }
 }
