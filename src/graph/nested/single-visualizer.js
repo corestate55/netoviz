@@ -38,6 +38,26 @@ export default class SingleNestedVisualizer extends BaseContainer {
     const nodes = graphData.nodes.filter(d => d.type === 'node')
     const tps = graphData.nodes.filter(d => d.type === 'tp')
 
+    this.svgGrp.selectAll('line.grid-x')
+      .data(graphData.grid.x)
+      .enter()
+      .append('line')
+      .attr('class', 'grid-x')
+      .attr('x1', d => d)
+      .attr('y1', -100)
+      .attr('x2', d => d)
+      .attr('y2', 2000)
+
+    this.svgGrp.selectAll('line.grid-y')
+      .data(graphData.grid.y)
+      .enter()
+      .append('line')
+      .attr('class', 'grid-y')
+      .attr('x1', -100)
+      .attr('y1', d => d)
+      .attr('x2', 2000)
+      .attr('y2', d => d)
+
     this.svgGrp.selectAll('rect')
       .data(nodes)
       .enter()
@@ -55,15 +75,17 @@ export default class SingleNestedVisualizer extends BaseContainer {
       return n.type === 'node' ? n[axis] : n['c' + axis]
     }
 
-    this.svgGrp.selectAll('line')
-      .data(graphData.links)
-      .enter()
-      .append('line')
-      .attr('class', d => d.type)
-      .attr('x1', d => findNode(d, 'sourceId', 'x'))
-      .attr('y1', d => findNode(d, 'sourceId', 'y'))
-      .attr('x2', d => findNode(d, 'targetId', 'x'))
-      .attr('y2', d => findNode(d, 'targetId', 'y'))
+    for (const linkClass of ['tp-tp', 'support-tp']) {
+      this.svgGrp.selectAll(`line.${linkClass}`)
+        .data(graphData.links.filter(d => d.type === linkClass))
+        .enter()
+        .append('line')
+        .attr('class', d => d.type)
+        .attr('x1', d => findNode(d, 'sourceId', 'x'))
+        .attr('y1', d => findNode(d, 'sourceId', 'y'))
+        .attr('x2', d => findNode(d, 'targetId', 'x'))
+        .attr('y2', d => findNode(d, 'targetId', 'y'))
+    }
 
     this.svgGrp.selectAll('circle')
       .data(tps)

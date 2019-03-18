@@ -173,7 +173,8 @@ export default class NestedGraph extends NestedGraphConstants {
     const supportTpLinks = this.makeSupportTpLinks(operativeNodes)
     return {
       nodes: operativeNodes,
-      links: this.operativeLinksIn(operativeNodes).concat(supportTpLinks)
+      links: this.operativeLinksIn(operativeNodes).concat(supportTpLinks),
+      grid: this.grid.toData()
     }
   }
 }

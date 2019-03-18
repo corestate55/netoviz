@@ -62,4 +62,8 @@ export default class GridOperator {
     }
     return this.nextOrdinalPosition()
   }
+
+  toData () {
+    return { x: this.xGrids, y: this.yGrids }
+  }
 }

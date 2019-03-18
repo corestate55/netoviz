@@ -4,9 +4,9 @@
     "y": [50, 300, 500]
   },
   "layout": {
-    "target-L3.5/GRT-vRT": { "i": 1, "j": 0 },
-    "target-L3.5/Seg.A": { "i": 0, "j": 1 },
-    "target-L3.5/Seg.B": { "i": 1, "j": 1 },
+    "target-L3/GRT-vRT": { "i": 1, "j": 0 },
+    "target-L3/Seg.A": { "i": 0, "j": 1 },
+    "target-L3/Seg.B": { "i": 1, "j": 1 },
     "target-L3/Seg.C": {"i": 2, "j": 1 },
     "target-L3/VM1": { "i": 0, "j": 2 },
     "target-L3/VM2": { "i": 1, "j": 2 },
