@@ -4,6 +4,5 @@ export default class NestedGraphConstants {
     this.nodeYPad = 20
     this.r = 10
     this.tpInterval = 10
-    this.initialGridInterval = 400
   }
 }

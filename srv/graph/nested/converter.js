@@ -1,8 +1,8 @@
 import NestedGraph from './graph'
 
 export default class NestedGraphConverter {
-  constructor (graphData) {
-    this.nestedGraph = new NestedGraph(graphData)
+  constructor (graphData, layoutData) {
+    this.nestedGraph = new NestedGraph(graphData, layoutData)
   }
 
   toData () {

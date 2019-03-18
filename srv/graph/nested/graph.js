@@ -4,12 +4,12 @@ import NestedGraphNode from './node'
 import NestedGraphLink from './link'
 
 export default class NestedGraph extends NestedGraphConstants {
-  constructor (graphData) {
+  constructor (graphData, layoutData) {
     super()
     this.setNodes(graphData)
     this.setLinks(graphData)
     this.setRootNodes()
-    this.grid = new GridOperator(4, 4, this.initialGridInterval)
+    this.grid = new GridOperator(layoutData)
     this.culcRootNodePosition()
   }
 
@@ -41,10 +41,9 @@ export default class NestedGraph extends NestedGraphConstants {
 
   culcRootNodePosition () {
     for (const rootNode of this.rootNodes) {
-      const baseOrdinalPosition = this.grid.nextOrdinalPosition()
-      const basePosition = this.grid.positionByOrdinal(baseOrdinalPosition)
-      rootNode.setGridPosition(baseOrdinalPosition)
-      this.culcNodePosition(rootNode, basePosition)
+      const ordinalPosition = this.grid.ordinalPositionByNodePath(rootNode.path)
+      rootNode.setGridPosition(ordinalPosition)
+      this.culcNodePosition(rootNode, this.grid.positionByOrdinal(ordinalPosition))
     }
   }
 

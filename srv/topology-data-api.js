@@ -89,9 +89,24 @@ export default class TopoogyDataAPI {
     return JSON.stringify(depGraphConverter.toData())
   }
 
+  async readLayoutJsonOf (jsonName) {
+    try {
+      const baseName = jsonName.split('.').shift()
+      const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
+      return await readFile(layoutJsonName, 'utf-8')
+    } catch (error) {
+      // layout file is optional.
+      // when error (not found the file), use default layout.
+      return '{ "error": true }'
+    }
+  }
+
   async convertNestedGraphData (jsonName) {
     const topoJsonString = await this.convertTopoGraphData(jsonName)
-    const nestedGraphConverter = new NestedGraphConverter(JSON.parse(topoJsonString))
+    const layoutJsonString = await this.readLayoutJsonOf(jsonName)
+    const nestedGraphConverter = new NestedGraphConverter(
+      JSON.parse(topoJsonString), JSON.parse(layoutJsonString)
+    )
     return JSON.stringify(nestedGraphConverter.toData())
   }
 
