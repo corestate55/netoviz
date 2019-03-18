@@ -16,27 +16,17 @@
         <AppSelectModel />
       </el-col>
     </el-row>
-    <el-row>
-      <el-col v-bind:span="3">
-        <div class="item">Layer</div>
-      </el-col>
-      <el-col v-bind:span="21">
-        <AppSelectLayer />
-      </el-col>
-    </el-row>
   </div>
 </template>
 
 <script>
 import AppSelectVisualizer from './AppSelectVisualizer'
 import AppSelectModel from './AppSelectModel'
-import AppSelectLayer from './AppSelectLayer'
 
 export default {
   components: {
     AppSelectVisualizer,
-    AppSelectModel,
-    AppSelectLayer
+    AppSelectModel
   }
 }
 </script>

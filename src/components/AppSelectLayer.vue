@@ -1,7 +1,6 @@
 <template>
   <el-checkbox-group
     v-model="selectedLayers"
-    v-bind:disabled="useSingleDiagram"
     size="small"
   >
     <el-checkbox-button
@@ -21,9 +20,6 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['wholeLayers', 'visualizer']),
-    useSingleDiagram () {
-      return this.visualizer === 'Dependency' || this.visualizer === 'Nested'
-    },
     selectedLayers: {
       get () { return this.$store.getters.selectedLayers },
       set (value) { this.$store.commit('setSelectedLayers', value) }

@@ -1,5 +1,6 @@
 <template>
   <div id="visualizer">
+    <AppSelectLayer />
     <div  v-bind:style="{ display: debug }">
       <ul>
         <li>
@@ -22,10 +23,14 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import AppSelectLayer from './AppSelectLayer'
 import TopoGraphVisualizer from '../graph/topology/visualizer'
 import '../css/topology.scss'
 
 export default {
+  components: {
+    AppSelectLayer
+  },
   data () {
     return {
       visualizer: null,
