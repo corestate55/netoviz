@@ -37,8 +37,6 @@ export default app => {
 
   app.get('/graph/:graphName/:jsonName', async (req, res) => {
     res.type('json')
-    const graphName = req.params.graphName
-    const jsonName = req.params.jsonName
-    res.send(await topoDataAPI.callGraphData(graphName, jsonName))
+    res.send(await topoDataAPI.callGraphData(req))
   })
 }

@@ -1,14 +1,33 @@
 export default class NestedGraphNode {
-  constructor (nodeData) {
+  constructor (nodeData, reverse) {
     this.operative = false
     this.type = nodeData.type
     this.name = nodeData.name
     this.path = nodeData.path
     this.id = nodeData.id
-    this.parents = nodeData.parents
-    this.children = nodeData.children
+    this.setFamilyRelation(nodeData, reverse)
     // this.attribute = nodeData.attribute
     // this.diffState = nodeData.diffState
+  }
+
+  setFamilyRelation (nodeData, reverse) {
+    this.parents = nodeData.parents
+    this.children = nodeData.children
+    if (reverse) {
+      if (this.type === 'node') {
+        const tps = this.tpPathsInParents()
+        const childNodes = this.childNodePaths()
+        const parentNodes = this.parentNodePaths()
+        this.parents = childNodes.concat(tps)
+        this.children = parentNodes
+      } else { // tp
+        const nodes = this.nodePathsInChildren()
+        const childTps = this.childTpPaths()
+        const parentTps = this.parentTpPaths()
+        this.parents = childTps.concat(nodes)
+        this.children = parentTps
+      }
+    }
   }
 
   isNode () {
@@ -31,12 +50,16 @@ export default class NestedGraphNode {
     return !this.matchTpPath(path) && path.match(/.+\/.+/)
   }
 
-  tpPaths () {
+  tpPathsInParents () {
     return this.filterTpPath(this.parents)
   }
 
+  nodePathsInChildren () {
+    return this.filterNodePath(this.children)
+  }
+
   numberOfTps () {
-    return this.tpPaths().length
+    return this.tpPathsInParents().length
   }
 
   parentNodePaths () {

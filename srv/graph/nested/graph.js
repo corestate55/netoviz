@@ -4,20 +4,25 @@ import NestedGraphNode from './node'
 import NestedGraphLink from './link'
 
 export default class NestedGraph extends NestedGraphConstants {
-  constructor (graphData, layoutData) {
+  constructor (graphData, layoutData, reverse) {
     super()
-    this.setNodes(graphData)
+    this.setGrid(layoutData, reverse)
+    this.setNodes(graphData, reverse)
     this.setLinks(graphData)
     this.setRootNodes()
-    this.grid = new GridOperator(layoutData)
     this.culcRootNodePosition()
   }
 
-  setNodes (graphData) {
+  setGrid (layoutData, reverse) {
+    const selectedLayoutData = reverse ? layoutData.reverse : layoutData.standard
+    this.grid = new GridOperator(selectedLayoutData)
+  }
+
+  setNodes (graphData, reverse) {
     this.nodes = []
     for (const layer of graphData) {
       for (const node of layer.nodes) {
-        this.nodes.push(new NestedGraphNode(node))
+        this.nodes.push(new NestedGraphNode(node, reverse))
       }
     }
   }
@@ -129,7 +134,7 @@ export default class NestedGraph extends NestedGraphConstants {
   culcTpPosition (node, basePosition) {
     let cx11 = basePosition.x + this.nodeXPad + this.r
     const cy1x = basePosition.y + this.nodeYPad + this.r
-    for (const tpPath of node.tpPaths()) {
+    for (const tpPath of node.tpPathsInParents()) {
       const tp = this.findNodeByPath(tpPath)
       tp.setCircle(cx11, cy1x, this.r)
       cx11 += this.r * 2 + this.tpInterval

@@ -89,7 +89,7 @@ export default class TopoogyDataAPI {
     return JSON.stringify(depGraphConverter.toData())
   }
 
-  async readLayoutJsonOf (jsonName) {
+  async readLayoutJSONOf (jsonName) {
     try {
       const baseName = jsonName.split('.').shift()
       const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
@@ -97,27 +97,35 @@ export default class TopoogyDataAPI {
     } catch (error) {
       // layout file is optional.
       // when error (not found the file), use default layout.
-      return '{ "error": true }'
+      const errorLayoutData = {
+        reverse: { error: true },
+        standard: { error: true }
+      }
+      return JSON.stringify(errorLayoutData)
     }
   }
 
-  async convertNestedGraphData (jsonName) {
+  async convertNestedGraphData (jsonName, reverse) {
     const topoJsonString = await this.convertTopoGraphData(jsonName)
-    const layoutJsonString = await this.readLayoutJsonOf(jsonName)
+    const layoutJsonString = await this.readLayoutJSONOf(jsonName)
     const nestedGraphConverter = new NestedGraphConverter(
-      JSON.parse(topoJsonString), JSON.parse(layoutJsonString)
+      JSON.parse(topoJsonString), JSON.parse(layoutJsonString), reverse
     )
     return JSON.stringify(nestedGraphConverter.toData())
   }
 
-  async callGraphData (graphName, jsonName) {
+  async callGraphData (req) {
+    const graphName = req.params.graphName
+    const jsonName = req.params.jsonName
     try {
       if (graphName === 'topology') {
         return await this.convertTopoGraphData(jsonName)
       } else if (graphName === 'dependency') {
         return await this.convertDependencyGraphData(jsonName)
       } else if (graphName === 'nested') {
-        return await this.convertNestedGraphData(jsonName)
+        const reverse = req.query.reverse === 'true'
+        console.log('call nested: reverse =', reverse)
+        return await this.convertNestedGraphData(jsonName, reverse)
       }
     } catch (error) {
       throw error
