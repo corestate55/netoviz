@@ -1,5 +1,6 @@
 import { select } from 'd3-selection'
 import BaseContainer from '../../../srv/graph/base'
+import InterTpLinkCreator from './link-creator'
 
 export default class SingleNestedVisualizer extends BaseContainer {
   constructor () {
@@ -58,6 +59,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('x2', 2000)
       .attr('y2', d => d)
 
+    // node
     this.svgGrp.selectAll('rect')
       .data(nodes)
       .enter()
@@ -67,26 +69,32 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('y', d => d.y)
       .attr('width', d => d.width)
       .attr('height', d => d.height)
+      .attr('rx', 5)
+      .attr('ry', 5)
       .append('title')
       .text(d => d.path)
 
-    const findNode = (d, id, axis) => {
-      const n = graphData.nodes.find(node => node.id === d[id])
-      return n.type === 'node' ? n[axis] : n['c' + axis]
-    }
+    // lines
+    const linkCreator = new InterTpLinkCreator(graphData)
+    this.svgGrp.selectAll('line.support-tp')
+      .data(linkCreator.supportTpLinks())
+      .enter()
+      .append('line')
+      .attr('class', d => d.type)
+      .attr('x1', d => d.x1)
+      .attr('y1', d => d.y1)
+      .attr('x2', d => d.x2)
+      .attr('y2', d => d.y2)
 
-    for (const linkClass of ['tp-tp', 'support-tp']) {
-      this.svgGrp.selectAll(`line.${linkClass}`)
-        .data(graphData.links.filter(d => d.type === linkClass))
-        .enter()
-        .append('line')
-        .attr('class', d => d.type)
-        .attr('x1', d => findNode(d, 'sourceId', 'x'))
-        .attr('y1', d => findNode(d, 'sourceId', 'y'))
-        .attr('x2', d => findNode(d, 'targetId', 'x'))
-        .attr('y2', d => findNode(d, 'targetId', 'y'))
-    }
+    this.svgGrp.selectAll('polyline.tp-tp')
+      .data(linkCreator.tpTpLinks())
+      .enter()
+      .append('polyline')
+      .attr('class', d => d.type)
+      .attr('id', d => d.path)
+      .attr('points', d => d.polylineString())
 
+    // tp
     this.svgGrp.selectAll('circle')
       .data(tps)
       .enter()
@@ -98,6 +106,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('title')
       .text(d => d.path)
 
+    // node label
     this.svgGrp.selectAll('text.node')
       .data(nodes)
       .enter()
@@ -108,6 +117,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('alignment-baseline', 'hanging')
       .text(d => d.name)
 
+    // tp label
     this.svgGrp.selectAll('text.tp')
       .data(tps)
       .enter()

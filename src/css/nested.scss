@@ -5,7 +5,7 @@ rect {
 }
 
 circle {
-  fill: #CEE3F6;
+  fill: darkcyan;
   stroke: none;
 }
 
@@ -15,14 +15,9 @@ text {
 }
 
 line {
-  &.tp-tp {
-    stroke: #CEE3F6;
-    stroke-width: 4pt;
-    stroke-opacity: 0.3;
-  }
   &.support-tp {
     stroke: lightcoral;
-    stroke-width: 4pt;
+    stroke-width: 2pt;
     stroke-opacity: 0.3;
   }
   &.grid-x {
@@ -34,5 +29,15 @@ line {
     stroke: mediumspringgreen;
     stroke-width: 1pt;
     stroke-dasharray: 5;
+  }
+}
+
+polyline {
+  fill: none;
+  &.tp-tp {
+    stroke: #CEE3F6;
+    stroke-width: 4pt;
+    stroke-opacity: 0.3;
+    stroke-linejoin: round;
   }
 }
