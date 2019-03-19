@@ -3,7 +3,7 @@
 import OperationalVisualizer from './operational-visualizer'
 import PositionCache from './position-cache'
 import { select } from 'd3-selection'
-import { json } from 'd3-request'
+import { json } from 'd3-fetch'
 import { interval } from 'd3-timer'
 import BaseContainer from '../../../srv/graph/base'
 
@@ -15,10 +15,7 @@ export default class GraphVisualizer extends BaseContainer {
   }
 
   drawJsonModel (jsonName) {
-    json(`graph/topology/${jsonName}`, (error, graphData) => {
-      if (error) {
-        throw error
-      }
+    json(`graph/topology/${jsonName}`).then((graphData) => {
       // graph object data to draw converted from topology json
       this.graphs = graphData
 
@@ -32,6 +29,8 @@ export default class GraphVisualizer extends BaseContainer {
       }, 5000)
       // draw
       this.drawGraphs()
+    }, (error) => {
+      throw error
     })
   }
 
