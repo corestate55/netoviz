@@ -35,9 +35,9 @@ line {
 polyline {
   fill: none;
   &.tp-tp {
-    stroke: #CEE3F6;
-    stroke-width: 4pt;
-    stroke-opacity: 0.3;
+    stroke: gray;
+    stroke-width: 2pt;
+    stroke-opacity: 0.6;
     stroke-linejoin: round;
   }
 }

@@ -30,9 +30,15 @@ export default class NestedGraph extends NestedGraphConstants {
   setLinks (graphData) {
     this.links = []
     for (const layer of graphData) {
-      this.links = this.links.concat(
-        layer.links.map(d => new NestedGraphLink(d))
-      )
+      for (const link of layer.links) {
+        const foundReverse = this.links.find(d => {
+          return d.sourceId === link.targetId && d.targetId === link.sourceId
+        })
+        // filter (discard) reverse link of bi-directional link for visualizer
+        if (!foundReverse) {
+          this.links.push(new NestedGraphLink(link))
+        }
+      }
     }
   }
 
