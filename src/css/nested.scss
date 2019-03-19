@@ -5,8 +5,20 @@ rect {
 }
 
 circle {
-  fill: darkcyan;
-  stroke: none;
+  &.tp {
+    fill: darkcyan;
+    stroke: none;
+  }
+  &.grid-x-handle {
+    fill: greenyellow;
+    fill-opacity: 0.5;
+    stroke: none;
+  }
+  &.grid-y-handle {
+    fill: mediumspringgreen;
+    fill-opacity: 0.5;
+    stroke: none;
+  }
 }
 
 text {
