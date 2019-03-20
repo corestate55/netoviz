@@ -164,6 +164,36 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
         .on('end', dragEnded))
   }
 
+  clearLinkSlectHighlight () {
+    this.svgGrp.selectAll('.checked')
+      .classed('checked', false)
+  }
+
+  setLinkSelectHandler () {
+    const click = (d) => {
+      console.log('clicked: ', d.path)
+      this.clearLinkSlectHighlight()
+      const links = this.graphData.links.filter(line => {
+        return line.sourcePath === d.path || line.targetPath === d.path
+      })
+      for (const link of links) {
+        this.svgGrp.select(`circle[id='${link.sourcePath}']`)
+          .classed('checked', true)
+        this.svgGrp.select(`circle[id='${link.targetPath}']`)
+          .classed('checked', true)
+        let linkSelector = `line[id='${link.path}']`
+
+        if (link.type === 'tp-tp') {
+          linkSelector = `polyline[id='${link.path}']`
+        }
+        this.svgGrp.select(linkSelector)
+          .classed('checked', true)
+      }
+    }
+    this.svgGrp.selectAll('circle.tp')
+      .on('click', click)
+  }
+
   setSVGZoom () {
     this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])
@@ -176,6 +206,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     this.graphData = graphData
     this.setXGridHandler()
     this.setYGridHandler()
+    this.setLinkSelectHandler()
     this.setSVGZoom()
   }
 }

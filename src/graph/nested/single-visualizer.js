@@ -150,6 +150,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .enter()
       .append('line')
       .attr('class', d => `nest  ${d.type}`)
+      .attr('id', d => d.path)
       .attr('x1', d => d.x1)
       .attr('y1', d => d.y1)
       .attr('x2', d => d.x2)

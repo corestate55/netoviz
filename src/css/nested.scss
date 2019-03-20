@@ -19,6 +19,9 @@ circle.nest {
     fill-opacity: 0.8;
     stroke: none;
   }
+  &.checked {
+    fill: palevioletred;
+  }
 }
 
 text.nest {
@@ -42,7 +45,7 @@ text.nest {
 
 line.nest {
   &.support-tp {
-    stroke: lightcoral;
+    stroke: darkorange;
     stroke-width: 2pt;
     stroke-opacity: 0.3;
   }
@@ -56,6 +59,11 @@ line.nest {
     stroke-width: 1pt;
     stroke-dasharray: 5;
   }
+  &.checked {
+    stroke-width: 5pt;
+    stroke: #FE7367;
+    stroke-opacity: 0.5;
+  }
 }
 
 polyline.nest {
@@ -65,5 +73,10 @@ polyline.nest {
     stroke-width: 2pt;
     stroke-opacity: 0.6;
     stroke-linejoin: round;
+  }
+  &.checked {
+    stroke-width: 5pt;
+    stroke: #FE7367;
+    stroke-opacity: 0.5;
   }
 }
