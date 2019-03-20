@@ -167,7 +167,7 @@ export default class NestedGraph extends NestedGraphConstants {
         const name = `${tp.linkPath()},${childTp.linkPath()}`
         supportTpLinks.push({
           name: name,
-          path: `inter-layer/${name}`,
+          path: `${tp.layer()},${childTp.layer()}/${name}`,
           type: 'support-tp',
           sourcePath: tp.path,
           targetPath: childTpPath,

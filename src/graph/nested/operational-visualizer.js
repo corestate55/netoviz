@@ -177,12 +177,13 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
         return line.sourcePath === d.path || line.targetPath === d.path
       })
       for (const link of links) {
+        console.log(link)
         this.svgGrp.select(`circle[id='${link.sourcePath}']`)
           .classed('checked', true)
         this.svgGrp.select(`circle[id='${link.targetPath}']`)
           .classed('checked', true)
-        let linkSelector = `line[id='${link.path}']`
 
+        let linkSelector = `line[id='${link.path}']`
         if (link.type === 'tp-tp') {
           linkSelector = `polyline[id='${link.path}']`
         }

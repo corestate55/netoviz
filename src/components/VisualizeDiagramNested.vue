@@ -63,6 +63,7 @@ export default {
   },
   beforeDestroy () {
     console.log('[nested] before destroy')
+    delete this.visualizer
     this.unwatchModelFile()
   }
 }

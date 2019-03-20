@@ -119,4 +119,8 @@ export default class NestedGraphNode {
   setGridPosition (ordinalPosition) {
     this.grid = ordinalPosition // { i: N, j:M }
   }
+
+  layer () {
+    return this.path.split('/').shift()
+  }
 }
