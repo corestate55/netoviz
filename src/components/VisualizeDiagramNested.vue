@@ -31,7 +31,7 @@ export default {
       visualizer: null,
       reverse: true,
       unwatchModelFile: null,
-      debug: 'block' // 'none' or 'block' to appear debug container
+      debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   computed: {

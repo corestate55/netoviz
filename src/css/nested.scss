@@ -1,32 +1,46 @@
-rect {
+rect.nest {
   fill: ivory;
   fill-opacity: 0.4;
   stroke: gray;
 }
 
-circle {
+circle.nest {
   &.tp {
     fill: darkcyan;
     stroke: none;
   }
   &.grid-x-handle {
     fill: greenyellow;
-    fill-opacity: 0.5;
+    fill-opacity: 0.8;
     stroke: none;
   }
   &.grid-y-handle {
     fill: mediumspringgreen;
-    fill-opacity: 0.5;
+    fill-opacity: 0.8;
     stroke: none;
   }
 }
 
-text {
+text.nest {
   fill: #303030;
   font-size: 10pt;
+  &.node {
+    dominant-baseline: hanging;
+  }
+  &.tp {
+    text-anchor: middle;
+    dominant-baseline: hanging;
+  }
+  &.grid-x-handle, &.grid-y-handle {
+    text-anchor: middle;
+    dominant-baseline: central;
+    fill: white;
+    font-weight: bold;
+    font-size: 15pt;
+  }
 }
 
-line {
+line.nest {
   &.support-tp {
     stroke: lightcoral;
     stroke-width: 2pt;
@@ -44,7 +58,7 @@ line {
   }
 }
 
-polyline {
+polyline.nest {
   fill: none;
   &.tp-tp {
     stroke: gray;

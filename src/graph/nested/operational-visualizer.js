@@ -8,13 +8,10 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   findTargetRootNodes (i, j) {
     // -1 in arg is ignored
     return this.graphData.nodes
-      .filter(node => node.type === 'node')
       .filter(node => {
-        if (node.grid) { // only root node has attr:grid
-          return (i >= 0 && node.grid.i === i) ||
-            (j >= 0 && node.grid.j === j)
-        }
-        return false
+        return node.grid && // only root node has attr:grid
+          ((i >= 0 && node.grid.i === i) ||
+            (j >= 0 && node.grid.j === j))
       })
   }
 
@@ -24,7 +21,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       .attr('y', rootNode.y)
     this.svgGrp.select(`text[id='${rootNode.path}']`) // label
       .attr('x', rootNode.x)
-      .attr('y', rootNode.y)
+      .attr('y', rootNode.y + rootNode.height)
   }
 
   tpsInNode (node) {
@@ -95,6 +92,8 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       .attr('x2', d.position)
     this.svgGrp.select(`circle#grid-x${i}-handle`)
       .attr('cx', d.position)
+    this.svgGrp.select(`text#grid-x${i}-label`)
+      .attr('x', d.position)
   }
 
   setXGridHandler () {
@@ -118,16 +117,22 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       .call(drag()
         .on('start', dragStarted)
         .on('drag', dragged)
-        .on('end', dragEnded)
-      )
+        .on('end', dragEnded))
+    this.svgGrp.selectAll('text.grid-x-handle')
+      .call(drag()
+        .on('start', dragStarted)
+        .on('drag', dragged)
+        .on('end', dragEnded))
   }
 
-  updatetYGridLine (d, i) {
+  updateYGridLine (d, i) {
     this.svgGrp.select(`line#grid-y${i}`)
       .attr('y1', d.position)
       .attr('y2', d.position)
     this.svgGrp.select(`circle#grid-y${i}-handle`)
       .attr('cy', d.position)
+    this.svgGrp.select(`text#grid-y${i}-label`)
+      .attr('y', d.position)
   }
 
   setYGridHandler () {
@@ -137,7 +142,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     }
     const dragged = (d, i) => {
       d.position = event.y
-      this.updatetYGridLine(d, i)
+      this.updateYGridLine(d, i)
     }
     const dragEnded = (d) => {
       d.position = event.y
@@ -147,12 +152,16 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       this.redrawLinkLines()
     }
 
-    this.svgGrp.selectAll('circle.grid-y-handle')
+    this.svgGrp.selectAll('.grid-y-handle')
       .call(drag()
         .on('start', dragStarted)
         .on('drag', dragged)
-        .on('end', dragEnded)
-      )
+        .on('end', dragEnded))
+    this.svgGrp.selectAll('text.grid-y-handle')
+      .call(drag()
+        .on('start', dragStarted)
+        .on('drag', dragged)
+        .on('end', dragEnded))
   }
 
   setSVGZoom () {

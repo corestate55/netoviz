@@ -35,54 +35,96 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('id', 'whole-dep-graph')
   }
 
-  makeXGrids (xGridData) {
-    const xGrids = xGridData.map((d, i) => {
-      return { position: d, index: i }
-    })
-    this.svgGrp.selectAll('line.grid-x')
-      .data(xGrids)
-      .enter()
-      .append('line')
-      .attr('class', 'grid-x')
-      .attr('id', d => `grid-x${d.index}`)
-      .attr('x1', d => d.position)
-      .attr('y1', this.gridStart)
-      .attr('x2', d => d.position)
-      .attr('y2', this.gridEnd)
+  makeXGridHandles (xGrids) {
     this.svgGrp.selectAll('circle.grid-x-handle')
       .data(xGrids)
       .enter()
       .append('circle')
-      .attr('class', 'grid-x-handle')
+      .attr('class', 'nest grid-x-handle')
       .attr('id', d => `grid-x${d.index}-handle`)
       .attr('cx', d => d.position)
       .attr('cy', this.gridStart)
       .attr('r', this.gridHandleRadius)
   }
 
-  makeYGrids (yGridData) {
-    const yGrids = yGridData.map((d, i) => {
+  makeXGridLabels (xGrids) {
+    this.svgGrp.selectAll('text.grid-x-handle')
+      .data(xGrids)
+      .enter()
+      .append('text')
+      .attr('class', 'nest grid-x-handle')
+      .attr('id', d => `grid-x${d.index}-label`)
+      .attr('x', d => d.position)
+      .attr('y', this.gridStart)
+      .text(d => d.index)
+  }
+
+  makeXGridLines (xGrids) {
+    this.svgGrp.selectAll('line.grid-x')
+      .data(xGrids)
+      .enter()
+      .append('line')
+      .attr('class', 'nest grid-x')
+      .attr('id', d => `grid-x${d.index}`)
+      .attr('x1', d => d.position)
+      .attr('y1', this.gridStart)
+      .attr('x2', d => d.position)
+      .attr('y2', this.gridEnd)
+  }
+
+  makeXGrids (xGridData) {
+    const xGrids = xGridData.map((d, i) => {
       return { position: d, index: i }
     })
+    this.makeXGridLines(xGrids)
+    this.makeXGridHandles(xGrids)
+    this.makeXGridLabels(xGrids)
+  }
+
+  makeYGridHandles (yGrids) {
+    this.svgGrp.selectAll('circle.grid-y-handle')
+      .data(yGrids)
+      .enter()
+      .append('circle')
+      .attr('class', 'nest grid-y-handle')
+      .attr('id', d => `grid-y${d.index}-handle`)
+      .attr('cx', this.gridStart)
+      .attr('cy', d => d.position)
+      .attr('r', this.gridHandleRadius)
+  }
+
+  makeYGridLabels (yGrids) {
+    this.svgGrp.selectAll('text.grid-y-handle')
+      .data(yGrids)
+      .enter()
+      .append('text')
+      .attr('class', 'nest grid-y-handle')
+      .attr('id', d => `grid-y${d.index}-label`)
+      .attr('x', this.gridStart)
+      .attr('y', d => d.position)
+      .text(d => d.index)
+  }
+
+  makeYGridLines (yGrids) {
     this.svgGrp.selectAll('line.grid-y')
       .data(yGrids)
       .enter()
       .append('line')
-      .attr('class', 'grid-y')
+      .attr('class', 'nest grid-y')
       .attr('id', (d) => `grid-y${d.index}`)
       .attr('x1', this.gridStart)
       .attr('y1', d => d.position)
       .attr('x2', this.gridEnd)
       .attr('y2', d => d.position)
-    this.svgGrp.selectAll('circle.grid-y-handle')
-      .data(yGrids)
-      .enter()
-      .append('circle')
-      .attr('class', 'grid-y-handle')
-      .attr('id', d => `grid-y${d.index}-handle`)
-      .attr('cx', this.gridStart)
-      .attr('cy', d => d.position)
-      .attr('r', this.gridHandleRadius)
+  }
+
+  makeYGrids (yGridData) {
+    const yGrids = yGridData.map((d, i) => {
+      return { position: d, index: i }
+    })
+    this.makeYGridLines(yGrids)
+    this.makeYGridHandles(yGrids)
+    this.makeYGridLabels(yGrids)
   }
 
   makeNodes (nodes) {
@@ -90,7 +132,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(nodes)
       .enter()
       .append('rect')
-      .attr('class', 'node')
+      .attr('class', 'nest node')
       .attr('id', d => d.path)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
@@ -107,7 +149,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(supportTpLinks)
       .enter()
       .append('line')
-      .attr('class', d => d.type)
+      .attr('class', d => `nest  ${d.type}`)
       .attr('x1', d => d.x1)
       .attr('y1', d => d.y1)
       .attr('x2', d => d.x2)
@@ -119,7 +161,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(tpTpLinks)
       .enter()
       .append('polyline')
-      .attr('class', d => d.type)
+      .attr('class', d => `nest ${d.type}`)
       .attr('id', d => d.path)
       .attr('points', d => d.polylineString())
   }
@@ -129,7 +171,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(tps)
       .enter()
       .append('circle')
-      .attr('class', 'tp')
+      .attr('class', 'nest tp')
       .attr('id', d => d.path)
       .attr('cx', d => d.cx)
       .attr('cy', d => d.cy)
@@ -143,11 +185,10 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(nodes)
       .enter()
       .append('text')
-      .attr('class', 'node')
+      .attr('class', 'nest node')
       .attr('id', d => d.path)
       .attr('x', d => d.x)
       .attr('y', d => d.y + d.height)
-      .attr('alignment-baseline', 'hanging')
       .text(d => d.name)
   }
 
@@ -156,12 +197,11 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(tps)
       .enter()
       .append('text')
-      .attr('class', 'tp')
+      .attr('class', 'nest tp')
       .attr('id', d => d.path)
       .attr('x', d => d.cx)
-      .attr('y', d => d.cy + d.r)
-      .attr('text-anchor', 'middle')
-      .attr('alignment-baseline', 'hanging')
+      .attr('y', d => d.cy)
+      .attr('dy', d => d.r)
       .text(d => d.name)
   }
 
