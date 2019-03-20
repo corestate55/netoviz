@@ -194,9 +194,14 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   setSVGZoom () {
+    // fot to grid line size
+    const zoomRatio = (this.gridEnd - this.gridStart) / Math.max(this.width, this.height)
     this.svg.call(zoom()
-      .scaleExtent([1 / 4, 5])
-      .translateExtent([[-150, -150], [2000, 2000]])
+      .scaleExtent([1 / zoomRatio, 4])
+      .translateExtent([
+        [this.gridStart * 1.5, this.gridStart * 1.5],
+        [this.gridEnd, this.gridEnd]
+      ])
       .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
   }
