@@ -30,6 +30,7 @@ export default {
     return {
       visualizer: null,
       reverse: true,
+      unwatchAlert: null,
       unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -46,6 +47,16 @@ export default {
       if (this.modelFile) {
         this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow, this.reverse)
       }
+    },
+    clearAllHighlight () {
+      this.visualizer.clearAllAlertHighlight()
+    },
+    highlightByAlert (alertRow) {
+      if (alertRow) {
+        this.visualizer.highlightByAlert(alertRow)
+      } else {
+        this.clearAllHighlight()
+      }
     }
   },
   mounted () {
@@ -53,10 +64,18 @@ export default {
     this.visualizer = new NestedGraphVisualizer()
     this.drawJsonModel()
 
+    this.unwatchAlert = this.$store.watch(
+      state => state.currentAlertRow,
+      (newRow, oldRow) => {
+        this.clearAllHighlight()
+        this.highlightByAlert(newRow)
+      }
+    )
     this.unwatchModelFile = this.$store.watch(
       state => state.modelFile,
       (newModelFile, oldModelFile) => {
         console.log(`[nested] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        this.clearAllHighlight()
         this.drawJsonModel()
       }
     )
@@ -64,6 +83,7 @@ export default {
   beforeDestroy () {
     console.log('[nested] before destroy')
     delete this.visualizer
+    this.unwatchAlert()
     this.unwatchModelFile()
   }
 }

@@ -15,7 +15,7 @@ export default class DepGraphVisualizer extends OperationalDepGraphVisualizer {
 
   highlightByAlert (alert) {
     // this.graphData = json data
-    // assign at this.setOperationhandler()
+    // assign at this.setOperationHandler()
     if (!alert || !this.graphData) {
       return
     }

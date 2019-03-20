@@ -171,13 +171,11 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   setLinkSelectHandler () {
     const click = (d) => {
-      console.log('clicked: ', d.path)
       this.clearLinkSlectHighlight()
       const links = this.graphData.links.filter(line => {
         return line.sourcePath === d.path || line.targetPath === d.path
       })
       for (const link of links) {
-        console.log(link)
         this.svgGrp.select(`circle[id='${link.sourcePath}']`)
           .classed('checked', true)
         this.svgGrp.select(`circle[id='${link.targetPath}']`)

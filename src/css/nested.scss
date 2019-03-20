@@ -2,6 +2,11 @@ rect.nest {
   fill: ivory;
   fill-opacity: 0.4;
   stroke: gray;
+  &.selected {
+    stroke: #FE7367;
+    stroke-width: 4px;
+    fill: palevioletred;
+  }
 }
 
 circle.nest {
@@ -20,6 +25,11 @@ circle.nest {
     stroke: none;
   }
   &.checked {
+    fill: #58FAF4;
+  }
+  &.selected {
+    stroke: #FE7367;
+    stroke-width: 4px;
     fill: palevioletred;
   }
 }
@@ -41,6 +51,12 @@ text.nest {
     font-weight: bold;
     font-size: 15pt;
   }
+  &.warning {
+    fill: red;
+    fill-opacity: 0.5;
+    font-size: 12pt;
+    font-weight: bold;
+  }
 }
 
 line.nest {
@@ -61,7 +77,7 @@ line.nest {
   }
   &.checked {
     stroke-width: 5pt;
-    stroke: #FE7367;
+    stroke: #5E92F2;
     stroke-opacity: 0.5;
   }
 }
@@ -76,7 +92,7 @@ polyline.nest {
   }
   &.checked {
     stroke-width: 5pt;
-    stroke: #FE7367;
+    stroke: #5E92F2;
     stroke-opacity: 0.5;
   }
 }
