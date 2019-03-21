@@ -127,25 +127,29 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.makeYGridLabels(yGrids)
   }
 
+  layerOf (node) {
+    return node.path.split('/').shift()
+  }
+
+  colorOfNode (node) {
+    return this.colorTable[this.layerOf(node)]
+  }
+
   makeColorTable (nodes) {
     const colors = [
-      '#d5e5d5',
       '#e1f1e0',
-      '#e3e9c2',
+      '#d5e5d5',
+      '#F9FBB2',
       '#F8FCDA',
-      '#F9FBB2'
+      '#e3e9c2'
     ]
     let colorTable = {}
-    const layerNameList = nodes.map(node => node.path.split('/').shift())
+    const layerNameList = nodes.map(node => this.layerOf(node))
     Array.from(new Set(layerNameList)) // Array.uniq
       .forEach((d, i) => {
         colorTable[d] = colors[i % colors.length]
       })
     return colorTable
-  }
-
-  colorOfNode (node) {
-    return this.colorTable[node.path.split('/').shift()]
   }
 
   makeNodes (nodes) {

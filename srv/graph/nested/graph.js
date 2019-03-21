@@ -54,6 +54,7 @@ export default class NestedGraph extends NestedGraphConstants {
   culcRootNodePosition () {
     for (const rootNode of this.rootNodes) {
       const ordinalPosition = this.grid.ordinalPositionByNodePath(rootNode.path)
+      // only root node has grid information
       rootNode.setGridPosition(ordinalPosition)
       this.culcNodePosition(rootNode, this.grid.positionByOrdinal(ordinalPosition))
     }

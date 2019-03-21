@@ -1,36 +1,46 @@
+$grid_x_color: limegreen;
+$grid_y_color: mediumspringgreen;
+
+$selected_fill_color: palevioletred;
+$selected_stroke_color: #FE7367;
+$checked_stroke_color: cyan;
+$checked_fill_color: cyan;
+
+$tp_fill_color: #7C7354;
+
 rect.nest {
   fill: none;
   &.selected {
-    stroke: #FE7367;
+    stroke: $selected_stroke_color;
     stroke-width: 8px;
     stroke-opacity: 0.8;
-    fill: palevioletred;
+    fill: $selected_fill_color;
     fill-opacity: 0.4;
   }
 }
 
 circle.nest {
   &.tp {
-    fill: #7C7354;
+    fill: $tp_fill_color;
     stroke: none;
   }
   &.grid-x-handle {
-    fill: greenyellow;
+    fill: $grid_x_color;
     fill-opacity: 0.8;
     stroke: none;
   }
   &.grid-y-handle {
-    fill: mediumspringgreen;
+    fill: $grid_y_color;
     fill-opacity: 0.8;
     stroke: none;
   }
   &.checked {
-    fill: #58FAF4;
+    fill: $checked_fill_color;
   }
   &.selected {
-    stroke: #FE7367;
+    stroke: $selected_stroke_color;
     stroke-width: 4px;
-    fill: palevioletred;
+    fill: $selected_fill_color;
   }
 }
 
@@ -61,23 +71,23 @@ text.nest {
 
 line.nest {
   &.support-tp {
-    stroke: darkorange;
+    stroke: orange;
     stroke-width: 2pt;
-    stroke-opacity: 0.3;
+    stroke-opacity: 0.8;
   }
   &.grid-x {
-    stroke: greenyellow;
+    stroke: $grid_x_color;
     stroke-width: 1pt;
     stroke-dasharray: 5;
   }
   &.grid-y {
-    stroke: mediumspringgreen;
+    stroke: $grid_y_color;
     stroke-width: 1pt;
     stroke-dasharray: 5;
   }
   &.checked {
     stroke-width: 5pt;
-    stroke: #5E92F2;
+    stroke: $checked_stroke_color;
     stroke-opacity: 0.5;
   }
 }
@@ -85,14 +95,14 @@ line.nest {
 polyline.nest {
   fill: none;
   &.tp-tp {
-    stroke: gray;
+    stroke: $tp_fill_color;
     stroke-width: 2pt;
     stroke-opacity: 0.6;
     stroke-linejoin: round;
   }
   &.checked {
     stroke-width: 5pt;
-    stroke: #5E92F2;
+    stroke: $checked_stroke_color;
     stroke-opacity: 0.5;
   }
 }
