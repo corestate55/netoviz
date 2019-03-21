@@ -2620,7 +2620,19 @@
             "node-id": "Seg.A",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "p0"
+                "tp-id": "p0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "Seg.A",
+                    "tp-ref": "p1"
+                  },
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "Seg.A",
+                    "tp-ref": "p2"
+                  }
+                ]
               }
             ],
             "supporting-node": [
@@ -2634,7 +2646,19 @@
             "node-id": "Seg.B",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "p0"
+                "tp-id": "p0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "Seg.B",
+                    "tp-ref": "p1"
+                  },
+                  {
+                    "network-ref": "target-L3",
+                    "node-ref": "Seg.B",
+                    "tp-ref": "p2"
+                  }
+                ]
               }
             ],
             "supporting-node": [
