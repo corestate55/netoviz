@@ -1,17 +1,17 @@
 rect.nest {
-  fill: ivory;
-  fill-opacity: 0.4;
-  stroke: gray;
+  fill: none;
   &.selected {
     stroke: #FE7367;
-    stroke-width: 4px;
+    stroke-width: 8px;
+    stroke-opacity: 0.8;
     fill: palevioletred;
+    fill-opacity: 0.4;
   }
 }
 
 circle.nest {
   &.tp {
-    fill: darkcyan;
+    fill: #7C7354;
     stroke: none;
   }
   &.grid-x-handle {

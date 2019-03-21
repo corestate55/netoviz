@@ -6,23 +6,24 @@ import NestedGraphLink from './link'
 export default class NestedGraph extends NestedGraphConstants {
   constructor (graphData, layoutData, reverse) {
     super()
-    this.setGrid(layoutData, reverse)
-    this.setNodes(graphData, reverse)
+    this.reverse = reverse
+    this.setGrid(layoutData)
+    this.setNodes(graphData)
     this.setLinks(graphData)
     this.setRootNodes()
     this.culcRootNodePosition()
   }
 
-  setGrid (layoutData, reverse) {
-    const selectedLayoutData = reverse ? layoutData.reverse : layoutData.standard
+  setGrid (layoutData) {
+    const selectedLayoutData = this.reverse ? layoutData.reverse : layoutData.standard
     this.grid = new GridOperator(selectedLayoutData)
   }
 
-  setNodes (graphData, reverse) {
+  setNodes (graphData) {
     this.nodes = []
     for (const layer of graphData) {
       for (const node of layer.nodes) {
-        this.nodes.push(new NestedGraphNode(node, reverse))
+        this.nodes.push(new NestedGraphNode(node, this.reverse))
       }
     }
   }
@@ -183,7 +184,11 @@ export default class NestedGraph extends NestedGraphConstants {
     const operativeNodes = this.operativeNodes()
     const supportTpLinks = this.makeSupportTpLinks(operativeNodes)
     return {
-      nodes: operativeNodes,
+      // nodes: key reverse check -> root node will be head of array
+      // because visualizer draws rectangles from head to tail of array,
+      // Outer of nest (Root) must be head of it.
+      // (make root/outer object at first, leaf/inner object over it.)
+      nodes: this.reverse ? operativeNodes : operativeNodes.reverse(),
       links: this.operativeLinksIn(operativeNodes).concat(supportTpLinks),
       grid: this.grid.toData()
     }

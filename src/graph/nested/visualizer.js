@@ -18,6 +18,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   clearAllAlertHighlight () {
     this.svgGrp.selectAll('.selected')
       .classed('selected', false)
+      .style('fill', d => this.colorOfNode(d))
   }
 
   highlight (node) {
@@ -29,6 +30,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     }
     this.svgGrp.selectAll(selector)
       .classed('selected', true)
+      .style('fill', null)
   }
 
   clearWarning () {

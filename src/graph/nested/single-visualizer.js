@@ -127,6 +127,27 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.makeYGridLabels(yGrids)
   }
 
+  makeColorTable (nodes) {
+    const colors = [
+      '#d5e5d5',
+      '#e1f1e0',
+      '#e3e9c2',
+      '#F8FCDA',
+      '#F9FBB2'
+    ]
+    let colorTable = {}
+    const layerNameList = nodes.map(node => node.path.split('/').shift())
+    Array.from(new Set(layerNameList)) // Array.uniq
+      .forEach((d, i) => {
+        colorTable[d] = colors[i % colors.length]
+      })
+    return colorTable
+  }
+
+  colorOfNode (node) {
+    return this.colorTable[node.path.split('/').shift()]
+  }
+
   makeNodes (nodes) {
     this.svgGrp.selectAll('rect.node')
       .data(nodes)
@@ -140,6 +161,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('height', d => d.height)
       .attr('rx', 5)
       .attr('ry', 5)
+      .style('fill', d => this.colorOfNode(d))
       .append('title')
       .text(d => d.path)
   }
@@ -214,6 +236,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.makeYGrids(graphData.grid.y)
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
+    this.colorTable = this.makeColorTable(nodes)
     this.makeNodes(nodes)
 
     const linkCreator = new InterTpLinkCreator(graphData)
