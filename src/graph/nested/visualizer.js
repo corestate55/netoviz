@@ -72,35 +72,37 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       .attr('x', d => d.x)
       .attr('y', d => d.y)
       .text(d => d.message)
+    console.log(message)
   }
 
-  findOperativeNode (path) {
+  findOperativeNodeByPath (path) {
     return this.graphData.nodes.find(node => node.path === path)
   }
 
-  findInoperativeNode (path) {
+  findInoperativeNodeByPath (path) {
     return this.graphData.inoperativeNodes.find(node => node.path === path)
   }
 
-  parentPaths (node) {
-    // NOTICE: children/parents selection is OK?
-    // parents/children of inoperative node are not processed
-    // when converted to graph data in server.
-    // a node (in upper layer) refers nodes in lower layer.
-    return this.reverse ? node.children : node.parents
+  operativeNodesByName (name) {
+    return this.graphData.nodes.filter(node => node.name === name)
+  }
+
+  inoperativeNodesByName (name) {
+    return this.graphData.inoperativeNodes.filter(node => node.name === name)
   }
 
   highlightParentOfInoperativeNodes (alertNodes) {
     // search only nodes (ignore tp)
     for (const alertNode of alertNodes.filter(node => node.type === 'node')) {
-      const parentPaths = this.parentPaths(alertNode)
       const parentsFromInoperative = []
-      for (const parentPath of parentPaths) {
-        const operativeParent = this.findOperativeNode(parentPath)
+      // parents/children of inoperative node are not processed
+      // it is constant whether reverse is true or not.
+      for (const parentPath of alertNode.parents) {
+        const operativeParent = this.findOperativeNodeByPath(parentPath)
         if (operativeParent) {
           this.highlight(operativeParent, 'selected2')
         } else {
-          const inoperativeParent = this.findInoperativeNode(parentPath)
+          const inoperativeParent = this.findInoperativeNodeByPath(parentPath)
           parentsFromInoperative.push(inoperativeParent)
         }
       }
@@ -109,12 +111,9 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   }
 
   highlightParentsByAlert (alert) {
-    const alertNodes = this.graphData.inoperativeNodes.filter(node => {
-      return node.name === alert.host
-    })
     const message = `Alerted host: [${alert.host}] is not found.`
     this.makeWarningMessage(message)
-    console.log(message)
+    const alertNodes = this.inoperativeNodesByName(alert.host)
     this.highlightParentOfInoperativeNodes(alertNodes)
   }
 
@@ -125,12 +124,10 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       return
     }
     this.clearWarning()
-    const alertedNodes = this.graphData.nodes.filter(node => {
-      return node.name === alert.host
-    })
-    if (alertedNodes.length > 0) {
-      for (const alertedNode of alertedNodes) {
-        this.highlight(alertedNode, 'selected')
+    const alertNodes = this.operativeNodesByName(alert.host)
+    if (alertNodes.length > 0) {
+      for (const alertNode of alertNodes) {
+        this.highlight(alertNode, 'selected')
       }
     } else {
       this.highlightParentsByAlert(alert)
