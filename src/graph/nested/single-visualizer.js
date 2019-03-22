@@ -35,9 +35,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('id', 'whole-dep-graph')
   }
 
-  makeXGridHandles (xGrids) {
+  makeXGridHandles () {
     this.svgGrp.selectAll('circle.grid-x-handle')
-      .data(xGrids)
+      .data(this.xGrids)
       .enter()
       .append('circle')
       .attr('class', 'nest grid-x-handle')
@@ -47,9 +47,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('r', this.gridHandleRadius)
   }
 
-  makeXGridLabels (xGrids) {
+  makeXGridLabels () {
     this.svgGrp.selectAll('text.grid-x-handle')
-      .data(xGrids)
+      .data(this.xGrids)
       .enter()
       .append('text')
       .attr('class', 'nest grid-x-handle')
@@ -59,9 +59,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .text(d => d.index)
   }
 
-  makeXGridLines (xGrids) {
+  makeXGridLines () {
     this.svgGrp.selectAll('line.grid-x')
-      .data(xGrids)
+      .data(this.xGrids)
       .enter()
       .append('line')
       .attr('class', 'nest grid-x')
@@ -73,17 +73,17 @@ export default class SingleNestedVisualizer extends BaseContainer {
   }
 
   makeXGrids (xGridData) {
-    const xGrids = xGridData.map((d, i) => {
+    this.xGrids = xGridData.map((d, i) => {
       return { position: d, index: i }
     })
-    this.makeXGridLines(xGrids)
-    this.makeXGridHandles(xGrids)
-    this.makeXGridLabels(xGrids)
+    this.makeXGridLines()
+    this.makeXGridHandles()
+    this.makeXGridLabels()
   }
 
-  makeYGridHandles (yGrids) {
+  makeYGridHandles () {
     this.svgGrp.selectAll('circle.grid-y-handle')
-      .data(yGrids)
+      .data(this.yGrids)
       .enter()
       .append('circle')
       .attr('class', 'nest grid-y-handle')
@@ -93,9 +93,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('r', this.gridHandleRadius)
   }
 
-  makeYGridLabels (yGrids) {
+  makeYGridLabels () {
     this.svgGrp.selectAll('text.grid-y-handle')
-      .data(yGrids)
+      .data(this.yGrids)
       .enter()
       .append('text')
       .attr('class', 'nest grid-y-handle')
@@ -105,9 +105,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .text(d => d.index)
   }
 
-  makeYGridLines (yGrids) {
+  makeYGridLines () {
     this.svgGrp.selectAll('line.grid-y')
-      .data(yGrids)
+      .data(this.yGrids)
       .enter()
       .append('line')
       .attr('class', 'nest grid-y')
@@ -119,12 +119,12 @@ export default class SingleNestedVisualizer extends BaseContainer {
   }
 
   makeYGrids (yGridData) {
-    const yGrids = yGridData.map((d, i) => {
+    this.yGrids = yGridData.map((d, i) => {
       return { position: d, index: i }
     })
-    this.makeYGridLines(yGrids)
-    this.makeYGridHandles(yGrids)
-    this.makeYGridLabels(yGrids)
+    this.makeYGridLines()
+    this.makeYGridHandles()
+    this.makeYGridLabels()
   }
 
   layerOf (node) {

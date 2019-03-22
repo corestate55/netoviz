@@ -35,8 +35,12 @@ export default app => {
     res.send(instances)
   })
 
+  app.post('/graph/:graphName/:jsonName', (req, res) => {
+    topoDataAPI.postGraphData(req)
+    res.send(JSON.stringify({ message: 'layout data received.' }))
+  })
   app.get('/graph/:graphName/:jsonName', async (req, res) => {
     res.type('json')
-    res.send(await topoDataAPI.callGraphData(req))
+    res.send(await topoDataAPI.getGraphData(req))
   })
 }

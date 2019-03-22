@@ -114,7 +114,11 @@ export default class TopoogyDataAPI {
     return JSON.stringify(nestedGraphConverter.toData())
   }
 
-  async callGraphData (req) {
+  boolString2Bool (strBool) {
+    return strBool.toLowerCase() === 'true'
+  }
+
+  async getGraphData (req) {
     const graphName = req.params.graphName
     const jsonName = req.params.jsonName
     try {
@@ -123,12 +127,39 @@ export default class TopoogyDataAPI {
       } else if (graphName === 'dependency') {
         return await this.convertDependencyGraphData(jsonName)
       } else if (graphName === 'nested') {
-        const reverse = req.query.reverse === 'true'
+        const reverse = this.boolString2Bool(req.query.reverse)
         console.log('call nested: reverse =', reverse)
         return await this.convertNestedGraphData(jsonName, reverse)
       }
     } catch (error) {
       throw error
     }
+  }
+
+  async postGraphData (req) {
+    const layoutData = req.body
+    const graphName = req.params.graphName
+    const jsonName = req.params.jsonName
+    const reverse = this.boolString2Bool(req.query.reverse)
+
+    const layoutJsonName = `${jsonName.split('.').shift()}-layout.json`
+    const layoutJsonPath = `${this.modelDir}/${layoutJsonName}`
+    // const cacheLayoutJsonPath = `${this.cacheDir}/${layoutJsonName}` // test
+    const cacheLayoutJsonPath = layoutJsonPath // overwrite
+
+    console.log(`receive ${graphName}/${jsonName}?reverse=${reverse}): `, layoutData)
+    const baseLayoutData = JSON.parse(await readFile(layoutJsonPath, 'utf8'))
+    if (reverse) {
+      baseLayoutData.reverse.grid = layoutData
+    } else {
+      baseLayoutData.standard.grid = layoutData
+    }
+    const layoutDataString = JSON.stringify(baseLayoutData, null, 2) // pretty print
+    fs.writeFile(cacheLayoutJsonPath, layoutDataString, 'utf8', (error) => {
+      if (error) {
+        throw error
+      }
+      console.log(`layout cache saved: ${cacheLayoutJsonPath}`)
+    })
   }
 }

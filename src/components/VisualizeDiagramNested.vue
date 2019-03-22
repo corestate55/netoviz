@@ -8,6 +8,14 @@
     >
       Change to {{ reverse ? 'Top' : 'Bottom'}} View
     </el-button>
+    <el-button
+      round
+      size="small"
+      type="warning"
+      v-on:click="saveLayout()"
+    >
+      Save Layout
+    </el-button>
     <div
       v-bind:style="{ display: debug }"
     >
@@ -42,6 +50,9 @@ export default {
     toggleViewPoint () {
       this.reverse = !this.reverse
       this.drawJsonModel()
+    },
+    saveLayout () {
+      this.visualizer.saveLayout(this.modelFile, this.reverse)
     },
     drawJsonModel () {
       if (this.modelFile) {
