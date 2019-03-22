@@ -153,6 +153,10 @@ export default class NestedGraph extends NestedGraphConstants {
     return this.nodes.filter(node => node.operative)
   }
 
+  inoperativeNodes () {
+    return this.nodes.filter(node => !node.operative)
+  }
+
   operativeLinksIn (operativeNodes) {
     return this.links.filter(link => link.availableIn(operativeNodes))
   }
@@ -190,6 +194,9 @@ export default class NestedGraph extends NestedGraphConstants {
       // Outer of nest (Root) must be head of it.
       // (make root/outer object at first, leaf/inner object over it.)
       nodes: this.reverse ? operativeNodes : operativeNodes.reverse(),
+      // inoperative nodes are used to find parents
+      // when hosts must be highlight by alert are not found in operative nodes.
+      inoperativeNodes: this.inoperativeNodes(),
       links: this.operativeLinksIn(operativeNodes).concat(supportTpLinks),
       grid: this.grid.toData()
     }

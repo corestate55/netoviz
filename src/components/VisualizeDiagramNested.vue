@@ -3,7 +3,7 @@
     <el-button
       round
       size="small"
-      type="info"
+      type="primary"
       v-on:click="toggleViewPoint()"
     >
       Change to {{ reverse ? 'Top' : 'Bottom'}} View

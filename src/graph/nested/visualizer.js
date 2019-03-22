@@ -2,12 +2,13 @@ import { json } from 'd3-fetch'
 import OperationalNestedGraphVisualizer from './operational-visualizer'
 
 export default class NestedGraphVisualizer extends OperationalNestedGraphVisualizer {
-  apiUrl (jsonName, reverse) {
-    return `graph/nested/${jsonName}?reverse=${reverse}`
+  apiUrl (jsonName) {
+    return `graph/nested/${jsonName}?reverse=${this.reverse}`
   }
 
   drawJsonModel (jsonName, alert, reverse) {
-    const url = this.apiUrl(jsonName, reverse)
+    this.reverse = reverse
+    const url = this.apiUrl(jsonName)
     console.log(`[nested] query ${url}`)
     json(url).then((graphData) => {
       this.clearCanvas()
@@ -20,7 +21,8 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   }
 
   saveLayout (jsonName, reverse) {
-    const url = this.apiUrl(jsonName, reverse)
+    this.reverse = reverse
+    const url = this.apiUrl(jsonName)
     const layoutData = {
       x: this.xGrids.map(d => d.position),
       y: this.yGrids.map(d => d.position)
@@ -37,12 +39,14 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   }
 
   clearAllAlertHighlight () {
-    this.svgGrp.selectAll('.selected')
-      .classed('selected', false)
-      .style('fill', d => this.colorOfNode(d))
+    for (const className of ['selected', 'selected2']) {
+      this.svgGrp.selectAll(`.${className}`)
+        .classed(className, false)
+        .style('fill', d => this.colorOfNode(d))
+    }
   }
 
-  highlight (node) {
+  highlight (node, className) {
     let selector = ''
     if (node.type === 'node') {
       selector = `rect[id='${node.path}']`
@@ -50,7 +54,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       selector = `circle[id='${node.path}']`
     }
     this.svgGrp.selectAll(selector)
-      .classed('selected', true)
+      .classed(className, true)
       .style('fill', null)
   }
 
@@ -70,6 +74,50 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       .text(d => d.message)
   }
 
+  findOperativeNode (path) {
+    return this.graphData.nodes.find(node => node.path === path)
+  }
+
+  findInoperativeNode (path) {
+    return this.graphData.inoperativeNodes.find(node => node.path === path)
+  }
+
+  parentPaths (node) {
+    // NOTICE: children/parents selection is OK?
+    // parents/children of inoperative node are not processed
+    // when converted to graph data in server.
+    // a node (in upper layer) refers nodes in lower layer.
+    return this.reverse ? node.children : node.parents
+  }
+
+  highlightParentOfInoperativeNodes (alertNodes) {
+    // search only nodes (ignore tp)
+    for (const alertNode of alertNodes.filter(node => node.type === 'node')) {
+      const parentPaths = this.parentPaths(alertNode)
+      const parentsFromInoperative = []
+      for (const parentPath of parentPaths) {
+        const operativeParent = this.findOperativeNode(parentPath)
+        if (operativeParent) {
+          this.highlight(operativeParent, 'selected2')
+        } else {
+          const inoperativeParent = this.findInoperativeNode(parentPath)
+          parentsFromInoperative.push(inoperativeParent)
+        }
+      }
+      this.highlightParentOfInoperativeNodes(parentsFromInoperative)
+    }
+  }
+
+  highlightParentsByAlert (alert) {
+    const alertNodes = this.graphData.inoperativeNodes.filter(node => {
+      return node.name === alert.host
+    })
+    const message = `Alerted host: [${alert.host}] is not found.`
+    this.makeWarningMessage(message)
+    console.log(message)
+    this.highlightParentOfInoperativeNodes(alertNodes)
+  }
+
   highlightByAlert (alert) {
     // this.graphData = json data
     // assign at this.setOperationHandler()
@@ -82,12 +130,10 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     })
     if (alertedNodes.length > 0) {
       for (const alertedNode of alertedNodes) {
-        this.highlight(alertedNode)
+        this.highlight(alertedNode, 'selected')
       }
     } else {
-      const message = `Alerted host: [${alert.host}] is not found.`
-      this.makeWarningMessage(message)
-      console.log(message)
+      this.highlightParentsByAlert(alert)
     }
   }
 }

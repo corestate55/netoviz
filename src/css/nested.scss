@@ -3,6 +3,8 @@ $grid_y_color: mediumspringgreen;
 
 $selected_fill_color: palevioletred;
 $selected_stroke_color: #FE7367;
+$selected2_fill_color: orange;
+$selected2_stroke_color: darkorange;
 $checked_stroke_color: cyan;
 $checked_fill_color: cyan;
 
@@ -15,6 +17,13 @@ rect.nest {
     stroke-width: 8px;
     stroke-opacity: 0.8;
     fill: $selected_fill_color;
+    fill-opacity: 0.4;
+  }
+  &.selected2 {
+    stroke: $selected2_stroke_color;
+    stroke-width: 8px;
+    stroke-opacity: 0.8;
+    fill: $selected2_fill_color;
     fill-opacity: 0.4;
   }
 }
@@ -41,6 +50,11 @@ circle.nest {
     stroke: $selected_stroke_color;
     stroke-width: 4px;
     fill: $selected_fill_color;
+  }
+  &.selected2 {
+    stroke: $selected2_stroke_color;
+    stroke-width: 4px;
+    fill: $selected2_fill_color;
   }
 }
 
@@ -71,9 +85,10 @@ text.nest {
 
 line.nest {
   &.support-tp {
-    stroke: orange;
+    stroke: $tp_fill_color;
     stroke-width: 2pt;
-    stroke-opacity: 0.8;
+    stroke-opacity: 0.5;
+    stroke-dasharray: 4pt;
   }
   &.grid-x {
     stroke: $grid_x_color;
