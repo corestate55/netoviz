@@ -11,7 +11,7 @@ export default class NestedGraph extends NestedGraphConstants {
     this.setNodes(graphData)
     this.setLinks(graphData)
     this.setRootNodes()
-    this.culcRootNodePosition()
+    this.calcRootNodePosition()
   }
 
   setGrid (layoutData) {
@@ -51,12 +51,13 @@ export default class NestedGraph extends NestedGraphConstants {
     return this.nodes.find(d => d.path === path)
   }
 
-  culcRootNodePosition () {
+  calcRootNodePosition () {
     for (const rootNode of this.rootNodes) {
       const ordinalPosition = this.grid.ordinalPositionByNodePath(rootNode.path)
       // only root node has grid information
       rootNode.setGridPosition(ordinalPosition)
-      this.culcNodePosition(rootNode, this.grid.positionByOrdinal(ordinalPosition))
+      const basePosition = this.grid.positionByOrdinal(ordinalPosition)
+      this.calcNodePosition(rootNode, basePosition, 0)
     }
   }
 
@@ -67,22 +68,22 @@ export default class NestedGraph extends NestedGraphConstants {
     })
   }
 
-  culcNodePosition (node, basePosition) {
+  calcNodePosition (node, basePosition, layerOrder) {
     // console.log(`path: ${node.path}`)
-    this.culcTpPosition(node, basePosition)
+    this.calcTpPosition(node, basePosition, layerOrder + 1)
 
     // if the node is leaf:
     // only counted as child node when it has single parent.
     // if it has multiple parents, it breaks tree structure.
     if (this.singleParentChildNodePaths(node).length < 1) {
-      return this.culcLeafNodeWH(node, basePosition)
+      return this.calcLeafNodeWH(node, basePosition, layerOrder)
     }
     // recursive position calculation
-    const childrenWHList = this.culcChildNodePosition(node, basePosition)
-    return this.culcSubRootNodeWH(node, basePosition, childrenWHList)
+    const childrenWHList = this.calcChildNodePosition(node, basePosition, layerOrder + 2)
+    return this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
   }
 
-  culcChildNodePosition (node, basePosition) {
+  calcChildNodePosition (node, basePosition, layerOrder) {
     const childrenWHList = [] // [{ width: w, height: h }]
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
@@ -91,7 +92,8 @@ export default class NestedGraph extends NestedGraphConstants {
       // console.log(`  childrenNodePath: ${childNodePath}`)
       const childNode = this.findNodeByPath(childNodePath)
       // recursive search
-      const wh = this.culcNodePosition(childNode, { x: nx11, y: ny1x })
+      const basePosition = { x: nx11, y: ny1x }
+      const wh = this.calcNodePosition(childNode, basePosition, layerOrder)
       childrenWHList.push(wh)
       nx11 += wh.width + this.nodeXPad
     }
@@ -118,7 +120,7 @@ export default class NestedGraph extends NestedGraphConstants {
     return this.heightByTp() + maxChildHeight + this.nodeYPad
   }
 
-  culcSubRootNodeWH (node, basePosition, childrenWHList) {
+  calcSubRootNodeWH (node, basePosition, childrenWHList, layerOrder) {
     // width
     const widthByChildNodes = this.widthByChildNodes(node, childrenWHList)
     const widthByTp = this.widthByTp(node)
@@ -126,25 +128,25 @@ export default class NestedGraph extends NestedGraphConstants {
     // height
     const height = this.heightByChildNodes(childrenWHList)
 
-    node.setRect(basePosition.x, basePosition.y, width, height)
+    node.setRect(basePosition.x, basePosition.y, width, height, layerOrder)
     return { width: width, height: height }
   }
 
-  culcLeafNodeWH (node, basePosition) {
+  calcLeafNodeWH (node, basePosition, layerOrder) {
     // console.log(`  return: ${node.path} does not have child node`)
     const width = this.widthByTp(node)
     const height = this.heightByTp()
 
-    node.setRect(basePosition.x, basePosition.y, width, height)
+    node.setRect(basePosition.x, basePosition.y, width, height, layerOrder)
     return { width: width, height: height }
   }
 
-  culcTpPosition (node, basePosition) {
+  calcTpPosition (node, basePosition, layerOrder) {
     let cx11 = basePosition.x + this.nodeXPad + this.r
     const cy1x = basePosition.y + this.nodeYPad + this.r
     for (const tpPath of node.tpPathsInParents()) {
       const tp = this.findNodeByPath(tpPath)
-      tp.setCircle(cx11, cy1x, this.r)
+      tp.setCircle(cx11, cy1x, this.r, layerOrder)
       cx11 += this.r * 2 + this.tpInterval
     }
   }
@@ -188,12 +190,11 @@ export default class NestedGraph extends NestedGraphConstants {
   toData () {
     const operativeNodes = this.operativeNodes()
     const supportTpLinks = this.makeSupportTpLinks(operativeNodes)
+    const ascendingLayerOrder = (a, b) => {
+      return a.layerOrder > b.layerOrder ? 1 : -1
+    }
     return {
-      // nodes: key reverse check -> root node will be head of array
-      // because visualizer draws rectangles from head to tail of array,
-      // Outer of nest (Root) must be head of it.
-      // (make root/outer object at first, leaf/inner object over it.)
-      nodes: this.reverse ? operativeNodes : operativeNodes.reverse(),
+      nodes: operativeNodes.sort(ascendingLayerOrder),
       // inoperative nodes are used to find parents
       // when hosts must be highlight by alert are not found in operative nodes.
       inoperativeNodes: this.inoperativeNodes(),

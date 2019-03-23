@@ -8,6 +8,7 @@ export default class NestedGraphNode {
     this.setFamilyRelation(nodeData, reverse)
     // this.attribute = nodeData.attribute
     // this.diffState = nodeData.diffState
+    this.layerOrder = -1
   }
 
   setFamilyRelation (nodeData, reverse) {
@@ -101,19 +102,21 @@ export default class NestedGraphNode {
     return pathElements.join(',')
   }
 
-  setCircle (cx, cy, r) {
+  setCircle (cx, cy, r, layerOrder) {
     this.operative = true
     this.cx = cx
     this.cy = cy
     this.r = r
+    this.layerOrder = layerOrder
   }
 
-  setRect (x, y, width, height) {
+  setRect (x, y, width, height, layerOrder) {
     this.operative = true
     this.x = x
     this.y = y
     this.width = width
     this.height = height
+    this.layerOrder = layerOrder
   }
 
   setGridPosition (ordinalPosition) {

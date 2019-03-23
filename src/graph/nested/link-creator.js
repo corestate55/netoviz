@@ -89,7 +89,6 @@ export default class InterTpLinkCreator {
       }
       overlapIndex++
     }
-    console.log(this.links)
   }
 
   feedbackLineOverlap () {

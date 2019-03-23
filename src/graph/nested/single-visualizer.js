@@ -8,7 +8,6 @@ export default class SingleNestedVisualizer extends BaseContainer {
     // canvas size
     this.width = 800
     this.height = 600
-    this.fontSize = 10
     this.gridStart = -100
     this.gridEnd = 2000
     this.gridHandleRadius = 25

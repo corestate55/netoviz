@@ -115,6 +115,9 @@ export default class TopoogyDataAPI {
   }
 
   boolString2Bool (strBool) {
+    if (!strBool) {
+      return false
+    }
     return strBool.toLowerCase() === 'true'
   }
 
