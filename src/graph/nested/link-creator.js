@@ -2,10 +2,11 @@ class InterTpLink {
   constructor (link, sourceTp, targetTp) {
     this.lineWidth = 2
     this.overlapIndex = -1
-    this.link = link
     this.type = link.type
     this.path = link.path
     this.name = link.name
+    this.sourcePath = sourceTp.path
+    this.targetPath = targetTp.path
     this.x1 = sourceTp.cx
     this.y1 = sourceTp.cy
     this.x2 = targetTp.cx

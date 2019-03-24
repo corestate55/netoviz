@@ -15,11 +15,74 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       })
   }
 
+  selectNodeRectByPath (path) {
+    if (!path) { // all node rect
+      return this.svgGrp.selectAll('rect.node')
+    }
+    return this.svgGrp.select(`rect[id='${path}']`)
+  }
+
+  selectNodeLabelByPath (path) {
+    if (!path) { // all node label
+      return this.svgGrp.selectAll('text.node')
+    }
+    return this.svgGrp.select(`text[id='${path}']`)
+  }
+
+  selectTpCircleByPath (path) {
+    if (!path) { // all tp circle
+      return this.svgGrp.selectAll('circle.tp')
+    }
+    return this.svgGrp.select(`circle[id='${path}']`)
+  }
+
+  selectTpLabelByPath (path) {
+    if (!path) { // all tp label
+      return this.svgGrp.selectAll('text.tp')
+    }
+    return this.svgGrp.select(`text[id='${path}']`)
+  }
+
+  selectTpTpLineByPath (path) {
+    if (!path) { // all tp-tp line
+      return this.svgGrp.selectAll('polyline.tp-tp')
+    }
+    return this.svgGrp.select(`polyline[id='${path}']`)
+  }
+
+  selectSupportTpLineByPath (path) {
+    if (!path) { // all support-tp line
+      return this.svgGrp.selectAll('line.support-tp')
+    }
+    return this.svgGrp.select(`line[id='${path}']`)
+  }
+
+  selectGridLine (xy, i) {
+    if (i < 0) { // all grid-[xy]-line
+      return this.svgGrp.selectAll(`line.grid-${xy}`)
+    }
+    return this.svgGrp.select(`line#grid-${xy}${i}`)
+  }
+
+  selectGridHandle (xy, i) {
+    if (i < 0) { // all grid-[xy]-handle circle
+      return this.svgGrp.selectAll(`circle.grid-${xy}-handle`)
+    }
+    return this.svgGrp.select(`circle#grid-${xy}${i}-handle`)
+  }
+
+  selectGridLabel (xy, i) {
+    if (i < 0) { // all grid-[xy]-label text
+      return this.svgGrp.selectAll(`text.grid-${xy}-label`)
+    }
+    return this.svgGrp.select(`text#grid-${xy}${i}-label`)
+  }
+
   updateRootNodeRectPosition (rootNode) {
-    this.svgGrp.select(`rect[id='${rootNode.path}']`)
+    this.selectNodeRectByPath(rootNode.path)
       .attr('x', rootNode.x)
       .attr('y', rootNode.y)
-    this.svgGrp.select(`text[id='${rootNode.path}']`) // label
+    this.selectNodeLabelByPath(rootNode.path) // label
       .attr('x', rootNode.x)
       .attr('y', rootNode.y + rootNode.height)
   }
@@ -36,10 +99,10 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   updateTpCirclePosition (tp) {
-    this.svgGrp.select(`circle[id='${tp.path}']`)
+    this.selectTpCircleByPath(tp.path)
       .attr('cx', tp.cx)
       .attr('cy', tp.cy)
-    this.svgGrp.select(`text[id='${tp.path}']`) // label
+    this.selectTpLabelByPath(tp.path) // label
       .attr('x', tp.cx)
       .attr('y', tp.cy)
   }
@@ -86,111 +149,87 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     this.makeTpTpLines(linkCreator.tpTpLinks())
   }
 
-  updateXGridLine (d, i) {
-    this.svgGrp.select(`line#grid-x${i}`)
-      .attr('x1', d.position)
-      .attr('x2', d.position)
-    this.svgGrp.select(`circle#grid-x${i}-handle`)
-      .attr('cx', d.position)
-    this.svgGrp.select(`text#grid-x${i}-label`)
-      .attr('x', d.position)
+  updateGridLine (d, xy, i) {
+    this.selectGridLine(xy, i)
+      .attr(`${xy}1`, d.position)
+      .attr(`${xy}2`, d.position)
+    this.selectGridHandle(xy, i)
+      .attr(`c${xy}`, d.position)
+    this.selectGridLabel(xy, i)
+      .attr(xy, d.position)
   }
 
-  setXGridHandler () {
+  setGridHandler (xy) {
     let targetRootNodes = []
+    const selectArg = (xy, listX, listY) => {
+      return xy === 'x' ? listX : listY
+    }
     const dragStarted = (d, i) => {
-      targetRootNodes = this.findTargetRootNodes(i, -1)
+      targetRootNodes = this.findTargetRootNodes(
+        ...selectArg(xy, [i, -1], [-1, i])
+      )
     }
     const dragged = (d, i) => {
-      d.position = event.x
-      this.updateXGridLine(d, i)
+      d.position = event[xy]
+      this.updateGridLine(d, xy, i)
     }
     const dragEnded = (d) => {
-      d.position = event.x
+      d.position = event[xy]
       for (const rootNode of targetRootNodes) {
-        this.moveRootNode(rootNode, d.position - rootNode.x, 0)
+        this.moveRootNode(
+          ...selectArg(xy,
+            [rootNode, d.position - rootNode.x, 0],
+            [rootNode, 0, d.position - rootNode.y]
+          ))
       }
       this.redrawLinkLines()
     }
 
-    this.svgGrp.selectAll('circle.grid-x-handle')
+    this.selectGridHandle(xy, -1)
       .call(drag()
         .on('start', dragStarted)
         .on('drag', dragged)
         .on('end', dragEnded))
-    this.svgGrp.selectAll('text.grid-x-handle')
-      .call(drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded))
-  }
-
-  updateYGridLine (d, i) {
-    this.svgGrp.select(`line#grid-y${i}`)
-      .attr('y1', d.position)
-      .attr('y2', d.position)
-    this.svgGrp.select(`circle#grid-y${i}-handle`)
-      .attr('cy', d.position)
-    this.svgGrp.select(`text#grid-y${i}-label`)
-      .attr('y', d.position)
-  }
-
-  setYGridHandler () {
-    let targetRootNodes = []
-    const dragStarted = (d, i) => {
-      targetRootNodes = this.findTargetRootNodes(-1, i)
-    }
-    const dragged = (d, i) => {
-      d.position = event.y
-      this.updateYGridLine(d, i)
-    }
-    const dragEnded = (d) => {
-      d.position = event.y
-      for (const rootNode of targetRootNodes) {
-        this.moveRootNode(rootNode, 0, d.position - rootNode.y)
-      }
-      this.redrawLinkLines()
-    }
-
-    this.svgGrp.selectAll('.grid-y-handle')
-      .call(drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded))
-    this.svgGrp.selectAll('text.grid-y-handle')
+    this.selectGridLabel(xy, -1)
       .call(drag()
         .on('start', dragStarted)
         .on('drag', dragged)
         .on('end', dragEnded))
   }
 
-  clearLinkSlectHighlight () {
+  clearLinkSelectHighlight () {
     this.svgGrp.selectAll('.checked')
       .classed('checked', false)
   }
 
   setLinkSelectHandler () {
-    const click = (d) => {
-      this.clearLinkSlectHighlight()
-      const links = this.graphData.links.filter(line => {
-        return line.sourcePath === d.path || line.targetPath === d.path
-      })
-      for (const link of links) {
-        this.svgGrp.select(`circle[id='${link.sourcePath}']`)
+    const checkLine = (d) => {
+      this.selectTpCircleByPath(d.sourcePath)
+        .classed('checked', true)
+      this.selectTpCircleByPath(d.targetPath)
+        .classed('checked', true)
+      if (d.type === 'tp-tp') {
+        this.selectTpTpLineByPath(d.path)
           .classed('checked', true)
-        this.svgGrp.select(`circle[id='${link.targetPath}']`)
-          .classed('checked', true)
-
-        let linkSelector = `line[id='${link.path}']`
-        if (link.type === 'tp-tp') {
-          linkSelector = `polyline[id='${link.path}']`
-        }
-        this.svgGrp.select(linkSelector)
+      } else {
+        this.selectSupportTpLineByPath(d.path)
           .classed('checked', true)
       }
     }
-    this.svgGrp.selectAll('circle.tp')
-      .on('click', click)
+    const clickTpCircle = (d) => {
+      this.clearLinkSelectHighlight()
+      this.graphData.links.filter(link => {
+        return link.sourcePath === d.path || link.targetPath === d.path
+      }).forEach(link => { checkLine(link) })
+    }
+    const clickLine = (d) => {
+      this.clearLinkSelectHighlight()
+      checkLine(d)
+    }
+
+    this.selectTpCircleByPath().on('click', clickTpCircle)
+    this.selectTpTpLineByPath().on('click', clickLine)
+    this.selectSupportTpLineByPath().on('click', clickLine)
   }
 
   setSVGZoom () {
@@ -208,8 +247,8 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   setOperationHandler (graphData) {
     this.graphData = graphData
-    this.setXGridHandler()
-    this.setYGridHandler()
+    this.setGridHandler('x')
+    this.setGridHandler('y')
     this.setLinkSelectHandler()
     this.setSVGZoom()
   }
