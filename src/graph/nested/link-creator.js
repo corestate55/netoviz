@@ -30,6 +30,22 @@ class InterTpLink {
     return Math.abs(this.y2 - this.y1)
   }
 
+  skewType () {
+    if (this.y1 === this.y2) {
+      return 'horizontal'
+    } else if (this.x1 === this.x2) {
+      return 'vertical'
+    } else if (
+      (this.y1 > this.y2 && this.x1 < this.x2) ||
+      (this.y1 < this.y2 && this.x1 > this.x2)) {
+      return 'slash'
+    } else if (
+      (this.y1 > this.y2 && this.x1 > this.x2) ||
+      (this.y1 < this.y2 && this.x1 < this.x2)) {
+      return 'backslash'
+    }
+  }
+
   hasOverlapIndex () {
     return this.overlapIndex >= 0
   }
@@ -40,14 +56,14 @@ class InterTpLink {
     //    +--+====+--+    +--+====+--+
     //    |  |            |  |
     //    a  b            a  b
-    return (this.yMiddle - this.lineWidth * 1.5 <= link.yMiddle &&
-      link.yMiddle <= this.yMiddle + this.lineWidth * 1.5) &&
-      ((this.minX() <= link.minX() && link.minX() <= this.maxX()) ||
-        (link.minX() <= this.minX() && this.minX() <= link.maxX()))
+    const b = this.lineWidth * 2.5
+    return (this.yMiddle - b <= link.yMiddle && link.yMiddle <= this.yMiddle + b) &&
+      ((this.minX() - b <= link.minX() && link.minX() <= this.maxX() + b) ||
+        (link.minX() - b <= this.minX() && this.minX() <= link.maxX() + b))
   }
 
   yMiddlePoint () {
-    let ym = this.y1 - 80 // default (if horizontal line)
+    let ym = this.y1 - 40 // default (if horizontal line)
     if (this.y1 !== this.y2) { // if not horizontal line
       ym = this.height() / 2 + this.minY()
     }
@@ -78,29 +94,47 @@ export default class InterTpLinkCreator {
   checkLineOverlap () {
     let overlapIndex = 0
     for (let i = 0; i < this.links.length; i++) {
+      let oi = overlapIndex
       if (this.links[i].hasOverlapIndex()) {
-        continue
+        oi = this.links[i].overlapIndex
+      } else {
+        // to set overlapIndex for last entry, counter:i must loop at last
+        this.links[i].overlapIndex = overlapIndex
+        overlapIndex++
       }
-      // to set overlapIndex for last entry, counter:i must loop at last
-      this.links[i].overlapIndex = overlapIndex
       for (let j = i + 1; j < this.links.length; j++) {
         if (this.links[i].isOverlap(this.links[j])) {
-          this.links[j].overlapIndex = overlapIndex
+          this.links[j].overlapIndex = oi
         }
       }
-      overlapIndex++
     }
   }
 
+  slashLinks (linkGroup) {
+    return linkGroup
+      .filter(link => link.skewType() !== 'backslash') // horizontal, vertical, slash
+      .sort((a, b) => a.maxX() < b.maxX() ? -1 : 1)
+  }
+
+  backslashLinks (linkGroup) {
+    return linkGroup
+      .filter(link => link.skewType() === 'backslash')
+      .sort((a, b) => a.maxX() < b.maxX() ? 1 : -1)
+  }
+
   feedbackLineOverlap () {
-    const overlapIndexes = this.links.map(link => link.overlapIndex)
+    const overlapIndexes = Array.from(
+      new Set(this.links.map(link => link.overlapIndex))
+    ) // uniq
     for (const i of overlapIndexes) {
       const linkGroup = this.links.filter(link => link.overlapIndex === i)
       if (linkGroup.length <= 1) {
         continue
       }
-      for (const [j, link] of linkGroup.entries()) {
-        link.yMiddle += j * link.lineWidth * 1.2
+      const slashLinks = this.slashLinks(linkGroup)
+      const backslashLinks = this.backslashLinks(linkGroup)
+      for (const [j, link] of slashLinks.concat(backslashLinks).entries()) {
+        link.yMiddle += j * link.lineWidth * 2.5
       }
     }
   }
