@@ -56,7 +56,7 @@ class InterTpLink {
     //    +--+====+--+    +--+====+--+
     //    |  |            |  |
     //    a  b            a  b
-    const b = this.lineWidth * 2.5
+    const b = this.lineWidth * 3
     return (this.yMiddle - b <= link.yMiddle && link.yMiddle <= this.yMiddle + b) &&
       ((this.minX() - b <= link.minX() && link.minX() <= this.maxX() + b) ||
         (link.minX() - b <= this.minX() && this.minX() <= link.maxX() + b))
@@ -93,21 +93,30 @@ export default class InterTpLinkCreator {
 
   checkLineOverlap () {
     let overlapIndex = 0
+    let overwriteIndex = {}
+    // to set overlapIndex for last entry, counter:i must loop at last
     for (let i = 0; i < this.links.length; i++) {
       let oi = overlapIndex
       if (this.links[i].hasOverlapIndex()) {
         oi = this.links[i].overlapIndex
       } else {
-        // to set overlapIndex for last entry, counter:i must loop at last
         this.links[i].overlapIndex = overlapIndex
         overlapIndex++
       }
       for (let j = i + 1; j < this.links.length; j++) {
         if (this.links[i].isOverlap(this.links[j])) {
+          if (this.links[j].hasOverlapIndex() && oi !== this.links[j].overlapIndex) {
+            overwriteIndex[oi] = this.links[j].overlapIndex
+          }
           this.links[j].overlapIndex = oi
         }
       }
     }
+    this.links.forEach(link => {
+      if (overwriteIndex[link.overlapIndex]) {
+        link.overlapIndex = overwriteIndex[link.overlapIndex]
+      }
+    })
   }
 
   slashLinks (linkGroup) {
@@ -134,7 +143,7 @@ export default class InterTpLinkCreator {
       const slashLinks = this.slashLinks(linkGroup)
       const backslashLinks = this.backslashLinks(linkGroup)
       for (const [j, link] of slashLinks.concat(backslashLinks).entries()) {
-        link.yMiddle += j * link.lineWidth * 2.5
+        link.yMiddle += j * link.lineWidth * 3
       }
     }
   }
