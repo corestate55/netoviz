@@ -2340,7 +2340,7 @@
                   {
                     "network-ref": "target-L2b",
                     "node-ref": "HYP1-vSW1-BR-VL30",
-                    "tp-ref": "p1"
+                    "tp-ref": "p3"
                   }
                 ]
               },
