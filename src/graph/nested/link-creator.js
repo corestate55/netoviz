@@ -120,14 +120,26 @@ export default class InterTpLinkCreator {
   }
 
   slashLinks (linkGroup) {
+    //         a b
+    //         | |
+    //  +------+ |
+    //  | +------+
+    //  | |   sequence of slash type link
+    //  a b   (a -> b)
     return linkGroup
-      .filter(link => link.skewType() !== 'backslash') // horizontal, vertical, slash
+      .filter(link => link.skewType() === 'slash')
       .sort((a, b) => a.maxX() < b.maxX() ? -1 : 1)
   }
 
   backslashLinks (linkGroup) {
+    //  b a   sequence of backslash type link
+    //  | |   (a -> b)
+    //  | +------+           +------+   sequence of
+    //  +------+ |           | +--+ |   horizontal link
+    //         | |           | |  | |   (without crossing)
+    //         b a           a b  b a   (a -> b)
     return linkGroup
-      .filter(link => link.skewType() === 'backslash')
+      .filter(link => link.skewType() !== 'slash') // backslash, horizontal, vertical
       .sort((a, b) => a.maxX() < b.maxX() ? 1 : -1)
   }
 
