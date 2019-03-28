@@ -204,6 +204,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   setLinkSelectHandler () {
     const checkLine = (d) => {
+      // console.log(`link: ${d.path}.oi = ${d.overlapIndex}`)
       this.selectTpCircleByPath(d.sourcePath)
         .classed('checked', true)
       this.selectTpCircleByPath(d.targetPath)

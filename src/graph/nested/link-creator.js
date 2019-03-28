@@ -26,6 +26,10 @@ class InterTpLink {
     return Math.max(this.x1, this.x2)
   }
 
+  maxY () {
+    return Math.max(this.y1, this.y2)
+  }
+
   height () {
     return Math.abs(this.y2 - this.y1)
   }
@@ -56,10 +60,81 @@ class InterTpLink {
     //    +--+====+--+    +--+====+--+
     //    |  |            |  |
     //    a  b            a  b
+    // return this.crossingX(link) && this.nearYMiddle(link)
+    return (this.crossingX(link) || link.crossingX(this)) &&
+      ((this.nearYMiddle(link) || link.nearYMiddle(this)) ||
+        (this.crossingYbackslash(link) || link.crossingYbackslash(this)) ||
+        (this.crossingYslash(link) || link.crossingYslash(this)))
+  }
+
+  inSection (val, s1, s2) {
+    return (s1 <= val) && (val <= s2)
+  }
+
+  inSectionX (val, link) {
+    if (!link) {
+      link = this
+    }
+    return this.inSection(val, link.minX(), link.maxX())
+  }
+
+  inSectionYLow (val, link) {
+    if (!link) {
+      link = this
+    }
+    return this.inSection(val, link.minY(), link.yMiddle)
+  }
+
+  inSectionYHigh (val, link) {
+    if (!link) {
+      link = this
+    }
+    return this.inSection(val, link.yMiddle, link.maxY())
+  }
+
+  nearYMiddle (link) {
+    if (!link) {
+      link = this
+    }
     const b = this.lineWidth * 3
-    return (this.yMiddle - b <= link.yMiddle && link.yMiddle <= this.yMiddle + b) &&
-      ((this.minX() - b <= link.minX() && link.minX() <= this.maxX() + b) ||
-        (link.minX() - b <= this.minX() && this.minX() <= link.maxX() + b))
+    return this.inSection(link.yMiddle, this.yMiddle - b, this.yMiddle + b)
+  }
+
+  crossingX (link) {
+    if (!link) {
+      link = this
+    }
+    return this.inSectionX(link.minX()) ||
+      this.inSectionX(link.maxX())
+  }
+
+  isSameSkew (link, type) {
+    return this.skewType() === link.skewType() &&
+      this.skewType() === type
+  }
+
+  crossingYbackslash (link) {
+    return this.isSameSkew(link, 'backslash') &&
+      (
+        (this.inSectionYLow(link.yMiddle) &&
+          this.inSectionX(link.maxX()) &&
+          !this.inSectionX(link.minX())) ||
+        (this.inSectionYHigh(link.yMiddle) &&
+          this.inSectionX(link.minX()) &&
+          !this.inSectionX(link.maxX()))
+      )
+  }
+
+  crossingYslash (link) {
+    return this.isSameSkew(link, 'slash') &&
+      (
+        (this.inSectionYLow(link.yMiddle) &&
+          this.inSectionX(link.minX()) &&
+          !this.inSectionX(link.maxX())) ||
+        (this.inSectionYHigh(link.yMiddle) &&
+          this.inSectionX(link.maxX()) &&
+          !this.inSectionX(link.minX()))
+      )
   }
 
   yMiddlePoint () {
@@ -103,17 +178,27 @@ export default class InterTpLinkCreator {
         this.links[i].overlapIndex = overlapIndex
         overlapIndex++
       }
+      // console.log(`Start: [${i}] ${this.links[i].path}.oi: ${this.links[i].overlapIndex}`)
       for (let j = i + 1; j < this.links.length; j++) {
+        // if (this.links[i].crossingYbackslash(this.links[j]) ||
+        //   this.links[i].crossingYslash(this.links[j])) {
+        //   console.log(`> found crossing [${j}] ${this.links[j].path}`)
+        //   console.log('> backslash overlap', this.links[i].crossingYbackslash(this.links[j]))
+        //   console.log('> slash overlap', this.links[i].crossingYslash(this.links[j]))
+        // }
         if (this.links[i].isOverlap(this.links[j])) {
           if (this.links[j].hasOverlapIndex() && oi !== this.links[j].overlapIndex) {
             overwriteIndex[oi] = this.links[j].overlapIndex
           }
           this.links[j].overlapIndex = oi
+          // console.log(`>> overlap: [${j}] ${this.links[j].path}.oi <- ${oi}`)
         }
       }
     }
+    console.log('overwrite index: ', overwriteIndex)
     this.links.forEach(link => {
       if (overwriteIndex[link.overlapIndex]) {
+        console.log(`${link.path}.oi <= ${overwriteIndex[link.overlapIndex]}`)
         link.overlapIndex = overwriteIndex[link.overlapIndex]
       }
     })
@@ -154,8 +239,12 @@ export default class InterTpLinkCreator {
       }
       const slashLinks = this.slashLinks(linkGroup)
       const backslashLinks = this.backslashLinks(linkGroup)
-      for (const [j, link] of slashLinks.concat(backslashLinks).entries()) {
-        link.yMiddle += j * link.lineWidth * 3
+      const links = slashLinks.concat(backslashLinks)
+      const ymBase = links
+        .map(link => link.yMiddle)
+        .reduce((sum, val) => sum + val) / links.length // average of yMiddle
+      for (const [j, link] of links.entries()) {
+        link.yMiddle = ymBase + j * link.lineWidth * 3
       }
     }
   }
