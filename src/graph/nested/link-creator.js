@@ -247,62 +247,83 @@ export default class InterTpLinkCreator {
         }
       }
     }
+    // integrate indirect overlapped links
     this.links.forEach(link => {
-      if (overwriteIndex[link.overlapIndex]) {
+      if (link.overlapIndex in overwriteIndex) {
         link.overlapIndex = overwriteIndex[link.overlapIndex]
       }
     })
   }
 
-  slashLinks (linkGroup) {
+  slashLinks (overlappedLinks) {
     //         a b
     //         | |
     //  +------+ |
     //  | +------+
     //  | |   sequence of slash type link
     //  a b   (a -> b)
-    return linkGroup
+    return overlappedLinks
       .filter(link => link.isSkewSlash())
       .sort((a, b) => a.xMax() < b.xMax() ? -1 : 1)
   }
 
-  backslashLinks (linkGroup) {
+  backslashLinks (overlappedLinks) {
     //  b a   sequence of backslash type link
     //  | |   (a -> b)
     //  | +------+           +------+   sequence of
     //  +------+ |           | +--+ |   horizontal link
     //         | |           | |  | |   (without crossing)
     //         b a           a b  b a   (a -> b)
-    return linkGroup
+    return overlappedLinks
       .filter(link => !link.isSkewSlash()) // backslash, horizontal, vertical
       .sort((a, b) => a.xMax() < b.xMax() ? 1 : -1)
   }
 
-  feedbackLineOverlap () {
-    const uniqOverlapIndex = new Set(this.links.map(link => link.overlapIndex))
-    const overlapIndexes = Array.from(uniqOverlapIndex)
-    for (const i of overlapIndexes) {
-      const linkGroup = this.links.filter(link => link.overlapIndex === i)
-      if (linkGroup.length <= 1) {
-        continue
+  setYMidOfLinksIn (overlappedLinks) {
+    const slashLinks = this.slashLinks(overlappedLinks)
+    const backslashLinks = this.backslashLinks(overlappedLinks)
+    const links = slashLinks.concat(backslashLinks)
+
+    const yMidBase = links.map(link => link.yMid)
+      .reduce((sum, val) => sum + val) / links.length // average of yMid
+    let yMidOffset = 0
+
+    for (const [i, link] of links.entries()) {
+      if (i > 0 && link.isOverlapX(links[i - 1])) {
+        //    i-1    i i+1
+        //     |     |  |
+        //  *--+  +--+  | <--- align yMid
+        //  | +---(-----*
+        //  | |   |
+        // link[i-1] and link[i] are not overlapped
+        // but same group because they have same overlapped link.
+        yMidOffset += link.lineWidth * 3
       }
-      const slashLinks = this.slashLinks(linkGroup)
-      const backslashLinks = this.backslashLinks(linkGroup)
-      const links = slashLinks.concat(backslashLinks)
-      const yMidBase = links.map(link => link.yMid)
-        .reduce((sum, val) => sum + val) / links.length // average of yMid
-      for (const [j, link] of links.entries()) {
-        link.yMid = yMidBase + j * link.lineWidth * 3
-      }
+      link.yMid = yMidBase + yMidOffset
     }
   }
 
+  feedbackLineOverlap () {
+    const uniqOverlapIndex = new Set(this.links.map(link => link.overlapIndex))
+    for (const oi of Array.from(uniqOverlapIndex)) {
+      const overlappedLinks = this.linksWith('overlapIndex', oi)
+      if (overlappedLinks.length <= 1) {
+        continue
+      }
+      this.setYMidOfLinksIn(overlappedLinks)
+    }
+  }
+
+  linksWith (attribute, value) {
+    return this.links.filter(link => link[attribute] === value)
+  }
+
   supportTpLinks () {
-    return this.links.filter(link => link.type === 'support-tp')
+    return this.linksWith('type', 'support-tp')
   }
 
   tpTpLinks () {
-    return this.links.filter(link => link.type === 'tp-tp')
+    return this.linksWith('type', 'tp-tp')
   }
 
   toData () {
