@@ -2,6 +2,7 @@
 
 import { select, selectAll } from 'd3-selection'
 import DiffState from '../../../srv/graph/diff-state'
+import TooltipCreator from '../common/tooltip-creator'
 
 export default class SingleGraphVisualizer {
   constructor (graph, findAllNodeFunc) {
@@ -28,7 +29,7 @@ export default class SingleGraphVisualizer {
     // setup info table
     this.makeInfoTable()
     // add tool tip
-    this.tooltip = this.makeToolTip()
+    this.tooltip = new TooltipCreator(this.visContainer)
     // set style of initial inactive objects
     this.setStyleOfInactiveObjects()
   }
@@ -49,13 +50,6 @@ export default class SingleGraphVisualizer {
       list.push('inactive')
     }
     return list.join(' ')
-  }
-
-  makeToolTip () {
-    return this.visContainer
-      .append('div')
-      .classed('tooltip', true)
-      .classed('pop-down', true)
   }
 
   makeInfoTable () {

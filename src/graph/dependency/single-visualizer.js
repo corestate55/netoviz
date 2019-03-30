@@ -1,6 +1,7 @@
 import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import BaseContainer from '../../../srv/graph/base'
+import TooltipCreator from '../common/tooltip-creator'
 
 export default class SingleDepGraphVisualizer extends BaseContainer {
   constructor () {
@@ -25,6 +26,13 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
+  }
+
+  makeToolTip () {
+    const origin = select('body').select('div#visualizer')
+      .append('div')
+      .attr('class', 'tool-tip')
+    return new TooltipCreator(origin)
   }
 
   makeDepGraphSVGGroup () {
@@ -169,6 +177,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
     this.svgGrp = this.makeDepGraphSVGGroup()
     this.clearButton = this.makeClearButton()
     this.scale = this.makeScale(graphData)
+    this.tooltip = this.makeToolTip()
 
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()

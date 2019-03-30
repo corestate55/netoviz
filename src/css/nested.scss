@@ -1,6 +1,7 @@
 $grid_x_color: limegreen;
 $grid_y_color: mediumspringgreen;
 
+$select_ready_stroke_color: cyan;
 $selected_fill_color: palevioletred;
 $selected_stroke_color: #FE7367;
 $selected2_fill_color: orange;
@@ -12,6 +13,11 @@ $tp_fill_color: #7C7354;
 
 rect.nest {
   fill: none;
+  &.select-ready {
+    stroke: $select_ready_stroke_color;
+    stroke-width: 5px;
+    transition: stroke .2s ease-in-out;
+  }
   &.selected {
     stroke: $selected_stroke_color;
     stroke-width: 8px;
@@ -45,6 +51,11 @@ circle.nest {
   }
   &.checked {
     fill: $checked_fill_color;
+  }
+  &.select-ready {
+    stroke: $select_ready_stroke_color;
+    stroke-width: 5px;
+    transition: stroke .2s ease-in-out;
   }
   &.selected {
     stroke: $selected_stroke_color;

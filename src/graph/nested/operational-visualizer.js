@@ -246,11 +246,49 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     )
   }
 
+  setSelectReady (node) {
+    if (node.type === 'node') {
+      this.selectNodeRectByPath(node.path)
+        .classed('select-ready', true)
+    } else {
+      this.selectTpCircleByPath(node.path)
+        .classed('select-ready', true)
+    }
+  }
+
+  clearSelectReady () {
+    this.svgGrp.selectAll('.select-ready')
+      .classed('select-ready', false)
+  }
+
+  setMouseHandler () {
+    const mouseOverHandler = (d) => {
+      this.setSelectReady(d)
+      this.tooltip.enableTooltip(d)
+    }
+    const mouseOutHandler = () => {
+      this.clearSelectReady()
+      this.tooltip.disableTooltip()
+    }
+    const targets = [
+      this.selectNodeRectByPath(),
+      this.selectNodeLabelByPath(),
+      this.selectTpCircleByPath(),
+      this.selectTpLabelByPath()
+    ]
+    for (const target of targets) {
+      target
+        .on('mouseover', mouseOverHandler)
+        .on('mouseout', mouseOutHandler)
+    }
+  }
+
   setOperationHandler (graphData) {
     this.graphData = graphData
     this.setGridHandler('x')
     this.setGridHandler('y')
     this.setLinkSelectHandler()
+    this.setMouseHandler()
     this.setSVGZoom()
   }
 }

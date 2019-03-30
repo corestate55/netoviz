@@ -5,25 +5,7 @@ import { event, selectAll } from 'd3-selection'
 import { timeout } from 'd3-timer'
 import { drag } from 'd3-drag'
 import ForceSimulatedVisualizer from './simulated-visualizer'
-import L2LinkAttribute from '../../../srv/graph/topo-model/link-l2attr'
-import L3LinkAttribute from '../../../srv/graph/topo-model/link-l3attr'
-import L2NetworkAttribute from '../../../srv/graph/topo-model/network-l2attr'
-import L3NetworkAttribute from '../../../srv/graph/topo-model/network-l3attr'
-import L2NodeAttribute from '../../../srv/graph/topo-model/node-l2attr'
-import L3NodeAttribute from '../../../srv/graph/topo-model/node-l3attr'
-import L2TPAttribute from '../../../srv/graph/topo-model/term-point-l2attr'
-import L3TPAttribute from '../../../srv/graph/topo-model/term-point-l3attr'
 
-const AttrClassOf = {
-  'L2LinkAttribute': L2LinkAttribute,
-  'L3LinkAttribute': L3LinkAttribute,
-  'L2NetworkAttribute': L2NetworkAttribute,
-  'L3NetworkAttribute': L3NetworkAttribute,
-  'L2NodeAttribute': L2NodeAttribute,
-  'L3NodeAttribute': L3NodeAttribute,
-  'L2TPAttribute': L2TPAttribute,
-  'L3TPAttribute': L3TPAttribute
-}
 // NOTE
 // arg; `d` : data binded to DOM by d3.js
 // arg: `element`: DOM object (NOT a d3.selection)
@@ -188,28 +170,6 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     element.classList.remove('select-ready')
   }
 
-  enableTooltip (path) {
-    // tooltip header
-    let tooltipBody = path
-    // tooltip body
-    const node = this.findGraphNodeByPath(path)
-    if (node && Object.keys(node.attribute).length > 0) {
-      const AttrClass = AttrClassOf[node.attribute.class]
-      const attr = new AttrClass(node.attribute)
-      tooltipBody = tooltipBody + attr.toHtml()
-    }
-    this.tooltip
-      .classed('pop-up', true)
-      .classed('pop-down', false)
-      .html(tooltipBody)
-  }
-
-  disableTooltip () {
-    this.tooltip
-      .classed('pop-up', false)
-      .classed('pop-down', true)
-  }
-
   mouseOver (element) {
     const path = this.pathFromElement(element)
     // avoid loop: DO NOT make tp info table when the element is in tp info
@@ -219,14 +179,8 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     // set highlight style
     for (const elm of this.highlightElementsByPath(path, 'select-ready')) {
       this.classifyNodeAsSelectReady(elm)
-      this.enableTooltip(path)
+      this.tooltip.enableTooltip(this.findGraphNodeByPath(path))
     }
-  }
-
-  mouseMove (element) {
-    this.tooltip
-      .style('top', `${event.pageY - 20}px`)
-      .style('left', `${event.pageX + 30}px`)
   }
 
   mouseOut (element) {
@@ -234,7 +188,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     // remove highlight style
     for (const elm of this.highlightElementsByPath(path, 'select-ready')) {
       this.unclassifyNodeAsSelectReady(elm)
-      this.disableTooltip()
+      this.tooltip.disableTooltip()
     }
   }
 
@@ -325,7 +279,6 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
         .on('click', function () { self.click(this) })
         .on('dblclick', function (d) { self.dblClick(d, this) })
         .on('mouseover', function () { self.mouseOver(this) })
-        .on('mousemove', function () { self.mouseMove(this) })
         .on('mouseout', function () { self.mouseOut(this) })
         .call(drag()
           .on('start', function (d) { self.dragStarted(d, this) })

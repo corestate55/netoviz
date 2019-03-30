@@ -1,6 +1,7 @@
 import { select } from 'd3-selection'
 import BaseContainer from '../../../srv/graph/base'
 import InterTpLinkCreator from './link-creator'
+import TooltipCreator from '../common/tooltip-creator'
 
 export default class SingleNestedVisualizer extends BaseContainer {
   constructor () {
@@ -27,6 +28,13 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
+  }
+
+  makeToolTip () {
+    const origin = select('body').select('div#visualizer')
+      .append('div')
+      .attr('class', 'tool-tip')
+    return new TooltipCreator(origin)
   }
 
   makeNestedGraphSVGGroup () {
@@ -165,8 +173,6 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('rx', 5)
       .attr('ry', 5)
       .style('fill', d => this.colorOfNode(d))
-      .append('title')
-      .text(d => d.path)
   }
 
   makeSupportTpLines (supportTpLinks) {
@@ -202,8 +208,6 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('cx', d => d.cx)
       .attr('cy', d => d.cy)
       .attr('r', d => d.r)
-      .append('title')
-      .text(d => d.path)
   }
 
   makeNodeLabels (nodes) {
@@ -234,6 +238,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
   makeGraphObjects (graphData) {
     this.svg = this.makeNestedGraphSVG()
     this.svgGrp = this.makeNestedGraphSVGGroup()
+    this.tooltip = this.makeToolTip()
 
     this.makeXGrids(graphData.grid.x)
     this.makeYGrids(graphData.grid.y)

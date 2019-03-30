@@ -40,7 +40,8 @@ export default class DepGraphTp extends DepGraphNodeBase {
       'path': this.path,
       'type': this.type,
       'parents': this.parents,
-      'children': this.children
+      'children': this.children,
+      'attribute': this.attribute
     }
   }
 }

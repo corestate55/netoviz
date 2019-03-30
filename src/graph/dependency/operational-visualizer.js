@@ -113,6 +113,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     }
     this.runParentsAndChildren(d,
       makeSelectReadyDepLines, setSelectReadyByPath)
+    this.tooltip.enableTooltip(d)
   }
 
   mouseOutHandler (d) {
@@ -127,6 +128,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     }
     this.runParentsAndChildren(d,
       clearSelectReadyDepLines, unsetSelectReadyByPath)
+    this.tooltip.disableTooltip(d)
   }
 
   setOperationHandler (graphData) {

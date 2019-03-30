@@ -40,6 +40,7 @@ import { mapGetters } from 'vuex'
 import VisualizeDiagramTopology from './VisualizeDiagramTopology'
 import VisualizeDiagramDependency from './VisualizeDiagramDependency'
 import VisualizeDiagramNested from './VisualizeDiagramNested'
+import '../css/tooltip.scss'
 
 export default {
   data () {

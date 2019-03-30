@@ -6,7 +6,7 @@ export default class NestedGraphNode {
     this.path = nodeData.path
     this.id = nodeData.id
     this.setFamilyRelation(nodeData, reverse)
-    // this.attribute = nodeData.attribute
+    this.attribute = nodeData.attribute
     // this.diffState = nodeData.diffState
     this.layerOrder = -1
   }
