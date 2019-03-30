@@ -63,7 +63,7 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
       .attr('y2', d => d.target.y)
   }
 
-  tickecTermPoint () {
+  tickedTermPoint () {
     this.tp
       .attr('r', this.tpSize)
       .attr('cx', d => d.x)
@@ -91,7 +91,7 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   // Set event callbacks for node/tp object (mouse dragging)
   ticked () {
     this.tickedLink()
-    this.tickecTermPoint()
+    this.tickedTermPoint()
     this.tickedNode()
   }
 

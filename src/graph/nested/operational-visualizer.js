@@ -6,12 +6,12 @@ import InterTpLinkCreator from './link-creator'
 
 export default class OperationalNestedGraphVisualizer extends SingleNestedGraphVisualizer {
   findTargetRootNodes (i, j) {
-    // -1 in arg is ignored
     return this.graphData.nodes
       .filter(node => {
-        return node.grid && // only root node has attr:grid
-          ((i >= 0 && node.grid.i === i) ||
-            (j >= 0 && node.grid.j === j))
+        // only root node has attr:grid
+        // -1 in arg(i,j) is ignored (multiple select)
+        return node.grid &&
+          ((i >= 0 && node.grid.i === i) || (j >= 0 && node.grid.j === j))
       })
   }
 
@@ -185,29 +185,23 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       this.redrawLinkLines()
     }
 
-    this.selectGridHandle(xy, -1)
-      .call(drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded))
-    this.selectGridLabel(xy, -1)
-      .call(drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded))
-  }
-
-  clearLinkSelectHighlight () {
-    this.svgGrp.selectAll('.checked')
-      .classed('checked', false)
+    [this.selectGridHandle(xy, -1), this.selectGridLabel(xy, -1)]
+      .forEach(target => {
+        target.call(drag()
+          .on('start', dragStarted)
+          .on('drag', dragged)
+          .on('end', dragEnded))
+      })
   }
 
   setLineClass (line, lineClass) {
     // console.log(`link: ${d.path}.oi = ${d.overlapIndex}`)
+    // tp circle
     this.selectTpCircleByPath(line.sourcePath)
       .classed(lineClass, true)
     this.selectTpCircleByPath(line.targetPath)
       .classed(lineClass, true)
+    // link line
     if (line.type === 'tp-tp') {
       this.selectTpTpLineByPath(line.path)
         .classed(lineClass, true)
@@ -218,30 +212,23 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   setLinkMouseHandler () {
-    const tpCircleClick = (d) => {
-      this.clearLinkSelectHighlight()
-      this.graphData.links.filter(link => {
-        return link.sourcePath === d.path || link.targetPath === d.path
-      }).forEach(link => { this.setLineClass(link, 'checked') })
-    }
     const lineClick = (d) => {
-      this.clearLinkSelectHighlight()
+      this.clearAllChecked()
       this.setLineClass(d, 'checked')
     }
     const lineMouseOver = (d) => {
       this.setLineClass(d, 'select-ready')
     }
-    const lineMouseOUt = () => {
-      this.clearSelectReady()
+    const lineMouseOut = () => {
+      this.clearAllSelectReady()
     }
 
-    this.selectTpCircleByPath().on('click', tpCircleClick)
     const targets = [this.selectTpTpLineByPath(), this.selectSupportTpLineByPath()]
-    targets.forEach((line) => {
-      line
+    targets.forEach(target => {
+      target
         .on('click', lineClick)
         .on('mouseover', lineMouseOver)
-        .on('mouseout', lineMouseOUt)
+        .on('mouseout', lineMouseOut)
     })
   }
 
@@ -268,9 +255,39 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     }
   }
 
-  clearSelectReady () {
+  clearAllChecked () {
+    this.svgGrp.selectAll('.checked')
+      .classed('checked', false)
+  }
+
+  clearAllSelectReady () {
     this.svgGrp.selectAll('.select-ready')
       .classed('select-ready', false)
+  }
+
+  setTpMouseHandler () {
+    const linksHasTp = (tp) => {
+      return this.graphData.links.filter(link => {
+        return link.sourcePath === tp.path || link.targetPath === tp.path
+      })
+    }
+    const tpCircleHighlight = (d, className) => {
+      this.tooltip.enableTooltip(d)
+      className === 'checked' && this.clearAllChecked()
+      linksHasTp(d).forEach(link => this.setLineClass(link, className))
+    }
+    const tpMouseOut = () => {
+      this.tooltip.disableTooltip()
+      this.clearAllSelectReady()
+    }
+
+    [this.selectTpCircleByPath(), this.selectTpLabelByPath()]
+      .forEach(target => {
+        target
+          .on('click', d => tpCircleHighlight(d, 'checked'))
+          .on('mouseover', d => tpCircleHighlight(d, 'select-ready'))
+          .on('mouseout', tpMouseOut)
+      })
   }
 
   setNodeMouseHandler () {
@@ -279,20 +296,15 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       this.tooltip.enableTooltip(d)
     }
     const nodeMouseOut = () => {
-      this.clearSelectReady()
+      this.clearAllSelectReady()
       this.tooltip.disableTooltip()
     }
-    const targets = [
-      this.selectNodeRectByPath(),
-      this.selectNodeLabelByPath(),
-      this.selectTpCircleByPath(),
-      this.selectTpLabelByPath()
-    ]
-    for (const target of targets) {
-      target
-        .on('mouseover', nodeMouseOver)
-        .on('mouseout', nodeMouseOut)
-    }
+    [this.selectNodeRectByPath(), this.selectNodeLabelByPath()]
+      .forEach(target => {
+        target
+          .on('mouseover', nodeMouseOver)
+          .on('mouseout', nodeMouseOut)
+      })
   }
 
   setOperationHandler (graphData) {
@@ -300,6 +312,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     this.setGridHandler('x')
     this.setGridHandler('y')
     this.setLinkMouseHandler()
+    this.setTpMouseHandler()
     this.setNodeMouseHandler()
     this.setSVGZoom()
   }
