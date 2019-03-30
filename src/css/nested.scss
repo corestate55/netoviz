@@ -111,6 +111,9 @@ line.nest {
     stroke-width: 1pt;
     stroke-dasharray: 5;
   }
+  &.select-ready {
+    stroke: $checked_stroke_color;
+  }
   &.checked {
     stroke-width: 5pt;
     stroke: $checked_stroke_color;
@@ -125,6 +128,9 @@ polyline.nest {
     stroke-width: 2pt;
     stroke-opacity: 0.6;
     stroke-linejoin: round;
+  }
+  &.select-ready {
+    stroke: $checked_stroke_color;
   }
   &.checked {
     stroke-width: 5pt;
