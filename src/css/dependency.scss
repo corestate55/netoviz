@@ -1,17 +1,24 @@
+%select-ready {
+  stroke: #FE7367;
+  transition: fill .2s ease-in-out;
+}
+%selected {
+  stroke: #FE7367;
+  stroke-width: 2px;
+  transition: fill .2s ease-in-out;
+}
+
 rect.dep {
   fill: none;
   stroke: gray;
 
   &.select-ready {
+    @extend %select-ready;
     fill: lightgoldenrodyellow;
-    stroke: #FE7367;
-    transition: fill .2s ease-in-out;
   }
   &.selected {
+    @extend %selected;
     fill: #CEF6CE;
-    stroke: #FE7367;
-    stroke-width: 2px;
-    transition: fill .2s ease-in-out;
   }
 }
 
@@ -20,15 +27,12 @@ circle.dep {
   stroke: none;
 
   &.select-ready {
+    @extend %select-ready;
     fill: #58FAF4;
-    stroke: #FE7367;
-    transition: fill .2s ease-in-out;
   }
   &.selected {
     fill: #819FF7;
-    stroke: #FE7367;
-    stroke-width: 2px;
-    transition: fill .2s ease-in-out;
+    @extend %selected;
   }
 }
 
