@@ -161,12 +161,9 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   setGridHandler (xy) {
     let targetRootNodes = []
-    const selectArg = (xy, listX, listY) => {
-      return xy === 'x' ? listX : listY
-    }
     const dragStarted = (d, i) => {
       targetRootNodes = this.findTargetRootNodes(
-        ...selectArg(xy, [i, -1], [-1, i])
+        ...this.selectXY(xy, [i, -1], [-1, i])
       )
     }
     const dragged = (d, i) => {
@@ -177,7 +174,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       d.position = event[xy]
       for (const rootNode of targetRootNodes) {
         this.moveRootNode(
-          ...selectArg(xy,
+          ...this.selectXY(xy,
             [rootNode, d.position - rootNode.x, 0],
             [rootNode, 0, d.position - rootNode.y]
           ))
@@ -223,13 +220,13 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       this.clearAllSelectReady()
     }
 
-    const targets = [this.selectTpTpLineByPath(), this.selectSupportTpLineByPath()]
-    targets.forEach(target => {
-      target
-        .on('click', lineClick)
-        .on('mouseover', lineMouseOver)
-        .on('mouseout', lineMouseOut)
-    })
+    [this.selectTpTpLineByPath(), this.selectSupportTpLineByPath()]
+      .forEach(target => {
+        target
+          .on('click', lineClick)
+          .on('mouseover', lineMouseOver)
+          .on('mouseout', lineMouseOut)
+      })
   }
 
   setSVGZoom () {

@@ -42,96 +42,57 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('id', 'whole-dep-graph')
   }
 
-  makeXGridHandles () {
-    this.svgGrp.selectAll('circle.grid-x-handle')
-      .data(this.xGrids)
+  selectXY (xy, a, b) {
+    return xy === 'x' ? a : b
+  }
+
+  makeGridHandles (xy) {
+    this.svgGrp.selectAll(`circle.grid-${xy}-handle`)
+      .data(this.selectXY(xy, this.xGrids, this.yGrids))
       .enter()
       .append('circle')
-      .attr('class', 'nest grid-x-handle')
-      .attr('id', d => `grid-x${d.index}-handle`)
-      .attr('cx', d => d.position)
-      .attr('cy', this.gridStart)
+      .attr('class', `nest grid-${xy}-handle`)
+      .attr('id', d => `grid-${xy}${d.index}-handle`)
+      .attr('cx', this.selectXY(xy, d => d.position, this.gridStart))
+      .attr('cy', this.selectXY(xy, this.gridStart, d => d.position))
       .attr('r', this.gridHandleRadius)
   }
 
-  makeXGridLabels () {
-    this.svgGrp.selectAll('text.grid-x-handle')
-      .data(this.xGrids)
+  makeGridLines (xy) {
+    this.svgGrp.selectAll(`line.grid-${xy}`)
+      .data(this.selectXY(xy, this.xGrids, this.yGrids))
+      .enter()
+      .append('line')
+      .attr('class', `nest grid-${xy}`)
+      .attr('id', d => `grid-${xy}${d.index}`)
+      .attr('x1', this.selectXY(xy, d => d.position, this.gridStart))
+      .attr('y1', this.selectXY(xy, this.gridStart, d => d.position))
+      .attr('x2', this.selectXY(xy, d => d.position, this.gridEnd))
+      .attr('y2', this.selectXY(xy, this.gridEnd, d => d.position))
+  }
+
+  makeGridLabels (xy) {
+    this.svgGrp.selectAll(`text.grid-${xy}-handle`)
+      .data(this.selectXY(xy, this.xGrids, this.yGrids))
       .enter()
       .append('text')
-      .attr('class', 'nest grid-x-handle')
-      .attr('id', d => `grid-x${d.index}-label`)
-      .attr('x', d => d.position)
-      .attr('y', this.gridStart)
+      .attr('class', `nest grid-${xy}-handle`)
+      .attr('id', d => `grid-${xy}${d.index}-label`)
+      .attr('x', this.selectXY(xy, d => d.position, this.gridStart))
+      .attr('y', this.selectXY(xy, this.gridStart, d => d.position))
       .text(d => d.index)
   }
 
-  makeXGridLines () {
-    this.svgGrp.selectAll('line.grid-x')
-      .data(this.xGrids)
-      .enter()
-      .append('line')
-      .attr('class', 'nest grid-x')
-      .attr('id', d => `grid-x${d.index}`)
-      .attr('x1', d => d.position)
-      .attr('y1', this.gridStart)
-      .attr('x2', d => d.position)
-      .attr('y2', this.gridEnd)
-  }
-
-  makeXGrids (xGridData) {
-    this.xGrids = xGridData.map((d, i) => {
+  gridObjectsFrom (gridData) {
+    return gridData.map((d, i) => {
       return { position: d, index: i }
     })
-    this.makeXGridLines()
-    this.makeXGridHandles()
-    this.makeXGridLabels()
   }
 
-  makeYGridHandles () {
-    this.svgGrp.selectAll('circle.grid-y-handle')
-      .data(this.yGrids)
-      .enter()
-      .append('circle')
-      .attr('class', 'nest grid-y-handle')
-      .attr('id', d => `grid-y${d.index}-handle`)
-      .attr('cx', this.gridStart)
-      .attr('cy', d => d.position)
-      .attr('r', this.gridHandleRadius)
-  }
-
-  makeYGridLabels () {
-    this.svgGrp.selectAll('text.grid-y-handle')
-      .data(this.yGrids)
-      .enter()
-      .append('text')
-      .attr('class', 'nest grid-y-handle')
-      .attr('id', d => `grid-y${d.index}-label`)
-      .attr('x', this.gridStart)
-      .attr('y', d => d.position)
-      .text(d => d.index)
-  }
-
-  makeYGridLines () {
-    this.svgGrp.selectAll('line.grid-y')
-      .data(this.yGrids)
-      .enter()
-      .append('line')
-      .attr('class', 'nest grid-y')
-      .attr('id', (d) => `grid-y${d.index}`)
-      .attr('x1', this.gridStart)
-      .attr('y1', d => d.position)
-      .attr('x2', this.gridEnd)
-      .attr('y2', d => d.position)
-  }
-
-  makeYGrids (yGridData) {
-    this.yGrids = yGridData.map((d, i) => {
-      return { position: d, index: i }
-    })
-    this.makeYGridLines()
-    this.makeYGridHandles()
-    this.makeYGridLabels()
+  makeGrids (xy) {
+    this.makeGridLines(xy)
+    this.makeGridHandles(xy)
+    this.makeGridLabels(xy)
   }
 
   layerOf (node) {
@@ -240,8 +201,10 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.svgGrp = this.makeNestedGraphSVGGroup()
     this.tooltip = this.makeToolTip()
 
-    this.makeXGrids(graphData.grid.x)
-    this.makeYGrids(graphData.grid.y)
+    this.xGrids = this.gridObjectsFrom(graphData.grid.x)
+    this.yGrids = this.gridObjectsFrom(graphData.grid.y)
+    this.makeGrids('x')
+    this.makeGrids('y')
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.colorTable = this.makeColorTable(nodes)
