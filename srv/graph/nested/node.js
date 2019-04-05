@@ -1,6 +1,7 @@
 export default class NestedGraphNode {
   constructor (nodeData, reverse) {
     this.operative = false
+    this.split = 0
     this.type = nodeData.type
     this.name = nodeData.name
     this.path = nodeData.path
@@ -29,6 +30,30 @@ export default class NestedGraphNode {
         this.children = parentTps
       }
     }
+  }
+
+  renameChildPath (oldChildPath, newChildPath) {
+    // operation for parent node of multiple-parents node
+    // (change child info)
+    this.children = this.children
+      .filter(d => d !== oldChildPath)
+      .concat(newChildPath)
+  }
+
+  splitByParent (parentPath) {
+    // operation for child node which has multiple-parents
+    // (copy and change parents info)
+    const splitNode = new NestedGraphNode(this)
+    splitNode.path = `${this.path}::${this.split}`
+    splitNode.children = this.children
+    // splitNode.parents = this.parentTpPaths().concat(parentPath)
+    splitNode.parents = [ parentPath ]
+    // delete and ignore tp path
+    this.parents = this.parentNodePaths().filter(d => d !== parentPath)
+    splitNode.split++
+    this.split++
+
+    return splitNode
   }
 
   isNode () {
