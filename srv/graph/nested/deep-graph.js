@@ -1,6 +1,13 @@
-import NestedGraph from './shallow-graph'
+import ShallowNestedGraph from './shallow-graph'
+import DeepNestedGraphNode from './deep-node'
 
-export default class DeepNestedGraph extends NestedGraph {
+export default class DeepNestedGraph extends ShallowNestedGraph {
+  setNodes (graphData) {
+    this.setNodesAs(graphData, node => {
+      return new DeepNestedGraphNode(node, this.reverse)
+    })
+  }
+
   splitChildNode (parentNode, childNode) {
     // console.log(`  ** child: ${childNode.path} has ${childNode.numberOfParentNodes()} parent nodes : `, childNode.parents)
     if (parentNode.split <= 0 && childNode.numberOfParentNodes() <= 1) {
@@ -8,9 +15,9 @@ export default class DeepNestedGraph extends NestedGraph {
     }
     // console.log('  ** child has multi-parents -> split')
     const splitChildNode = childNode.splitByParent(parentNode.path)
-    parentNode.renameChildPath(childNode.path, splitChildNode.path)
     this.nodes.push(splitChildNode)
     // console.log(`  ** splitChild : `, splitChildNode)
+    parentNode.renameChildPath(childNode.path, splitChildNode.path)
     // console.log(`  ** parent :`, parentNode)
     return splitChildNode
   }

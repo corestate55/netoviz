@@ -1,6 +1,6 @@
 import NestedGraphConstants from './constants'
 import GridOperator from './grid-operator'
-import NestedGraphNode from './node'
+import ShallowNestedGraphNode from './shallow-node'
 import NestedGraphLink from './link'
 
 export default class ShallowNestedGraph extends NestedGraphConstants {
@@ -20,10 +20,16 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   }
 
   setNodes (graphData) {
+    this.setNodesAs(graphData, node => {
+      return new ShallowNestedGraphNode(node, this.reverse)
+    })
+  }
+
+  setNodesAs (graphData, generateGraphNodeCallback) {
     this.nodes = []
     for (const layer of graphData) {
       for (const node of layer.nodes) {
-        this.nodes.push(new NestedGraphNode(node, this.reverse))
+        this.nodes.push(generateGraphNodeCallback(node))
       }
     }
   }
