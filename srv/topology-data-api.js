@@ -89,7 +89,7 @@ export default class TopoogyDataAPI {
     return JSON.stringify(depGraphConverter.toData())
   }
 
-  async readLayoutJSONOf (jsonName) {
+  async readLayoutJSON (jsonName) {
     try {
       const baseName = jsonName.split('.').shift()
       const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
@@ -98,8 +98,14 @@ export default class TopoogyDataAPI {
       // layout file is optional.
       // when error (not found the file), use default layout.
       const errorLayoutData = {
-        reverse: { error: true },
-        standard: { error: true }
+        shallow: {
+          reverse: { error: true },
+          standard: { error: true }
+        },
+        deep: {
+          reverse: { error: true },
+          standard: { error: true }
+        }
       }
       return JSON.stringify(errorLayoutData)
     }
@@ -107,7 +113,7 @@ export default class TopoogyDataAPI {
 
   async convertNestedGraphData (jsonName, reverse, deep) {
     const topoJsonString = await this.convertTopoGraphData(jsonName)
-    const layoutJsonString = await this.readLayoutJSONOf(jsonName)
+    const layoutJsonString = await this.readLayoutJSON(jsonName)
     const nestedGraphConverter = new NestedGraphConverter(
       JSON.parse(topoJsonString), JSON.parse(layoutJsonString),
       reverse, deep
@@ -145,20 +151,20 @@ export default class TopoogyDataAPI {
     const layoutData = req.body
     const graphName = req.params.graphName
     const jsonName = req.params.jsonName
+    // TODO: 404 if graphName != nested
     const reverse = this.boolString2Bool(req.query.reverse)
+    const deep = this.boolString2Bool(req.query.deep)
 
     const layoutJsonName = `${jsonName.split('.').shift()}-layout.json`
     const layoutJsonPath = `${this.modelDir}/${layoutJsonName}`
     // const cacheLayoutJsonPath = `${this.cacheDir}/${layoutJsonName}` // test
     const cacheLayoutJsonPath = layoutJsonPath // overwrite
 
-    console.log(`receive ${graphName}/${jsonName}?reverse=${reverse}): `, layoutData)
+    console.log(`receive ${graphName}/${jsonName}?reverse=${reverse}&deep=${deep}): `, layoutData)
     const baseLayoutData = JSON.parse(await readFile(layoutJsonPath, 'utf8'))
-    if (reverse) {
-      baseLayoutData.reverse.grid = layoutData
-    } else {
-      baseLayoutData.standard.grid = layoutData
-    }
+    const layoutKey = deep ? 'deep' : 'shallow'
+    const reverseKey = reverse ? 'reverse' : 'standard'
+    baseLayoutData[layoutKey][reverseKey].grid = layoutData
     const layoutDataString = JSON.stringify(baseLayoutData, null, 2) // pretty print
     fs.writeFile(cacheLayoutJsonPath, layoutDataString, 'utf8', (error) => {
       if (error) {

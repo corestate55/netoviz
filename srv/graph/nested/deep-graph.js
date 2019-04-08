@@ -8,6 +8,11 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     })
   }
 
+  selectLayout (layoutData) {
+    const data = layoutData.deep
+    return this.reverse ? data.reverse : data.standard
+  }
+
   splitChildNode (parentNode, childNode) {
     // console.log(`  ** child: ${childNode.path} has ${childNode.numberOfParentNodes()} parent nodes : `, childNode.parents)
     if (parentNode.split <= 0 && childNode.numberOfParentNodes() <= 1) {

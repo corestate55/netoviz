@@ -65,7 +65,7 @@ export default {
       this.drawJsonModel()
     },
     saveLayout () {
-      this.visualizer.saveLayout(this.modelFile, this.reverse)
+      this.visualizer.saveLayout(this.modelFile, this.reverse, this.deep)
     },
     drawJsonModel () {
       if (this.modelFile) {

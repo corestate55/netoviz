@@ -14,8 +14,13 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.calcRootNodePosition()
   }
 
+  selectLayout (layoutData) {
+    const data = layoutData.shallow
+    return this.reverse ? data.reverse : data.standard
+  }
+
   setGrid (layoutData) {
-    const selectedLayoutData = this.reverse ? layoutData.reverse : layoutData.standard
+    const selectedLayoutData = this.selectLayout(layoutData)
     this.grid = new GridOperator(selectedLayoutData)
   }
 
