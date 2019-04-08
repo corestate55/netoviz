@@ -16,13 +16,13 @@ export default class ShallowNestedGraphNode {
     this.children = nodeData.children
     if (reverse) {
       if (this.type === 'node') {
-        const tps = this.tpPathsInParents()
+        const tps = this.parentTpPaths()
         const childNodes = this.childNodePaths()
         const parentNodes = this.parentNodePaths()
         this.parents = childNodes.concat(tps)
         this.children = parentNodes
       } else { // tp
-        const nodes = this.nodePathsInChildren()
+        const nodes = this.childNodePaths()
         const childTps = this.childTpPaths()
         const parentTps = this.parentTpPaths()
         this.parents = childTps.concat(nodes)
@@ -51,18 +51,6 @@ export default class ShallowNestedGraphNode {
     return !this.matchTpPath(path) && path.match(/.+\/.+/)
   }
 
-  tpPathsInParents () {
-    return this.filterTpPath(this.parents)
-  }
-
-  nodePathsInChildren () {
-    return this.filterNodePath(this.children)
-  }
-
-  numberOfTps () {
-    return this.tpPathsInParents().length
-  }
-
   parentNodePaths () {
     return this.filterNodePath(this.parents)
   }
@@ -77,6 +65,10 @@ export default class ShallowNestedGraphNode {
 
   childTpPaths () {
     return this.filterTpPath(this.children)
+  }
+
+  numberOfTps () {
+    return this.parentTpPaths().length
   }
 
   numberOfParentNodes () {

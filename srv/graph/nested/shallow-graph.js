@@ -150,7 +150,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   calcTpPosition (node, basePosition, layerOrder) {
     let cx11 = basePosition.x + this.nodeXPad + this.r
     const cy1x = basePosition.y + this.nodeYPad + this.r
-    for (const tpPath of node.tpPathsInParents()) {
+    for (const tpPath of node.parentTpPaths()) {
       const tp = this.findNodeByPath(tpPath)
       tp.setCircle(cx11, cy1x, this.r, layerOrder)
       cx11 += this.r * 2 + this.tpInterval
