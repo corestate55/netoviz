@@ -1,27 +1,27 @@
-import NestedGraph from './graph'
+import NestedGraph from './shallow-graph'
 
 export default class DeepNestedGraph extends NestedGraph {
   splitChildNode (parentNode, childNode) {
-    console.log(`  ** child: ${childNode.path} has ${childNode.numberOfParentNodes()} parent nodes : `, childNode.parents)
+    // console.log(`  ** child: ${childNode.path} has ${childNode.numberOfParentNodes()} parent nodes : `, childNode.parents)
     if (parentNode.split <= 0 && childNode.numberOfParentNodes() <= 1) {
       return childNode
     }
-    console.log('  ** child has multi-parents -> split')
+    // console.log('  ** child has multi-parents -> split')
     const splitChildNode = childNode.splitByParent(parentNode.path)
     parentNode.renameChildPath(childNode.path, splitChildNode.path)
     this.nodes.push(splitChildNode)
-    console.log(`  ** splitChild : `, splitChildNode)
-    console.log(`  ** parent :`, parentNode)
+    // console.log(`  ** splitChild : `, splitChildNode)
+    // console.log(`  ** parent :`, parentNode)
     return splitChildNode
   }
 
   calcNodePosition (node, basePosition, layerOrder) {
-    console.log(`node path: ${node.path}`)
+    // console.log(`node path: ${node.path}`)
     this.calcTpPosition(node, basePosition, layerOrder + 1)
     // condition to finish recursive calc (node is leaf = have no children)
     if (node.childNodePaths().length < 1) {
       const lnwh = this.calcLeafNodeWH(node, basePosition, layerOrder)
-      console.log(`stop recurse, ${node.path} is leaf.`, lnwh)
+      // console.log(`stop recurse, ${node.path} is leaf.`, lnwh)
       return lnwh
     }
     // goto recursive calc
@@ -34,9 +34,9 @@ export default class DeepNestedGraph extends NestedGraph {
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
 
-    console.log('children: ', node.childNodePaths())
+    // console.log('children: ', node.childNodePaths())
     for (const childNodePath of node.childNodePaths()) {
-      console.log(`  child path: ${childNodePath}`)
+      // console.log(`  child path: ${childNodePath}`)
       let childNode = this.findNodeByPath(childNodePath)
       if (!childNode) {
         console.error(`child ${childNodePath} not found in ${node.path}`)

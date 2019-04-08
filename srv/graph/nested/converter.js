@@ -1,10 +1,13 @@
-// import NestedGraph from './graph'
-import DeepNestedGraph from './graph-deep'
+import ShallowNestedGraph from './shallow-graph'
+import DeepNestedGraph from './deep-graph'
 
 export default class NestedGraphConverter {
-  constructor (graphData, layoutData, reverse) {
-    // this.nestedGraph = new NestedGraph(graphData, layoutData, reverse)
-    this.nestedGraph = new DeepNestedGraph(graphData, layoutData, reverse)
+  constructor (graphData, layoutData, reverse, deep) {
+    if (deep) {
+      this.nestedGraph = new DeepNestedGraph(graphData, layoutData, reverse)
+    } else {
+      this.nestedGraph = new ShallowNestedGraph(graphData, layoutData, reverse)
+    }
   }
 
   toData () {

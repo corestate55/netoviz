@@ -6,7 +6,15 @@
       type="primary"
       v-on:click="toggleViewPoint()"
     >
-      Change to {{ reverse ? 'Top' : 'Bottom'}} View
+      Change to {{ reverse ? 'Top' : 'Bottom' }} View
+    </el-button>
+    <el-button
+      round
+      size="small"
+      type="primary"
+      v-on:click="toggleDeepNest()"
+      >
+      Change to {{ deep ? 'Shallow' : 'Deep' }} View
     </el-button>
     <el-button
       round
@@ -38,6 +46,7 @@ export default {
     return {
       visualizer: null,
       reverse: true,
+      deep: false,
       unwatchAlert: null,
       unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
@@ -51,12 +60,18 @@ export default {
       this.reverse = !this.reverse
       this.drawJsonModel()
     },
+    toggleDeepNest () {
+      this.deep = !this.deep
+      this.drawJsonModel()
+    },
     saveLayout () {
       this.visualizer.saveLayout(this.modelFile, this.reverse)
     },
     drawJsonModel () {
       if (this.modelFile) {
-        this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow, this.reverse)
+        this.visualizer.drawJsonModel(
+          this.modelFile, this.currentAlertRow, this.reverse, this.deep
+        )
       }
     },
     clearAllHighlight () {

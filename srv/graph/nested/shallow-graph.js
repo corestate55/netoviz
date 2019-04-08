@@ -3,7 +3,7 @@ import GridOperator from './grid-operator'
 import NestedGraphNode from './node'
 import NestedGraphLink from './link'
 
-export default class NestedGraph extends NestedGraphConstants {
+export default class ShallowNestedGraph extends NestedGraphConstants {
   constructor (graphData, layoutData, reverse) {
     super()
     this.reverse = reverse

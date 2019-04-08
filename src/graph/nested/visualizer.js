@@ -3,11 +3,12 @@ import OperationalNestedGraphVisualizer from './operational-visualizer'
 
 export default class NestedGraphVisualizer extends OperationalNestedGraphVisualizer {
   apiUrl (jsonName) {
-    return `graph/nested/${jsonName}?reverse=${this.reverse}`
+    return `graph/nested/${jsonName}?reverse=${this.reverse}&deep=${this.deep}`
   }
 
-  drawJsonModel (jsonName, alert, reverse) {
+  drawJsonModel (jsonName, alert, reverse, deep) {
     this.reverse = reverse
+    this.deep = deep
     const url = this.apiUrl(jsonName)
     console.log(`[nested] query ${url}`)
     json(url).then((graphData) => {

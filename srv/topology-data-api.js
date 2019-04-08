@@ -105,11 +105,12 @@ export default class TopoogyDataAPI {
     }
   }
 
-  async convertNestedGraphData (jsonName, reverse) {
+  async convertNestedGraphData (jsonName, reverse, deep) {
     const topoJsonString = await this.convertTopoGraphData(jsonName)
     const layoutJsonString = await this.readLayoutJSONOf(jsonName)
     const nestedGraphConverter = new NestedGraphConverter(
-      JSON.parse(topoJsonString), JSON.parse(layoutJsonString), reverse
+      JSON.parse(topoJsonString), JSON.parse(layoutJsonString),
+      reverse, deep
     )
     return JSON.stringify(nestedGraphConverter.toData())
   }
@@ -131,8 +132,9 @@ export default class TopoogyDataAPI {
         return await this.convertDependencyGraphData(jsonName)
       } else if (graphName === 'nested') {
         const reverse = this.boolString2Bool(req.query.reverse)
-        console.log('call nested: reverse =', reverse)
-        return await this.convertNestedGraphData(jsonName, reverse)
+        const deep = this.boolString2Bool(req.query.deep)
+        console.log(`call nested: reverse=${reverse}, deep=${deep}`)
+        return await this.convertNestedGraphData(jsonName, reverse, deep)
       }
     } catch (error) {
       throw error
