@@ -1,43 +1,38 @@
 <template>
   <div>
-    <el-input-number
-      size="small"
-      v-model="alertLimit"
-      v-on:change="changeTableLineNumber"
-      v-bind:min="1"
-      v-bind:max="15"
-    />
-    <el-button
-      round
-      size="small"
-      type="info"
-      icon="el-icon-delete"
-      v-bind:disabled="!currentAlertRow"
-      v-on:click="setAlertTableCurrentRow()"
-    >
-      Clear selection
-    </el-button>
-    <!-- time start/stop : toggle (exclusive) button -->
-    <el-button
-      round
-      size="small"
-      type="warning"
-      icon="el-icon-warning"
-      v-bind:disabled="!alertCheckTimer"
-      v-on:click="stopAlertCheckTimer"
-    >
-      Stop Timer
-    </el-button>
-    <el-button
-      round
-      size="small"
-      type="success"
-      icon="el-icon-success"
-      v-bind:disabled="!!alertCheckTimer"
-      v-on:click="startAlertCheckTimer()"
-    >
-      Start Timer
-    </el-button>
+    <el-row v-bind:gutter="20">
+      <el-col v-bind:span="4">
+        <el-input-number
+          size="small"
+          v-model="alertLimit"
+          v-on:change="changeTableLineNumber"
+          v-bind:min="1"
+          v-bind:max="15"
+        />
+      </el-col>
+      <el-col v-bind:span="4">
+        <el-button
+          round
+          size="small"
+          type="info"
+          icon="el-icon-delete"
+          v-bind:disabled="!currentAlertRow"
+          v-on:click="setAlertTableCurrentRow()"
+        >
+          Clear selection
+        </el-button>
+      </el-col>
+      <el-col v-bind:span="6">
+        <el-switch
+          v-model="enableTimer"
+          v-on:change="setAlertCheckTimer()"
+          active-text="Enable Timer"
+          inactive-text="Disable Timer"
+          active-color="#ff4949"
+          inactive-color="#409EFF"
+        />
+      </el-col>
+    </el-row>
     <!-- alert data table -->
     <el-table
       ref="alertTable"
@@ -81,6 +76,7 @@ export default {
     return {
       alerts: [],
       alertLimit: 5,
+      enableTimer: true,
       alertCheckTimer: null
     }
   },
@@ -96,6 +92,9 @@ export default {
   },
   methods: {
     ...mapMutations(['setCurrentAlertRow']),
+    setAlertCheckTimer () {
+      this.enableTimer ? this.startAlertCheckTimer() : this.stopAlertCheckTimer()
+    },
     stopAlertCheckTimer () {
       clearInterval(this.alertCheckTimer)
       this.alertCheckTimer = null

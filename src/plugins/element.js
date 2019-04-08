@@ -6,7 +6,7 @@ import {
   Table, TableColumn,
   Button, InputNumber,
   Collapse, CollapseItem,
-  Row, Col
+  Row, Col, Switch
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ja'
 import locale from 'element-ui/lib/locale'
@@ -28,3 +28,4 @@ Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Switch)

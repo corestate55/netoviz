@@ -1,29 +1,35 @@
 <template>
   <div id="visualizer">
-    <el-button
-      round
-      size="small"
-      type="primary"
-      v-on:click="toggleViewPoint()"
-    >
-      Change to {{ reverse ? 'Top' : 'Bottom' }} View
-    </el-button>
-    <el-button
-      round
-      size="small"
-      type="primary"
-      v-on:click="toggleDeepNest()"
-      >
-      Change to {{ deep ? 'Shallow' : 'Deep' }} View
-    </el-button>
-    <el-button
-      round
-      size="small"
-      type="warning"
-      v-on:click="saveLayout()"
-    >
-      Save Layout
-    </el-button>
+    <el-row v-bind:gutter="20">
+      <el-col v-bind:span="5">
+        <el-switch
+          v-model="reverse"
+          v-on:change="drawJsonModel()"
+          active-text="Bottom View"
+          inactive-text="Top View"
+          inactive-color="#13ce66"
+        />
+      </el-col>
+      <el-col v-bind:span="5">
+        <el-switch
+          v-model="deep"
+          v-on:change="drawJsonModel()"
+          active-text="Deep"
+          inactive-text="Shallow"
+          inactive-color="#13ce66"
+        />
+      </el-col>
+      <el-col v-bind:span="5">
+        <el-button
+          round
+          size="small"
+          type="warning"
+          v-on:click="saveLayout()"
+        >
+          Save Layout
+        </el-button>
+      </el-col>
+    </el-row>
     <div
       v-bind:style="{ display: debug }"
     >
@@ -56,14 +62,6 @@ export default {
     ...mapGetters(['currentAlertRow', 'modelFile'])
   },
   methods: {
-    toggleViewPoint () {
-      this.reverse = !this.reverse
-      this.drawJsonModel()
-    },
-    toggleDeepNest () {
-      this.deep = !this.deep
-      this.drawJsonModel()
-    },
     saveLayout () {
       this.visualizer.saveLayout(this.modelFile, this.reverse, this.deep)
     },
