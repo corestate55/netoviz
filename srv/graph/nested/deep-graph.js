@@ -27,41 +27,21 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     return splitChildNode
   }
 
-  calcNodePosition (node, basePosition, layerOrder) {
-    // console.log(`node path: ${node.path}`)
-    this.calcTpPosition(node, basePosition, layerOrder + 1)
-    // condition to finish recursive calc (node is leaf = have no children)
-    if (node.childNodePaths().length < 1) {
-      const lnwh = this.calcLeafNodeWH(node, basePosition, layerOrder)
-      // console.log(`stop recurse, ${node.path} is leaf.`, lnwh)
-      return lnwh
-    }
-    // goto recursive calc
-    const childrenWHList = this.calcChildNodePosition(node, basePosition, layerOrder + 2)
-    return this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
+  checkLeafNode (node) {
+    return node.childNodePaths().length < 1
   }
 
-  calcChildNodePosition (node, basePosition, layerOrder) {
-    const childrenWHList = [] // [{ width: w, height: h }]
-    let nx11 = basePosition.x + this.nodeXPad
-    const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
+  childNodePathsToCalcPosition (node) {
+    return node.childNodePaths()
+  }
 
-    // console.log('children: ', node.childNodePaths())
-    for (const childNodePath of node.childNodePaths()) {
-      // console.log(`  child path: ${childNodePath}`)
-      let childNode = this.findNodeByPath(childNodePath)
-      if (!childNode) {
-        console.error(`child ${childNodePath} not found in ${node.path}`)
-      }
-      // split multi-parents child node to single parent node
-      childNode = this.splitChildNode(node, childNode)
-      // recursive search
-      const basePosition = { x: nx11, y: ny1x }
-      const wh = this.calcNodePosition(childNode, basePosition, layerOrder)
-      childrenWHList.push(wh)
-      nx11 += wh.width + this.nodeXPad
+  childNodeFrom (parentNode, childNodePath) {
+    const childNode = this.findNodeByPath(childNodePath)
+    if (!childNode) {
+      console.error(`child ${childNodePath} not found in ${parentNode.path}`)
     }
-    return childrenWHList
+    // split multi-parents child node to single parent node
+    return this.splitChildNode(parentNode, childNode)
   }
 
   widthByChildNodes (node, childrenWHList) {

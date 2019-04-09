@@ -79,6 +79,10 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     })
   }
 
+  checkLeafNode (node) {
+    return this.singleParentChildNodePaths(node).length < 1
+  }
+
   calcNodePosition (node, basePosition, layerOrder) {
     // console.log(`path: ${node.path}`)
     this.calcTpPosition(node, basePosition, layerOrder + 1)
@@ -86,7 +90,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     // if the node is leaf:
     // only counted as child node when it has single parent.
     // if it has multiple parents, it breaks tree structure.
-    if (this.singleParentChildNodePaths(node).length < 1) {
+    if (this.checkLeafNode(node)) {
       return this.calcLeafNodeWH(node, basePosition, layerOrder)
     }
     // recursive position calculation
@@ -94,14 +98,22 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
   }
 
+  childNodePathsToCalcPosition (node) {
+    return this.singleParentChildNodePaths(node)
+  }
+
+  childNodeFrom (parentNode, childNodePath) {
+    return this.findNodeByPath(childNodePath)
+  }
+
   calcChildNodePosition (node, basePosition, layerOrder) {
     const childrenWHList = [] // [{ width: w, height: h }]
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
 
-    for (const childNodePath of this.singleParentChildNodePaths(node)) {
+    for (const childNodePath of this.childNodePathsToCalcPosition(node)) {
       // console.log(`  childrenNodePath: ${childNodePath}`)
-      const childNode = this.findNodeByPath(childNodePath)
+      const childNode = this.childNodeFrom(node, childNodePath)
       // recursive search
       const basePosition = { x: nx11, y: ny1x }
       const wh = this.calcNodePosition(childNode, basePosition, layerOrder)
