@@ -9,7 +9,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
     // canvas size
     this.width = 800
     this.height = 600
-    this.fontSize = 10
+    this.fontSize = 20
   }
 
   clearCanvas () {
@@ -62,6 +62,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y + d.height / 2))
       .attr('class', 'dep layer')
+      .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }
 
@@ -110,7 +111,8 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .attr('id', d => `${d.path}-ndlb`)
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y + d.height))
-      .attr('dy', this.fontSize)
+      .attr('dy', this.scale(this.fontSize))
+      .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }
 
@@ -123,7 +125,8 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .attr('id', d => `${d.path}-tplb`)
       .attr('x', d => this.scale(d.cx))
       .attr('y', d => this.scale(d.cy + d.r))
-      .attr('dy', this.fontSize / 2)
+      .attr('dy', this.scale(this.fontSize / 2))
+      .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }
 

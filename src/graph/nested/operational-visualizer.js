@@ -80,11 +80,11 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   updateRootNodeRectPosition (rootNode) {
     this.selectNodeRectByPath(rootNode.path)
-      .attr('x', rootNode.x)
-      .attr('y', rootNode.y)
+      .attr('x', this.scale(rootNode.x))
+      .attr('y', this.scale(rootNode.y))
     this.selectNodeLabelByPath(rootNode.path) // label
-      .attr('x', rootNode.x)
-      .attr('y', rootNode.y + rootNode.height)
+      .attr('x', this.scale(rootNode.x))
+      .attr('y', this.scale(rootNode.y + rootNode.height))
   }
 
   tpsInNode (node) {
@@ -100,11 +100,11 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   updateTpCirclePosition (tp) {
     this.selectTpCircleByPath(tp.path)
-      .attr('cx', tp.cx)
-      .attr('cy', tp.cy)
+      .attr('cx', this.scale(tp.cx))
+      .attr('cy', this.scale(tp.cy))
     this.selectTpLabelByPath(tp.path) // label
-      .attr('x', tp.cx)
-      .attr('y', tp.cy)
+      .attr('x', this.scale(tp.cx))
+      .attr('y', this.scale(tp.cy))
   }
 
   childNodesOfNode (node) {
@@ -151,12 +151,12 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   updateGridLine (d, xy, i) {
     this.selectGridLine(xy, i)
-      .attr(`${xy}1`, d.position)
-      .attr(`${xy}2`, d.position)
+      .attr(`${xy}1`, this.scale(d.position))
+      .attr(`${xy}2`, this.scale(d.position))
     this.selectGridHandle(xy, i)
-      .attr(`c${xy}`, d.position)
+      .attr(`c${xy}`, this.scale(d.position))
     this.selectGridLabel(xy, i)
-      .attr(xy, d.position)
+      .attr(xy, this.scale(d.position))
   }
 
   setGridHandler (xy) {
@@ -167,11 +167,12 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       )
     }
     const dragged = (d, i) => {
-      d.position = event[xy]
+      d.position = this.scale.invert(event[xy])
       this.updateGridLine(d, xy, i)
     }
     const dragEnded = (d) => {
-      d.position = event[xy]
+      // inverse function: screen to data model scale.
+      d.position = this.scale.invert(event[xy])
       for (const rootNode of targetRootNodes) {
         this.moveRootNode(
           ...this.selectXY(xy,

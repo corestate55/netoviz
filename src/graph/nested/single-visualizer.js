@@ -1,4 +1,5 @@
 import { select } from 'd3-selection'
+import { scaleLinear } from 'd3-scale'
 import BaseContainer from '../../../srv/graph/base'
 import InterTpLinkCreator from './link-creator'
 import TooltipCreator from '../common/tooltip-creator'
@@ -12,6 +13,8 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.gridStart = -100
     this.gridEnd = 2000
     this.gridHandleRadius = 25
+    this.fontSize = 15
+    this.gridFontSize = 25
   }
 
   clearCanvas () {
@@ -43,7 +46,11 @@ export default class SingleNestedVisualizer extends BaseContainer {
   }
 
   selectXY (xy, a, b) {
-    return xy === 'x' ? a : b
+    const selectedValue = xy === 'x' ? a : b
+    if (Array.isArray(selectedValue)) {
+      return selectedValue
+    }
+    return this.scale(selectedValue) // single value
   }
 
   makeGridHandles (xy) {
@@ -53,9 +60,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('circle')
       .attr('class', `nest grid-${xy}-handle`)
       .attr('id', d => `grid-${xy}${d.index}-handle`)
-      .attr('cx', this.selectXY(xy, d => d.position, this.gridStart))
-      .attr('cy', this.selectXY(xy, this.gridStart, d => d.position))
-      .attr('r', this.gridHandleRadius)
+      .attr('cx', d => this.selectXY(xy, d.position, this.gridStart))
+      .attr('cy', d => this.selectXY(xy, this.gridStart, d.position))
+      .attr('r', this.scale(this.gridHandleRadius))
   }
 
   makeGridLines (xy) {
@@ -65,10 +72,10 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('line')
       .attr('class', `nest grid-${xy}`)
       .attr('id', d => `grid-${xy}${d.index}`)
-      .attr('x1', this.selectXY(xy, d => d.position, this.gridStart))
-      .attr('y1', this.selectXY(xy, this.gridStart, d => d.position))
-      .attr('x2', this.selectXY(xy, d => d.position, this.gridEnd))
-      .attr('y2', this.selectXY(xy, this.gridEnd, d => d.position))
+      .attr('x1', d => this.selectXY(xy, d.position, this.gridStart))
+      .attr('y1', d => this.selectXY(xy, this.gridStart, d.position))
+      .attr('x2', d => this.selectXY(xy, d.position, this.gridEnd))
+      .attr('y2', d => this.selectXY(xy, this.gridEnd, d.position))
   }
 
   makeGridLabels (xy) {
@@ -78,8 +85,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('text')
       .attr('class', `nest grid-${xy}-handle`)
       .attr('id', d => `grid-${xy}${d.index}-label`)
-      .attr('x', this.selectXY(xy, d => d.position, this.gridStart))
-      .attr('y', this.selectXY(xy, this.gridStart, d => d.position))
+      .attr('x', d => this.selectXY(xy, d.position, this.gridStart))
+      .attr('y', d => this.selectXY(xy, this.gridStart, d.position))
+      .attr('font-size', this.scale(this.gridFontSize))
       .text(d => d.index)
   }
 
@@ -127,10 +135,10 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('rect')
       .attr('class', 'nest node')
       .attr('id', d => d.path)
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
-      .attr('width', d => d.width)
-      .attr('height', d => d.height)
+      .attr('x', d => this.scale(d.x))
+      .attr('y', d => this.scale(d.y))
+      .attr('width', d => this.scale(d.width))
+      .attr('height', d => this.scale(d.height))
       .attr('rx', 5)
       .attr('ry', 5)
       .style('fill', d => this.colorOfNode(d))
@@ -143,10 +151,10 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('line')
       .attr('class', d => `nest  ${d.type}`)
       .attr('id', d => d.path)
-      .attr('x1', d => d.x1)
-      .attr('y1', d => d.y1)
-      .attr('x2', d => d.x2)
-      .attr('y2', d => d.y2)
+      .attr('x1', d => this.scale(d.x1))
+      .attr('y1', d => this.scale(d.y1))
+      .attr('x2', d => this.scale(d.x2))
+      .attr('y2', d => this.scale(d.y2))
   }
 
   makeTpTpLines (tpTpLinks) {
@@ -156,7 +164,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('polyline')
       .attr('class', d => `nest ${d.type}`)
       .attr('id', d => d.path)
-      .attr('points', d => d.polylineString())
+      .attr('points', d => d.polylineString(this.scale))
   }
 
   makeTp (tps) {
@@ -166,9 +174,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('circle')
       .attr('class', 'nest tp')
       .attr('id', d => d.path)
-      .attr('cx', d => d.cx)
-      .attr('cy', d => d.cy)
-      .attr('r', d => d.r)
+      .attr('cx', d => this.scale(d.cx))
+      .attr('cy', d => this.scale(d.cy))
+      .attr('r', d => this.scale(d.r))
   }
 
   makeNodeLabels (nodes) {
@@ -178,8 +186,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('text')
       .attr('class', 'nest node')
       .attr('id', d => d.path)
-      .attr('x', d => d.x)
-      .attr('y', d => d.y + d.height)
+      .attr('x', d => this.scale(d.x))
+      .attr('y', d => this.scale(d.y + d.height))
+      .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }
 
@@ -190,23 +199,40 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('text')
       .attr('class', 'nest tp')
       .attr('id', d => d.path)
-      .attr('x', d => d.cx)
-      .attr('y', d => d.cy)
-      .attr('dy', d => d.r)
+      .attr('x', d => this.scale(d.cx))
+      .attr('y', d => this.scale(d.cy))
+      .attr('dy', d => this.scale(d.r))
+      .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }
 
+  makeScale (nodes) {
+    const xMax = Math.max(...nodes.map(d => d.x + d.width))
+    const yMax = Math.max(...nodes.map(d => d.y + d.height))
+    const xScale = scaleLinear()
+      .domain([0, xMax])
+      .range([0, this.width])
+    if (xScale(yMax) < this.height) {
+      return xScale
+    }
+    return scaleLinear()
+      .domain([0, yMax])
+      .range([0, this.height])
+  }
+
   makeGraphObjects (graphData) {
+    const nodes = graphData.nodes.filter(d => d.type === 'node')
+
     this.svg = this.makeNestedGraphSVG()
     this.svgGrp = this.makeNestedGraphSVGGroup()
     this.tooltip = this.makeToolTip()
+    this.scale = this.makeScale(nodes)
 
     this.xGrids = this.gridObjectsFrom(graphData.grid.x)
     this.yGrids = this.gridObjectsFrom(graphData.grid.y)
     this.makeGrids('x')
     this.makeGrids('y')
 
-    const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.colorTable = this.makeColorTable(nodes)
     this.makeNodes(nodes)
 

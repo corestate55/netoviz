@@ -37,9 +37,10 @@ circle.dep {
 }
 
 text.dep {
+  // do not specify font-size except screen message
+  // size of svg object label must be scaled
+  // when these DOMs are added.
   fill: #303030;
-  font-size: 10pt;
-
   &.layer {
     text-anchor: end;
   }

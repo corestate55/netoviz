@@ -81,8 +81,10 @@ circle.nest {
 }
 
 text.nest {
+  // do not specify font-size except screen message
+  // size of svg object label must be scaled
+  // when these DOMs are added.
   fill: #303030;
-  font-size: 10pt;
   &.node {
     dominant-baseline: hanging;
   }
@@ -95,12 +97,11 @@ text.nest {
     dominant-baseline: central;
     fill: white;
     font-weight: bold;
-    font-size: 15pt;
   }
   &.warning {
     fill: red;
     fill-opacity: 0.5;
-    font-size: 12pt;
+    font-size: 12pt; // screen message
     font-weight: bold;
   }
 }

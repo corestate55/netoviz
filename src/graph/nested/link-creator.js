@@ -202,12 +202,12 @@ class InterTpLink {
     return ym
   }
 
-  polylineString () {
+  polylineString (scale) {
     return [
-      `${this.x1},${this.y1}`,
-      `${this.x1},${this.yMid}`,
-      `${this.x2},${this.yMid}`,
-      `${this.x2},${this.y2}`
+      `${scale(this.x1)},${scale(this.y1)}`,
+      `${scale(this.x1)},${scale(this.yMid)}`,
+      `${scale(this.x2)},${scale(this.yMid)}`,
+      `${scale(this.x2)},${scale(this.y2)}`
     ].join(' ')
   }
 }
