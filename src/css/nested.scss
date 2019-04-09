@@ -86,11 +86,12 @@ text.nest {
   // when these DOMs are added.
   fill: #303030;
   &.node {
-    dominant-baseline: hanging;
+    text-anchor: start;
+    // dominant-baseline: hanging;
   }
   &.tp {
     text-anchor: middle;
-    dominant-baseline: hanging;
+    // dominant-baseline: hanging;
   }
   &.grid-x-handle, &.grid-y-handle {
     text-anchor: middle;

@@ -188,6 +188,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('id', d => d.path)
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y + d.height))
+      .attr('dy', this.scale(this.fontSize))
       .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }
@@ -200,8 +201,8 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('class', 'nest tp')
       .attr('id', d => d.path)
       .attr('x', d => this.scale(d.cx))
-      .attr('y', d => this.scale(d.cy))
-      .attr('dy', d => this.scale(d.r))
+      .attr('y', d => this.scale(d.cy + d.r))
+      .attr('dy', this.scale(this.fontSize))
       .attr('font-size', this.scale(this.fontSize))
       .text(d => d.name)
   }

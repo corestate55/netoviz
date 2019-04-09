@@ -231,13 +231,13 @@ div {
 
 // node/termination-point label
 text {
-  dominant-baseline: central;
-
   &.tp-label {
+    dominant-baseline: central;
     font-size: 8px;
     fill-opacity: 0.5;
   }
   &.node-label {
+    dominant-baseline: central;
     font-size: 10px;
   }
 }
