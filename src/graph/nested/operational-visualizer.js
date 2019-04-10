@@ -78,6 +78,22 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     return this.svgGrp.select(`text#grid-${xy}${i}-label`)
   }
 
+  findOperativeNodeByPath (path) {
+    return this.graphData.nodes.find(node => node.path === path)
+  }
+
+  findInoperativeNodeByPath (path) {
+    return this.graphData.inoperativeNodes.find(node => node.path === path)
+  }
+
+  operativeNodesByName (name) {
+    return this.graphData.nodes.filter(node => node.name === name)
+  }
+
+  inoperativeNodesByName (name) {
+    return this.graphData.inoperativeNodes.filter(node => node.name === name)
+  }
+
   updateRootNodeRectPosition (rootNode) {
     this.selectNodeRectByPath(rootNode.path)
       .attr('x', this.scale(rootNode.x))
@@ -253,6 +269,20 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     }
   }
 
+  // for alert highlight,
+  // target class = ['selected', 'selected2']
+  highlight (node, className) {
+    if (node.type === 'node') {
+      this.selectNodeRectByPath(node.path)
+        .classed(className, true)
+        .style('fill', null)
+    } else {
+      this.selectTpCircleByPath(node.path)
+        .classed(className, true)
+        .style('fill', null)
+    }
+  }
+
   clearAllChecked () {
     this.svgGrp.selectAll('.checked')
       .classed('checked', false)
@@ -261,6 +291,14 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   clearAllSelectReady () {
     this.svgGrp.selectAll('.select-ready')
       .classed('select-ready', false)
+  }
+
+  clearAllAlertHighlight () {
+    for (const className of ['selected', 'selected2']) {
+      this.svgGrp.selectAll(`.${className}`)
+        .classed(className, false)
+        .style('fill', d => this.colorOfNode(d))
+    }
   }
 
   setTpMouseHandler () {
@@ -289,6 +327,12 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   setNodeMouseHandler () {
+    const nodeClick = (d) => {
+      this.clearAllAlertHighlight()
+      this.operativeNodesByName(d.name).forEach(node => {
+        this.highlight(node, 'selected')
+      })
+    }
     const nodeMouseOver = (d) => {
       this.setSelectReady(d)
       this.tooltip.enableTooltip(d)
@@ -300,13 +344,20 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     [this.selectNodeRectByPath(), this.selectNodeLabelByPath()]
       .forEach(target => {
         target
+          .on('click', nodeClick)
           .on('mouseover', nodeMouseOver)
           .on('mouseout', nodeMouseOut)
       })
   }
 
+  setClearButtonHandler () {
+    this.svg.select('text#clear-button')
+      .on('click', () => { this.clearAllAlertHighlight() })
+  }
+
   setOperationHandler (graphData) {
     this.graphData = graphData
+    this.setClearButtonHandler()
     this.setGridHandler('x')
     this.setGridHandler('y')
     this.setLinkMouseHandler()

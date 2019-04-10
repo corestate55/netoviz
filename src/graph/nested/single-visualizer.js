@@ -207,6 +207,16 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .text(d => d.name)
   }
 
+  makeClearButton () {
+    const clearButtonFontSize = 12
+    this.svg.append('text')
+      .attr('class', 'dep')
+      .attr('id', 'clear-button')
+      .attr('x', clearButtonFontSize / 2)
+      .attr('y', clearButtonFontSize)
+      .text('[clear highlight]')
+  }
+
   makeScale (nodes) {
     const xMax = Math.max(...nodes.map(d => d.x + d.width))
     const yMax = Math.max(...nodes.map(d => d.y + d.height))
@@ -222,11 +232,12 @@ export default class SingleNestedVisualizer extends BaseContainer {
   }
 
   makeGraphObjects (graphData) {
-    const nodes = graphData.nodes.filter(d => d.type === 'node')
-
     this.svg = this.makeNestedGraphSVG()
     this.svgGrp = this.makeNestedGraphSVGGroup()
     this.tooltip = this.makeToolTip()
+    this.makeClearButton()
+
+    const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.scale = this.makeScale(nodes)
 
     this.xGrids = this.gridObjectsFrom(graphData.grid.x)
