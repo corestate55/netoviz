@@ -28,8 +28,8 @@
           v-on:change="setAlertCheckTimer()"
           active-text="Enable Timer"
           inactive-text="Disable Timer"
-          active-color="#ff4949"
-          inactive-color="#409EFF"
+          active-color="#409EFF"
+          inactive-color="#ff4949"
         />
       </el-col>
     </el-row>
