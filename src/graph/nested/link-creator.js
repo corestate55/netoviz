@@ -214,12 +214,12 @@ class InterTpLink {
 
 export default class InterTpLinkCreator {
   constructor (graphData) {
-    const findNodeById = (nodes, id) => {
-      return nodes.find(tp => tp.id === id)
+    const findNodeByPath = (nodes, path) => {
+      return nodes.find(tp => tp.path === path)
     }
     this.links = graphData.links.map(link => {
-      const sourceTp = findNodeById(graphData.nodes, link.sourceId)
-      const targetTp = findNodeById(graphData.nodes, link.targetId)
+      const sourceTp = findNodeByPath(graphData.nodes, link.sourcePath)
+      const targetTp = findNodeByPath(graphData.nodes, link.targetPath)
       return new InterTpLink(link, sourceTp, targetTp)
     })
     this.checkLineOverlap()

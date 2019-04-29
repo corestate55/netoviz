@@ -201,9 +201,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
           path: `${tp.layer()},${childTp.layer()}/${name}`,
           type: 'support-tp',
           sourcePath: tp.path,
-          targetPath: childTpPath,
-          sourceId: tp.id,
-          targetId: childTp.id
+          targetPath: childTpPath
         })
       }
     }
