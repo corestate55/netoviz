@@ -39,15 +39,19 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     }
   }
 
+  findLinkBetween (sourcePath, targetPath) {
+    return this.links.find(d => {
+      return d.sourcePath === sourcePath && d.targetPath === targetPath
+    })
+  }
+
   setLinks (graphData) {
     this.links = []
     for (const layer of graphData) {
       for (const link of layer.links) {
-        const foundReverse = this.links.find(d => {
-          return d.sourceId === link.targetId && d.targetId === link.sourceId
-        })
+        const reverseLink = this.findLinkBetween(link.targetPath, link.sourcePath)
         // filter (discard) reverse link of bi-directional link for visualizer
-        if (!foundReverse) {
+        if (!reverseLink) {
           this.links.push(new NestedGraphLink(link))
         }
       }
@@ -60,6 +64,10 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
 
   findNodeByPath (path) {
     return this.nodes.find(d => d.path === path)
+  }
+
+  mapPathsToNodes (paths) {
+    return paths.map(path => this.findNodeByPath(path))
   }
 
   calcRootNodePosition () {
@@ -167,8 +175,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   calcTpPosition (node, basePosition, layerOrder) {
     let cx11 = basePosition.x + this.nodeXPad + this.r
     const cy1x = basePosition.y + this.nodeYPad + this.r
-    for (const tpPath of node.parentTpPaths()) {
-      const tp = this.findNodeByPath(tpPath)
+    for (const tp of this.mapPathsToNodes(node.parentTpPaths())) {
       tp.setCircle(cx11, cy1x, this.r, layerOrder)
       cx11 += this.r * 2 + this.tpInterval
     }
