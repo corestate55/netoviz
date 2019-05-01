@@ -9,7 +9,7 @@ class SupportingNode extends TopoBaseContainer {
     super(data)
     this.networkRef = data['network-ref']
     this.nodeRef = data['node-ref']
-    this.refPath = [this.networkRef, this.nodeRef].join('/')
+    this.refPath = [this.networkRef, this.nodeRef].join('__')
   }
 }
 
@@ -19,7 +19,7 @@ export default class Node extends TopoBaseContainer {
     this.name = data['node-id'] // name string
     this.id = nwId + nodeNum * 100
     this.parentPath = nwPath
-    this.path = [this.parentPath, this.name].join('/')
+    this.path = [this.parentPath, this.name].join('__')
     this.attribute = {} // for extension
     this.constructSupportingNodes(data)
     this.constructTermPts(data)

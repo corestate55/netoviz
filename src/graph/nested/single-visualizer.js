@@ -104,7 +104,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
   }
 
   layerOf (node) {
-    return node.path.split('/').shift()
+    return node.path.split('__').shift()
   }
 
   colorOfNode (node) {

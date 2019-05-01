@@ -25,9 +25,9 @@ export default class DepGraphTp extends DepGraphNodeBase {
   }
 
   parentPath () {
-    const p = this.path.split('/')
+    const p = this.path.split('__')
     p.pop() // discard last element (tp name)
-    return p.join('/')
+    return p.join('__')
   }
 
   toData () {

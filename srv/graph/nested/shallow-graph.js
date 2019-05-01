@@ -205,7 +205,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
         const name = `${tp.linkPath()},${childTp.linkPath()}`
         supportTpLinks.push({
           name: name,
-          path: `${tp.layer()},${childTp.layer()}/${name}`,
+          path: `${tp.layer()},${childTp.layer()}__${name}`,
           type: 'support-tp',
           sourcePath: tp.path,
           targetPath: childTpPath

@@ -44,11 +44,11 @@ export default class ShallowNestedGraphNode {
   }
 
   matchTpPath (path) {
-    return path.match(/.+\/.+\/.+/)
+    return path.match(/.+__.+__.+/)
   }
 
   matchNodePath (path) {
-    return !this.matchTpPath(path) && path.match(/.+\/.+/)
+    return !this.matchTpPath(path) && path.match(/.+__.+/)
   }
 
   parentNodePaths () {
@@ -89,7 +89,7 @@ export default class ShallowNestedGraphNode {
 
   linkPath () {
     // to make link path
-    const pathElements = this.path.split('/')
+    const pathElements = this.path.split('__')
     pathElements.shift() // discard top(layer)
     return pathElements.join(',')
   }
@@ -116,6 +116,6 @@ export default class ShallowNestedGraphNode {
   }
 
   layer () {
-    return this.path.split('/').shift()
+    return this.path.split('__').shift()
   }
 }

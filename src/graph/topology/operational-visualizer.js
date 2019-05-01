@@ -38,14 +38,16 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   typeOfPath (path) {
-    if (path.match(/.+\/.+\/.+/)) {
+    if (path.match(/.+__.+__.+/)) {
       return 'tp'
     }
     return 'node'
   }
 
   nodePathFromTpPath (path) {
-    return path.replace(/\/[.\w]+$/, '') // remove tp name
+    const paths = path.split('__')
+    paths.pop() // remove latest (tp) path
+    return paths.join('__')
   }
 
   pathFromElement (element) {
@@ -66,11 +68,8 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
     // TP info table is not always present at all times.
     // Especially for children/parent layer.
-    const tpInfo = document.getElementById(`${path}-tpinfo`) // tp info
-    if (tpInfo) {
-      list.push(tpInfo)
-    }
-    return list
+    list.push(document.getElementById(`${path}-tpinfo`)) // tp info
+    return list.filter(d => d !== null)
   }
 
   highlightElementsByPathOfNode (path) {

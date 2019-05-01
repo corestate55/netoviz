@@ -8,7 +8,7 @@ class TpRef extends TopoBaseContainer {
     super(data)
     this.nodeRef = data['source-node'] || data['dest-node']
     this.tpRef = data['source-tp'] || data['dest-tp']
-    this.refPath = [nwPath, this.nodeRef, this.tpRef].join('/')
+    this.refPath = [nwPath, this.nodeRef, this.tpRef].join('__')
   }
 }
 
@@ -24,7 +24,7 @@ export default class Link extends TopoBaseContainer {
   constructor (data, nwPath) {
     super(data)
     this.name = data['link-id'] // name string
-    this.path = [nwPath, this.name].join('/')
+    this.path = [nwPath, this.name].join('__')
     this.source = new TpRef(data['source'], nwPath)
     this.destination = new TpRef(data['destination'], nwPath)
     this.constructSupportingLinks(data)

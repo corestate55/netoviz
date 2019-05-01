@@ -9,7 +9,7 @@ class SupportingTermPoint {
     this.networkRef = data['network-ref']
     this.nodeRef = data['node-ref']
     this.tpRef = data['tp-ref']
-    this.refPath = [this.networkRef, this.nodeRef, this.tpRef].join('/')
+    this.refPath = [this.networkRef, this.nodeRef, this.tpRef].join('__')
   }
 }
 
@@ -19,7 +19,7 @@ export default class TermPoint extends TopoBaseContainer {
     this.name = data['tp-id'] // name string
     this.id = nodeId + tpNum
     this.parentPath = nodePath
-    this.path = [this.parentPath, this.name].join('/')
+    this.path = [this.parentPath, this.name].join('__')
     this.attribute = {} // for extension
     this.constructSupportingTermPoints(data)
   }
@@ -53,7 +53,7 @@ export default class TermPoint extends TopoBaseContainer {
   }
 
   graphLink () {
-    const pathList = this.parentPath.split('/')
+    const pathList = this.parentPath.split('__')
     const nodeName = pathList.pop()
     const linkName = [nodeName, this.name].join(',')
     return new GraphLink({
@@ -61,7 +61,7 @@ export default class TermPoint extends TopoBaseContainer {
       'sourcePath': this.parentPath,
       'targetPath': this.path,
       'name': linkName,
-      'path': [pathList, linkName].join('/'),
+      'path': [pathList, linkName].join('__'),
       'attribute': {}, // Notice (Link attribute does not implemented yet)
       'diffState': this.diffState
     })

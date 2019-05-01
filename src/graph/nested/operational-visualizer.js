@@ -107,7 +107,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     // tp path in parents => tp node object list
     return node.parents
       .filter(parentPath => {
-        return parentPath.match(/.+\/.+\/.+/)
+        return parentPath.match(/.+__.+__.+/)
       })
       .map(path => {
         return this.graphData.nodes.find(node => node.path === path)
