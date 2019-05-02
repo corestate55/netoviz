@@ -51,6 +51,10 @@ text.dep {
     fill: darkgray;
     text-anchor: middle;
   }
+  &.warning {
+    fill: red;
+    font-weight: bold;
+  }
 }
 
 line.dep {

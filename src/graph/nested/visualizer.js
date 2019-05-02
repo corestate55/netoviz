@@ -43,7 +43,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
 
   makeWarningMessage (message) {
     this.svg.selectAll('text.warning')
-      .data([{ message: message, x: 10, y: 10 }])
+      .data([{ message: message, x: 150, y: 12 }])
       .enter()
       .append('text')
       .attr('class', 'nest warning')
