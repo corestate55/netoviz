@@ -13,7 +13,7 @@ export default class DepGraphNode extends DepGraphNodeBase {
   }
 
   nodeWidth () {
-    const numOfTp = this.tpList.length
+    const numOfTp = this.tpList.length > 0 ? this.tpList.length : 1 // minimum size
     return this.tpXPad1 * 2 + 2 * this.tpR * numOfTp + this.tpXPad2 * (numOfTp - 1)
   }
 
