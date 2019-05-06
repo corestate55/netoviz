@@ -20,6 +20,9 @@ export default {
   data () {
     return {
       options: [{
+        value: 'bf_trial.json',
+        label: 'batfish trial'
+      }, {
         value: 'target3b.json',
         label: '[3b] L2 Aggr, L3.5 and L2 separate'
       }, {

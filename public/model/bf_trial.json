@@ -1,0 +1,2694 @@
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "bgp",
+        "network-types": {
+        },
+        "node": [
+          {
+            "node-id": "as3",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.23.21.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "3.1.1.1",
+                    "tp-ref": "10.23.21.3"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.13.22.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "3.2.2.2",
+                    "tp-ref": "10.13.22.3"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf",
+                "node-ref": "as3-area1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "3.1.1.1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "3.2.2.2"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "3.10.1.1"
+              }
+            ]
+          },
+          {
+            "node-id": "as1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.12.11.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "1.1.1.1",
+                    "tp-ref": "10.12.11.1"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.13.22.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "1.2.2.2",
+                    "tp-ref": "10.13.22.1"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf",
+                "node-ref": "as1-area1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "1.1.1.1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "1.2.2.2"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "1.10.1.1"
+              }
+            ]
+          },
+          {
+            "node-id": "as65001",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.34.201.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.4.1",
+                    "tp-ref": "2.34.201.4"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.101.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.4.1",
+                    "tp-ref": "2.34.101.4"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.4.1"
+              }
+            ]
+          },
+          {
+            "node-id": "as2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.34.101.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.3.1",
+                    "tp-ref": "2.34.101.3"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.12.11.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.1.1",
+                    "tp-ref": "10.12.11.2"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.201.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.3.2",
+                    "tp-ref": "2.34.201.3"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.23.21.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.1.2",
+                    "tp-ref": "10.23.21.2"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf",
+                "node-ref": "as2-area1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.1.1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.1.2"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.2.1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.2.2"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.3.1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.3.2"
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "as65001,2.34.201.4,as2,2.34.201.3",
+            "source": {
+              "source-node": "as65001",
+              "source-tp": "2.34.201.4"
+            },
+            "destination": {
+              "dest-node": "as2",
+              "dest-tp": "2.34.201.3"
+            }
+          },
+          {
+            "link-id": "as2,2.34.101.3,as65001,2.34.101.4",
+            "source": {
+              "source-node": "as2",
+              "source-tp": "2.34.101.3"
+            },
+            "destination": {
+              "dest-node": "as65001",
+              "dest-tp": "2.34.101.4"
+            }
+          },
+          {
+            "link-id": "as1,10.12.11.1,as2,10.12.11.2",
+            "source": {
+              "source-node": "as1",
+              "source-tp": "10.12.11.1"
+            },
+            "destination": {
+              "dest-node": "as2",
+              "dest-tp": "10.12.11.2"
+            }
+          },
+          {
+            "link-id": "as2,10.12.11.2,as1,10.12.11.1",
+            "source": {
+              "source-node": "as2",
+              "source-tp": "10.12.11.2"
+            },
+            "destination": {
+              "dest-node": "as1",
+              "dest-tp": "10.12.11.1"
+            }
+          },
+          {
+            "link-id": "as3,10.23.21.3,as2,10.23.21.2",
+            "source": {
+              "source-node": "as3",
+              "source-tp": "10.23.21.3"
+            },
+            "destination": {
+              "dest-node": "as2",
+              "dest-tp": "10.23.21.2"
+            }
+          },
+          {
+            "link-id": "as65001,2.34.101.4,as2,2.34.101.3",
+            "source": {
+              "source-node": "as65001",
+              "source-tp": "2.34.101.4"
+            },
+            "destination": {
+              "dest-node": "as2",
+              "dest-tp": "2.34.101.3"
+            }
+          },
+          {
+            "link-id": "as2,2.34.201.3,as65001,2.34.201.4",
+            "source": {
+              "source-node": "as2",
+              "source-tp": "2.34.201.3"
+            },
+            "destination": {
+              "dest-node": "as65001",
+              "dest-tp": "2.34.201.4"
+            }
+          },
+          {
+            "link-id": "as1,10.13.22.1,as3,10.13.22.3",
+            "source": {
+              "source-node": "as1",
+              "source-tp": "10.13.22.1"
+            },
+            "destination": {
+              "dest-node": "as3",
+              "dest-tp": "10.13.22.3"
+            }
+          },
+          {
+            "link-id": "as3,10.13.22.3,as1,10.13.22.1",
+            "source": {
+              "source-node": "as3",
+              "source-tp": "10.13.22.3"
+            },
+            "destination": {
+              "dest-node": "as1",
+              "dest-tp": "10.13.22.1"
+            }
+          },
+          {
+            "link-id": "as2,10.23.21.2,as3,10.23.21.3",
+            "source": {
+              "source-node": "as2",
+              "source-tp": "10.23.21.2"
+            },
+            "destination": {
+              "dest-node": "as3",
+              "dest-tp": "10.23.21.3"
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "bgp-proc",
+        "network-types": {
+        },
+        "node": [
+          {
+            "node-id": "1.1.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1.1.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.12.11.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1border1"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.1.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.12.11.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2border1"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.2.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.2.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.2.2:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.2.2:2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.2.2:3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2core2"
+              }
+            ]
+          },
+          {
+            "node-id": "3.1.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "3.1.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.23.21.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3border1"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.3.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.3.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.3.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.101.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist1",
+                    "tp-ref": "GigabitEthernet2/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2dist1"
+              }
+            ]
+          },
+          {
+            "node-id": "3.2.2.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "3.2.2.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.13.22.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border2",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3border2"
+              }
+            ]
+          },
+          {
+            "node-id": "3.10.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "3.10.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "3.10.1.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3core1"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.3.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.3.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.3.2:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.201.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist2",
+                    "tp-ref": "GigabitEthernet2/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2dist2"
+              }
+            ]
+          },
+          {
+            "node-id": "1.2.2.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1.2.2.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.13.22.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1border2"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.1.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.1.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.1.2:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.23.21.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2border2"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.4.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.34.101.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dept1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.201.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dept1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2dept1"
+              }
+            ]
+          },
+          {
+            "node-id": "2.1.2.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.2.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.2.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.2.1:2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.1.2.1:3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2core1"
+              }
+            ]
+          },
+          {
+            "node-id": "1.10.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1.10.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "1.10.1.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1core1"
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "3.1.1.1,3.1.1.1,3.10.1.1,3.10.1.1",
+            "source": {
+              "source-node": "3.1.1.1",
+              "source-tp": "3.1.1.1"
+            },
+            "destination": {
+              "dest-node": "3.10.1.1",
+              "dest-tp": "3.10.1.1"
+            }
+          },
+          {
+            "link-id": "1.1.1.1,1.1.1.1,1.10.1.1,1.10.1.1",
+            "source": {
+              "source-node": "1.1.1.1",
+              "source-tp": "1.1.1.1"
+            },
+            "destination": {
+              "dest-node": "1.10.1.1",
+              "dest-tp": "1.10.1.1"
+            }
+          },
+          {
+            "link-id": "2.1.4.1,2.34.201.4,2.1.3.2,2.34.201.3",
+            "source": {
+              "source-node": "2.1.4.1",
+              "source-tp": "2.34.201.4"
+            },
+            "destination": {
+              "dest-node": "2.1.3.2",
+              "dest-tp": "2.34.201.3"
+            }
+          },
+          {
+            "link-id": "2.1.2.2,2.1.2.2,2.1.3.2,2.1.3.2",
+            "source": {
+              "source-node": "2.1.2.2",
+              "source-tp": "2.1.2.2"
+            },
+            "destination": {
+              "dest-node": "2.1.3.2",
+              "dest-tp": "2.1.3.2"
+            }
+          },
+          {
+            "link-id": "2.1.2.1,2.1.2.1,2.1.3.2,2.1.3.2:1",
+            "source": {
+              "source-node": "2.1.2.1",
+              "source-tp": "2.1.2.1"
+            },
+            "destination": {
+              "dest-node": "2.1.3.2",
+              "dest-tp": "2.1.3.2:1"
+            }
+          },
+          {
+            "link-id": "2.1.2.2,2.1.2.2:1,2.1.3.1,2.1.3.1",
+            "source": {
+              "source-node": "2.1.2.2",
+              "source-tp": "2.1.2.2:1"
+            },
+            "destination": {
+              "dest-node": "2.1.3.1",
+              "dest-tp": "2.1.3.1"
+            }
+          },
+          {
+            "link-id": "2.1.2.1,2.1.2.1:1,2.1.3.1,2.1.3.1:1",
+            "source": {
+              "source-node": "2.1.2.1",
+              "source-tp": "2.1.2.1:1"
+            },
+            "destination": {
+              "dest-node": "2.1.3.1",
+              "dest-tp": "2.1.3.1:1"
+            }
+          },
+          {
+            "link-id": "1.10.1.1,1.10.1.1:1,1.2.2.2,1.2.2.2",
+            "source": {
+              "source-node": "1.10.1.1",
+              "source-tp": "1.10.1.1:1"
+            },
+            "destination": {
+              "dest-node": "1.2.2.2",
+              "dest-tp": "1.2.2.2"
+            }
+          },
+          {
+            "link-id": "3.10.1.1,3.10.1.1:1,3.2.2.2,3.2.2.2",
+            "source": {
+              "source-node": "3.10.1.1",
+              "source-tp": "3.10.1.1:1"
+            },
+            "destination": {
+              "dest-node": "3.2.2.2",
+              "dest-tp": "3.2.2.2"
+            }
+          },
+          {
+            "link-id": "2.1.3.1,2.34.101.3,2.1.4.1,2.34.101.4",
+            "source": {
+              "source-node": "2.1.3.1",
+              "source-tp": "2.34.101.3"
+            },
+            "destination": {
+              "dest-node": "2.1.4.1",
+              "dest-tp": "2.34.101.4"
+            }
+          },
+          {
+            "link-id": "3.10.1.1,3.10.1.1,3.1.1.1,3.1.1.1",
+            "source": {
+              "source-node": "3.10.1.1",
+              "source-tp": "3.10.1.1"
+            },
+            "destination": {
+              "dest-node": "3.1.1.1",
+              "dest-tp": "3.1.1.1"
+            }
+          },
+          {
+            "link-id": "1.1.1.1,10.12.11.1,2.1.1.1,10.12.11.2",
+            "source": {
+              "source-node": "1.1.1.1",
+              "source-tp": "10.12.11.1"
+            },
+            "destination": {
+              "dest-node": "2.1.1.1",
+              "dest-tp": "10.12.11.2"
+            }
+          },
+          {
+            "link-id": "2.1.1.1,10.12.11.2,1.1.1.1,10.12.11.1",
+            "source": {
+              "source-node": "2.1.1.1",
+              "source-tp": "10.12.11.2"
+            },
+            "destination": {
+              "dest-node": "1.1.1.1",
+              "dest-tp": "10.12.11.1"
+            }
+          },
+          {
+            "link-id": "3.1.1.1,10.23.21.3,2.1.1.2,10.23.21.2",
+            "source": {
+              "source-node": "3.1.1.1",
+              "source-tp": "10.23.21.3"
+            },
+            "destination": {
+              "dest-node": "2.1.1.2",
+              "dest-tp": "10.23.21.2"
+            }
+          },
+          {
+            "link-id": "1.2.2.2,1.2.2.2,1.10.1.1,1.10.1.1:1",
+            "source": {
+              "source-node": "1.2.2.2",
+              "source-tp": "1.2.2.2"
+            },
+            "destination": {
+              "dest-node": "1.10.1.1",
+              "dest-tp": "1.10.1.1:1"
+            }
+          },
+          {
+            "link-id": "2.1.4.1,2.34.101.4,2.1.3.1,2.34.101.3",
+            "source": {
+              "source-node": "2.1.4.1",
+              "source-tp": "2.34.101.4"
+            },
+            "destination": {
+              "dest-node": "2.1.3.1",
+              "dest-tp": "2.34.101.3"
+            }
+          },
+          {
+            "link-id": "2.1.3.2,2.34.201.3,2.1.4.1,2.34.201.4",
+            "source": {
+              "source-node": "2.1.3.2",
+              "source-tp": "2.34.201.3"
+            },
+            "destination": {
+              "dest-node": "2.1.4.1",
+              "dest-tp": "2.34.201.4"
+            }
+          },
+          {
+            "link-id": "2.1.3.1,2.1.3.1:1,2.1.2.1,2.1.2.1:1",
+            "source": {
+              "source-node": "2.1.3.1",
+              "source-tp": "2.1.3.1:1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.1",
+              "dest-tp": "2.1.2.1:1"
+            }
+          },
+          {
+            "link-id": "1.2.2.2,10.13.22.1,3.2.2.2,10.13.22.3",
+            "source": {
+              "source-node": "1.2.2.2",
+              "source-tp": "10.13.22.1"
+            },
+            "destination": {
+              "dest-node": "3.2.2.2",
+              "dest-tp": "10.13.22.3"
+            }
+          },
+          {
+            "link-id": "2.1.3.2,2.1.3.2:1,2.1.2.1,2.1.2.1",
+            "source": {
+              "source-node": "2.1.3.2",
+              "source-tp": "2.1.3.2:1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.1",
+              "dest-tp": "2.1.2.1"
+            }
+          },
+          {
+            "link-id": "2.1.3.2,2.1.3.2,2.1.2.2,2.1.2.2",
+            "source": {
+              "source-node": "2.1.3.2",
+              "source-tp": "2.1.3.2"
+            },
+            "destination": {
+              "dest-node": "2.1.2.2",
+              "dest-tp": "2.1.2.2"
+            }
+          },
+          {
+            "link-id": "3.2.2.2,3.2.2.2,3.10.1.1,3.10.1.1:1",
+            "source": {
+              "source-node": "3.2.2.2",
+              "source-tp": "3.2.2.2"
+            },
+            "destination": {
+              "dest-node": "3.10.1.1",
+              "dest-tp": "3.10.1.1:1"
+            }
+          },
+          {
+            "link-id": "2.1.3.1,2.1.3.1,2.1.2.2,2.1.2.2:1",
+            "source": {
+              "source-node": "2.1.3.1",
+              "source-tp": "2.1.3.1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.2",
+              "dest-tp": "2.1.2.2:1"
+            }
+          },
+          {
+            "link-id": "3.2.2.2,10.13.22.3,1.2.2.2,10.13.22.1",
+            "source": {
+              "source-node": "3.2.2.2",
+              "source-tp": "10.13.22.3"
+            },
+            "destination": {
+              "dest-node": "1.2.2.2",
+              "dest-tp": "10.13.22.1"
+            }
+          },
+          {
+            "link-id": "2.1.2.2,2.1.2.2:2,2.1.1.2,2.1.1.2",
+            "source": {
+              "source-node": "2.1.2.2",
+              "source-tp": "2.1.2.2:2"
+            },
+            "destination": {
+              "dest-node": "2.1.1.2",
+              "dest-tp": "2.1.1.2"
+            }
+          },
+          {
+            "link-id": "2.1.2.1,2.1.2.1:2,2.1.1.2,2.1.1.2:1",
+            "source": {
+              "source-node": "2.1.2.1",
+              "source-tp": "2.1.2.1:2"
+            },
+            "destination": {
+              "dest-node": "2.1.1.2",
+              "dest-tp": "2.1.1.2:1"
+            }
+          },
+          {
+            "link-id": "2.1.1.2,2.1.1.2:1,2.1.2.1,2.1.2.1:2",
+            "source": {
+              "source-node": "2.1.1.2",
+              "source-tp": "2.1.1.2:1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.1",
+              "dest-tp": "2.1.2.1:2"
+            }
+          },
+          {
+            "link-id": "2.1.1.2,2.1.1.2,2.1.2.2,2.1.2.2:2",
+            "source": {
+              "source-node": "2.1.1.2",
+              "source-tp": "2.1.1.2"
+            },
+            "destination": {
+              "dest-node": "2.1.2.2",
+              "dest-tp": "2.1.2.2:2"
+            }
+          },
+          {
+            "link-id": "2.1.2.2,2.1.2.2:3,2.1.1.1,2.1.1.1",
+            "source": {
+              "source-node": "2.1.2.2",
+              "source-tp": "2.1.2.2:3"
+            },
+            "destination": {
+              "dest-node": "2.1.1.1",
+              "dest-tp": "2.1.1.1"
+            }
+          },
+          {
+            "link-id": "2.1.1.1,2.1.1.1:1,2.1.2.1,2.1.2.1:3",
+            "source": {
+              "source-node": "2.1.1.1",
+              "source-tp": "2.1.1.1:1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.1",
+              "dest-tp": "2.1.2.1:3"
+            }
+          },
+          {
+            "link-id": "2.1.2.1,2.1.2.1:3,2.1.1.1,2.1.1.1:1",
+            "source": {
+              "source-node": "2.1.2.1",
+              "source-tp": "2.1.2.1:3"
+            },
+            "destination": {
+              "dest-node": "2.1.1.1",
+              "dest-tp": "2.1.1.1:1"
+            }
+          },
+          {
+            "link-id": "2.1.1.2,10.23.21.2,3.1.1.1,10.23.21.3",
+            "source": {
+              "source-node": "2.1.1.2",
+              "source-tp": "10.23.21.2"
+            },
+            "destination": {
+              "dest-node": "3.1.1.1",
+              "dest-tp": "10.23.21.3"
+            }
+          },
+          {
+            "link-id": "2.1.1.1,2.1.1.1,2.1.2.2,2.1.2.2:3",
+            "source": {
+              "source-node": "2.1.1.1",
+              "source-tp": "2.1.1.1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.2",
+              "dest-tp": "2.1.2.2:3"
+            }
+          },
+          {
+            "link-id": "1.10.1.1,1.10.1.1,1.1.1.1,1.1.1.1",
+            "source": {
+              "source-node": "1.10.1.1",
+              "source-tp": "1.10.1.1"
+            },
+            "destination": {
+              "dest-node": "1.1.1.1",
+              "dest-tp": "1.1.1.1"
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "ospf",
+        "network-types": {
+        },
+        "node": [
+          {
+            "node-id": "as3-area1",
+            "ietf-network-topology:termination-point": [
+
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as3border1"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as3border2"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as3core1"
+              }
+            ]
+          },
+          {
+            "node-id": "as1-area1",
+            "ietf-network-topology:termination-point": [
+
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as1border1"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as1border2"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as1core1"
+              }
+            ]
+          },
+          {
+            "node-id": "as2-area1",
+            "ietf-network-topology:termination-point": [
+
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as2border1"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as2border2"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as2core1"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as2core2"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as2dist1"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as2dist2"
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+
+        ]
+      },
+      {
+        "network-id": "ospf-proc",
+        "network-types": {
+        },
+        "node": [
+          {
+            "node-id": "as3border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3border1"
+              }
+            ]
+          },
+          {
+            "node-id": "as3border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border2",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3border2"
+              }
+            ]
+          },
+          {
+            "node-id": "as3core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3core1"
+              }
+            ]
+          },
+          {
+            "node-id": "as1border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1border1"
+              }
+            ]
+          },
+          {
+            "node-id": "as1border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1border2"
+              }
+            ]
+          },
+          {
+            "node-id": "as1core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1core1"
+              }
+            ]
+          },
+          {
+            "node-id": "as2border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet2/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "GigabitEthernet2/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2border1"
+              }
+            ]
+          },
+          {
+            "node-id": "as2border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet2/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "GigabitEthernet2/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2border2"
+              }
+            ]
+          },
+          {
+            "node-id": "as2core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet2/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "GigabitEthernet2/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet3/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "GigabitEthernet3/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2core1"
+              }
+            ]
+          },
+          {
+            "node-id": "as2core2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet2/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "GigabitEthernet2/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet3/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "GigabitEthernet3/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2core2"
+              }
+            ]
+          },
+          {
+            "node-id": "as2dist1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist1",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist1",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist1",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2dist1"
+              }
+            ]
+          },
+          {
+            "node-id": "as2dist2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist2",
+                    "tp-ref": "GigabitEthernet0/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "GigabitEthernet1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist2",
+                    "tp-ref": "GigabitEthernet1/0"
+                  }
+                ]
+              },
+              {
+                "tp-id": "Loopback0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2dist2",
+                    "tp-ref": "Loopback0"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2dist2"
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "as2dist2,GigabitEthernet0/0,as2core2,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet2/0,as2dist2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2dist2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2dist1,GigabitEthernet1/0,as2core2,GigabitEthernet3/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet3/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet1/0,as2border2,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2dist2,GigabitEthernet1/0,as2core1,GigabitEthernet3/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet3/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet1/0,as2border1,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2dist1,GigabitEthernet0/0,as2core1,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as3core1,GigabitEthernet1/0,as3border1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as3core1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as3border1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet0/0,as2border1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet0/0,as2border2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as3core1,GigabitEthernet0/0,as3border2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as3core1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as3border2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2border1,GigabitEthernet1/0,as2core1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2border1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2border2,GigabitEthernet1/0,as2core2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2border2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2border1,GigabitEthernet2/0,as2core2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2border1",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet2/0,as2dist1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as1border1,GigabitEthernet0/0,as1core1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as1border1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as1core1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet3/0,as2dist1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet3/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as3border2,GigabitEthernet1/0,as3core1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as3border2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as3core1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as1border2,GigabitEthernet1/0,as1core1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as1border2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as1core1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as1core1,GigabitEthernet0/0,as1border2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as1core1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as1border2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as1core1,GigabitEthernet1/0,as1border1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as1core1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as1border1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2border2,GigabitEthernet2/0,as2core1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2border2",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet3/0,as2dist2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet3/0"
+            },
+            "destination": {
+              "dest-node": "as2dist2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as3border1,GigabitEthernet0/0,as3core1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as3border1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as3core1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          }
+        ]
+      },
+      {
+        "network-id": "layer3",
+        "network-types": {
+        },
+        "node": [
+          {
+            "node-id": "as1border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              }
+            ]
+          },
+          {
+            "node-id": "as1border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as1core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "GigabitEthernet3/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2core2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "GigabitEthernet3/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2dept1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "GigabitEthernet3/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2dist1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as2dist2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as3border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as3border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet1/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              }
+            ]
+          },
+          {
+            "node-id": "as3core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "GigabitEthernet2/0"
+              },
+              {
+                "tp-id": "GigabitEthernet3/0"
+              },
+              {
+                "tp-id": "Loopback0"
+              },
+              {
+                "tp-id": "GigabitEthernet0/0"
+              },
+              {
+                "tp-id": "GigabitEthernet1/0"
+              }
+            ]
+          },
+          {
+            "node-id": "host1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0"
+              }
+            ]
+          },
+          {
+            "node-id": "host2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0"
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "as2border2,GigabitEthernet2/0,as2core1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2border2",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2dept1,GigabitEthernet0/0,as2dist1,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2dept1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as3border1,GigabitEthernet0/0,as3core1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as3border1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as3core1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2border2,GigabitEthernet1/0,as2core2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2border2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as3border2,GigabitEthernet0/0,as1border2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as3border2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as1border2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2dist2,GigabitEthernet0/0,as2core2,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2dist2,GigabitEthernet1/0,as2core1,GigabitEthernet3/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet3/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet1/0,as2border2,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2dept1,GigabitEthernet3/0,host2,eth0",
+            "source": {
+              "source-node": "as2dept1",
+              "source-tp": "GigabitEthernet3/0"
+            },
+            "destination": {
+              "dest-node": "host2",
+              "dest-tp": "eth0"
+            }
+          },
+          {
+            "link-id": "as2dist1,GigabitEthernet2/0,as2dept1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2dept1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2dist1,GigabitEthernet0/0,as2core1,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as1border1,GigabitEthernet0/0,as1core1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as1border1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as1core1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2border1,GigabitEthernet2/0,as2core2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2border1",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as3border2,GigabitEthernet1/0,as3core1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as3border2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as3core1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet0/0,as2border2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as1border2,GigabitEthernet1/0,as1core1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as1border2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as1core1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2border1,GigabitEthernet1/0,as2core1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2border1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as1border1,GigabitEthernet1/0,as2border1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as1border1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2border2,GigabitEthernet0/0,as3border1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2border2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as3border1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2dept1,GigabitEthernet1/0,as2dist2,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2dept1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2dist2",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2border1,GigabitEthernet0/0,as1border1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2border1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as1border1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2dist2,GigabitEthernet2/0,as2dept1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2dept1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet0/0,as2border1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as3border1,GigabitEthernet1/0,as2border2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as3border1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet2/0,as2dist1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as3core1,GigabitEthernet1/0,as3border1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as3core1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as3border1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as2dist1,GigabitEthernet1/0,as2core2,GigabitEthernet3/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "GigabitEthernet3/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet1/0,as2border1,GigabitEthernet2/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet2/0,as2dist2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "as2dist2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as3core1,GigabitEthernet0/0,as3border2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as3core1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as3border2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "host1,eth0,as2dept1,GigabitEthernet2/0",
+            "source": {
+              "source-node": "host1",
+              "source-tp": "eth0"
+            },
+            "destination": {
+              "dest-node": "as2dept1",
+              "dest-tp": "GigabitEthernet2/0"
+            }
+          },
+          {
+            "link-id": "as1core1,GigabitEthernet1/0,as1border1,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as1core1",
+              "source-tp": "GigabitEthernet1/0"
+            },
+            "destination": {
+              "dest-node": "as1border1",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as1border2,GigabitEthernet0/0,as3border2,GigabitEthernet0/0",
+            "source": {
+              "source-node": "as1border2",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as3border2",
+              "dest-tp": "GigabitEthernet0/0"
+            }
+          },
+          {
+            "link-id": "as1core1,GigabitEthernet0/0,as1border2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as1core1",
+              "source-tp": "GigabitEthernet0/0"
+            },
+            "destination": {
+              "dest-node": "as1border2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core1,GigabitEthernet3/0,as2dist2,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "GigabitEthernet3/0"
+            },
+            "destination": {
+              "dest-node": "as2dist2",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2core2,GigabitEthernet3/0,as2dist1,GigabitEthernet1/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "GigabitEthernet3/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "GigabitEthernet1/0"
+            }
+          },
+          {
+            "link-id": "as2dept1,GigabitEthernet2/0,host1,eth0",
+            "source": {
+              "source-node": "as2dept1",
+              "source-tp": "GigabitEthernet2/0"
+            },
+            "destination": {
+              "dest-node": "host1",
+              "dest-tp": "eth0"
+            }
+          },
+          {
+            "link-id": "host2,eth0,as2dept1,GigabitEthernet3/0",
+            "source": {
+              "source-node": "host2",
+              "source-tp": "eth0"
+            },
+            "destination": {
+              "dest-node": "as2dept1",
+              "dest-tp": "GigabitEthernet3/0"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
