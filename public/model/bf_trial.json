@@ -315,6 +315,8 @@
       {
         "network-id": "bgp-proc",
         "network-types": {
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
         },
         "node": [
           {
@@ -326,7 +328,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -336,7 +338,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               }
@@ -346,7 +348,39 @@
                 "network-ref": "layer3",
                 "node-ref": "as1border1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.1.1",
@@ -357,7 +391,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -367,7 +401,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -377,7 +411,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               }
@@ -387,7 +421,116 @@
                 "network-ref": "layer3",
                 "node-ref": "as2border1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.2.2",
@@ -398,7 +541,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -408,7 +551,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -418,7 +561,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -428,7 +571,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -438,7 +581,88 @@
                 "network-ref": "layer3",
                 "node-ref": "as2core2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "3.1.1.1",
@@ -449,7 +673,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -459,7 +683,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               }
@@ -469,7 +693,39 @@
                 "network-ref": "layer3",
                 "node-ref": "as3border1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.3.1",
@@ -480,7 +736,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -490,7 +746,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -500,7 +756,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist1",
-                    "tp-ref": "GigabitEthernet2/0"
+                    "tp-ref": "Gi2/0"
                   }
                 ]
               }
@@ -510,7 +766,116 @@
                 "network-ref": "layer3",
                 "node-ref": "as2dist1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "3.2.2.2",
@@ -521,7 +886,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -531,7 +896,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border2",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               }
@@ -541,7 +906,39 @@
                 "network-ref": "layer3",
                 "node-ref": "as3border2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "3.10.1.1",
@@ -552,7 +949,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -562,7 +959,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -572,7 +969,39 @@
                 "network-ref": "layer3",
                 "node-ref": "as3core1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.3.2",
@@ -583,7 +1012,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -593,7 +1022,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -603,7 +1032,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist2",
-                    "tp-ref": "GigabitEthernet2/0"
+                    "tp-ref": "Gi2/0"
                   }
                 ]
               }
@@ -613,7 +1042,116 @@
                 "network-ref": "layer3",
                 "node-ref": "as2dist2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "1.2.2.2",
@@ -624,7 +1162,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -634,7 +1172,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border2",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               }
@@ -644,7 +1182,39 @@
                 "network-ref": "layer3",
                 "node-ref": "as1border2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.1.2",
@@ -655,7 +1225,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -665,7 +1235,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -675,7 +1245,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border2",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               }
@@ -685,7 +1255,116 @@
                 "network-ref": "layer3",
                 "node-ref": "as2border2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.4.1",
@@ -696,7 +1375,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dept1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
@@ -706,7 +1385,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dept1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               }
@@ -716,7 +1395,74 @@
                 "network-ref": "layer3",
                 "node-ref": "as2dept1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "2.1.2.1",
@@ -727,7 +1473,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -737,7 +1483,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -747,7 +1493,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -757,7 +1503,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -767,7 +1513,88 @@
                 "network-ref": "layer3",
                 "node-ref": "as2core1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "1.10.1.1",
@@ -778,7 +1605,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               },
@@ -788,7 +1615,7 @@
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -798,7 +1625,39 @@
                 "network-ref": "layer3",
                 "node-ref": "as1core1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
           }
         ],
         "ietf-network-topology:link": [
@@ -1263,28 +2122,30 @@
       {
         "network-id": "ospf-proc",
         "network-types": {
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
         },
         "node": [
           {
             "node-id": "as3border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1294,28 +2155,67 @@
                 "network-ref": "layer3",
                 "node-ref": "as3border1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.10.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "3.2.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as3border2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border2",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1325,38 +2225,77 @@
                 "network-ref": "layer3",
                 "node-ref": "as3border2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "3.10.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "3.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as3core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3core1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3core1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as3core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1366,28 +2305,67 @@
                 "network-ref": "layer3",
                 "node-ref": "as3core1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.2.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.1.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as1border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1397,28 +2375,74 @@
                 "network-ref": "layer3",
                 "node-ref": "as1border1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "1.2.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "1.10.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.14.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as1border2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border2",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1428,38 +2452,77 @@
                 "network-ref": "layer3",
                 "node-ref": "as1border2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "1.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "1.10.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as1core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1core1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1core1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as1core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1469,38 +2532,84 @@
                 "network-ref": "layer3",
                 "node-ref": "as1core1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.14.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "1.1.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "1.2.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet2/0",
+                "tp-id": "Gi2/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border1",
-                    "tp-ref": "GigabitEthernet2/0"
+                    "tp-ref": "Gi2/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1510,38 +2619,189 @@
                 "network-ref": "layer3",
                 "node-ref": "as2border1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2border2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border2",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet2/0",
+                "tp-id": "Gi2/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border2",
-                    "tp-ref": "GigabitEthernet2/0"
+                    "tp-ref": "Gi2/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2border2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1551,58 +2811,209 @@
                 "network-ref": "layer3",
                 "node-ref": "as2border2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet2/0",
+                "tp-id": "Gi2/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "GigabitEthernet2/0"
+                    "tp-ref": "Gi2/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet3/0",
+                "tp-id": "Gi3/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "GigabitEthernet3/0"
+                    "tp-ref": "Gi3/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1612,58 +3023,181 @@
                 "network-ref": "layer3",
                 "node-ref": "as2core1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2core2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet2/0",
+                "tp-id": "Gi2/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "GigabitEthernet2/0"
+                    "tp-ref": "Gi2/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet3/0",
+                "tp-id": "Gi3/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "GigabitEthernet3/0"
+                    "tp-ref": "Gi3/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2core2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1673,38 +3207,161 @@
                 "network-ref": "layer3",
                 "node-ref": "as2core2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2dist1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist1",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist1",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist1",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1714,38 +3371,189 @@
                 "network-ref": "layer3",
                 "node-ref": "as2dist1"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2dist2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0",
+                "tp-id": "Gi0/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist2",
-                    "tp-ref": "GigabitEthernet0/0"
+                    "tp-ref": "Gi0/0"
                   }
                 ]
               },
               {
-                "tp-id": "GigabitEthernet1/0",
+                "tp-id": "Gi1/0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist2",
-                    "tp-ref": "GigabitEthernet1/0"
+                    "tp-ref": "Gi1/0"
                   }
                 ]
               },
               {
-                "tp-id": "Loopback0",
+                "tp-id": "Lo0",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
                     "node-ref": "as2dist2",
-                    "tp-ref": "Loopback0"
+                    "tp-ref": "Lo0"
                   }
                 ]
               }
@@ -1755,272 +3563,423 @@
                 "network-ref": "layer3",
                 "node-ref": "as2dist2"
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.23.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
           }
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "as2dist2,GigabitEthernet0/0,as2core2,GigabitEthernet2/0",
+            "link-id": "as2dist2,Gi0/0,as2core2,Gi2/0",
             "source": {
               "source-node": "as2dist2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet2/0,as2dist2,GigabitEthernet0/0",
+            "link-id": "as2core2,Gi2/0,as2dist2,Gi0/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2dist2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2dist1,GigabitEthernet1/0,as2core2,GigabitEthernet3/0",
+            "link-id": "as2dist1,Gi1/0,as2core2,Gi3/0",
             "source": {
               "source-node": "as2dist1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet3/0"
+              "dest-tp": "Gi3/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet1/0,as2border2,GigabitEthernet2/0",
+            "link-id": "as2core1,Gi1/0,as2border2,Gi2/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2border2",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2dist2,GigabitEthernet1/0,as2core1,GigabitEthernet3/0",
+            "link-id": "as2dist2,Gi1/0,as2core1,Gi3/0",
             "source": {
               "source-node": "as2dist2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet3/0"
+              "dest-tp": "Gi3/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet1/0,as2border1,GigabitEthernet2/0",
+            "link-id": "as2core2,Gi1/0,as2border1,Gi2/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2border1",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2dist1,GigabitEthernet0/0,as2core1,GigabitEthernet2/0",
+            "link-id": "as2dist1,Gi0/0,as2core1,Gi2/0",
             "source": {
               "source-node": "as2dist1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as3core1,GigabitEthernet1/0,as3border1,GigabitEthernet0/0",
+            "link-id": "as3core1,Gi1/0,as3border1,Gi0/0",
             "source": {
               "source-node": "as3core1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as3border1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet0/0,as2border1,GigabitEthernet1/0",
+            "link-id": "as2core1,Gi0/0,as2border1,Gi1/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2border1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet0/0,as2border2,GigabitEthernet1/0",
+            "link-id": "as2core2,Gi0/0,as2border2,Gi1/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2border2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as3core1,GigabitEthernet0/0,as3border2,GigabitEthernet1/0",
+            "link-id": "as3core1,Gi0/0,as3border2,Gi1/0",
             "source": {
               "source-node": "as3core1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as3border2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2border1,GigabitEthernet1/0,as2core1,GigabitEthernet0/0",
+            "link-id": "as2border1,Gi1/0,as2core1,Gi0/0",
             "source": {
               "source-node": "as2border1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2border2,GigabitEthernet1/0,as2core2,GigabitEthernet0/0",
+            "link-id": "as2border2,Gi1/0,as2core2,Gi0/0",
             "source": {
               "source-node": "as2border2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2border1,GigabitEthernet2/0,as2core2,GigabitEthernet1/0",
+            "link-id": "as2border1,Gi2/0,as2core2,Gi1/0",
             "source": {
               "source-node": "as2border1",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet2/0,as2dist1,GigabitEthernet0/0",
+            "link-id": "as2core1,Gi2/0,as2dist1,Gi0/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2dist1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as1border1,GigabitEthernet0/0,as1core1,GigabitEthernet1/0",
+            "link-id": "as1border1,Gi0/0,as1core1,Gi1/0",
             "source": {
               "source-node": "as1border1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as1core1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet3/0,as2dist1,GigabitEthernet1/0",
+            "link-id": "as2core2,Gi3/0,as2dist1,Gi1/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet3/0"
+              "source-tp": "Gi3/0"
             },
             "destination": {
               "dest-node": "as2dist1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as3border2,GigabitEthernet1/0,as3core1,GigabitEthernet0/0",
+            "link-id": "as3border2,Gi1/0,as3core1,Gi0/0",
             "source": {
               "source-node": "as3border2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as3core1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as1border2,GigabitEthernet1/0,as1core1,GigabitEthernet0/0",
+            "link-id": "as1border2,Gi1/0,as1core1,Gi0/0",
             "source": {
               "source-node": "as1border2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as1core1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as1core1,GigabitEthernet0/0,as1border2,GigabitEthernet1/0",
+            "link-id": "as1core1,Gi0/0,as1border2,Gi1/0",
             "source": {
               "source-node": "as1core1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as1border2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as1core1,GigabitEthernet1/0,as1border1,GigabitEthernet0/0",
+            "link-id": "as1core1,Gi1/0,as1border1,Gi0/0",
             "source": {
               "source-node": "as1core1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as1border1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2border2,GigabitEthernet2/0,as2core1,GigabitEthernet1/0",
+            "link-id": "as2border2,Gi2/0,as2core1,Gi1/0",
             "source": {
               "source-node": "as2border2",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet3/0,as2dist2,GigabitEthernet1/0",
+            "link-id": "as2core1,Gi3/0,as2dist2,Gi1/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet3/0"
+              "source-tp": "Gi3/0"
             },
             "destination": {
               "dest-node": "as2dist2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as3border1,GigabitEthernet0/0,as3core1,GigabitEthernet1/0",
+            "link-id": "as3border1,Gi0/0,as3core1,Gi1/0",
             "source": {
               "source-node": "as3border1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as3core1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           }
         ]
@@ -2028,340 +3987,1470 @@
       {
         "network-id": "layer3",
         "network-types": {
+          "ietf-l3-unicast-topology:l3-unicast-topology": {
+          }
         },
         "node": [
           {
             "node-id": "as1border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.12.11.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.0.1.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.1.1.1/32"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "1.1.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as1border2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.13.22.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.0.2.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.2.2.2/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.14.22.1/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.2.2.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.14.22.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "10.14.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as1core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.10.1.1/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.0.2.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.0.1.2/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "1.0.1.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "1.10.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.12.11.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.1/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.11.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.12.1/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.12.12.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.12.11.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "aggregate"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2border2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.22.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.21.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.2/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.23.21.2/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "aggregate"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.11.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet3/0"
+                "tp-id": "Gi3/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.12.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.11.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.21.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.1/32"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.23.12.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.11.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.21.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2core2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.12.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.12.22.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.2/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.22.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet3/0"
+                "tp-id": "Gi3/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.21.2/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.23.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.23.21.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.23.21.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.12.12.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.12.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.1.2.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2dept1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.34.201.4/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.2/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.34.101.4/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.128.0.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet3/0"
+                "tp-id": "Gi3/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.128.1.1/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.4/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.1.1.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.4/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2dist1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.3.1/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.34.101.3/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.21.3/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.11.3/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.23.21.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.23.11.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.21.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.34.101.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as2dist2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.3.2/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.34.201.3/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.22.3/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.12.3/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.34.201.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.1.3.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.34.201.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.23.12.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.23.22.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as3border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.1.1.1/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.23.21.3/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.1.1/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "3.1.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as3border2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.2.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.2.2.2/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.13.22.3/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.3/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "3.2.2.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "as3core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "GigabitEthernet2/0"
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "90.90.90.1/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet3/0"
+                "tp-id": "Gi3/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "90.90.90.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "Loopback0"
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.10.1.1/32"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet0/0"
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.2.2/24"
+                  ]
+                }
               },
               {
-                "tp-id": "GigabitEthernet1/0"
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.1.2/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.10.1.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "90.90.90.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "90.90.90.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "90.90.90.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "90.90.90.1/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.2/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "host1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "eth0"
+                "tp-id": "eth0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.128.0.101/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.128.0.101/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "0.0.0.0/0",
+                  "metric": 0,
+                  "flag": [
+                    "static"
+                  ]
+                }
+              ]
+            }
           },
           {
             "node-id": "host2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "eth0"
+                "tp-id": "eth0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.128.1.101/24"
+                  ]
+                }
               }
-            ]
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "connected"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.101/32",
+                  "metric": 0,
+                  "flag": [
+                    "local"
+                  ]
+                },
+                {
+                  "prefix": "0.0.0.0/0",
+                  "metric": 0,
+                  "flag": [
+                    "static"
+                  ]
+                }
+              ]
+            }
           }
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "as2border2,GigabitEthernet2/0,as2core1,GigabitEthernet1/0",
+            "link-id": "as2border2,Gi2/0,as2core1,Gi1/0",
             "source": {
               "source-node": "as2border2",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2dept1,GigabitEthernet0/0,as2dist1,GigabitEthernet2/0",
+            "link-id": "as2dept1,Gi0/0,as2dist1,Gi2/0",
             "source": {
               "source-node": "as2dept1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2dist1",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as3border1,GigabitEthernet0/0,as3core1,GigabitEthernet1/0",
+            "link-id": "as3border1,Gi0/0,as3core1,Gi1/0",
             "source": {
               "source-node": "as3border1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as3core1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2border2,GigabitEthernet1/0,as2core2,GigabitEthernet0/0",
+            "link-id": "as2border2,Gi1/0,as2core2,Gi0/0",
             "source": {
               "source-node": "as2border2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as3border2,GigabitEthernet0/0,as1border2,GigabitEthernet0/0",
+            "link-id": "as3border2,Gi0/0,as1border2,Gi0/0",
             "source": {
               "source-node": "as3border2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as1border2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2dist2,GigabitEthernet0/0,as2core2,GigabitEthernet2/0",
+            "link-id": "as2dist2,Gi0/0,as2core2,Gi2/0",
             "source": {
               "source-node": "as2dist2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2dist2,GigabitEthernet1/0,as2core1,GigabitEthernet3/0",
+            "link-id": "as2dist2,Gi1/0,as2core1,Gi3/0",
             "source": {
               "source-node": "as2dist2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet3/0"
+              "dest-tp": "Gi3/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet1/0,as2border2,GigabitEthernet2/0",
+            "link-id": "as2core1,Gi1/0,as2border2,Gi2/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2border2",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2dept1,GigabitEthernet3/0,host2,eth0",
+            "link-id": "as2dept1,Gi3/0,host2,eth0",
             "source": {
               "source-node": "as2dept1",
-              "source-tp": "GigabitEthernet3/0"
+              "source-tp": "Gi3/0"
             },
             "destination": {
               "dest-node": "host2",
@@ -2369,307 +5458,307 @@
             }
           },
           {
-            "link-id": "as2dist1,GigabitEthernet2/0,as2dept1,GigabitEthernet0/0",
+            "link-id": "as2dist1,Gi2/0,as2dept1,Gi0/0",
             "source": {
               "source-node": "as2dist1",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2dept1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2dist1,GigabitEthernet0/0,as2core1,GigabitEthernet2/0",
+            "link-id": "as2dist1,Gi0/0,as2core1,Gi2/0",
             "source": {
               "source-node": "as2dist1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as1border1,GigabitEthernet0/0,as1core1,GigabitEthernet1/0",
+            "link-id": "as1border1,Gi0/0,as1core1,Gi1/0",
             "source": {
               "source-node": "as1border1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as1core1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2border1,GigabitEthernet2/0,as2core2,GigabitEthernet1/0",
+            "link-id": "as2border1,Gi2/0,as2core2,Gi1/0",
             "source": {
               "source-node": "as2border1",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as3border2,GigabitEthernet1/0,as3core1,GigabitEthernet0/0",
+            "link-id": "as3border2,Gi1/0,as3core1,Gi0/0",
             "source": {
               "source-node": "as3border2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as3core1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet0/0,as2border2,GigabitEthernet1/0",
+            "link-id": "as2core2,Gi0/0,as2border2,Gi1/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2border2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as1border2,GigabitEthernet1/0,as1core1,GigabitEthernet0/0",
+            "link-id": "as1border2,Gi1/0,as1core1,Gi0/0",
             "source": {
               "source-node": "as1border2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as1core1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2border1,GigabitEthernet1/0,as2core1,GigabitEthernet0/0",
+            "link-id": "as2border1,Gi1/0,as2core1,Gi0/0",
             "source": {
               "source-node": "as2border1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as1border1,GigabitEthernet1/0,as2border1,GigabitEthernet0/0",
+            "link-id": "as1border1,Gi1/0,as2border1,Gi0/0",
             "source": {
               "source-node": "as1border1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2border1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2border2,GigabitEthernet0/0,as3border1,GigabitEthernet1/0",
+            "link-id": "as2border2,Gi0/0,as3border1,Gi1/0",
             "source": {
               "source-node": "as2border2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as3border1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2dept1,GigabitEthernet1/0,as2dist2,GigabitEthernet2/0",
+            "link-id": "as2dept1,Gi1/0,as2dist2,Gi2/0",
             "source": {
               "source-node": "as2dept1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2dist2",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2border1,GigabitEthernet0/0,as1border1,GigabitEthernet1/0",
+            "link-id": "as2border1,Gi0/0,as1border1,Gi1/0",
             "source": {
               "source-node": "as2border1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as1border1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2dist2,GigabitEthernet2/0,as2dept1,GigabitEthernet1/0",
+            "link-id": "as2dist2,Gi2/0,as2dept1,Gi1/0",
             "source": {
               "source-node": "as2dist2",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2dept1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet0/0,as2border1,GigabitEthernet1/0",
+            "link-id": "as2core1,Gi0/0,as2border1,Gi1/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as2border1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as3border1,GigabitEthernet1/0,as2border2,GigabitEthernet0/0",
+            "link-id": "as3border1,Gi1/0,as2border2,Gi0/0",
             "source": {
               "source-node": "as3border1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2border2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet2/0,as2dist1,GigabitEthernet0/0",
+            "link-id": "as2core1,Gi2/0,as2dist1,Gi0/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2dist1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as3core1,GigabitEthernet1/0,as3border1,GigabitEthernet0/0",
+            "link-id": "as3core1,Gi1/0,as3border1,Gi0/0",
             "source": {
               "source-node": "as3core1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as3border1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as2dist1,GigabitEthernet1/0,as2core2,GigabitEthernet3/0",
+            "link-id": "as2dist1,Gi1/0,as2core2,Gi3/0",
             "source": {
               "source-node": "as2dist1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2core2",
-              "dest-tp": "GigabitEthernet3/0"
+              "dest-tp": "Gi3/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet1/0,as2border1,GigabitEthernet2/0",
+            "link-id": "as2core2,Gi1/0,as2border1,Gi2/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as2border1",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet2/0,as2dist2,GigabitEthernet0/0",
+            "link-id": "as2core2,Gi2/0,as2dist2,Gi0/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "as2dist2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as3core1,GigabitEthernet0/0,as3border2,GigabitEthernet1/0",
+            "link-id": "as3core1,Gi0/0,as3border2,Gi1/0",
             "source": {
               "source-node": "as3core1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as3border2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "host1,eth0,as2dept1,GigabitEthernet2/0",
+            "link-id": "host1,eth0,as2dept1,Gi2/0",
             "source": {
               "source-node": "host1",
               "source-tp": "eth0"
             },
             "destination": {
               "dest-node": "as2dept1",
-              "dest-tp": "GigabitEthernet2/0"
+              "dest-tp": "Gi2/0"
             }
           },
           {
-            "link-id": "as1core1,GigabitEthernet1/0,as1border1,GigabitEthernet0/0",
+            "link-id": "as1core1,Gi1/0,as1border1,Gi0/0",
             "source": {
               "source-node": "as1core1",
-              "source-tp": "GigabitEthernet1/0"
+              "source-tp": "Gi1/0"
             },
             "destination": {
               "dest-node": "as1border1",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as1border2,GigabitEthernet0/0,as3border2,GigabitEthernet0/0",
+            "link-id": "as1border2,Gi0/0,as3border2,Gi0/0",
             "source": {
               "source-node": "as1border2",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as3border2",
-              "dest-tp": "GigabitEthernet0/0"
+              "dest-tp": "Gi0/0"
             }
           },
           {
-            "link-id": "as1core1,GigabitEthernet0/0,as1border2,GigabitEthernet1/0",
+            "link-id": "as1core1,Gi0/0,as1border2,Gi1/0",
             "source": {
               "source-node": "as1core1",
-              "source-tp": "GigabitEthernet0/0"
+              "source-tp": "Gi0/0"
             },
             "destination": {
               "dest-node": "as1border2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core1,GigabitEthernet3/0,as2dist2,GigabitEthernet1/0",
+            "link-id": "as2core1,Gi3/0,as2dist2,Gi1/0",
             "source": {
               "source-node": "as2core1",
-              "source-tp": "GigabitEthernet3/0"
+              "source-tp": "Gi3/0"
             },
             "destination": {
               "dest-node": "as2dist2",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2core2,GigabitEthernet3/0,as2dist1,GigabitEthernet1/0",
+            "link-id": "as2core2,Gi3/0,as2dist1,Gi1/0",
             "source": {
               "source-node": "as2core2",
-              "source-tp": "GigabitEthernet3/0"
+              "source-tp": "Gi3/0"
             },
             "destination": {
               "dest-node": "as2dist1",
-              "dest-tp": "GigabitEthernet1/0"
+              "dest-tp": "Gi1/0"
             }
           },
           {
-            "link-id": "as2dept1,GigabitEthernet2/0,host1,eth0",
+            "link-id": "as2dept1,Gi2/0,host1,eth0",
             "source": {
               "source-node": "as2dept1",
-              "source-tp": "GigabitEthernet2/0"
+              "source-tp": "Gi2/0"
             },
             "destination": {
               "dest-node": "host1",
@@ -2677,14 +5766,14 @@
             }
           },
           {
-            "link-id": "host2,eth0,as2dept1,GigabitEthernet3/0",
+            "link-id": "host2,eth0,as2dept1,Gi3/0",
             "source": {
               "source-node": "host2",
               "source-tp": "eth0"
             },
             "destination": {
               "dest-node": "as2dept1",
-              "dest-tp": "GigabitEthernet3/0"
+              "dest-tp": "Gi3/0"
             }
           }
         ]
