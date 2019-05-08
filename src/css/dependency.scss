@@ -58,8 +58,7 @@ text.dep {
 }
 
 line.dep {
-  stroke-width: 5px;
-  stroke-opacity: .2;
+  stroke-opacity: .5;
   &.node {
     stroke: lawngreen;
   }
@@ -70,7 +69,7 @@ line.dep {
 }
 
 marker.dep {
-  stroke-opacity: .3;
+  stroke-opacity: .5;
   &.node {
     fill: lawngreen;
   }

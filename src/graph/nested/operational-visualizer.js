@@ -163,6 +163,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     const linkCreator = new InterTpLinkCreator(this.graphData)
     this.makeSupportTpLines(linkCreator.supportTpLinks())
     this.makeTpTpLines(linkCreator.tpTpLinks())
+    this.setLinkMouseHandler()
   }
 
   updateGridLine (d, xy, i) {

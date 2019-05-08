@@ -76,6 +76,8 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('y1', d => this.selectXY(xy, this.gridStart, d.position))
       .attr('x2', d => this.selectXY(xy, d.position, this.gridEnd))
       .attr('y2', d => this.selectXY(xy, this.gridEnd, d.position))
+      .attr('stroke-width', this.scale(1))
+      .attr('stroke-dasharray', this.scale(5))
   }
 
   makeGridLabels (xy) {
@@ -87,6 +89,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('id', d => `grid-${xy}${d.index}-label`)
       .attr('x', d => this.selectXY(xy, d.position, this.gridStart))
       .attr('y', d => this.selectXY(xy, this.gridStart, d.position))
+      .attr('dy', this.scale(this.gridFontSize / 2)) // vertical center
       .attr('font-size', this.scale(this.gridFontSize))
       .text(d => d.index)
   }
@@ -155,6 +158,8 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('y1', d => this.scale(d.y1))
       .attr('x2', d => this.scale(d.x2))
       .attr('y2', d => this.scale(d.y2))
+      .attr('stroke-width', this.scale(4))
+      .attr('stroke-dasharray', this.scale(4))
   }
 
   makeTpTpLines (tpTpLinks) {
@@ -165,6 +170,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('class', d => `nest ${d.type}`)
       .attr('id', d => d.path)
       .attr('points', d => d.polylineString(this.scale))
+      .attr('stroke-width', this.scale(4))
   }
 
   makeTp (tps) {

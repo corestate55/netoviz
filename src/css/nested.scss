@@ -95,7 +95,6 @@ text.nest {
   }
   &.grid-x-handle, &.grid-y-handle {
     text-anchor: middle;
-    dominant-baseline: central;
     fill: white;
     font-weight: bold;
   }
@@ -105,17 +104,10 @@ text.nest {
   }
 }
 
-%grid-line {
-  stroke-width: 1pt;
-  stroke-dasharray: 5;
-}
-
 line.nest {
   &.support-tp {
     stroke: $tp_fill_color;
-    stroke-width: 2pt;
     stroke-opacity: 0.5;
-    stroke-dasharray: 4pt;
     &.select-ready {
       @extend %select-ready;
     }
@@ -124,11 +116,9 @@ line.nest {
     }
   }
   &.grid-x {
-    @extend %grid-line;
     stroke: $grid_x_color;
   }
   &.grid-y {
-    @extend %grid-line;
     stroke: $grid_y_color;
   }
 }
@@ -137,7 +127,6 @@ polyline.nest {
   fill: none;
   &.tp-tp {
     stroke: $tp_fill_color;
-    stroke-width: 2pt;
     stroke-opacity: 0.6;
     stroke-linejoin: round;
     &.select-ready {

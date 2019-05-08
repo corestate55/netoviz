@@ -131,7 +131,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
   }
 
   makeArrowEnd (defs, arrowId, arrowClass) {
-    const size = this.scale(4)
+    const size = this.scale(10)
     const linePath = `M 0,0 V ${size} L${size},${size / 2} Z`
     defs.append('marker')
       .attr('id', arrowId)
@@ -141,6 +141,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .attr('markerWidth', size)
       .attr('markerHeight', size)
       .attr('orient', 'auto')
+      .attr('stroke-width', this.scale(5))
       .append('path')
       .attr('d', linePath)
   }

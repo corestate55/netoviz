@@ -25,6 +25,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .attr('x2', this.scale(dst.cx))
       .attr('y2', this.scale(src.cy < dst.cy ? dst.cy - dst.r : dst.cy + dst.r))
       .attr('marker-end', 'url(#tp-dep-arrow-end)')
+      .attr('stroke-width', this.scale(5))
   }
 
   makeNodeDepLine (lineClass, src, dst) {
@@ -35,6 +36,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .attr('x2', this.scale(dst.x + dst.width / 2))
       .attr('y2', this.scale(src.y < dst.y ? dst.y : dst.y + dst.height))
       .attr('marker-end', 'url(#node-dep-arrow-end)')
+      .attr('stroke-width', this.scale(5))
   }
 
   makeDependencyLines (lines, lineClass) {
