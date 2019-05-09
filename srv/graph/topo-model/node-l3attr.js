@@ -25,11 +25,20 @@ export default class L3NodeAttribute extends TopoBaseContainer {
     this.class = 'L3NodeAttribute'
     this.name = data.name || ''
     this.flag = data.flag || ''
-    this.routerId = data.routerId || [] // array
+    this.routerId = this.selectRouterId(data)
     this.prefix = [] // array
     if (data.prefix) {
       this.prefix = data.prefix.map(d => new L3Prefix(d))
     }
+  }
+
+  selectRouterId (data) {
+    if ('router-id' in data) {
+      return data['router-id'] // RFC8345-json
+    } else if ('routerId' in data) {
+      return data.routerId // converted data for topology graph
+    }
+    return [] // array
   }
 
   toHtml () {
@@ -39,6 +48,7 @@ export default class L3NodeAttribute extends TopoBaseContainer {
     return `
 <ul>
   <li><span class="attr">Name:</span> ${this.name}</li>
+  <li><span class="attr">Router ID:</span> ${this.routerId}</li>
   <li><span class="attr">Flag:</span> ${this.flag}</li>
   <li><span class="attr">prefix:</span></li>
   <ul>${prefixList.join('')}</ul>

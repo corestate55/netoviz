@@ -1,15 +1,16 @@
 #! /usr/bin/env ruby
 require 'json'
 
+# random argument generator for alert log
 class RandomArg
-  def initialize
+  def initialize(file)
+    @json_file = file
     @hosts = make_hosts
   end
 
   def make_hosts
-    json_file = './public/model/target3b.json'
-    json_data = open(json_file) do |file|
-      JSON.load(file)
+    json_data = File.open(@json_file) do |file|
+      JSON.parse(file.read)
     end
     networks = json_data['ietf-network:networks']
 
@@ -21,7 +22,7 @@ class RandomArg
   end
 
   def make_severities
-    [ :unknown, :fatal, :error, :warn, :info, :debug ]
+    %i[unknown fatal error warn info debug]
   end
 
   def make_message(host)
@@ -44,7 +45,8 @@ class RandomArg
   end
 end
 
-rand_arg = RandomArg.new
+file = ARGV[0] || './public/model/target3b.json'
+rand_arg = RandomArg.new(file)
 url = 'http://localhost:3000/alert'
 headers = [
   'Content-type: application/json',
