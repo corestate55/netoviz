@@ -72,7 +72,9 @@ export default class GraphVisualizer extends BaseContainer {
     }
     this.clearAllHighlight()
     // find and select (highlight) a node
-    for (const layer of this.graphs) {
+    //   layer(graph) order is assumed as high -> low
+    //   search the node to highlight from low layer
+    for (const layer of this.graphs.reverse()) {
       const result = layer.nodes.find(d => d.name === alert.host)
       if (result) {
         const el = document.getElementById(result.path)

@@ -7,49 +7,6 @@
         },
         "node": [
           {
-            "node-id": "as3",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "10.23.21.3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "bgp-proc",
-                    "node-ref": "3.1.1.1",
-                    "tp-ref": "10.23.21.3"
-                  }
-                ]
-              },
-              {
-                "tp-id": "10.13.22.3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "bgp-proc",
-                    "node-ref": "3.2.2.2",
-                    "tp-ref": "10.13.22.3"
-                  }
-                ]
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "ospf",
-                "node-ref": "as3-area1"
-              },
-              {
-                "network-ref": "bgp-proc",
-                "node-ref": "3.1.1.1"
-              },
-              {
-                "network-ref": "bgp-proc",
-                "node-ref": "3.2.2.2"
-              },
-              {
-                "network-ref": "bgp-proc",
-                "node-ref": "3.10.1.1"
-              }
-            ]
-          },
-          {
             "node-id": "as1",
             "ietf-network-topology:termination-point": [
               {
@@ -93,49 +50,8 @@
             ]
           },
           {
-            "node-id": "as65001",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "2.34.201.4",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "bgp-proc",
-                    "node-ref": "2.1.4.1",
-                    "tp-ref": "2.34.201.4"
-                  }
-                ]
-              },
-              {
-                "tp-id": "2.34.101.4",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "bgp-proc",
-                    "node-ref": "2.1.4.1",
-                    "tp-ref": "2.34.101.4"
-                  }
-                ]
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "bgp-proc",
-                "node-ref": "2.1.4.1"
-              }
-            ]
-          },
-          {
             "node-id": "as2",
             "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "2.34.101.3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "bgp-proc",
-                    "node-ref": "2.1.3.1",
-                    "tp-ref": "2.34.101.3"
-                  }
-                ]
-              },
               {
                 "tp-id": "10.12.11.2",
                 "supporting-termination-point": [
@@ -147,22 +63,32 @@
                 ]
               },
               {
-                "tp-id": "2.34.201.3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "bgp-proc",
-                    "node-ref": "2.1.3.2",
-                    "tp-ref": "2.34.201.3"
-                  }
-                ]
-              },
-              {
                 "tp-id": "10.23.21.2",
                 "supporting-termination-point": [
                   {
                     "network-ref": "bgp-proc",
                     "node-ref": "2.1.1.2",
                     "tp-ref": "10.23.21.2"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.101.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.3.1",
+                    "tp-ref": "2.34.101.3"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.201.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.3.2",
+                    "tp-ref": "2.34.201.3"
                   }
                 ]
               }
@@ -195,6 +121,80 @@
               {
                 "network-ref": "bgp-proc",
                 "node-ref": "2.1.3.2"
+              }
+            ]
+          },
+          {
+            "node-id": "as3",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.13.22.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "3.2.2.2",
+                    "tp-ref": "10.13.22.3"
+                  }
+                ]
+              },
+              {
+                "tp-id": "10.23.21.3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "3.1.1.1",
+                    "tp-ref": "10.23.21.3"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf",
+                "node-ref": "as3-area1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "3.1.1.1"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "3.2.2.2"
+              },
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "3.10.1.1"
+              }
+            ]
+          },
+          {
+            "node-id": "as65001",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.34.101.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.4.1",
+                    "tp-ref": "2.34.101.4"
+                  }
+                ]
+              },
+              {
+                "tp-id": "2.34.201.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "2.1.4.1",
+                    "tp-ref": "2.34.201.4"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "2.1.4.1"
               }
             ]
           }
@@ -393,8 +393,169 @@
             }
           },
           {
+            "node-id": "1.10.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1.10.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.10.1.1"
+                  ]
+                }
+              },
+              {
+                "tp-id": "1.10.1.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.10.1.1"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1core1"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "as1core1",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                "1.10.1.1"
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "1.2.2.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "1.2.2.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.2.2.2"
+                  ]
+                }
+              },
+              {
+                "tp-id": "10.13.22.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "Gi0/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.13.22.1"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as1border2"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "as1border2",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                "1.2.2.2"
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
+          },
+          {
             "node-id": "2.1.1.1",
             "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.12.11.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border1",
+                    "tp-ref": "Gi0/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.12.11.2"
+                  ]
+                }
+              },
               {
                 "tp-id": "2.1.1.1",
                 "supporting-termination-point": [
@@ -422,21 +583,6 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.1.1.1"
-                  ]
-                }
-              },
-              {
-                "tp-id": "10.12.11.2",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as2border1",
-                    "tp-ref": "Gi0/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.12.11.2"
                   ]
                 }
               }
@@ -549,6 +695,323 @@
                 },
                 {
                   "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "2.1.1.2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.23.21.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "Gi0/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.23.21.2"
+                  ]
+                }
+              },
+              {
+                "tp-id": "2.1.1.2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.2"
+                  ]
+                }
+              },
+              {
+                "tp-id": "2.1.1.2:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2border2",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.2"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2border2"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "as2border2",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                "2.1.1.2"
+              ],
+              "prefix": [
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "2.1.2.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "2.1.2.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.1"
+                  ]
+                }
+              },
+              {
+                "tp-id": "2.1.2.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.1"
+                  ]
+                }
+              },
+              {
+                "tp-id": "2.1.2.1:2",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.1"
+                  ]
+                }
+              },
+              {
+                "tp-id": "2.1.2.1:3",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as2core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.1"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as2core1"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "as2core1",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                "2.1.2.1"
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "2.128.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
                   "metric": 50,
                   "flag": [
                     "ibgp"
@@ -701,79 +1164,6 @@
                 },
                 {
                   "prefix": "3.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "node-id": "3.1.1.1",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "3.1.1.1",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.1.1.1"
-                  ]
-                }
-              },
-              {
-                "tp-id": "10.23.21.3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border1",
-                    "tp-ref": "Gi1/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.23.21.3"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as3border1"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as3border1",
-              "flag": [
-                "bgp-proc"
-              ],
-              "router-id": [
-                "3.1.1.1"
-              ],
-              "prefix": [
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.1.0/24",
                   "metric": 50,
                   "flag": [
                     "ibgp"
@@ -948,152 +1338,6 @@
             }
           },
           {
-            "node-id": "3.2.2.2",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "3.2.2.2",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border2",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.2.2.2"
-                  ]
-                }
-              },
-              {
-                "tp-id": "10.13.22.3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border2",
-                    "tp-ref": "Gi0/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.13.22.3"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as3border2"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as3border2",
-              "flag": [
-                "bgp-proc"
-              ],
-              "router-id": [
-                "3.2.2.2"
-              ],
-              "prefix": [
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "node-id": "3.10.1.1",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "3.10.1.1",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3core1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.10.1.1"
-                  ]
-                }
-              },
-              {
-                "tp-id": "3.10.1.1:1",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3core1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.10.1.1"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as3core1"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as3core1",
-              "flag": [
-                "bgp-proc"
-              ],
-              "router-id": [
-                "3.10.1.1"
-              ],
-              "prefix": [
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
-              ]
-            }
-          },
-          {
             "node-id": "2.1.3.2",
             "ietf-network-topology:termination-point": [
               {
@@ -1259,244 +1503,6 @@
             }
           },
           {
-            "node-id": "1.2.2.2",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "1.2.2.2",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as1border2",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "1.2.2.2"
-                  ]
-                }
-              },
-              {
-                "tp-id": "10.13.22.1",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as1border2",
-                    "tp-ref": "Gi0/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.13.22.1"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as1border2"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as1border2",
-              "flag": [
-                "bgp-proc"
-              ],
-              "router-id": [
-                "1.2.2.2"
-              ],
-              "prefix": [
-                {
-                  "prefix": "3.0.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "3.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "node-id": "2.1.1.2",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "2.1.1.2",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as2border2",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.1.2"
-                  ]
-                }
-              },
-              {
-                "tp-id": "2.1.1.2:1",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as2border2",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.1.2"
-                  ]
-                }
-              },
-              {
-                "tp-id": "10.23.21.2",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as2border2",
-                    "tp-ref": "Gi0/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.23.21.2"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as2border2"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as2border2",
-              "flag": [
-                "bgp-proc"
-              ],
-              "router-id": [
-                "2.1.1.2"
-              ],
-              "prefix": [
-                {
-                  "prefix": "1.0.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "3.0.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "3.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "1.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
-              ]
-            }
-          },
-          {
             "node-id": "2.1.4.1",
             "ietf-network-topology:termination-point": [
               {
@@ -1605,65 +1611,35 @@
             }
           },
           {
-            "node-id": "2.1.2.1",
+            "node-id": "3.1.1.1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "2.1.2.1",
+                "tp-id": "10.23.21.3",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
-                    "node-ref": "as2core1",
-                    "tp-ref": "Lo0"
+                    "node-ref": "as3border1",
+                    "tp-ref": "Gi1/0"
                   }
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "2.1.2.1"
+                    "10.23.21.3"
                   ]
                 }
               },
               {
-                "tp-id": "2.1.2.1:1",
+                "tp-id": "3.1.1.1",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
-                    "node-ref": "as2core1",
+                    "node-ref": "as3border1",
                     "tp-ref": "Lo0"
                   }
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "2.1.2.1"
-                  ]
-                }
-              },
-              {
-                "tp-id": "2.1.2.1:2",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as2core1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.2.1"
-                  ]
-                }
-              },
-              {
-                "tp-id": "2.1.2.1:3",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as2core1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.2.1"
+                    "3.1.1.1"
                   ]
                 }
               }
@@ -1671,34 +1647,93 @@
             "supporting-node": [
               {
                 "network-ref": "layer3",
-                "node-ref": "as2core1"
+                "node-ref": "as3border1"
               }
             ],
             "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as2core1",
+              "name": "as3border1",
               "flag": [
                 "bgp-proc"
               ],
               "router-id": [
-                "2.1.2.1"
+                "3.1.1.1"
               ],
               "prefix": [
                 {
-                  "prefix": "3.0.1.0/24",
+                  "prefix": "2.128.0.0/16",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.2.0/24",
                   "metric": 50,
                   "flag": [
                     "ibgp"
                   ]
                 },
                 {
-                  "prefix": "2.128.0.0/24",
+                  "prefix": "1.0.1.0/24",
                   "metric": 50,
                   "flag": [
                     "ibgp"
                   ]
-                },
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "3.10.1.1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "3.10.1.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.10.1.1"
+                  ]
+                }
+              },
+              {
+                "tp-id": "3.10.1.1:1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.10.1.1"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3core1"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "as3core1",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                "3.10.1.1"
+              ],
+              "prefix": [
                 {
-                  "prefix": "2.128.1.0/24",
+                  "prefix": "2.128.0.0/16",
                   "metric": 50,
                   "flag": [
                     "ibgp"
@@ -1712,42 +1747,7 @@
                   ]
                 },
                 {
-                  "prefix": "2.128.0.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
                   "prefix": "1.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.1.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "3.0.2.0/24",
                   "metric": 50,
                   "flag": [
                     "ibgp"
@@ -1757,35 +1757,35 @@
             }
           },
           {
-            "node-id": "1.10.1.1",
+            "node-id": "3.2.2.2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "1.10.1.1",
+                "tp-id": "10.13.22.3",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
-                    "node-ref": "as1core1",
-                    "tp-ref": "Lo0"
+                    "node-ref": "as3border2",
+                    "tp-ref": "Gi0/0"
                   }
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "1.10.1.1"
+                    "10.13.22.3"
                   ]
                 }
               },
               {
-                "tp-id": "1.10.1.1:1",
+                "tp-id": "3.2.2.2",
                 "supporting-termination-point": [
                   {
                     "network-ref": "layer3",
-                    "node-ref": "as1core1",
+                    "node-ref": "as3border2",
                     "tp-ref": "Lo0"
                   }
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "1.10.1.1"
+                    "3.2.2.2"
                   ]
                 }
               }
@@ -1793,25 +1793,18 @@
             "supporting-node": [
               {
                 "network-ref": "layer3",
-                "node-ref": "as1core1"
+                "node-ref": "as3border2"
               }
             ],
             "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "as1core1",
+              "name": "as3border2",
               "flag": [
                 "bgp-proc"
               ],
               "router-id": [
-                "1.10.1.1"
+                "3.2.2.2"
               ],
               "prefix": [
-                {
-                  "prefix": "3.0.2.0/24",
-                  "metric": 50,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
                 {
                   "prefix": "2.128.0.0/16",
                   "metric": 50,
@@ -1820,10 +1813,17 @@
                   ]
                 },
                 {
-                  "prefix": "3.0.1.0/24",
+                  "prefix": "1.0.2.0/24",
                   "metric": 50,
                   "flag": [
-                    "ibgp"
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "1.0.1.0/24",
+                  "metric": 50,
+                  "flag": [
+                    "bgp"
                   ]
                 }
               ]
@@ -2213,26 +2213,6 @@
         },
         "node": [
           {
-            "node-id": "as3-area1",
-            "ietf-network-topology:termination-point": [
-
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "ospf-proc",
-                "node-ref": "as3border1"
-              },
-              {
-                "network-ref": "ospf-proc",
-                "node-ref": "as3border2"
-              },
-              {
-                "network-ref": "ospf-proc",
-                "node-ref": "as3core1"
-              }
-            ]
-          },
-          {
             "node-id": "as1-area1",
             "ietf-network-topology:termination-point": [
 
@@ -2283,6 +2263,26 @@
                 "node-ref": "as2dist2"
               }
             ]
+          },
+          {
+            "node-id": "as3-area1",
+            "ietf-network-topology:termination-point": [
+
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as3border1"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as3border2"
+              },
+              {
+                "network-ref": "ospf-proc",
+                "node-ref": "as3core1"
+              }
+            ]
           }
         ],
         "ietf-network-topology:link": [
@@ -2296,261 +2296,6 @@
           }
         },
         "node": [
-          {
-            "node-id": "as3border1",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "Gi0/0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border1",
-                    "tp-ref": "Gi0/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.0.1.1/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Lo0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.1.1.1/32"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as3border1"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "process_1",
-              "flag": [
-                "ospf-proc"
-              ],
-              "router-id": [
-                ""
-              ],
-              "prefix": [
-                {
-                  "prefix": "3.10.1.1/32",
-                  "metric": 2,
-                  "flag": [
-                    "ospf"
-                  ]
-                },
-                {
-                  "prefix": "10.13.22.0/24",
-                  "metric": 20,
-                  "flag": [
-                    "ospfE2"
-                  ]
-                },
-                {
-                  "prefix": "3.0.2.0/24",
-                  "metric": 2,
-                  "flag": [
-                    "ospf"
-                  ]
-                },
-                {
-                  "prefix": "3.2.2.2/32",
-                  "metric": 3,
-                  "flag": [
-                    "ospf"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "node-id": "as3border2",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "Gi1/0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border2",
-                    "tp-ref": "Gi1/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.0.2.1/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Lo0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3border2",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.2.2.2/32"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as3border2"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "process_1",
-              "flag": [
-                "ospf-proc"
-              ],
-              "router-id": [
-                ""
-              ],
-              "prefix": [
-                {
-                  "prefix": "10.23.21.0/24",
-                  "metric": 20,
-                  "flag": [
-                    "ospfE2"
-                  ]
-                },
-                {
-                  "prefix": "3.0.1.0/24",
-                  "metric": 2,
-                  "flag": [
-                    "ospf"
-                  ]
-                },
-                {
-                  "prefix": "3.10.1.1/32",
-                  "metric": 2,
-                  "flag": [
-                    "ospf"
-                  ]
-                },
-                {
-                  "prefix": "3.1.1.1/32",
-                  "metric": 3,
-                  "flag": [
-                    "ospf"
-                  ]
-                }
-              ]
-            }
-          },
-          {
-            "node-id": "as3core1",
-            "ietf-network-topology:termination-point": [
-              {
-                "tp-id": "Gi0/0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3core1",
-                    "tp-ref": "Gi0/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.0.2.2/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi1/0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3core1",
-                    "tp-ref": "Gi1/0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.0.1.2/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Lo0",
-                "supporting-termination-point": [
-                  {
-                    "network-ref": "layer3",
-                    "node-ref": "as3core1",
-                    "tp-ref": "Lo0"
-                  }
-                ],
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.10.1.1/32"
-                  ]
-                }
-              }
-            ],
-            "supporting-node": [
-              {
-                "network-ref": "layer3",
-                "node-ref": "as3core1"
-              }
-            ],
-            "ietf-l3-unicast-topology:l3-node-attributes": {
-              "name": "process_1",
-              "flag": [
-                "ospf-proc"
-              ],
-              "router-id": [
-                ""
-              ],
-              "prefix": [
-                {
-                  "prefix": "10.23.21.0/24",
-                  "metric": 20,
-                  "flag": [
-                    "ospfE2"
-                  ]
-                },
-                {
-                  "prefix": "3.2.2.2/32",
-                  "metric": 2,
-                  "flag": [
-                    "ospf"
-                  ]
-                },
-                {
-                  "prefix": "10.13.22.0/24",
-                  "metric": 20,
-                  "flag": [
-                    "ospfE2"
-                  ]
-                },
-                {
-                  "prefix": "3.1.1.1/32",
-                  "metric": 2,
-                  "flag": [
-                    "ospf"
-                  ]
-                }
-              ]
-            }
-          },
           {
             "node-id": "as1border1",
             "ietf-network-topology:termination-point": [
@@ -4059,6 +3804,261 @@
                 {
                   "prefix": "2.1.1.1/32",
                   "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "as3border1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Gi0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border1",
+                    "tp-ref": "Gi0/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.1.1/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.1.1.1/32"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3border1"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "process_1",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "3.10.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.0.2.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "3.2.2.2/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "as3border2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Gi1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border2",
+                    "tp-ref": "Gi1/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.2.1/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3border2",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.2.2.2/32"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3border2"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "process_1",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.0.1.0/24",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "3.10.1.1/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "3.1.1.1/32",
+                  "metric": 3,
+                  "flag": [
+                    "ospf"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "node-id": "as3core1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "Gi0/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Gi0/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.2.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi1/0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Gi1/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.1.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as3core1",
+                    "tp-ref": "Lo0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.10.1.1/32"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as3core1"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "process_1",
+              "flag": [
+                "ospf-proc"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+                {
+                  "prefix": "10.23.21.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.2.2.2/32",
+                  "metric": 2,
+                  "flag": [
+                    "ospf"
+                  ]
+                },
+                {
+                  "prefix": "10.13.22.0/24",
+                  "metric": 20,
+                  "flag": [
+                    "ospfE2"
+                  ]
+                },
+                {
+                  "prefix": "3.1.1.1/32",
+                  "metric": 2,
                   "flag": [
                     "ospf"
                   ]
@@ -4345,18 +4345,18 @@
             "node-id": "as1border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Gi1/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.12.11.1/24"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "1.0.1.1/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.12.11.1/24"
                   ]
                 }
               },
@@ -4436,18 +4436,18 @@
                 }
               },
               {
-                "tp-id": "Lo0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "1.2.2.2/32"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi2/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "10.14.22.1/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.2.2.2/32"
                   ]
                 }
               }
@@ -4517,14 +4517,6 @@
             "node-id": "as1core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Lo0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "1.10.1.1/32"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -4537,6 +4529,14 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "1.0.1.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "1.10.1.1/32"
                   ]
                 }
               }
@@ -4600,14 +4600,6 @@
                 }
               },
               {
-                "tp-id": "Lo0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.1.1/32"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi1/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -4620,6 +4612,14 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.12.12.1/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.1/32"
                   ]
                 }
               }
@@ -4696,6 +4696,14 @@
             "node-id": "as2border2",
             "ietf-network-topology:termination-point": [
               {
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.23.21.2/24"
+                  ]
+                }
+              },
+              {
                 "tp-id": "Gi1/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -4716,14 +4724,6 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.1.1.2/32"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi0/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.23.21.2/24"
                   ]
                 }
               }
@@ -4800,22 +4800,6 @@
             "node-id": "as2core1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Gi2/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.23.11.2/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi3/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.23.12.2/24"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -4828,6 +4812,22 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.12.21.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.11.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi3/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.23.12.2/24"
                   ]
                 }
               },
@@ -4919,14 +4919,6 @@
             "node-id": "as2core2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Gi1/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.12.12.2/24"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -4935,10 +4927,10 @@
                 }
               },
               {
-                "tp-id": "Lo0",
+                "tp-id": "Gi1/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "2.1.2.2/32"
+                    "2.12.12.2/24"
                   ]
                 }
               },
@@ -4955,6 +4947,14 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.23.21.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.2.2/32"
                   ]
                 }
               }
@@ -5038,26 +5038,18 @@
             "node-id": "as2dept1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Gi1/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.34.201.4/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Lo0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.1.2/32"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.34.101.4/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.34.201.4/24"
                   ]
                 }
               },
@@ -5074,6 +5066,14 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.128.1.1/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.1.2/32"
                   ]
                 }
               }
@@ -5157,18 +5157,10 @@
             "node-id": "as2dist1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Lo0",
+                "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "2.1.3.1/32"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi2/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.34.101.3/24"
+                    "2.23.11.3/24"
                   ]
                 }
               },
@@ -5181,10 +5173,18 @@
                 }
               },
               {
-                "tp-id": "Gi0/0",
+                "tp-id": "Gi2/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "2.23.11.3/24"
+                    "2.34.101.3/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.3.1/32"
                   ]
                 }
               }
@@ -5254,22 +5254,6 @@
             "node-id": "as2dist2",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Lo0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.1.3.2/32"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi2/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "2.34.201.3/24"
-                  ]
-                }
-              },
-              {
                 "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -5282,6 +5266,22 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "2.23.12.3/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi2/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.34.201.3/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Lo0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "2.1.3.2/32"
                   ]
                 }
               }
@@ -5351,10 +5351,10 @@
             "node-id": "as3border1",
             "ietf-network-topology:termination-point": [
               {
-                "tp-id": "Lo0",
+                "tp-id": "Gi0/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "3.1.1.1/32"
+                    "3.0.1.1/24"
                   ]
                 }
               },
@@ -5367,10 +5367,10 @@
                 }
               },
               {
-                "tp-id": "Gi0/0",
+                "tp-id": "Lo0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "3.0.1.1/24"
+                    "3.1.1.1/32"
                   ]
                 }
               }
@@ -5426,6 +5426,14 @@
             "node-id": "as3border2",
             "ietf-network-topology:termination-point": [
               {
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.13.22.3/24"
+                  ]
+                }
+              },
+              {
                 "tp-id": "Gi1/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -5438,14 +5446,6 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "3.2.2.2/32"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi0/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "10.13.22.3/24"
                   ]
                 }
               }
@@ -5501,6 +5501,22 @@
             "node-id": "as3core1",
             "ietf-network-topology:termination-point": [
               {
+                "tp-id": "Gi0/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.2.2/24"
+                  ]
+                }
+              },
+              {
+                "tp-id": "Gi1/0",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "3.0.1.2/24"
+                  ]
+                }
+              },
+              {
                 "tp-id": "Gi2/0",
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
@@ -5521,22 +5537,6 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "3.10.1.1/32"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi0/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.0.2.2/24"
-                  ]
-                }
-              },
-              {
-                "tp-id": "Gi1/0",
-                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
-                  "ip-address": [
-                    "3.0.1.2/24"
                   ]
                 }
               }

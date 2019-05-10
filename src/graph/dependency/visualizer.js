@@ -37,7 +37,10 @@ export default class DepGraphVisualizer extends OperationalDepGraphVisualizer {
       return
     }
     // console.log('graphData: ', this.graphData)
-    for (const layer of this.graphData) {
+    // find and select (highlight) a node
+    //   layer(graph) order is assumed as high -> low
+    //   search the node to highlight from low layer
+    for (const layer of this.graphData.reverse()) {
       const result = layer.nodes.find(d => d.name === alert.host)
       if (result) {
         this.clearWarning()
