@@ -209,13 +209,16 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       })
   }
 
+  setTpClassByPath (tpPath, tpClass) {
+    this.selectTpCircleByPath(tpPath)
+      .classed(tpClass, true)
+  }
+
   setLineClass (line, lineClass) {
     // console.log(`link: ${d.path}.oi = ${d.overlapIndex}`)
     // tp circle
-    this.selectTpCircleByPath(line.sourcePath)
-      .classed(lineClass, true)
-    this.selectTpCircleByPath(line.targetPath)
-      .classed(lineClass, true)
+    this.setTpClassByPath(line.sourcePath, lineClass)
+    this.setTpClassByPath(line.targetPath, lineClass)
     // link line
     if (line.type === 'tp-tp') {
       this.selectTpTpLineByPath(line.path)
@@ -311,7 +314,13 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     const tpCircleHighlight = (d, className) => {
       this.tooltip.enableTooltip(d)
       className === 'checked' && this.clearAllChecked()
-      linksHasTp(d).forEach(link => this.setLineClass(link, className))
+      const links = linksHasTp(d)
+      if (links.length > 0) {
+        links.forEach(link => this.setLineClass(link, className))
+      } else {
+        // tp without link (tp that has link-ref-count 0)
+        this.setTpClassByPath(d.path, className)
+      }
     }
     const tpMouseOut = () => {
       this.tooltip.disableTooltip()
