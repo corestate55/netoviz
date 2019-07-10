@@ -22,7 +22,8 @@ class RandomArg
   end
 
   def make_severities
-    %i[unknown fatal error warn info debug]
+    base = %w[disaster high average warning information not_classified]
+    [base, base.map{ |s| cs = s.dup; cs[0].capitalize!; cs }].flatten
   end
 
   def make_message(host)

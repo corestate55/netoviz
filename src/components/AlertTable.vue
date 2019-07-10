@@ -124,11 +124,14 @@ export default {
     },
     tableClassSelector (row) {
       const severity = row.row.severity
-      const severities = ['fatal', 'error', 'warn', 'info', 'debug']
-      if (severities.find(d => d === severity)) {
-        return `${severity}-row`
+      const severityRegexp = new RegExp(severity, 'i')
+      const severities = [
+        'disaster', 'high', 'average', 'warning', 'information'
+      ]
+      if (severities.find(s => s.match(severityRegexp))) {
+        return `${severity.toLowerCase()}-row`
       }
-      return 'unknown-row'
+      return 'not-classifed-row'
     },
     setAlertTableCurrentRow (row) {
       this.$refs.alertTable.setCurrentRow(row)
@@ -153,23 +156,23 @@ export default {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
   }
-  .fatal-row {
-    background-color: #FDC168;
+  .disaster-row {
+    background-color: lightpink; // bright red
   }
-  .error-row {
-    background-color: #FDE58B;
+  .high-row {
+    background-color: mistyrose; // red
   }
-  .warn-row {
-    background-color: #FFFFAE;
+  .average-row {
+    background-color: palegoldenrod; // orange
   }
-  .info-row {
-    background-color: azure;
+  .warning-row {
+    background-color: lightyellow; // bright yellow
   }
-  .debug-row {
-    background-color: #E8E8E8;
+  .information-row {
+    background-color: honeydew; // bright green
   }
-  .unknown-row {
-    background-color: #ffe6e6;
+  .not-classified-row {
+    background-color: grey; // grey
   }
   .current-row {
     td {
