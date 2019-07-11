@@ -13,6 +13,19 @@ The visualizer works on Heroku.
 
 * https://netoviz.herokuapp.com/
 
+Demo movie
+
+[![Batfish を使ってネットワーク構成を可視化してみよう \- YouTube](https://img.youtube.com/vi/YKKWg7Ap6H8/0.jpg)](https://www.youtube.com/watch?v=YKKWg7Ap6H8)
+
+Blog
+* [Batfish を使ってネットワーク構成を可視化してみよう \(1\) \- Qiita](https://qiita.com/corestate55/items/8a39af553785fd77c20a)
+* [Batfish を使ってネットワーク構成を可視化してみよう \(2\) \- Qiita](https://qiita.com/corestate55/items/9d8023eb19637f9bbd1e)
+* [Batfish を使ってネットワーク構成を可視化してみよう \(3\) \- Qiita](https://qiita.com/corestate55/items/10673ef74c33a24a0389)
+
+Slide
+* [「ネットワーク図」のモデル化とモデルを起点にした自動化の可能性 / onic2018 \- Speaker Deck](https://speakerdeck.com/corestate55/onic2018)
+* [ここまでできる\! 設定ファイルからのネットワーク構成可視化 / npstudy17 \- Speaker Deck](https://speakerdeck.com/corestate55/npstudy17)
+
 ## Directory
 
 * `src`: Source code files of visualizer.
@@ -33,6 +46,31 @@ This application depends on:
 
 ```
 npm install
+```
+
+### Initialize database file
+To highlight hosts in the dialog by event log,
+SQLite3 database is used in this application.
+
+For development mode (environment variable `NODE_ENV` is not `production`)
+
+```bash
+./bin/dbmigrate.sh
+```
+
+For production mode
+
+```bash
+NODE_ENV=production ./bin/dbmigrate.sh
+```
+
+To send a dummy log message (after running web server),
+use test script like below.
+It selects a name of hosts from specified model file and send random message to API server.
+(NOTE: `push_alert.rb` calls `curl` utility.)
+
+```bash
+./bin/push_alert.rb ./public/model/target.json
 ```
 
 ## Run web server
@@ -60,9 +98,6 @@ npm run express:run
 ```
 npm run lint
 ```
-
-## Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Structure
 
@@ -96,3 +131,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ```
 
 See more detail, [class diagram in fig directory](./fig/).
+
+## Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
