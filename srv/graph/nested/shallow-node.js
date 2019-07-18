@@ -7,7 +7,7 @@ export default class ShallowNestedGraphNode {
     this.id = nodeData.id
     this.setFamilyRelation(nodeData, reverse)
     this.attribute = nodeData.attribute
-    // this.diffState = nodeData.diffState
+    this.diffState = nodeData.diffState
     this.layerOrder = -1
   }
 

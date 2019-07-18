@@ -12,6 +12,8 @@ class InterTpLink {
     this.x2 = targetTp.cx
     this.y2 = targetTp.cy
     this.yMid = this.yMiddlePoint()
+    this.diffState = link.diffState || {}
+    this.attribute = link.attribute || {}
   }
 
   xMin () {

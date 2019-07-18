@@ -34,6 +34,44 @@ $checked_color: cyan;
   stroke-opacity: 0.5;
 }
 
+// diff node/tp set
+%changed {
+  stroke: orange;
+  stroke-width: 3pt;
+}
+%added {
+  stroke: green;
+  stroke-width: 3pt;
+}
+%deleted {
+  stroke: darkred;
+  stroke-width: 3pt;
+}
+
+%changed-highlight {
+  stroke: yellow;
+  stroke-width: 5pt;
+}
+%added-highlight {
+  stroke: limegreen;
+  stroke-width: 5pt;
+}
+%deleted-highlight {
+  stroke: orangered;
+  stroke-width: 5pt;
+}
+
+%inactive {
+  fill-opacity: 0.2;
+  stroke-opacity: 0.1;
+  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
+}
+%active {
+  fill-opacity: 1.0;
+  stroke-opacity: 1.0;
+  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
+}
+
 rect.nest {
   fill: none;
   &.select-ready {
@@ -44,6 +82,31 @@ rect.nest {
   }
   &.selected2 {
     @extend %selected2;
+  }
+
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
+  &.changed {
+    @extend %changed;
+    &.select-ready {
+      @extend %changed-highlight;
+    }
+  }
+  &.added {
+    @extend %added;
+    &.select-ready {
+      @extend %added-highlight;
+    }
+  }
+  &.deleted {
+    @extend %deleted;
+    &.select-ready {
+      @extend %deleted-highlight;
+    }
   }
 }
 
@@ -69,6 +132,31 @@ circle.nest {
     &.selected2 {
       @extend %selected2;
     }
+
+    &.inactive {
+      @extend %inactive;
+    }
+    &.active {
+      @extend %active;
+    }
+    &.changed {
+      @extend %changed;
+      &.select-ready {
+      @extend %changed-highlight;
+    }
+    }
+    &.added {
+      @extend %added;
+      &.select-ready {
+        @extend %added-highlight;
+      }
+    }
+    &.deleted {
+      @extend %deleted;
+      &.select-ready {
+        @extend %deleted-highlight;
+      }
+    }
   }
   &.grid-x-handle {
     @extend %grid-handle;
@@ -80,6 +168,13 @@ circle.nest {
   }
 }
 
+text#diff-toggle-button, text#clear-button {
+  fill: #303030;
+  &.select-ready {
+    font-weight: bold;
+  }
+}
+
 text.nest {
   // do not specify font-size except screen message
   // size of svg object label must be scaled
@@ -88,10 +183,22 @@ text.nest {
   &.node {
     text-anchor: start;
     // dominant-baseline: hanging;
+    &.inactive {
+      @extend %inactive;
+    }
+    &.active {
+      @extend %active;
+    }
   }
   &.tp {
     text-anchor: middle;
     // dominant-baseline: hanging;
+    &.inactive {
+      @extend %inactive;
+    }
+    &.active {
+      @extend %active;
+    }
   }
   &.grid-x-handle, &.grid-y-handle {
     text-anchor: middle;
@@ -134,6 +241,31 @@ polyline.nest {
     }
     &.checked {
       @extend %checked;
+    }
+
+    &.inactive {
+      @extend %inactive;
+    }
+    &.active {
+      @extend %active;
+    }
+    &.changed {
+      @extend %changed;
+      &.select-ready, &.checked {
+        @extend %changed-highlight;
+      }
+    }
+    &.added {
+      @extend %added;
+      &.select-ready, &.checked {
+        @extend %added-highlight;
+      }
+    }
+    &.deleted {
+      @extend %deleted;
+      &.select-ready, &.checked {
+        @extend %deleted-highlight;
+      }
     }
   }
 }

@@ -5,6 +5,14 @@ import db from './models'
 const port = process.env.PORT || 3000 // process.env.PORT for Heroku
 const topoDataAPI = new TopologyDataAPI(process.env.NODE_ENV)
 
+if (process.env.NODE_ENV === 'development') {
+  process.on('unhandledRejection', (err, p) => {
+    console.error('Error : ', err)
+    console.error('Promise : ', p)
+    // throw err;
+  })
+}
+
 export default app => {
   app.use(express.json())
   app.set('port', port)

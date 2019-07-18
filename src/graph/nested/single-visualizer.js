@@ -1,6 +1,7 @@
 import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import BaseContainer from '../../../srv/graph/base'
+import DiffState from '../../../srv/graph/diff-state'
 import InterTpLinkCreator from './link-creator'
 import TooltipCreator from '../common/tooltip-creator'
 
@@ -33,7 +34,30 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('height', this.height)
   }
 
+  objClassDef (obj, classString) {
+    let objState = null
+    if ('diffState' in obj) {
+      const diffState = new DiffState(obj.diffState)
+      objState = diffState.detect()
+    } else {
+      console.log(`object ${obj.type}: ${obj.path} does not have diffState`)
+      console.log(obj)
+    }
+    const list = classString.split(' ').concat(objState)
+    if (objState === this.currentInactive) {
+      list.push('inactive')
+    }
+    return list.join(' ')
+  }
+
+  clearToolTip () {
+    select('body').select('div#visualizer')
+      .select('div.tool-tip')
+      .remove()
+  }
+
   makeToolTip () {
+    this.clearToolTip()
     const origin = select('body').select('div#visualizer')
       .append('div')
       .attr('class', 'tool-tip')
@@ -136,7 +160,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(nodes)
       .enter()
       .append('rect')
-      .attr('class', 'nest node')
+      .attr('class', d => this.objClassDef(d, 'nest node'))
       .attr('id', d => d.path)
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y))
@@ -152,7 +176,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(supportTpLinks)
       .enter()
       .append('line')
-      .attr('class', d => `nest  ${d.type}`)
+      .attr('class', d => `nest ${d.type}`) // support-tp line does not have diffState
       .attr('id', d => d.path)
       .attr('x1', d => this.scale(d.x1))
       .attr('y1', d => this.scale(d.y1))
@@ -167,7 +191,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(tpTpLinks)
       .enter()
       .append('polyline')
-      .attr('class', d => `nest ${d.type}`)
+      .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
       .attr('points', d => d.polylineString(this.scale))
       .attr('stroke-width', this.scale(4))
@@ -178,7 +202,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(tps)
       .enter()
       .append('circle')
-      .attr('class', 'nest tp')
+      .attr('class', d => this.objClassDef(d, 'nest tp'))
       .attr('id', d => d.path)
       .attr('cx', d => this.scale(d.cx))
       .attr('cy', d => this.scale(d.cy))
@@ -190,7 +214,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(nodes)
       .enter()
       .append('text')
-      .attr('class', 'nest node')
+      .attr('class', d => this.objClassDef(d, 'nest node'))
       .attr('id', d => d.path)
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y + d.height))
@@ -204,7 +228,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .data(tps)
       .enter()
       .append('text')
-      .attr('class', 'nest tp')
+      .attr('class', d => this.objClassDef(d, 'nest tp'))
       .attr('id', d => d.path)
       .attr('x', d => this.scale(d.cx))
       .attr('y', d => this.scale(d.cy + d.r))
@@ -221,6 +245,15 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .attr('x', clearButtonFontSize / 2)
       .attr('y', clearButtonFontSize)
       .text('[clear highlight]')
+  }
+
+  makeDiffInactiveToggleButton () {
+    const clearButtonFontSize = 12
+    this.svg.append('text')
+      .attr('id', 'diff-toggle-button')
+      .attr('x', clearButtonFontSize / 2)
+      .attr('y', clearButtonFontSize * 2)
+      .text('[toggle diff added/deleted]')
   }
 
   makeScale (nodes) {
@@ -242,6 +275,7 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.svgGrp = this.makeNestedGraphSVGGroup()
     this.tooltip = this.makeToolTip()
     this.makeClearButton()
+    this.makeDiffInactiveToggleButton()
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.scale = this.makeScale(nodes)

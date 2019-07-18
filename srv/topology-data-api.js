@@ -66,19 +66,24 @@ export default class TopoogyDataAPI {
   }
 
   async convertTopoGraphData (jsonName) {
-    this.updateStatsOfTopoJSON(jsonName)
-    console.log('Requested: ', this.jsonPath)
-
     let resJsonString = '' // stringified json (NOT object)
-    if (this.foundCache()) {
-      resJsonString = await this.readCache()
-    } else {
-      // the json file was changed.
-      this.updateCacheTimeStamp()
-      const data = await this.readTopologyDataFromJSON()
-      const topoGraphConverter = new TopoGraphConverter(JSON.parse(data))
-      resJsonString = JSON.stringify(topoGraphConverter.toData())
-      this.writeCache(resJsonString)
+    try {
+      this.updateStatsOfTopoJSON(jsonName)
+      console.log('Requested: ', this.jsonPath)
+
+      if (this.foundCache()) {
+        resJsonString = await this.readCache()
+      } else {
+        // the json file was changed.
+        this.updateCacheTimeStamp()
+        const data = await this.readTopologyDataFromJSON()
+        const topoGraphConverter = new TopoGraphConverter(JSON.parse(data))
+        resJsonString = JSON.stringify(topoGraphConverter.toData())
+        this.writeCache(resJsonString)
+      }
+    } catch (error) {
+      resJsonString = ''
+      console.log('return null because error found in convertTopoGraphData()')
     }
     return resJsonString
   }

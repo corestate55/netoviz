@@ -7,8 +7,8 @@ export default class NestedGraphLink {
     this.targetPath = linkData.targetPath
     this.sourceId = linkData.sourceId
     this.targetId = linkData.targetId
-    // this.attribute = linkData.attribute
-    // this.diffState = linkData.diffState
+    this.attribute = linkData.attribute
+    this.diffState = linkData.diffState
   }
 
   availableIn (nodes) {
