@@ -1,6 +1,7 @@
 export default class GridOperator {
   constructor (layoutData) {
-    if (layoutData.error) {
+    if (layoutData === undefined || layoutData === null ||
+      'found' in layoutData && !layoutData.found) {
       this.layoutData = { layout: {}, grid: {} } // empty data
       this.initDefault(4, 10, 200)
     } else {

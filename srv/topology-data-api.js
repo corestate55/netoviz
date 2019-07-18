@@ -95,16 +95,17 @@ export default class TopoogyDataAPI {
       const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
       return await readFile(layoutJsonName, 'utf-8')
     } catch (error) {
+      console.log(`Layout file correspond with ${jsonName} was not found.`)
       // layout file is optional.
-      // when error (not found the file), use default layout.
+      // when found (layout file was not found), use default layout.
       const errorLayoutData = {
         shallow: {
-          reverse: { error: true },
-          standard: { error: true }
+          reverse: { found: false },
+          standard: { found: false }
         },
         deep: {
-          reverse: { error: true },
-          standard: { error: true }
+          reverse: { found: false },
+          standard: { found: false }
         }
       }
       return JSON.stringify(errorLayoutData)
