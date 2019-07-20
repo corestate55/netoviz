@@ -8,6 +8,44 @@
   transition: fill .2s ease-in-out;
 }
 
+// diff node/tp set
+%changed {
+  stroke: orange;
+  stroke-width: 3pt;
+}
+%added {
+  stroke: green;
+  stroke-width: 3pt;
+}
+%deleted {
+  stroke: darkred;
+  stroke-width: 3pt;
+}
+
+%changed-highlight {
+  stroke: yellow;
+  stroke-width: 5pt;
+}
+%added-highlight {
+  stroke: limegreen;
+  stroke-width: 5pt;
+}
+%deleted-highlight {
+  stroke: orangered;
+  stroke-width: 5pt;
+}
+
+%inactive {
+  fill-opacity: 0.2;
+  stroke-opacity: 0.1;
+  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
+}
+%active {
+  fill-opacity: 1.0;
+  stroke-opacity: 1.0;
+  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
+}
+
 rect.dep {
   fill: none;
   stroke: gray;
@@ -19,6 +57,31 @@ rect.dep {
   &.selected {
     @extend %selected;
     fill: #CEF6CE;
+  }
+
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
+  &.changed {
+    @extend %changed;
+    &.select-ready {
+      @extend %changed-highlight;
+    }
+  }
+  &.added {
+    @extend %added;
+    &.select-ready {
+      @extend %added-highlight;
+    }
+  }
+  &.deleted {
+    @extend %deleted;
+    &.select-ready {
+      @extend %deleted-highlight;
+    }
   }
 }
 
@@ -34,6 +97,30 @@ circle.dep {
     fill: #819FF7;
     @extend %selected;
   }
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
+  &.changed {
+    @extend %changed;
+    &.select-ready {
+      @extend %changed-highlight;
+    }
+  }
+  &.added {
+    @extend %added;
+    &.select-ready {
+      @extend %added-highlight;
+    }
+  }
+  &.deleted {
+    @extend %deleted;
+    &.select-ready {
+      @extend %deleted-highlight;
+    }
+  }
 }
 
 text.dep {
@@ -46,10 +133,22 @@ text.dep {
   }
   &.node {
     text-anchor: start;
+    &.inactive {
+      @extend %inactive;
+    }
+    &.active {
+      @extend %active;
+    }
   }
   &.tp {
     fill: darkgray;
     text-anchor: middle;
+    &.inactive {
+      @extend %inactive;
+    }
+    &.active {
+      @extend %active;
+    }
   }
   &.warning {
     fill: red;

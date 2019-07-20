@@ -35,7 +35,8 @@ export default class DepGraphNode extends DepGraphNodeBase {
       'type': this.type,
       'parents': this.parents,
       'children': this.children,
-      'attribute': this.attribute
+      'attribute': this.attribute,
+      'diffState': this.diffState
     }
   }
 }

@@ -9,5 +9,6 @@ export default class DepGraphNodeBase extends DepGraphConstants {
     this.parents = graphData.parents
     this.type = graphData.type
     this.attribute = graphData.attribute
+    this.diffState = graphData.diffState || {}
   }
 }

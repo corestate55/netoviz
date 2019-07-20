@@ -1,6 +1,7 @@
 import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import BaseContainer from '../../../srv/graph/base'
+import DiffState from '../../../srv/graph/diff-state'
 import TooltipCreator from '../common/tooltip-creator'
 
 export default class SingleDepGraphVisualizer extends BaseContainer {
@@ -28,6 +29,22 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .attr('height', this.height)
   }
 
+  objClassDef (obj, classString) {
+    let objState = null
+    if ('diffState' in obj) {
+      const diffState = new DiffState(obj.diffState)
+      objState = diffState.detect()
+    } else {
+      console.log(`object ${obj.type}: ${obj.path} does not have diffState`)
+      console.log(obj)
+    }
+    const list = classString.split(' ').concat(objState)
+    if (objState === this.currentInactive) {
+      list.push('inactive')
+    }
+    return list.join(' ')
+  }
+
   makeToolTip () {
     const origin = select('body').select('div#visualizer')
       .append('div')
@@ -47,11 +64,20 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
 
   makeClearButton () {
     const clearButtonFontSize = 12
-    return this.svg.append('text')
+    this.svg.append('text')
       .attr('class', 'dep')
       .attr('x', clearButtonFontSize / 2)
       .attr('y', clearButtonFontSize)
       .text('[clear highlight]')
+  }
+
+  makeDiffInactiveToggleButton () {
+    const clearButtonFontSize = 12
+    this.svg.append('text')
+      .attr('id', 'diff-toggle-button')
+      .attr('x', clearButtonFontSize / 2)
+      .attr('y', clearButtonFontSize * 2)
+      .text('[toggle diff added/deleted]')
   }
 
   makeLayerLabel (graphData, origin) {
@@ -76,7 +102,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .data(layer.nodes)
       .enter()
       .append('rect')
-      .attr('class', 'dep')
+      .attr('class', d => this.objClassDef(d, 'dep'))
       .attr('id', d => d.path)
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y))
@@ -93,7 +119,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .data(layer.tps)
       .enter()
       .append('circle')
-      .attr('class', 'dep')
+      .attr('class', d => this.objClassDef(d, 'dep'))
       .attr('id', d => d.path)
       .attr('cx', d => this.scale(d.cx))
       .attr('cy', d => this.scale(d.cy))
@@ -107,7 +133,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .data(layer.nodes)
       .enter()
       .append('text')
-      .attr('class', 'dep node')
+      .attr('class', d => this.objClassDef(d, 'dep node'))
       .attr('id', d => `${d.path}-ndlb`)
       .attr('x', d => this.scale(d.x))
       .attr('y', d => this.scale(d.y + d.height))
@@ -121,7 +147,7 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
       .data(layer.tps)
       .enter()
       .append('text')
-      .attr('class', 'dep tp')
+      .attr('class', d => this.objClassDef(d, 'dep tp'))
       .attr('id', d => `${d.path}-tplb`)
       .attr('x', d => this.scale(d.cx))
       .attr('y', d => this.scale(d.cy + d.r))
@@ -179,9 +205,10 @@ export default class SingleDepGraphVisualizer extends BaseContainer {
   makeGraphObjects (graphData) {
     this.svg = this.makeDepGraphSVG()
     this.svgGrp = this.makeDepGraphSVGGroup()
-    this.clearButton = this.makeClearButton()
     this.scale = this.makeScale(graphData)
     this.tooltip = this.makeToolTip()
+    this.makeClearButton()
+    this.makeDiffInactiveToggleButton()
 
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()
