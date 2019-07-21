@@ -1,114 +1,10 @@
+@import "node";
+@import "term-point";
+@import "./text-label";
+
 $grid_x_color: limegreen;
 $grid_y_color: mediumspringgreen;
 $tp_fill_color: #7C7354;
-
-// found and selected itself directly
-%selected {
-  stroke: #FE7367;
-  stroke-width: 8px;
-  stroke-opacity: 0.8;
-  fill: palevioletred;
-  fill-opacity: 0.4;
-}
-
-// not found and selected parents instead of itself
-%selected2 {
-  stroke: darkorange;
-  stroke-width: 8px;
-  stroke-opacity: 0.8;
-  fill: orange;
-  fill-opacity: 0.4;
-}
-
-// mouseover
-%select-ready {
-  stroke: turquoise;
-  stroke-width: 5px;
-}
-
-// click tp/line set
-$checked_color: cyan;
-%checked {
-  stroke: $checked_color;
-  stroke-width: 5pt;
-  stroke-opacity: 0.5;
-}
-
-// diff node/tp set
-%changed {
-  stroke: orange;
-  stroke-width: 3pt;
-}
-%added {
-  stroke: green;
-  stroke-width: 3pt;
-}
-%deleted {
-  stroke: darkred;
-  stroke-width: 3pt;
-}
-
-%changed-highlight {
-  stroke: yellow;
-  stroke-width: 5pt;
-}
-%added-highlight {
-  stroke: limegreen;
-  stroke-width: 5pt;
-}
-%deleted-highlight {
-  stroke: orangered;
-  stroke-width: 5pt;
-}
-
-%inactive {
-  fill-opacity: 0.2;
-  stroke-opacity: 0.1;
-  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
-}
-%active {
-  fill-opacity: 1.0;
-  stroke-opacity: 1.0;
-  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
-}
-
-rect.nest {
-  fill: none;
-  &.select-ready {
-    @extend %select-ready;
-  }
-  &.selected {
-    @extend %selected;
-  }
-  &.selected2 {
-    @extend %selected2;
-  }
-
-  &.inactive {
-    @extend %inactive;
-  }
-  &.active {
-    @extend %active;
-  }
-  &.changed {
-    @extend %changed;
-    &.select-ready {
-      @extend %changed-highlight;
-    }
-  }
-  &.added {
-    @extend %added;
-    &.select-ready {
-      @extend %added-highlight;
-    }
-  }
-  &.deleted {
-    @extend %deleted;
-    &.select-ready {
-      @extend %deleted-highlight;
-    }
-  }
-}
 
 %grid-handle {
   fill-opacity: 0.8;
@@ -116,48 +12,6 @@ rect.nest {
 }
 
 circle.nest {
-  &.tp {
-    fill: $tp_fill_color;
-    stroke: none;
-    &.select-ready {
-      @extend %select-ready;
-    }
-    &.checked {
-      @extend %checked;
-      fill: $checked_color;
-    }
-    &.selected {
-      @extend %selected;
-    }
-    &.selected2 {
-      @extend %selected2;
-    }
-
-    &.inactive {
-      @extend %inactive;
-    }
-    &.active {
-      @extend %active;
-    }
-    &.changed {
-      @extend %changed;
-      &.select-ready {
-      @extend %changed-highlight;
-    }
-    }
-    &.added {
-      @extend %added;
-      &.select-ready {
-        @extend %added-highlight;
-      }
-    }
-    &.deleted {
-      @extend %deleted;
-      &.select-ready {
-        @extend %deleted-highlight;
-      }
-    }
-  }
   &.grid-x-handle {
     @extend %grid-handle;
     fill: $grid_x_color;
@@ -168,45 +22,10 @@ circle.nest {
   }
 }
 
-text#diff-toggle-button, text#clear-button {
-  fill: #303030;
-  &.select-ready {
-    font-weight: bold;
-  }
-}
-
 text.nest {
-  // do not specify font-size except screen message
-  // size of svg object label must be scaled
-  // when these DOMs are added.
-  fill: #303030;
-  &.node {
-    text-anchor: start;
-    // dominant-baseline: hanging;
-    &.inactive {
-      @extend %inactive;
-    }
-    &.active {
-      @extend %active;
-    }
-  }
-  &.tp {
-    text-anchor: middle;
-    // dominant-baseline: hanging;
-    &.inactive {
-      @extend %inactive;
-    }
-    &.active {
-      @extend %active;
-    }
-  }
   &.grid-x-handle, &.grid-y-handle {
     text-anchor: middle;
     fill: white;
-    font-weight: bold;
-  }
-  &.warning {
-    fill: red;
     font-weight: bold;
   }
 }

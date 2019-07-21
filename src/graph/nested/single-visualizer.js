@@ -1,11 +1,9 @@
 import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
-import BaseContainer from '../../../srv/graph/base'
-import DiffState from '../../../srv/graph/diff-state'
+import SingleVisualizerBase from '../common/single-visualizer-base'
 import InterTpLinkCreator from './link-creator'
-import TooltipCreator from '../common/tooltip-creator'
 
-export default class SingleNestedVisualizer extends BaseContainer {
+export default class SingleNestedVisualizer extends SingleVisualizerBase {
   constructor () {
     super()
     // canvas size
@@ -18,13 +16,6 @@ export default class SingleNestedVisualizer extends BaseContainer {
     this.gridFontSize = 25
   }
 
-  clearCanvas () {
-    // clear graphs
-    select('div#visualizer') // clear all graphs
-      .selectAll('div.network-layer')
-      .remove()
-  }
-
   makeNestedGraphSVG () {
     return select('body').select('div#visualizer')
       .append('div') // to keep compatibility with topology visualizer
@@ -32,36 +23,6 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
-  }
-
-  objClassDef (obj, classString) {
-    let objState = null
-    if ('diffState' in obj) {
-      const diffState = new DiffState(obj.diffState)
-      objState = diffState.detect()
-    } else {
-      console.log(`object ${obj.type}: ${obj.path} does not have diffState`)
-      console.log(obj)
-    }
-    const list = classString.split(' ').concat(objState)
-    if (objState === this.currentInactive) {
-      list.push('inactive')
-    }
-    return list.join(' ')
-  }
-
-  clearToolTip () {
-    select('body').select('div#visualizer')
-      .select('div.tool-tip')
-      .remove()
-  }
-
-  makeToolTip () {
-    this.clearToolTip()
-    const origin = select('body').select('div#visualizer')
-      .append('div')
-      .attr('class', 'tool-tip')
-    return new TooltipCreator(origin)
   }
 
   makeNestedGraphSVGGroup () {
@@ -237,25 +198,6 @@ export default class SingleNestedVisualizer extends BaseContainer {
       .text(d => d.name)
   }
 
-  makeClearButton () {
-    const clearButtonFontSize = 12
-    this.svg.append('text')
-      .attr('class', 'dep')
-      .attr('id', 'clear-button')
-      .attr('x', clearButtonFontSize / 2)
-      .attr('y', clearButtonFontSize)
-      .text('[clear highlight]')
-  }
-
-  makeDiffInactiveToggleButton () {
-    const clearButtonFontSize = 12
-    this.svg.append('text')
-      .attr('id', 'diff-toggle-button')
-      .attr('x', clearButtonFontSize / 2)
-      .attr('y', clearButtonFontSize * 2)
-      .text('[toggle diff added/deleted]')
-  }
-
   makeScale (nodes) {
     const xMax = Math.max(...nodes.map(d => d.x + d.width))
     const yMax = Math.max(...nodes.map(d => d.y + d.height))
@@ -273,9 +215,9 @@ export default class SingleNestedVisualizer extends BaseContainer {
   makeGraphObjects (graphData) {
     this.svg = this.makeNestedGraphSVG()
     this.svgGrp = this.makeNestedGraphSVGGroup()
-    this.tooltip = this.makeToolTip()
-    this.makeClearButton()
-    this.makeDiffInactiveToggleButton()
+    this.tooltip = this.makeToolTip(select('body').select('div#visualizer'))
+    this.makeClearButton(this.svg)
+    this.makeDiffInactiveToggleButton(this.svg)
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.scale = this.makeScale(nodes)

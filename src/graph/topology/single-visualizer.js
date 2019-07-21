@@ -1,11 +1,11 @@
 'use strict'
 
 import { select, selectAll } from 'd3-selection'
-import DiffState from '../../../srv/graph/diff-state'
-import TooltipCreator from '../common/tooltip-creator'
+import SingleVisualizerBase from '../common/single-visualizer-base'
 
-export default class SingleGraphVisualizer {
+export default class SingleGraphVisualizer extends SingleVisualizerBase {
   constructor (graph, findAllNodeFunc) {
+    super()
     this.graph = graph
     this.setCavasSize()
     // set callback to find node through all layers
@@ -29,7 +29,7 @@ export default class SingleGraphVisualizer {
     // setup info table
     this.makeInfoTable()
     // add tool tip
-    this.tooltip = new TooltipCreator(this.visContainer)
+    this.tooltip = this.makeToolTip(this.visContainer)
     // set style of initial inactive objects
     this.setStyleOfInactiveObjects()
   }
@@ -40,16 +40,6 @@ export default class SingleGraphVisualizer {
 
   nodeTypeNodes () {
     return this.graph.nodes.filter(d => d.type === 'node')
-  }
-
-  objClassDef (obj, classString) {
-    const diffState = new DiffState(obj.diffState)
-    const objState = diffState.detect()
-    const list = [classString, objState]
-    if (objState === this.currentInactive) {
-      list.push('inactive')
-    }
-    return list.join(' ')
   }
 
   makeInfoTable () {
@@ -133,6 +123,7 @@ export default class SingleGraphVisualizer {
       .data(this.graph.links)
       .enter()
       .append('line')
+      .attr('class', 'topo')
       .attr('id', d => d.path)
       .attr('class', d => this.objClassDef(d, 'link'))
   }
@@ -144,7 +135,7 @@ export default class SingleGraphVisualizer {
       .data(this.tpTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => this.objClassDef(d, 'tp'))
+      .attr('class', d => this.objClassDef(d, 'topo tp'))
       // d => ['tp', d.diffState.detect()].join(' ')
       .attr('id', d => d.path)
   }
@@ -156,7 +147,7 @@ export default class SingleGraphVisualizer {
       .data(this.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => this.objClassDef(d, 'node'))
+      .attr('class', d => this.objClassDef(d, 'topo node'))
       .attr('id', d => d.path)
   }
 
@@ -167,7 +158,7 @@ export default class SingleGraphVisualizer {
       .data(this.nodeTypeNodes())
       .enter()
       .append('circle')
-      .attr('class', d => this.objClassDef(d, 'node-circle'))
+      .attr('class', d => this.objClassDef(d, 'topo node-circle'))
       .attr('id', d => `${d.path}-bg`) // background
   }
 
@@ -178,7 +169,7 @@ export default class SingleGraphVisualizer {
       .data(this.tpTypeNodes())
       .enter()
       .append('text')
-      .attr('class', d => this.objClassDef(d, 'tp-label'))
+      .attr('class', d => this.objClassDef(d, 'topo tp-label'))
       .attr('id', d => `${d.path}-tplb`) // tp label
       .text(d => d.name)
   }
@@ -190,7 +181,7 @@ export default class SingleGraphVisualizer {
       .data(this.nodeTypeNodes())
       .enter()
       .append('text')
-      .attr('class', d => this.objClassDef(d, 'node-label'))
+      .attr('class', d => this.objClassDef(d, 'topo node-label'))
       .attr('id', d => `${d.path}-ndlb`) // node label
       .text(d => d.name)
   }

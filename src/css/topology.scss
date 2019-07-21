@@ -1,24 +1,6 @@
-// color selection
-// https://www.w3schools.com/colors/
+@import "node";
+@import "term-point";
 
-// fill color
-// normal color
-$fill_normal1: #FEF6EB; // node center circle
-$fill_normal2: lightgray; // node outer circle
-// color for object selection (node outer circle)
-$fill_select_child: #BDD2FA;
-$fill_select_parent: #5E92F2;
-$fill_select: #33CCFF;
-$fill_select_ready: #66FFFF;
-// color for diff state (tp and node center circle)
-$fill_diff_changed: #FDED3A;
-$fill_diff_deleted: #FE7367;
-$fill_diff_added: #92D364;
-// stroke color
-$stroke_normal: #303030; // for line and circle
-$stroke_diff_changed: #CBCB01;
-$stroke_diff_deleted: #B71001;
-$stroke_diff_added: #66B032;
 // defaults
 $default_font_size: 10pt;
 $default_font_color: #333;
@@ -46,42 +28,15 @@ svg {
   }
 }
 
-%inactive {
-  fill-opacity: 0.2;
-  stroke-opacity: 0.1;
-  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
-}
-%active {
-  fill-opacity: 1.0;
-  stroke-opacity: 1.0;
-  transition: fill-opacity .5s ease-in-out, stroke-opacity .5s ease-in-out;
-}
-
-text {
-  fill: $stroke_normal;
-  &.select-ready {
-    font-weight: bold;
-  }
-  &.inactive {
-    @extend %inactive;
-  }
-  &.active {
-    @extend %active;
-  }
-}
-
 %circle-base {
   fill: $fill_normal1;
   stroke: $stroke_normal;
   stroke-width: 1px;
 }
 
-circle {
-  // operation
-  &.fixed {
-    stroke: $fixed_stroke;
-    stroke-width: 2pt;
-  }
+circle.topo {
+  @extend %circle-base;
+
   &.inactive {
     @extend %inactive;
   }
@@ -89,54 +44,16 @@ circle {
     @extend %active;
   }
 
-  // node circle: core(center) circle
-  &.node {
-    @extend %circle-base;
-
-    &.changed {
-      fill: $fill_diff_changed;
-    }
-    &.added {
-      fill: $fill_diff_added;
-    }
-    &.deleted {
-      fill: $fill_diff_deleted;
-    }
+  // operation
+  &.fixed {
+    stroke: $fixed_stroke;
+    stroke-width: 2pt;
   }
 
   // node circle: outer circle
   &.node-circle {
     fill: $fill_normal2;
     stroke: none;
-
-    &.selected-children {
-      fill: $fill_select_child;
-    }
-    &.selected-parents {
-      fill: $fill_select_parent;
-    }
-    &.selected {
-      fill: $fill_select;
-    }
-    &.select-ready {
-      fill: $fill_select_ready;
-      transition: fill .2s ease-in-out;
-    }
-  }
-
-  // termination point circle
-  &.tp {
-    @extend %circle-base;
-
-    &.changed {
-      fill: $fill_diff_changed;
-    }
-    &.added {
-      fill: $fill_diff_added;
-    }
-    &.deleted {
-      fill: $fill_diff_deleted;
-    }
 
     &.selected-children {
       fill: $fill_select_child;
@@ -170,16 +87,13 @@ line.link {
   }
 
   &.changed {
-    stroke: $stroke_diff_changed;
-    stroke-width: 3pt;
+    @extend %changed;
   }
   &.added {
-    stroke: $stroke_diff_added;
-    stroke-width: 3pt;
+    @extend %added;
   }
   &.deleted {
-    stroke: $stroke_diff_deleted;
-    stroke-width: 3pt;
+    @extend %deleted;
   }
 }
 

@@ -1,0 +1,42 @@
+@import "./color-schema";
+
+circle.topo.node,
+rect.dep,
+rect.nest {
+  fill: $fill_normal1;
+
+  &.select-ready {
+    @extend %select-ready;
+  }
+  &.selected {
+    @extend %selected;
+  }
+  &.selected2 {
+    @extend %selected2;
+  }
+
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
+  &.changed {
+    @extend %changed;
+    &.select-ready {
+      @extend %changed-highlight;
+    }
+  }
+  &.added {
+    @extend %added;
+    &.select-ready {
+      @extend %added-highlight;
+    }
+  }
+  &.deleted {
+    @extend %deleted;
+    &.select-ready {
+      @extend %deleted-highlight;
+    }
+  }
+}
