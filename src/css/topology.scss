@@ -1,29 +1,17 @@
 @import "node";
 @import "term-point";
-
-// defaults
-$default_font_size: 10pt;
-$default_font_color: #333;
-$fixed_stroke: hotpink;
-
-body {
-  font-size: $default_font_size;
-  color: $default_font_color;
-}
+@import "link";
 
 svg {
-  border: solid 1px;
-  margin: 10px;
-
   &.network {
     &.changed {
-      border: solid 3pt $stroke_diff_changed;
+      border: solid 3pt $stroke_changed;
     }
     &.added {
-      border: solid 3pt $stroke_diff_added;
+      border: solid 3pt $stroke_added;
     }
     &.deleted {
-      border: solid 3pt $stroke_diff_deleted;
+      border: solid 3pt $stroke_deleted;
     }
   }
 }
@@ -44,25 +32,19 @@ circle.topo {
     @extend %active;
   }
 
-  // operation
-  &.fixed {
-    stroke: $fixed_stroke;
-    stroke-width: 2pt;
-  }
-
   // node circle: outer circle
   &.node-circle {
     fill: $fill_normal2;
     stroke: none;
 
     &.selected-children {
-      fill: $fill_select_child;
+      fill: $fill_selected2;
     }
     &.selected-parents {
-      fill: $fill_select_parent;
+      fill: $fill_selected3;
     }
     &.selected {
-      fill: $fill_select;
+      fill: $fill_selected;
     }
     &.select-ready {
       fill: $fill_select_ready;
@@ -71,35 +53,9 @@ circle.topo {
   }
 }
 
-%link-base {
-  stroke: $stroke_normal;
-  stroke-width: 1px;
-}
-
-line.link {
-  @extend %link-base;
-
-  &.inactive {
-    @extend %inactive;
-  }
-  &.active {
-    @extend %active;
-  }
-
-  &.changed {
-    @extend %changed;
-  }
-  &.added {
-    @extend %added;
-  }
-  &.deleted {
-    @extend %deleted;
-  }
-}
-
 div {
   &.control {
-    padding: $default_font_size;
+    padding: 10pt;
     display: inline-block;
     vertical-align: top;
 
@@ -168,35 +124,32 @@ table {
     float: right;
   }
   th {
-    font-size: $default_font_size;
     padding: 0.25em;
     background: palegoldenrod;
     white-space: nowrap;
   }
   td {
-    font-size: $default_font_size;
     padding: 0.25em;
     white-space: nowrap;
     transition: all .2s ease-in-out;
 
     &.fixed {
-      border: 2px solid $fixed_stroke;
+      border: 2px solid $stroke_fixed;
     }
 
     &.selected-children {
-      background: $fill_select_child;
+      background: $fill_selected2;
     }
     &.selected-parents {
-      background: $fill_select_parent;
+      background: $fill_selected3;
       color: white;
     }
     &.selected {
-      background: $fill_select;
+      background: $fill_selected;
       color: white;
     }
     &.select-ready {
       background: $fill_select_ready;
-      color: $default_font_color;
       transition: all .2s ease-in-out;
     }
   }

@@ -1,0 +1,57 @@
+@import "color-schema";
+
+polyline {
+  stroke-linejoin: round;
+  fill: none;
+
+}
+
+line.topo.link,
+polyline.nest.tp-tp {
+  stroke: $stroke_normal2;
+  stroke-opacity: 0.6;
+
+  &.select-ready {
+    @extend %select-ready;
+  }
+  &.checked {
+    @extend %checked;
+  }
+
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
+  }
+  &.changed {
+    @extend %changed;
+    &.select-ready, &.checked {
+      @extend %changed-highlight;
+    }
+  }
+  &.added {
+    @extend %added;
+    &.select-ready, &.checked {
+      @extend %added-highlight;
+    }
+  }
+  &.deleted {
+    @extend %deleted;
+    &.select-ready, &.checked {
+      @extend %deleted-highlight;
+    }
+  }
+}
+
+line.nest.support-tp {
+  stroke: $stroke_normal2;
+  stroke-opacity: 0.5;
+
+  &.select-ready {
+    @extend %select-ready;
+  }
+  &.checked {
+    @extend %checked;
+  }
+}

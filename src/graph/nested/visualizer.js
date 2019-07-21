@@ -62,7 +62,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       for (const parentPath of alertNode.parents) {
         const operativeParent = this.findOperativeNodeByPath(parentPath)
         if (operativeParent) {
-          this.highlight(operativeParent, 'selected2')
+          this.highlight(operativeParent, 'selected-parents')
         } else {
           const inoperativeParent = this.findInoperativeNodeByPath(parentPath)
           parentsFromInoperative.push(inoperativeParent)

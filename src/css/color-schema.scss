@@ -2,23 +2,32 @@
 // normal color
 $fill_normal1: #FEF6EB; // node center circle
 $fill_normal2: lightgray; // node outer circle
+$stroke_normal: #c4b7a6; // node
+$stroke_normal2: #3e4444; // link and tp
 
 // color for object selection (node outer circle)
-$fill_select_child: #BDD2FA;
-$fill_select_parent: #5E92F2;
-$fill_select: #33CCFF;
 $fill_select_ready: #66FFFF;
+$fill_selected: #FE7367;
+$fill_selected2: #FCBA12; // children
+$fill_selected3: #C7A348; // parents (parents of selected node in nested graph)
+$fill_checked: cyan;
+$stroke_select_ready: #66FFFF;
+$stroke_selected: #E6B028;
+$stroke_selected2: #FCBA12;
+$stroke_selected3: #B1995D;
+$stroke_checked: cyan;
+$stroke_fixed: hotpink;
 
 // color for diff state (tp and node center circle)
-$fill_diff_changed: #FDED3A;
-$fill_diff_deleted: #FE7367;
-$fill_diff_added: #92D364;
-
-// stroke color
-$stroke_normal: #303030; // for line and circle
-$stroke_diff_changed: #CBCB01;
-$stroke_diff_deleted: #B71001;
-$stroke_diff_added: #66B032;
+$fill_changed: #FDED3A;
+$fill_deleted: #FE7367;
+$fill_added: #92D364;
+$stroke_changed: #CBCB01;
+$stroke_changed_highlight: #FDED2A;
+$stroke_deleted: #B71001;
+$stroke_deleted_highlight: #EC6988;
+$stroke_added: #66B032;
+$stroke_added_highlight: limegreen;
 
 // found and selected itself directly
 %selected-base {
@@ -29,60 +38,60 @@ $stroke_diff_added: #66B032;
 
 %selected {
   @extend %selected-base;
-  stroke: #FE7367;
-  fill: palevioletred;
+  stroke: $stroke_selected;
+  fill: $fill_selected;
 }
 
 // not found and selected parents instead of itself
 %selected2 {
   @extend %selected-base;
-  stroke: darkorange;
-  fill: orange;
+  stroke: $stroke_selected2;
+  fill: $fill_selected2;
 }
 
 %selected3 {
   @extend %selected-base;
-  stroke: palevioletred;
+  stroke: $stroke_selected3;
+  fill: $fill_selected3;
 }
 
 // mouseover
 %select-ready {
-  stroke: turquoise;
+  stroke: $stroke_select_ready;
   stroke-width: 5px;
 }
 
 // click tp/line set
-$checked_color: cyan;
 %checked {
-  stroke: $checked_color;
+  stroke: $stroke_checked;
   stroke-width: 5pt;
   stroke-opacity: 0.5;
 }
 
 // diff node/tp set
 %changed {
-  stroke: orange;
+  stroke: $stroke_changed;
   stroke-width: 3pt;
 }
 %added {
-  stroke: green;
+  stroke: $stroke_added;
   stroke-width: 3pt;
 }
 %deleted {
-  stroke: darkred;
+  stroke: $stroke_deleted;
   stroke-width: 3pt;
 }
 
 %changed-highlight {
-  stroke: yellow;
+  stroke: $stroke_changed_highlight;
   stroke-width: 5pt;
 }
 %added-highlight {
-  stroke: limegreen;
+  stroke: $stroke_added_highlight;
   stroke-width: 5pt;
 }
 %deleted-highlight {
-  stroke: orangered;
+  stroke: $stroke_deleted_highlight;
   stroke-width: 5pt;
 }
 

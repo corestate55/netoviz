@@ -42,4 +42,13 @@ export default {
 #app {
   margin: 0.5em;
 }
+body {
+  font-size: 10pt;
+  color: #333;
+}
+
+svg {
+  border: solid 1px;
+  margin: 10px;
+}
 </style>

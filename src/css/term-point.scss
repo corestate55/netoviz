@@ -4,7 +4,7 @@ circle.topo.tp,
 circle.dep,
 circle.nest.tp {
   fill: $fill_normal1;
-  stroke: $stroke_normal;
+  stroke: $stroke_normal2;
 
   &.inactive {
     @extend %inactive;
@@ -15,15 +15,27 @@ circle.nest.tp {
 
   &.select-ready {
     @extend %select-ready;
+    fill: $fill_select_ready;
   }
   &.selected {
     @extend %selected;
   }
+  &.selected2,
   &.selected-children {
     @extend %selected2;
   }
+  &.selected3,
   &.selected-parents {
     @extend %selected3;
+  }
+
+  &.checked {
+    @extend %checked;
+    fill: $fill_checked;
+  }
+  &.fixed {
+    stroke: $stroke_fixed;
+    stroke-width: 2pt;
   }
 
   &.changed {

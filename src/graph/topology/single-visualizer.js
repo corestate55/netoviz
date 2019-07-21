@@ -123,9 +123,8 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
       .data(this.graph.links)
       .enter()
       .append('line')
-      .attr('class', 'topo')
       .attr('id', d => d.path)
-      .attr('class', d => this.objClassDef(d, 'link'))
+      .attr('class', d => this.objClassDef(d, 'topo link'))
   }
 
   makeTpObjects () {

@@ -1,10 +1,10 @@
 @import "node";
 @import "term-point";
-@import "./text-label";
+@import "link";
+@import "text-label";
 
 $grid_x_color: limegreen;
 $grid_y_color: mediumspringgreen;
-$tp_fill_color: #7C7354;
 
 %grid-handle {
   fill-opacity: 0.8;
@@ -31,16 +31,6 @@ text.nest {
 }
 
 line.nest {
-  &.support-tp {
-    stroke: $tp_fill_color;
-    stroke-opacity: 0.5;
-    &.select-ready {
-      @extend %select-ready;
-    }
-    &.checked {
-      @extend %checked;
-    }
-  }
   &.grid-x {
     stroke: $grid_x_color;
   }
@@ -49,42 +39,3 @@ line.nest {
   }
 }
 
-polyline.nest {
-  fill: none;
-  &.tp-tp {
-    stroke: $tp_fill_color;
-    stroke-opacity: 0.6;
-    stroke-linejoin: round;
-    &.select-ready {
-      @extend %select-ready;
-    }
-    &.checked {
-      @extend %checked;
-    }
-
-    &.inactive {
-      @extend %inactive;
-    }
-    &.active {
-      @extend %active;
-    }
-    &.changed {
-      @extend %changed;
-      &.select-ready, &.checked {
-        @extend %changed-highlight;
-      }
-    }
-    &.added {
-      @extend %added;
-      &.select-ready, &.checked {
-        @extend %added-highlight;
-      }
-    }
-    &.deleted {
-      @extend %deleted;
-      &.select-ready, &.checked {
-        @extend %deleted-highlight;
-      }
-    }
-  }
-}

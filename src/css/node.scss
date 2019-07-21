@@ -4,6 +4,7 @@ circle.topo.node,
 rect.dep,
 rect.nest {
   fill: $fill_normal1;
+  stroke: $stroke_normal;
 
   &.select-ready {
     @extend %select-ready;
@@ -11,8 +12,17 @@ rect.nest {
   &.selected {
     @extend %selected;
   }
-  &.selected2 {
+  &.selected2,
+  &.selected-children { // children (in topo graph)
     @extend %selected2;
+  }
+  &.selected3,
+  &.selected-parents { // parents (in topo and nested/shallow graph)
+    @extend %selected3;
+  }
+  &.fixed { // (in topo graph)
+    stroke: $stroke_fixed;
+    stroke-width: 2pt;
   }
 
   &.inactive {

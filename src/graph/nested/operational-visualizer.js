@@ -274,7 +274,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   // for alert highlight,
-  // target class = ['selected', 'selected2']
+  // target class = ['selected', 'selected-parents']
   highlight (node, className) {
     if (node.type === 'node') {
       this.selectNodeRectByPath(node.path)
@@ -298,7 +298,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   clearAllAlertHighlight () {
-    for (const className of ['selected', 'selected2']) {
+    for (const className of ['selected', 'selected-parents', 'checked']) {
       this.svgGrp.selectAll(`.${className}`)
         .classed(className, false)
         .style('fill', d => this.colorOfNode(d))
