@@ -387,8 +387,8 @@
               {
                 "tp-id": "p0",
                 "_diff_state_": {
-                  "forward": "added",
-                  "backward": null,
+                  "forward": "kept",
+                  "backward": "kept",
                   "pair": ""
                 }
               },
@@ -480,7 +480,7 @@
                   {
                     "network-ref": "layer1",
                     "node-ref": "sv1",
-                    "tp-ref": "eth1",
+                    "tp-ref": "eth0",
                     "_diff_state_": {
                       "forward": "added",
                       "backward": null,

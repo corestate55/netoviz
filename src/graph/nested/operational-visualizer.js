@@ -301,7 +301,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     for (const className of ['selected', 'selected-parents', 'checked']) {
       this.svgGrp.selectAll(`.${className}`)
         .classed(className, false)
-        .style('fill', d => this.colorOfNode(d))
+        .style('fill', d => d.type === 'node' ? this.colorOfNode(d) : null)
     }
   }
 
