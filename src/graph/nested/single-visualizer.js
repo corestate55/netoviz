@@ -133,10 +133,13 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeSupportTpLines (supportTpLinks) {
-    this.svgGrp.selectAll('line.support-tp')
+    const updatedLines = this.svgGrp.selectAll('line.support-tp')
       .data(supportTpLinks)
+    const enteredLines = updatedLines
       .enter()
       .append('line')
+    const targetLines = enteredLines.merge(updatedLines)
+    targetLines
       .attr('class', d => `nest ${d.type}`) // support-tp line does not have diffState
       .attr('id', d => d.path)
       .attr('x1', d => this.scale(d.x1))
@@ -148,10 +151,13 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeTpTpLines (tpTpLinks) {
-    this.svgGrp.selectAll('polyline.tp-tp')
+    const updatedLines = this.svgGrp.selectAll('polyline.tp-tp')
       .data(tpTpLinks)
+    const enteredLines = updatedLines
       .enter()
       .append('polyline')
+    const targetLines = enteredLines.merge(updatedLines)
+    targetLines
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
       .attr('points', d => d.polylineString(this.scale))

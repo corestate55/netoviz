@@ -156,9 +156,6 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   }
 
   redrawLinkLines () {
-    // clear link lines
-    this.svgGrp.selectAll('line.support-tp').remove()
-    this.svgGrp.selectAll('polyline.tp-tp').remove()
     // redraw
     const linkCreator = new InterTpLinkCreator(this.graphData)
     this.makeSupportTpLines(linkCreator.supportTpLinks())
