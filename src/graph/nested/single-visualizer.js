@@ -140,7 +140,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .append('line')
     const targetLines = enteredLines.merge(updatedLines)
     targetLines
-      .attr('class', d => `nest ${d.type}`) // support-tp line does not have diffState
+      .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
       .attr('x1', d => this.scale(d.x1))
       .attr('y1', d => this.scale(d.y1))

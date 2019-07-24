@@ -1,16 +1,20 @@
 @import "color-schema";
 
-polyline {
+polyline.nest.tp-tp {
   stroke-linejoin: round;
   fill: none;
+  stroke: $stroke_normal2;
+  stroke-opacity: 0.6;
+}
 
+line.nest.support-tp {
+  stroke: $stroke_normal2;
+  stroke-opacity: 0.5;
 }
 
 line.topo.link,
+line.nest.support-tp,
 polyline.nest.tp-tp {
-  stroke: $stroke_normal2;
-  stroke-opacity: 0.6;
-
   &.select-ready {
     @extend %select-ready;
   }
@@ -41,17 +45,5 @@ polyline.nest.tp-tp {
     &.select-ready, &.checked {
       @extend %deleted-highlight;
     }
-  }
-}
-
-line.nest.support-tp {
-  stroke: $stroke_normal2;
-  stroke-opacity: 0.5;
-
-  &.select-ready {
-    @extend %select-ready;
-  }
-  &.checked {
-    @extend %checked;
   }
 }
