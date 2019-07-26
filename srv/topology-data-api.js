@@ -1,97 +1,19 @@
 import fs from 'fs'
-import TopoGraphConverter from './graph/topo-graph/converter'
-import DepGraphConverter from './graph/dependency/converter'
-import NestedGraphConverter from './graph/nested/converter'
+import CacheTopoGraphConverter from './cache-topo-graph-converter'
+import convertDependencyGraphData from './graph/dependency/converter'
+import convertNestedGraphData from './graph/nested/converter'
 import { promisify } from 'util'
 
 const readFile = promisify(fs.readFile)
 
 export default class TopoogyDataAPI {
   constructor (mode) {
-    this.timeStampOf = {} // timestamp table
     const prodDistDir = 'dist'
     const devDistDir = 'public'
     const distDir = mode === 'production' ? prodDistDir : devDistDir
     this.modelDir = `${distDir}/model`
-    this.cacheDir = prodDistDir // always use prod dist dir for cache
-    this.checkCacheDir()
-  }
-
-  checkCacheDir () {
-    if (!fs.existsSync(this.cacheDir)) {
-      fs.mkdirSync(this.cacheDir)
-    }
-  }
-
-  async readCache () {
-    console.log('use cache: ', this.cacheJsonPath)
-    try {
-      return await readFile(this.cacheJsonPath, 'utf8')
-    } catch (error) {
-      throw error
-    }
-  }
-
-  async readTopologyDataFromJSON () {
-    try {
-      return await readFile(this.jsonPath, 'utf8')
-    } catch (error) {
-      throw error
-    }
-  }
-
-  writeCache (resJsonString) {
-    console.log('create cache: ', this.cacheJsonPath)
-    fs.writeFile(this.cacheJsonPath, resJsonString, 'utf8', (error) => {
-      if (error) {
-        throw error
-      }
-      console.log(`cache saved: ${this.cacheJsonPath}`)
-    })
-  }
-
-  updateStatsOfTopoJSON (jsonName) {
-    this.jsonPath = `${this.modelDir}/${jsonName}`
-    this.cacheJsonPath = `${this.cacheDir}/${jsonName}.cache`
-    this.timeStamp = fs.statSync(this.jsonPath)
-  }
-
-  foundCache () {
-    return this.timeStampOf[this.jsonPath] &&
-      this.timeStampOf[this.jsonPath] === this.timeStamp.mtimeMs
-  }
-
-  updateCacheTimeStamp () {
-    this.timeStampOf[this.jsonPath] = this.timeStamp.mtimeMs
-  }
-
-  async convertTopoGraphData (jsonName) {
-    let resJsonString = '' // stringified json (NOT object)
-    try {
-      this.updateStatsOfTopoJSON(jsonName)
-      console.log('Requested: ', this.jsonPath)
-
-      if (this.foundCache()) {
-        resJsonString = await this.readCache()
-      } else {
-        // the json file was changed.
-        this.updateCacheTimeStamp()
-        const data = await this.readTopologyDataFromJSON()
-        const topoGraphConverter = new TopoGraphConverter(JSON.parse(data))
-        resJsonString = JSON.stringify(topoGraphConverter.toData())
-        this.writeCache(resJsonString)
-      }
-    } catch (error) {
-      resJsonString = ''
-      console.log('return null because error found in convertTopoGraphData()')
-    }
-    return resJsonString
-  }
-
-  async convertDependencyGraphData (jsonName) {
-    const topoJsonString = await this.convertTopoGraphData(jsonName)
-    const depGraphConverter = new DepGraphConverter(JSON.parse(topoJsonString))
-    return JSON.stringify(depGraphConverter.toData())
+    // always use prod dist dir for cache
+    this.topoGraphConverter = new CacheTopoGraphConverter(this.modelDir, prodDistDir)
   }
 
   async readLayoutJSON (jsonName) {
@@ -117,14 +39,8 @@ export default class TopoogyDataAPI {
     }
   }
 
-  async convertNestedGraphData (jsonName, reverse, deep) {
-    const topoJsonString = await this.convertTopoGraphData(jsonName)
-    const layoutJsonString = await this.readLayoutJSON(jsonName)
-    const nestedGraphConverter = new NestedGraphConverter(
-      JSON.parse(topoJsonString), JSON.parse(layoutJsonString),
-      reverse, deep
-    )
-    return JSON.stringify(nestedGraphConverter.toData())
+  async convertTopoGraphData (jsonName) {
+    return this.topoGraphConverter.toData(jsonName)
   }
 
   boolString2Bool (strBool) {
@@ -141,12 +57,17 @@ export default class TopoogyDataAPI {
       if (graphName === 'topology') {
         return await this.convertTopoGraphData(jsonName)
       } else if (graphName === 'dependency') {
-        return await this.convertDependencyGraphData(jsonName)
+        return await convertDependencyGraphData(
+          async () => this.convertTopoGraphData(jsonName)
+        )
       } else if (graphName === 'nested') {
         const reverse = this.boolString2Bool(req.query.reverse)
         const deep = this.boolString2Bool(req.query.deep)
         console.log(`call nested: reverse=${reverse}, deep=${deep}`)
-        return await this.convertNestedGraphData(jsonName, reverse, deep)
+        return await convertNestedGraphData(reverse, deep,
+          async () => this.convertTopoGraphData((jsonName)),
+          async () => this.readLayoutJSON(jsonName)
+        )
       }
     } catch (error) {
       throw error

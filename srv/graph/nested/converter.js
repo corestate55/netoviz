@@ -1,7 +1,7 @@
 import ShallowNestedGraph from './shallow-graph'
 import DeepNestedGraph from './deep-graph'
 
-export default class NestedGraphConverter {
+class NestedGraphConverter {
   constructor (graphData, layoutData, reverse, deep) {
     if (deep) {
       this.nestedGraph = new DeepNestedGraph(graphData, layoutData, reverse)
@@ -15,8 +15,14 @@ export default class NestedGraphConverter {
   }
 }
 
-// const jsonPath = 'dist/target3b.json.cache'
-// const graphData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-// const nestedGraph = new NestedGraph(graphData)
-// const resJsonString = JSON.stringify(nestedGraph.toData())
-// console.log(resJsonString)
+const convertNestedGraphData = async (reverse, deep, topoGraphDataCB, layoutDataCB) => {
+  const topoJsonString = await topoGraphDataCB()
+  const layoutJsonString = await layoutDataCB()
+  const nestedGraphConverter = new NestedGraphConverter(
+    JSON.parse(topoJsonString), JSON.parse(layoutJsonString),
+    reverse, deep
+  )
+  return JSON.stringify(nestedGraphConverter.toData())
+}
+
+export default convertNestedGraphData

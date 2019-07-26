@@ -1,6 +1,6 @@
 import DepGraphLayer from './layer'
 
-export default class DepGraphConverter {
+class DepGraphConverter {
   constructor (graphData) {
     this.setLayers(graphData)
   }
@@ -19,8 +19,10 @@ export default class DepGraphConverter {
   }
 }
 
-// const jsonPath = 'dist/target3b.json.cache'
-// const graphData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'))
-// const depGraph = new DepGraph(graphData)
-// const resJsonString = JSON.stringify(depGraph.toData())
-// console.log(resJsonString)
+const convertDependencyGraphData = async (topoGraphDataCB) => {
+  const topoJsonString = await topoGraphDataCB() // callback
+  const depGraphConverter = new DepGraphConverter(JSON.parse(topoJsonString))
+  return JSON.stringify(depGraphConverter.toData())
+}
+
+export default convertDependencyGraphData
