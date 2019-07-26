@@ -1,15 +1,21 @@
+import NestLayout from './layout'
+
 export default class GridOperator {
-  constructor (layoutData) {
-    if (layoutData === undefined || layoutData === null ||
-      'found' in layoutData && !layoutData.found) {
-      this.layoutData = { layout: {}, grid: {} } // empty data
-      this.initDefault(4, 10, 200)
-    } else {
-      this.layoutData = layoutData
-      this.setXYGrid()
-    }
+  constructor (reverse, nestType, layoutData) {
+    this.setLayoutData(reverse, nestType, layoutData)
     this.currentX = 0
     this.currentY = 0
+  }
+
+  setLayoutData (reverse, nestType, layoutData) {
+    const layout = new NestLayout(reverse, nestType, layoutData)
+    this.layoutData = layout.toData()
+    if (this.layoutData) {
+      this.setXYGrid()
+    } else {
+      this.layoutData = { layout: {}, grid: {} } // empty data
+      this.initDefault(4, 10, 200)
+    }
   }
 
   setXYGrid () {

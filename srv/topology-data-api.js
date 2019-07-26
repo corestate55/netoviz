@@ -25,17 +25,7 @@ export default class TopoogyDataAPI {
       console.log(`Layout file correspond with ${jsonName} was not found.`)
       // layout file is optional.
       // when found (layout file was not found), use default layout.
-      const errorLayoutData = {
-        shallow: {
-          reverse: { found: false },
-          standard: { found: false }
-        },
-        deep: {
-          reverse: { found: false },
-          standard: { found: false }
-        }
-      }
-      return JSON.stringify(errorLayoutData)
+      return JSON.stringify(null)
     }
   }
 
