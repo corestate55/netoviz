@@ -1,6 +1,6 @@
 import { select } from 'd3-selection'
-import BaseContainer from '../../../srv/graph/base'
-import DiffState from '../../../srv/graph/diff-state'
+import BaseContainer from '../../../srv/graph/common/base'
+import DiffState from '../../../srv/graph/common/diff-state'
 import TooltipCreator from './tooltip-creator'
 
 export default class SingleVisualizerBase extends BaseContainer {

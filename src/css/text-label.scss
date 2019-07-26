@@ -6,7 +6,7 @@ text.nest {
   // do not specify font-size except screen message
   // size of svg object label must be scaled
   // when these DOMs are added.
-  fill: $stroke_normal;
+  fill: $stroke_text;
 
   &.layer {
     text-anchor: end;
@@ -40,7 +40,7 @@ text.nest {
 }
 
 text.diff-toggle-button, text.clear-button {
-  fill: #303030;
+  fill: $stroke_text;
   &.select-ready {
     font-weight: bold;
   }

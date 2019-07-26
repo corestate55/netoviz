@@ -1,7 +1,7 @@
 'use strict'
 
-import DiffState from '../diff-state'
-import BaseContainer from '../base'
+import DiffState from '../common/diff-state'
+import BaseContainer from '../common/base'
 
 export default class TopoBaseContainer extends BaseContainer {
   constructor (data) {

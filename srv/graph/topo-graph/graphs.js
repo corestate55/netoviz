@@ -1,6 +1,6 @@
 'use strict'
 
-import BaseContainer from '../base'
+import BaseContainer from '../common/base'
 import Networks from '../topo-model/networks'
 import Graph from './graph'
 
