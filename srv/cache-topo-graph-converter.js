@@ -1,4 +1,4 @@
-import TopologyGraphConverter from './graph/topo-graph/converter'
+import convertTopologyGraphData from './graph/topo-graph/converter'
 import fs from 'fs'
 import { promisify } from 'util'
 
@@ -71,14 +71,15 @@ export default class CacheTopologyGraphConverter {
       } else {
         // the json file was changed.
         this.updateCacheTimeStamp()
-        const data = await this.readTopologyDataFromJSON()
-        const topoGraphConverter = new TopologyGraphConverter(JSON.parse(data))
-        resJsonString = JSON.stringify(topoGraphConverter.toData())
+        resJsonString = await convertTopologyGraphData(
+          async () => this.readTopologyDataFromJSON()
+        )
         this.writeCache(resJsonString)
       }
     } catch (error) {
       resJsonString = ''
       console.log('return null because error found in convertTopoGraphData()')
+      console.log(error)
     }
     return resJsonString
   }

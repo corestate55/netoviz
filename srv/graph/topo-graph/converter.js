@@ -1,6 +1,6 @@
 import Graphs from './graphs'
 
-export default class TopologyGraphConverter {
+class TopologyGraphConverter {
   constructor (graphData) {
     this.graphs = new Graphs(graphData)
   }
@@ -9,3 +9,11 @@ export default class TopologyGraphConverter {
     return this.graphs.graphs
   }
 }
+
+const convertTopologyGraphData = async (graphDataCB) => {
+  const graphDataString = await graphDataCB()
+  const topoGraphConverter = new TopologyGraphConverter(JSON.parse(graphDataString))
+  return JSON.stringify(topoGraphConverter.toData())
+}
+
+export default convertTopologyGraphData
