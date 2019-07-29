@@ -258,7 +258,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
       path = this.nodePathFromTpPath(path)
     }
     this.clearTpInfoTable()
-    const re = new RegExp(`^${path}__*`)
+    const re = new RegExp(`^${path}__.*`)
     const tpList = this.tpTypeNodes().filter(d => d.path.match(re))
     this.addTpInfoTableRecord(tpList)
   }
