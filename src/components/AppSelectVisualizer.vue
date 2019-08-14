@@ -10,6 +10,9 @@
       label="Dependency"
     />
     <el-radio-button
+      label="Dependency2"
+    />
+    <el-radio-button
       label="Nested"
     />
   </el-radio-group>

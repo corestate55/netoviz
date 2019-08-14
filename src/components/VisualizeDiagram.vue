@@ -29,6 +29,9 @@
     <VisualizeDiagramDependency
       v-else-if="visualizer === 'Dependency'"
     />
+    <VisualizeDiagramDependency2
+      v-else-if="visualizer === 'Dependency2'"
+    />
     <VisualizeDiagramNested
       v-else-if="visualizer === 'Nested'"
     />
@@ -39,6 +42,7 @@
 import { mapGetters } from 'vuex'
 import VisualizeDiagramTopology from './VisualizeDiagramTopology'
 import VisualizeDiagramDependency from './VisualizeDiagramDependency'
+import VisualizeDiagramDependency2 from './VisualizeDiagramDependency2'
 import VisualizeDiagramNested from './VisualizeDiagramNested'
 import '../css/tooltip.scss'
 
@@ -51,6 +55,7 @@ export default {
   components: {
     VisualizeDiagramTopology,
     VisualizeDiagramDependency,
+    VisualizeDiagramDependency2,
     VisualizeDiagramNested
   },
   computed: {
