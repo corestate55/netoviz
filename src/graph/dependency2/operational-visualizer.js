@@ -1,5 +1,5 @@
 import SingleDep2GraphVisualizer from './single-visualizer'
-import { event, selectAll } from 'd3-selection'
+import { event } from 'd3-selection'
 import { zoom } from 'd3-zoom'
 import { drag } from 'd3-drag'
 
@@ -162,50 +162,6 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     this.tooltip.disableTooltip(d)
   }
 
-  _setClearButtonHandler () {
-    const mouseOver = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#clear-button')
-      .on('click', () => {
-        this.clearHighlight()
-        this.clearDependencyLines('')
-      })
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
-  }
-
-  toggleActiveDiff () {
-    const visualizer = selectAll('div#visualizer')
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', false)
-      .classed('active', true)
-    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', true)
-      .classed('active', false)
-  }
-
-  _setToggleActiveDiffButtonHandler () {
-    const mouseOver = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#diff-toggle-button')
-      .on('click', this.toggleActiveDiff)
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
-  }
-
   _moveNetworkLayer (path, dy) {
     const nwObj = this.findNeworkObjHas(path)
     if (nwObj) {
@@ -249,7 +205,9 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     // for initialize (only called first time)
     this._setSVGZoom()
     this._setOperationHandler()
-    this._setClearButtonHandler()
-    this._setToggleActiveDiffButtonHandler()
+    this.setGraphControlButtons(() => {
+      this.clearHighlight()
+      this.clearDependencyLines('')
+    })
   }
 }

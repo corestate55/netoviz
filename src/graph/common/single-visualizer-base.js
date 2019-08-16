@@ -1,4 +1,4 @@
-import { select } from 'd3-selection'
+import { select, selectAll } from 'd3-selection'
 import BaseContainer from '../../../srv/graph/common/base'
 import DiffState from '../../../srv/graph/common/diff-state'
 import TooltipCreator from './tooltip-creator'
@@ -87,5 +87,51 @@ export default class SingleVisualizerBase extends BaseContainer {
   makeGraphControlButtons () {
     this.makeClearHighlightButton()
     this.makeToggleDiffButton()
+  }
+
+  setClearHighlightButtonHandler (clickCallback) {
+    const mouseOver = () => {
+      this.svg.select('text#clear-button')
+        .classed('select-ready', true)
+    }
+    const mouseOut = () => {
+      this.svg.select('text#clear-button')
+        .classed('select-ready', false)
+    }
+    this.svg.select('text#clear-button')
+      .on('click', clickCallback)
+      .on('mouseover', mouseOver)
+      .on('mouseout', mouseOut)
+  }
+
+  toggleActiveDiff () {
+    const visualizer = selectAll('div#visualizer')
+    visualizer.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', false)
+      .classed('active', true)
+    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
+    visualizer.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', true)
+      .classed('active', false)
+  }
+
+  setToggleDiffButtonHandler () {
+    const mouseOver = () => {
+      this.svg.select('text#diff-toggle-button')
+        .classed('select-ready', true)
+    }
+    const mouseOut = () => {
+      this.svg.select('text#diff-toggle-button')
+        .classed('select-ready', false)
+    }
+    this.svg.select('text#diff-toggle-button')
+      .on('click', this.toggleActiveDiff)
+      .on('mouseover', mouseOver)
+      .on('mouseout', mouseOut)
+  }
+
+  setGraphControlButtons (clearHighlightClickCB) {
+    this.setClearHighlightButtonHandler(clearHighlightClickCB)
+    this.setToggleDiffButtonHandler()
   }
 }

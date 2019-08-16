@@ -19,7 +19,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     this.setZoomEvnetCallback()
     this.setGraphNodeEventCallback()
     this.setNodeInfoTableEventCallback()
-    this.setButtonEventCallback()
+    this.setGraphControlButtons(this.clearHighlight)
   }
 
   setZoomEvnetCallback () {
@@ -303,38 +303,5 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
       selectAll('div#visualizer').selectAll(`.${cls}`)
         .classed(cls, false)
     }
-  }
-
-  toggleActiveDiff () {
-    const visualizer = selectAll('div#visualizer')
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', false)
-      .classed('active', true)
-    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', true)
-      .classed('active', false)
-  }
-
-  setButtonEventCallback () {
-    // add class to highlight 'button' text when mouse-over/out
-    function mouseOverFunc () {
-      this.classList.add('select-ready')
-    }
-    function mouseOutFunc () {
-      this.classList.remove('select-ready')
-    }
-
-    // set event callback for clear button
-    this.svg.select('text#clear-button')
-      .on('click', this.clearHighlight)
-      .on('mouseover', mouseOverFunc)
-      .on('mouseout', mouseOutFunc)
-
-    // set event callback for diff active/inactive
-    this.svg.select('text#diff-toggle-button')
-      .on('click', this.toggleActiveDiff)
-      .on('mouseover', mouseOverFunc)
-      .on('mouseout', mouseOutFunc)
   }
 }

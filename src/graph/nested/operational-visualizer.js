@@ -1,4 +1,4 @@
-import { event, selectAll } from 'd3-selection'
+import { event } from 'd3-selection'
 import { zoom } from 'd3-zoom'
 import { drag } from 'd3-drag'
 import SingleNestedGraphVisualizer from './single-visualizer'
@@ -357,51 +357,9 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       })
   }
 
-  setClearButtonHandler () {
-    const mouseOver = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#clear-button')
-      .on('click', () => { this.clearAllAlertHighlight() })
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
-  }
-
-  toggleActiveDiff () {
-    const visualizer = selectAll('div#visualizer')
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', false)
-      .classed('active', true)
-    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', true)
-      .classed('active', false)
-  }
-
-  setToggleActiveDiffButton () {
-    const mouseOver = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#diff-toggle-button')
-      .on('click', this.toggleActiveDiff)
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
-  }
-
   setOperationHandler (graphData) {
     this.graphData = graphData
-    this.setClearButtonHandler()
-    this.setToggleActiveDiffButton()
+    this.setGraphControlButtons(() => this.clearAllAlertHighlight())
     this.setGridHandler('x')
     this.setGridHandler('y')
     this.setLinkMouseHandler()

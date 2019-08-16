@@ -1,5 +1,5 @@
 import { zoom } from 'd3-zoom'
-import { event, selectAll } from 'd3-selection'
+import { event } from 'd3-selection'
 import SingleDepGraphVisualizer from './single-visualizer'
 
 export default class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
@@ -133,50 +133,6 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     this.tooltip.disableTooltip(d)
   }
 
-  setClearButtonHandler () {
-    const mouseOver = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#clear-button')
-      .on('click', () => {
-        this.clearHighlight()
-        this.clearDependencyLines('')
-      })
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
-  }
-
-  toggleActiveDiff () {
-    const visualizer = selectAll('div#visualizer')
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', false)
-      .classed('active', true)
-    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-    visualizer.selectAll(`.${this.currentInactive}`)
-      .classed('inactive', true)
-      .classed('active', false)
-  }
-
-  setToggleActiveDiffButtonHandler () {
-    const mouseOver = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#diff-toggle-button')
-      .on('click', this.toggleActiveDiff)
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
-  }
-
   setOperationHandler (graphData) {
     this.graphData = graphData
     this.allTargetObj = this.svgGrp
@@ -189,8 +145,10 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .on('mouseover', d => self.mouseOverHandler(d))
       .on('mouseout', d => self.mouseOutHandler(d))
 
-    this.setClearButtonHandler()
-    this.setToggleActiveDiffButtonHandler()
+    this.setGraphControlButtons(() => {
+      this.clearHighlight()
+      this.clearDependencyLines('')
+    })
 
     this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])
