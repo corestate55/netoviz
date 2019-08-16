@@ -1,19 +1,21 @@
 import SingleDep2GraphVisualizer from './single-visualizer'
-import { selectAll } from 'd3-selection'
+import { event, selectAll } from 'd3-selection'
+import { zoom } from 'd3-zoom'
+import { drag } from 'd3-drag'
 
 export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisualizer {
   clearHighlight () {
-    if (!this.svg) {
+    if (!this.svgGrp) {
       return // return if not ready svg (initial)
     }
-    this.svg.selectAll('.selected').classed('selected', false)
+    this.svgGrp.selectAll('.selected').classed('selected', false)
   }
 
   clearDependencyLines (lineClass) {
     const selector = lineClass ? `.${lineClass}` : ''
-    this.svg.selectAll(`line${selector}`).remove()
-    this.svg.selectAll(`circle${selector}`).classed(lineClass, false)
-    this.svg.selectAll(`text${selector}`).classed(lineClass, false)
+    this.svgGrp.selectAll(`line${selector}`).remove()
+    this.svgGrp.selectAll(`circle${selector}`).classed(lineClass, false)
+    this.svgGrp.selectAll(`text${selector}`).classed(lineClass, false)
   }
 
   clearAllSelection () {
@@ -22,8 +24,8 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   _setDependencyLineTp (tp, lineClass) {
-    this.svg.select(`circle[id='${tp.path}']`).classed(lineClass, true)
-    this.svg.select(`text[id='${tp.path}-lb']`).classed(lineClass, true)
+    this.svgGrp.select(`circle[id='${tp.path}']`).classed(lineClass, true)
+    this.svgGrp.select(`text[id='${tp.path}-lb']`).classed(lineClass, true)
   }
 
   _clearDependencyLineTpVisibility (originPath) {
@@ -54,7 +56,7 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   _makeDependencyLines (lines, lineClass) {
-    this.svg.selectAll(`line.dep2.${lineClass}`)
+    this.svgGrp.selectAll(`line.dep2.${lineClass}`)
       .data(lines)
       .enter()
       .append('line')
@@ -131,6 +133,11 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     return this.reduceDrawGraphDataToList().find(d => d.path === path)
   }
 
+  findNeworkObjHas (path) {
+    const nwPath = path.split('__').shift()
+    return this.reduceDrawGraphDataToList().find(d => d.path === nwPath)
+  }
+
   clickHandler (d) {
     console.log(`click: ${d.path}`)
     this.clearDependencyLines('')
@@ -199,16 +206,48 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
       .on('mouseout', mouseOut)
   }
 
+  _moveNetworkLayer (path, dy) {
+    const nwObj = this.findNeworkObjHas(path)
+    if (nwObj) {
+      nwObj.y += dy
+    }
+    this.reCalculatePositionOfVisibleObject()
+  }
+
   _setOperationHandler () {
+    const dragStarted = (d) => {
+      d.dragY = event.y
+    }
+    const dragged = (d) => {
+      this._moveNetworkLayer(d.path, event.y - d.dragY)
+      d.dragY = event.y
+    }
+    const dragEnded = (d) => {
+      delete d.dragY
+    }
+
     // add event hunder to current svg object
-    this.svg.selectAll('.dep2')
+    this.svgGrp.selectAll('.dep2')
       .on('click', d => this.clickHandler(d))
       .on('mouseover', d => this.mouseOverHandler(d))
       .on('mouseout', d => this.mouseOutHandler(d))
+      .call(drag()
+        .on('start', dragStarted)
+        .on('drag', dragged)
+        .on('end', dragEnded)
+      )
+  }
+
+  _setSVGZoom () {
+    this.svg.call(zoom()
+      .scaleExtent([1 / 4, 5])
+      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    )
   }
 
   setOperationHandler () {
     // for initialize (only called first time)
+    this._setSVGZoom()
     this._setOperationHandler()
     this._setClearButtonHandler()
     this._setToggleActiveDiffButtonHandler()

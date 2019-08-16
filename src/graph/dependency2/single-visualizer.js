@@ -9,22 +9,27 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
     this.height = 600
     // constants
     this.layer_xpad1 = 10
-    this.layer_xpad2 = 100
+    this.layer_xpad2 = 160
     this.layer_ypad = 40
     this.label_xpad = 5
-    this.p_ypad = 15
+    this.p_ypad = 30
     this.p_xpad = 8
-    this.p_r = 5
-    this.fontSize = 10
+    this.p_r = 10
+    this.fontSize = 18
   }
 
-  makeDepGraphSVG () {
+  makeDependency2GraphSVG () {
     return select('body').select('div#visualizer')
       .append('div') // to keep compatibility with topology visualizer
       .attr('class', 'network-layer')
       .append('svg')
       .attr('width', this.width)
       .attr('height', this.height)
+  }
+
+  makeDependency2GraphSVGGroup () {
+    return this.svg.append('g')
+      .attr('id', 'whole-dep-graph') // fpr zoom/transform
   }
 
   makeDrawNetworkData (nw) {
@@ -96,7 +101,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
     return type2indentNum[nwObj.type]
   }
 
-  culcPositionOfDrawGraphData () {
+  calculatePositionOfDrawGraphData () {
     for (let i = 0; i < this.drawGraphData.length; i++) {
       const nwObjects = this.drawGraphData[i] // a list of layer entries
       if (nwObjects[0].x == null || nwObjects[0].y == null) {
@@ -125,7 +130,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   makeEntryCircles () {
-    const updatedEntries = this.svg.selectAll('circle.dep2')
+    const updatedEntries = this.svgGrp.selectAll('circle.dep2')
       .data(this._visibleDrawGraphData())
     const enteredEntries = updatedEntries
       .enter()
@@ -143,7 +148,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   makeEntryLabels () {
-    const updatedEntries = this.svg.selectAll('text.dep2')
+    const updatedEntries = this.svgGrp.selectAll('text.dep2')
       .data(this._visibleDrawGraphData())
     const enteredEntries = updatedEntries
       .enter()
@@ -162,14 +167,15 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   refreshGraphObjects () {
-    this.culcPositionOfDrawGraphData()
+    this.calculatePositionOfDrawGraphData()
     this.makeEntryCircles()
     this.makeEntryLabels()
   }
 
   makeGraphObjects (graphData) {
     this._deleteUnusedProps(graphData)
-    this.svg = this.makeDepGraphSVG()
+    this.svg = this.makeDependency2GraphSVG()
+    this.svgGrp = this.makeDependency2GraphSVGGroup()
     this.tooltip = this.makeToolTip(select('body').select('div#visualizer'))
     this.makeClearButton(this.svg)
     this.makeDiffInactiveToggleButton(this.svg)
