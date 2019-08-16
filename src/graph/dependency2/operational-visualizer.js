@@ -139,13 +139,13 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   clickHandler (d) {
-    console.log(`click: ${d.path}`)
+    // console.log(`click: ${d.path}`)
     this.clearDependencyLines('')
     this.makeDependencyLines(d.path, 'selected')
   }
 
   mouseOverHandler (d) {
-    console.log(`mouseOver: ${d.path}`)
+    // console.log(`mouseOver: ${d.path}`)
     if (!d.path) {
       return
     }
@@ -154,7 +154,7 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   mouseOutHandler (d) {
-    console.log(`mouseOut: ${d.path}`)
+    // console.log(`mouseOut: ${d.path}`)
     if (!d.path) {
       return
     }
