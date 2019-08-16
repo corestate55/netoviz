@@ -135,14 +135,14 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
 
   setClearButtonHandler () {
     const mouseOver = () => {
-      this.svg.select('text.clear-button')
+      this.svg.select('text#clear-button')
         .classed('select-ready', true)
     }
     const mouseOut = () => {
-      this.svg.select('text.clear-button')
+      this.svg.select('text#clear-button')
         .classed('select-ready', false)
     }
-    this.svg.select('text.clear-button')
+    this.svg.select('text#clear-button')
       .on('click', () => {
         this.clearHighlight()
         this.clearDependencyLines('')
@@ -164,14 +164,14 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
 
   setToggleActiveDiffButtonHandler () {
     const mouseOver = () => {
-      this.svg.select('text.diff-toggle-button')
+      this.svg.select('text#diff-toggle-button')
         .classed('select-ready', true)
     }
     const mouseOut = () => {
-      this.svg.select('text.diff-toggle-button')
+      this.svg.select('text#diff-toggle-button')
         .classed('select-ready', false)
     }
-    this.svg.select('text.diff-toggle-button')
+    this.svg.select('text#diff-toggle-button')
       .on('click', this.toggleActiveDiff)
       .on('mouseover', mouseOver)
       .on('mouseout', mouseOut)

@@ -162,8 +162,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
     this.makeGraphSVG(
       'dependency2-view', null, 'whole-dep2-graph'
     )
-    this.makeClearButton(this.svg)
-    this.makeDiffInactiveToggleButton(this.svg)
+    this.makeGraphControlButtons()
     this.drawGraphData = this.makeDrawGraphData(graphData)
     this.refreshGraphObjects()
   }

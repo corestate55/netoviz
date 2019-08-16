@@ -326,13 +326,13 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
 
     // set event callback for clear button
-    this.clearBtn
+    this.svg.select('text#clear-button')
       .on('click', this.clearHighlight)
       .on('mouseover', mouseOverFunc)
       .on('mouseout', mouseOutFunc)
 
     // set event callback for diff active/inactive
-    this.toggleBtn
+    this.svg.select('text#diff-toggle-button')
       .on('click', this.toggleActiveDiff)
       .on('mouseover', mouseOverFunc)
       .on('mouseout', mouseOutFunc)

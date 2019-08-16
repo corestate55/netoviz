@@ -20,8 +20,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
       this.objClassDef(this.graph, 'network'),
       `${this.graph.name}-group`
     )
-    this.clearBtn = this.makeClearButton()
-    this.toggleBtn = this.makeDiffInactiveToggleButton()
+    this.makeGraphControlButtons()
     this.link = this.makeLinkObjects()
     this.nodeCircle = this.makeNodeCircleObjects()
     this.node = this.makeNodeObjects()
@@ -83,24 +82,6 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
       .style('display', 'block')
       .html(`<p>${this.graph.name}</p>`)
     return this.visContainer
-  }
-
-  makeClearButton () {
-    return this.svg
-      .append('text')
-      .attr('x', 10)
-      .attr('y', 20)
-      .attr('class', 'clear-button')
-      .text('[clear all selection/highlight]')
-  }
-
-  makeDiffInactiveToggleButton () {
-    return this.svg
-      .append('text')
-      .attr('x', 10)
-      .attr('y', 40)
-      .attr('class', 'diff-toggle-button')
-      .text('[toggle diff added/deleted]')
   }
 
   makeLinkObjects () {

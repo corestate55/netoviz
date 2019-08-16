@@ -141,9 +141,8 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
     this.makeGraphSVG(
       'dependency-view', null, 'whole-dep-graph'
     )
+    this.makeGraphControlButtons()
     this.scale = this.makeScale(graphData)
-    this.makeClearButton(this.svg)
-    this.makeDiffInactiveToggleButton(this.svg)
 
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()

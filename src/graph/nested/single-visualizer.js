@@ -207,8 +207,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
     this.makeGraphSVG(
       'nested-view', null, 'whole-nested-graph'
     )
-    this.makeClearButton(this.svg)
-    this.makeDiffInactiveToggleButton(this.svg)
+    this.makeGraphControlButtons()
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.scale = this.makeScale(nodes)

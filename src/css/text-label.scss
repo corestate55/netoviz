@@ -47,7 +47,7 @@ text.tp {
   }
 }
 
-text.diff-toggle-button, text.clear-button {
+text#diff-toggle-button, text#clear-button {
   fill: $stroke_text;
   &.select-ready {
     font-weight: bold;

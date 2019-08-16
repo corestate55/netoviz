@@ -359,14 +359,14 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   setClearButtonHandler () {
     const mouseOver = () => {
-      this.svg.select('text.clear-button')
+      this.svg.select('text#clear-button')
         .classed('select-ready', true)
     }
     const mouseOut = () => {
-      this.svg.select('text.clear-button')
+      this.svg.select('text#clear-button')
         .classed('select-ready', false)
     }
-    this.svg.select('text.clear-button')
+    this.svg.select('text#clear-button')
       .on('click', () => { this.clearAllAlertHighlight() })
       .on('mouseover', mouseOver)
       .on('mouseout', mouseOut)
@@ -385,14 +385,14 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   setToggleActiveDiffButton () {
     const mouseOver = () => {
-      this.svg.select('text.diff-toggle-button')
+      this.svg.select('text#diff-toggle-button')
         .classed('select-ready', true)
     }
     const mouseOut = () => {
-      this.svg.select('text.diff-toggle-button')
+      this.svg.select('text#diff-toggle-button')
         .classed('select-ready', false)
     }
-    this.svg.select('text.diff-toggle-button')
+    this.svg.select('text#diff-toggle-button')
       .on('click', this.toggleActiveDiff)
       .on('mouseover', mouseOver)
       .on('mouseout', mouseOut)

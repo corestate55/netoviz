@@ -66,21 +66,26 @@ export default class SingleVisualizerBase extends BaseContainer {
     return new TooltipCreator(toolTip)
   }
 
-  makeClearButton (originSelection) {
+  makeClearHighlightButton () {
     const clearButtonFontSize = 12
-    originSelection.append('text')
-      .attr('class', 'clear-button')
+    this.svg.append('text')
+      .attr('id', 'clear-button')
       .attr('x', clearButtonFontSize / 2)
       .attr('y', clearButtonFontSize)
       .text('[clear highlight]')
   }
 
-  makeDiffInactiveToggleButton (originSelection) {
+  makeToggleDiffButton () {
     const clearButtonFontSize = 12
-    originSelection.append('text')
-      .attr('class', 'diff-toggle-button')
+    this.svg.append('text')
+      .attr('id', 'diff-toggle-button')
       .attr('x', clearButtonFontSize / 2)
       .attr('y', clearButtonFontSize * 2)
       .text('[toggle diff added/deleted]')
+  }
+
+  makeGraphControlButtons () {
+    this.makeClearHighlightButton()
+    this.makeToggleDiffButton()
   }
 }
