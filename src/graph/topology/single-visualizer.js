@@ -15,9 +15,11 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
     // diff view mode default
     this.currentInactive = 'deleted'
     // make each objects
-    this.visContainer = this.makeVisContainer()
-    this.nwLayerSvg = this.makeNetworkLayerSVG()
-    this.nwLayer = this.makeNetworkLayer()
+    this.makeGraphSVG(
+      this.graph.name,
+      this.objClassDef(this.graph, 'network'),
+      `${this.graph.name}-group`
+    )
     this.clearBtn = this.makeClearButton()
     this.toggleBtn = this.makeDiffInactiveToggleButton()
     this.link = this.makeLinkObjects()
@@ -28,8 +30,6 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
     this.nodeLabel = this.makeNodeLabelObjects()
     // setup info table
     this.makeInfoTable()
-    // add tool tip
-    this.tooltip = this.makeToolTip(this.visContainer)
     // set style of initial inactive objects
     this.setStyleOfInactiveObjects()
   }
@@ -74,32 +74,19 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeVisContainer () {
-    return select('body')
+    // override
+    this.visContainer = select('body')
       .select('div#visualizer')
       .append('div')
       .attr('class', 'network-layer')
       .attr('id', `${this.graph.name}-container`)
       .style('display', 'block')
       .html(`<p>${this.graph.name}</p>`)
-  }
-
-  makeNetworkLayerSVG () {
     return this.visContainer
-      .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-      .attr('id', this.graph.name)
-      .attr('class', this.objClassDef(this.graph, 'network'))
-  }
-
-  makeNetworkLayer () {
-    return this.nwLayerSvg
-      .append('g')
-      .attr('id', `${this.graph.name}-group`)
   }
 
   makeClearButton () {
-    return this.nwLayerSvg
+    return this.svg
       .append('text')
       .attr('x', 10)
       .attr('y', 20)
@@ -108,7 +95,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeDiffInactiveToggleButton () {
-    return this.nwLayerSvg
+    return this.svg
       .append('text')
       .attr('x', 10)
       .attr('y', 40)
@@ -117,7 +104,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeLinkObjects () {
-    return this.nwLayer.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'links')
       .selectAll('line')
       .data(this.graph.links)
@@ -128,7 +115,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeTpObjects () {
-    return this.nwLayer.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'term-points')
       .selectAll('circle.tp')
       .data(this.tpTypeNodes())
@@ -140,7 +127,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeNodeObjects () {
-    return this.nwLayer.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
       .data(this.nodeTypeNodes())
@@ -151,7 +138,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeNodeCircleObjects () {
-    return this.nwLayer.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'node-circles')
       .selectAll('circle.node-circle')
       .data(this.nodeTypeNodes())
@@ -162,7 +149,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeTpLabelObjects () {
-    return this.nwLayer.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'tp-labels')
       .selectAll('text.tp-label')
       .data(this.tpTypeNodes())
@@ -174,7 +161,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeNodeLabelObjects () {
-    return this.nwLayer.append('g')
+    return this.svgGrp.append('g')
       .attr('class', 'node-labels')
       .selectAll('text.node-label')
       .data(this.nodeTypeNodes())

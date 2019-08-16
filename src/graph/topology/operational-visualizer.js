@@ -23,11 +23,11 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   setZoomEvnetCallback () {
-    this.nwLayerSvg.call(zoom()
+    this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])
-      .on('zoom', () => this.nwLayer.attr('transform', event.transform))
+      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
-    this.nwLayerSvg.on('dblclick.zoom', null) // remove zoom-by-double-click
+    this.svg.on('dblclick.zoom', null) // remove zoom-by-double-click
   }
 
   clearElementHighlight (element) {

@@ -1,4 +1,3 @@
-import { select } from 'd3-selection'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 
 export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
@@ -16,20 +15,6 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
     this.p_xpad = 8
     this.p_r = 10
     this.fontSize = 18
-  }
-
-  makeDependency2GraphSVG () {
-    return select('body').select('div#visualizer')
-      .append('div') // to keep compatibility with topology visualizer
-      .attr('class', 'network-layer')
-      .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-  }
-
-  makeDependency2GraphSVGGroup () {
-    return this.svg.append('g')
-      .attr('id', 'whole-dep-graph') // fpr zoom/transform
   }
 
   makeDrawNetworkData (nw) {
@@ -174,9 +159,9 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
 
   makeGraphObjects (graphData) {
     this._deleteUnusedProps(graphData)
-    this.svg = this.makeDependency2GraphSVG()
-    this.svgGrp = this.makeDependency2GraphSVGGroup()
-    this.tooltip = this.makeToolTip(select('body').select('div#visualizer'))
+    this.makeGraphSVG(
+      'dependency2-view', null, 'whole-dep2-graph'
+    )
     this.makeClearButton(this.svg)
     this.makeDiffInactiveToggleButton(this.svg)
     this.drawGraphData = this.makeDrawGraphData(graphData)

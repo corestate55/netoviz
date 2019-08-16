@@ -1,4 +1,3 @@
-import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 
@@ -9,20 +8,6 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
     this.width = 800
     this.height = 600
     this.fontSize = 20
-  }
-
-  makeDepGraphSVG () {
-    return select('body').select('div#visualizer')
-      .append('div') // to keep compatibility with topology visualizer
-      .attr('class', 'network-layer')
-      .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-  }
-
-  makeDepGraphSVGGroup () {
-    return this.svg.append('g')
-      .attr('id', 'whole-dep-graph')
   }
 
   makeLayerGroup () {
@@ -153,10 +138,10 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeGraphObjects (graphData) {
-    this.svg = this.makeDepGraphSVG()
-    this.svgGrp = this.makeDepGraphSVGGroup()
+    this.makeGraphSVG(
+      'dependency-view', null, 'whole-dep-graph'
+    )
     this.scale = this.makeScale(graphData)
-    this.tooltip = this.makeToolTip(select('body').select('div#visualizer'))
     this.makeClearButton(this.svg)
     this.makeDiffInactiveToggleButton(this.svg)
 

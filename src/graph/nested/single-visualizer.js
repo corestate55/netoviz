@@ -1,4 +1,3 @@
-import { select } from 'd3-selection'
 import { scaleLinear } from 'd3-scale'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 import InterTpLinkCreator from './link-creator'
@@ -14,20 +13,6 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
     this.gridHandleRadius = 25
     this.fontSize = 15
     this.gridFontSize = 25
-  }
-
-  makeNestedGraphSVG () {
-    return select('body').select('div#visualizer')
-      .append('div') // to keep compatibility with topology visualizer
-      .attr('class', 'network-layer')
-      .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height)
-  }
-
-  makeNestedGraphSVGGroup () {
-    return this.svg.append('g')
-      .attr('id', 'whole-dep-graph')
   }
 
   selectXY (xy, a, b) {
@@ -219,9 +204,9 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeGraphObjects (graphData) {
-    this.svg = this.makeNestedGraphSVG()
-    this.svgGrp = this.makeNestedGraphSVGGroup()
-    this.tooltip = this.makeToolTip(select('body').select('div#visualizer'))
+    this.makeGraphSVG(
+      'nested-view', null, 'whole-nested-graph'
+    )
     this.makeClearButton(this.svg)
     this.makeDiffInactiveToggleButton(this.svg)
 
