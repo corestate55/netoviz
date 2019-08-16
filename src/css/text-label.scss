@@ -1,6 +1,5 @@
 @import "./color-schema";
 
-text.topo,
 text.dep,
 text.nest {
   // do not specify font-size except screen message
@@ -23,19 +22,27 @@ text.nest {
       @extend %active;
     }
   }
-  &.tp {
-    fill: darkgray;
-    text-anchor: middle;
-    &.inactive {
-      @extend %inactive;
-    }
-    &.active {
-      @extend %active;
-    }
-  }
   &.warning {
     fill: red;
     font-weight: bold;
+  }
+}
+
+text.tp {
+  fill: darkgray;
+
+  &.dep,
+  &.nest {
+    text-anchor: middle;
+  }
+  &.dep2 {
+    text-anchor: start;
+  }
+  &.inactive {
+    @extend %inactive;
+  }
+  &.active {
+    @extend %active;
   }
 }
 

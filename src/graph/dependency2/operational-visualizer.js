@@ -54,11 +54,11 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
 
     // dep line
     const lines = linesOfParents.concat(linesOfChildren)
-    this.svg.selectAll(`line.dep.${lineClass}`)
+    this.svg.selectAll(`line.dep2.${lineClass}`)
       .data(lines)
       .enter()
       .append('line')
-      .attr('class', d => `dep ${lineClass} ${d.type}`)
+      .attr('class', d => `dep2 ${lineClass} ${d.type}`)
       .attr('x1', d => d.src.x + this.p_r)
       .attr('y1', d => d.src.y + this.p_r)
       .attr('x2', d => d.dst.x + this.p_r)
@@ -126,12 +126,18 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
 
   mouseOverHandler (d) {
     console.log(`mouseOver: ${d.path}`)
+    if (!d.path) {
+      return
+    }
     this.makeDependencyLines(d.path, 'select-ready')
     this.tooltip.enableTooltip(d)
   }
 
   mouseOutHandler (d) {
     console.log(`mouseOut: ${d.path}`)
+    if (!d.path) {
+      return
+    }
     this.clearDependencyLines('select-ready')
     this._clearDepLineTp('select-ready')
     this.tooltip.disableTooltip(d)
@@ -157,7 +163,7 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
 
   _setOperationHandler () {
     // add event hunder to current svg object
-    this.svg.selectAll('.dep')
+    this.svg.selectAll('.dep2')
       .on('click', d => this.clickHandler(d))
       .on('mouseover', d => this.mouseOverHandler(d))
       .on('mouseout', d => this.mouseOutHandler(d))

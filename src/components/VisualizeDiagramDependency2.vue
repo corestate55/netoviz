@@ -14,7 +14,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import Dep2GraphVisualizer from '../graph/dependency2/visualizer'
-import '../css/dependency2.scss'
+import '../css/dependency.scss'
 
 export default {
   name: 'VisualizeDiagramDependency2',

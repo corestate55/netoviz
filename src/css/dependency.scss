@@ -1,8 +1,9 @@
 @import "node";
 @import "term-point";
-@import "./text-label";
+@import "text-label";
 
-line.dep {
+line.dep,
+line.dep2 {
   stroke-opacity: .5;
   &.node {
     stroke: lawngreen;

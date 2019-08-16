@@ -125,7 +125,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   makeEntryCircles () {
-    const updatedEntries = this.svg.selectAll('circle.dep')
+    const updatedEntries = this.svg.selectAll('circle.dep2')
       .data(this._visibleDrawGraphData())
     const enteredEntries = updatedEntries
       .enter()
@@ -135,7 +135,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
       .remove()
     const targetEntries = enteredEntries.merge(updatedEntries)
     targetEntries
-      .attr('class', d => `dep ${d.type}`)
+      .attr('class', d => `dep2 ${d.type}`)
       .attr('id', d => d.path)
       .attr('cx', d => d.x + this.p_r)
       .attr('cy', d => d.y + this.p_r)
@@ -143,7 +143,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   makeEntryLabels () {
-    const updatedEntries = this.svg.selectAll('text.dep')
+    const updatedEntries = this.svg.selectAll('text.dep2')
       .data(this._visibleDrawGraphData())
     const enteredEntries = updatedEntries
       .enter()
@@ -153,7 +153,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
       .remove()
     const targetEntries = enteredEntries.merge(updatedEntries)
     targetEntries
-      .attr('class', d => `dep ${d.type}`)
+      .attr('class', d => `dep2 ${d.type}`)
       .attr('id', d => `${d.path}-lb`)
       .attr('x', d => d.x + 2 * this.p_r + this.label_xpad)
       .attr('y', d => d.y + this.fontSize)
