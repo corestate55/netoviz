@@ -1,30 +1,32 @@
 import SingleDep2GraphVisualizer from './single-visualizer'
+import { selectAll } from 'd3-selection'
 
 export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisualizer {
   clearHighlight () {
     if (!this.svg) {
       return // return if not ready svg (initial)
     }
-    this.svg.selectAll('.selected')
-      .classed('selected', false)
+    this.svg.selectAll('.selected').classed('selected', false)
   }
 
   clearDependencyLines (lineClass) {
-    const selector = lineClass ? `line.${lineClass}` : 'line'
-    this.svg.selectAll(selector).remove()
+    const selector = lineClass ? `.${lineClass}` : ''
+    this.svg.selectAll(`line${selector}`).remove()
+    this.svg.selectAll(`circle${selector}`).classed(lineClass, false)
+    this.svg.selectAll(`text${selector}`).classed(lineClass, false)
   }
 
-  _clearDepLineTp (lineClass) {
-    this.svg.selectAll(`circle.${lineClass}`).classed(lineClass, false)
-    this.svg.selectAll(`text.${lineClass}`).classed(lineClass, false)
+  clearAllSelection () {
+    this.clearHighlight()
+    this.clearDependencyLines('')
   }
 
-  _setDepLineTp (tp, lineClass) {
+  _setDependencyLineTp (tp, lineClass) {
     this.svg.select(`circle[id='${tp.path}']`).classed(lineClass, true)
     this.svg.select(`text[id='${tp.path}-lb']`).classed(lineClass, true)
   }
 
-  _clearDepLineTpVisibility (originPath) {
+  _clearDependencyLineTpVisibility (originPath) {
     let targetNodePath = ''
     if (originPath.split('__').length > 2) {
       const p = originPath.split('__')
@@ -42,18 +44,16 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     }
   }
 
-  makeDependencyLines (originPath, lineClass) {
-    this._clearDepLineTpVisibility(originPath)
-    // mark visible
-    const originData = this.findObjByPath(originPath)
-    const linesOfParents = this.getParentsTree(originData)
-    const linesOfChildren = this.getChildrenTree(originData)
+  reCalculatePositionOfVisibleObject () {
+    // clear all to avoid leaving selected/select-ready dep lines
+    // which created before node position changes.
+    this.clearAllSelection()
     // position calculation
     this.refreshGraphObjects()
     this._setOperationHandler()
+  }
 
-    // dep line
-    const lines = linesOfParents.concat(linesOfChildren)
+  _makeDependencyLines (lines, lineClass) {
     this.svg.selectAll(`line.dep2.${lineClass}`)
       .data(lines)
       .enter()
@@ -63,13 +63,26 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
       .attr('y1', d => d.src.y + this.p_r)
       .attr('x2', d => d.dst.x + this.p_r)
       .attr('y2', d => d.dst.y + this.p_r)
+  }
 
-    // highlight parent/children tp
-    this._clearDepLineTp(lineClass)
+  _highlightDependencyLineTp (lines, lineClass) {
     for (const line of lines) {
-      this._setDepLineTp(line.src, lineClass)
-      this._setDepLineTp(line.dst, lineClass)
+      this._setDependencyLineTp(line.src, lineClass)
+      this._setDependencyLineTp(line.dst, lineClass)
     }
+  }
+
+  makeDependencyLines (originPath, lineClass) {
+    this._clearDependencyLineTpVisibility(originPath)
+    // mark visible
+    const originData = this.findObjByPath(originPath)
+    const linesOfParents = this.getParentsTree(originData)
+    const linesOfChildren = this.getChildrenTree(originData)
+    this.reCalculatePositionOfVisibleObject()
+    // make line
+    const lines = linesOfParents.concat(linesOfChildren)
+    this._makeDependencyLines(lines, lineClass)
+    this._highlightDependencyLineTp(lines, lineClass)
   }
 
   getParentsTree (objData) {
@@ -139,7 +152,6 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
       return
     }
     this.clearDependencyLines('select-ready')
-    this._clearDepLineTp('select-ready')
     this.tooltip.disableTooltip(d)
   }
 
@@ -161,6 +173,32 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
       .on('mouseout', mouseOut)
   }
 
+  toggleActiveDiff () {
+    const visualizer = selectAll('div#visualizer')
+    visualizer.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', false)
+      .classed('active', true)
+    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
+    visualizer.selectAll(`.${this.currentInactive}`)
+      .classed('inactive', true)
+      .classed('active', false)
+  }
+
+  _setToggleActiveDiffButtonHandler () {
+    const mouseOver = () => {
+      this.svg.select('text.diff-toggle-button')
+        .classed('select-ready', true)
+    }
+    const mouseOut = () => {
+      this.svg.select('text.diff-toggle-button')
+        .classed('select-ready', false)
+    }
+    this.svg.select('text.diff-toggle-button')
+      .on('click', this.toggleActiveDiff)
+      .on('mouseover', mouseOver)
+      .on('mouseout', mouseOut)
+  }
+
   _setOperationHandler () {
     // add event hunder to current svg object
     this.svg.selectAll('.dep2')
@@ -173,5 +211,6 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     // for initialize (only called first time)
     this._setOperationHandler()
     this._setClearButtonHandler()
+    this._setToggleActiveDiffButtonHandler()
   }
 }

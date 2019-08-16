@@ -162,7 +162,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .classed('active', false)
   }
 
-  setToggleActiveDiffButton () {
+  setToggleActiveDiffButtonHandler () {
     const mouseOver = () => {
       this.svg.select('text.diff-toggle-button')
         .classed('select-ready', true)
@@ -190,7 +190,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .on('mouseout', d => self.mouseOutHandler(d))
 
     this.setClearButtonHandler()
-    this.setToggleActiveDiffButton()
+    this.setToggleActiveDiffButtonHandler()
 
     this.svg.call(zoom()
       .scaleExtent([1 / 4, 5])

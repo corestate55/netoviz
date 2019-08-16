@@ -135,7 +135,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
       .remove()
     const targetEntries = enteredEntries.merge(updatedEntries)
     targetEntries
-      .attr('class', d => `dep2 ${d.type}`)
+      .attr('class', d => this.objClassDef(d, `dep2 ${d.type}`))
       .attr('id', d => d.path)
       .attr('cx', d => d.x + this.p_r)
       .attr('cy', d => d.y + this.p_r)
@@ -153,7 +153,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
       .remove()
     const targetEntries = enteredEntries.merge(updatedEntries)
     targetEntries
-      .attr('class', d => `dep2 ${d.type}`)
+      .attr('class', d => this.objClassDef(d, `dep2 ${d.type}`))
       .attr('id', d => `${d.path}-lb`)
       .attr('x', d => d.x + 2 * this.p_r + this.label_xpad)
       .attr('y', d => d.y + this.fontSize)
