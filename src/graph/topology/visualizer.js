@@ -61,9 +61,15 @@ export default class GraphVisualizer extends BaseContainer {
 
   clearAllHighlight () {
     // clear all highlight
-    for (const graphVisualizer of this.graphVisualizers) {
-      graphVisualizer.clearHighlight()
-    }
+    this.graphVisualizers.forEach(vis => vis.clearHighlight())
+  }
+
+  findGraphVisualizerByName (name) {
+    return this.graphVisualizers.find(d => d.graph.name === name)
+  }
+
+  findNodeByNameInLayer (name, layer) {
+    return layer.nodes.find(d => d.name === name)
   }
 
   highlightByAlert (alert) {
@@ -74,14 +80,22 @@ export default class GraphVisualizer extends BaseContainer {
     // find and select (highlight) a node
     //   layer(graph) order is assumed as high -> low
     //   search the node to highlight from low layer
+    let foundTargetNode = false
     for (const layer of this.graphs.reverse()) {
-      const result = layer.nodes.find(d => d.name === alert.host)
+      const result = this.findNodeByNameInLayer(alert.host, layer)
       if (result) {
         const el = document.getElementById(result.path)
-        const graphVisualizer = this.graphVisualizers.find(d => d.graph.name === layer.name)
-        graphVisualizer.highlightNode(el)
+        this.findGraphVisualizerByName(layer.name).highlightNode(el)
+        foundTargetNode = true
         break
       }
+    }
+    this.graphVisualizers.forEach(vis => vis.clearWarningMessage())
+    if (!foundTargetNode) {
+      this.graphVisualizers.forEach(vis => {
+        const message = `Alerted host: [${alert.host}] is not found.`
+        vis.makeWarningMessage(message)
+      })
     }
   }
 }

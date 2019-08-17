@@ -129,6 +129,22 @@ export default class SingleVisualizerBase extends BaseContainer {
     this.setToggleDiffButtonHandler()
   }
 
+  clearWarningMessage () {
+    this.svg.selectAll('text.warning').remove()
+  }
+
+  makeWarningMessage (message) {
+    this.svg.selectAll('text.warning')
+      .data([{ message: message, x: 150, y: 12 }])
+      .enter()
+      .append('text')
+      .attr('class', 'nest warning')
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .text(d => d.message)
+    console.log(message)
+  }
+
   childPathRegexp (path) {
     return new RegExp(`${path}__.*`)
   }

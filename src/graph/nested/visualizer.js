@@ -36,23 +36,6 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     }).then(response => console.log(response.message))
   }
 
-  clearWarning () {
-    this.svg.selectAll('text.warning')
-      .remove()
-  }
-
-  makeWarningMessage (message) {
-    this.svg.selectAll('text.warning')
-      .data([{ message: message, x: 150, y: 12 }])
-      .enter()
-      .append('text')
-      .attr('class', 'nest warning')
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
-      .text(d => d.message)
-    console.log(message)
-  }
-
   highlightParentOfInoperativeNodes (alertNodes) {
     // search only nodes (ignore tp)
     for (const alertNode of alertNodes.filter(node => node.type === 'node')) {
@@ -85,7 +68,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     if (!alert || !this.graphData) {
       return
     }
-    this.clearWarning()
+    this.clearWarningMessage()
     const alertNodes = this.operativeNodesByName(alert.host)
     if (alertNodes.length > 0) {
       for (const alertNode of alertNodes) {
