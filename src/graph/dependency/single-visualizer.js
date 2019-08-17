@@ -2,11 +2,12 @@ import { scaleLinear } from 'd3-scale'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 
 export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
-  constructor () {
+  constructor (width, height) {
     super()
     // canvas size
-    this.width = 800
-    this.height = 600
+    this.width = width
+    this.height = height
+    // constants
     this.fontSize = 20
   }
 
@@ -92,7 +93,7 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeArrowEnd (defs, arrowId, arrowClass) {
-    const size = this.scale(10)
+    const size = this.scale(5)
     const linePath = `M 0,0 V ${size} L${size},${size / 2} Z`
     defs.append('marker')
       .attr('id', arrowId)

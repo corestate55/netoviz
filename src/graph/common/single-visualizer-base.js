@@ -72,7 +72,7 @@ export default class SingleVisualizerBase extends BaseContainer {
       .attr('id', 'clear-button')
       .attr('x', clearButtonFontSize / 2)
       .attr('y', clearButtonFontSize)
-      .text('[clear highlight]')
+      .text('[Clear Highlight]')
   }
 
   makeToggleDiffButton () {
@@ -80,8 +80,8 @@ export default class SingleVisualizerBase extends BaseContainer {
     this.svg.append('text')
       .attr('id', 'diff-toggle-button')
       .attr('x', clearButtonFontSize / 2)
-      .attr('y', clearButtonFontSize * 2)
-      .text('[toggle diff added/deleted]')
+      .attr('y', clearButtonFontSize * 2.2)
+      .text('[Toggle Diff Added/Deleted]')
   }
 
   makeGraphControlButtons () {
@@ -89,19 +89,20 @@ export default class SingleVisualizerBase extends BaseContainer {
     this.makeToggleDiffButton()
   }
 
+  controlButtonMouseOverCallback (id) {
+    return () => this.svg.select(id).classed('select-ready', true)
+  }
+
+  controlButtonMouseOutCallback (id) {
+    return () => this.svg.select(id).classed('select-ready', false)
+  }
+
   setClearHighlightButtonHandler (clickCallback) {
-    const mouseOver = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#clear-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#clear-button')
+    const id = 'text#clear-button'
+    this.svg.select(id)
       .on('click', clickCallback)
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
+      .on('mouseover', this.controlButtonMouseOverCallback(id))
+      .on('mouseout', this.controlButtonMouseOutCallback(id))
   }
 
   toggleActiveDiff () {
@@ -116,18 +117,11 @@ export default class SingleVisualizerBase extends BaseContainer {
   }
 
   setToggleDiffButtonHandler () {
-    const mouseOver = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', true)
-    }
-    const mouseOut = () => {
-      this.svg.select('text#diff-toggle-button')
-        .classed('select-ready', false)
-    }
-    this.svg.select('text#diff-toggle-button')
+    const id = 'text#diff-toggle-button'
+    this.svg.select(id)
       .on('click', this.toggleActiveDiff)
-      .on('mouseover', mouseOver)
-      .on('mouseout', mouseOut)
+      .on('mouseover', this.controlButtonMouseOverCallback(id))
+      .on('mouseout', this.controlButtonMouseOutCallback(id))
   }
 
   setGraphControlButtons (clearHighlightClickCB) {

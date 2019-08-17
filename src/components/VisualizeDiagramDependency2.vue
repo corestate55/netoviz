@@ -49,7 +49,9 @@ export default {
   },
   mounted () {
     console.log('[dep2] mounted')
-    this.visualizer = new Dep2GraphVisualizer()
+    const svgWidth = window.innerWidth * 0.95
+    const svgHeight = window.innerHeight * 0.8
+    this.visualizer = new Dep2GraphVisualizer(svgWidth, svgHeight)
 
     this.drawJsonModel()
     // set watcher for alert selection change

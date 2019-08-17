@@ -3,11 +3,12 @@ import SingleVisualizerBase from '../common/single-visualizer-base'
 import InterTpLinkCreator from './link-creator'
 
 export default class SingleNestedVisualizer extends SingleVisualizerBase {
-  constructor () {
+  constructor (width, height) {
     super()
     // canvas size
-    this.width = 800
-    this.height = 600
+    this.width = width
+    this.height = height
+    // constants
     this.gridStart = -100
     this.gridEnd = 2000
     this.gridHandleRadius = 25

@@ -85,7 +85,9 @@ export default {
   },
   mounted () {
     console.log('[nested] mounted')
-    this.visualizer = new NestedGraphVisualizer()
+    const svgWidth = window.innerWidth * 0.95
+    const svgHeight = window.innerHeight * 0.8
+    this.visualizer = new NestedGraphVisualizer(svgWidth, svgHeight)
     this.drawJsonModel()
 
     this.unwatchAlert = this.$store.watch(
