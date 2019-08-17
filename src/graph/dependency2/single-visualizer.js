@@ -42,7 +42,7 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
         node.visible = true
         nwObjs.push(node)
         // append tps in node
-        const tps = nw.tps.filter(d => d.path.match(new RegExp(`${node.path}__`)))
+        const tps = nw.tps.filter(d => this.matchChildPath(node.path, d.path))
         if (tps) {
           // initial: nw.tps is not used (all nodes are closed)
           tps.forEach(tp => {

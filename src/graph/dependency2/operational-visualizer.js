@@ -30,18 +30,18 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
 
   _clearDependencyLineTpVisibility (originPath) {
     let targetNodePath = ''
-    if (originPath.split('__').length > 2) {
-      const p = originPath.split('__')
-      p.pop()
-      targetNodePath = p.join('__')
+    if (this.typeOfPath(originPath) === 'tp') {
+      targetNodePath = this.parentPathOf(originPath)
     } else {
       targetNodePath = originPath
     }
 
-    const pathRegexp = new RegExp(`${targetNodePath}__`)
     for (const nwObjs of this.drawGraphData) {
       nwObjs
-        .filter(d => d.type === 'tp' && d.visible && !d.path.match(pathRegexp))
+        .filter(d => {
+          return d.type === 'tp' && d.visible &&
+            !this.matchChildPath(targetNodePath, d.path)
+        })
         .forEach(d => { d.visible = false })
     }
   }
@@ -125,16 +125,12 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     return this.flatten(pathList)
   }
 
-  _nwPath (path) {
-    return path.split('__').shift() // head of path string
-  }
-
   findObjByPath (path) {
     return this.reduceDrawGraphDataToList().find(d => d.path === path)
   }
 
-  findNeworkObjHas (path) {
-    const nwPath = path.split('__').shift()
+  findNetworkObjHas (path) {
+    const nwPath = this.networkPathOf(path)
     return this.reduceDrawGraphDataToList().find(d => d.path === nwPath)
   }
 
@@ -163,7 +159,7 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   _moveNetworkLayer (path, dy) {
-    const nwObj = this.findNeworkObjHas(path)
+    const nwObj = this.findNetworkObjHas(path)
     if (nwObj) {
       nwObj.y += dy
     }

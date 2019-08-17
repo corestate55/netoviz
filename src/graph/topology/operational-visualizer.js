@@ -37,19 +37,6 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
   }
 
-  typeOfPath (path) {
-    if (path.match(/.+__.+__.+/)) {
-      return 'tp'
-    }
-    return 'node'
-  }
-
-  nodePathFromTpPath (path) {
-    const paths = path.split('__')
-    paths.pop() // remove latest (tp) path
-    return paths.join('__')
-  }
-
   pathFromElement (element) {
     // remove id(path) suffix
     return element.id.replace(/-(bg|ndlb|tplb|ndinfo|tpinfo)$/, '')
@@ -63,7 +50,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     ]
     // add parent (node) info when tp caught mouse-over (select-ready)
     if (className === 'select-ready') {
-      const nodePath = this.nodePathFromTpPath(path)
+      const nodePath = this.parentPathOf(path)
       list.push(document.getElementById(`${nodePath}-ndinfo`))
     }
     // TP info table is not always present at all times.
@@ -255,11 +242,11 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   reMakeTpInfoTable (path) {
     // path is always points node itself or parent of tp
     if (this.typeOfPath(path) === 'tp') {
-      path = this.nodePathFromTpPath(path)
+      path = this.parentPathOf(path)
     }
     this.clearTpInfoTable()
-    const re = new RegExp(`^${path}__.*`)
-    const tpList = this.tpTypeNodes().filter(d => d.path.match(re))
+    const tpList = this.tpTypeNodes()
+      .filter(d => this.matchChildPath(path, d.path))
     this.addTpInfoTableRecord(tpList)
   }
 

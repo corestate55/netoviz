@@ -106,12 +106,8 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   tpsInNode (node) {
     // tp path in parents => tp node object list
     return node.parents
-      .filter(parentPath => {
-        return parentPath.match(/.+__.+__.+/)
-      })
-      .map(path => {
-        return this.graphData.nodes.find(node => node.path === path)
-      })
+      .filter(parentPath => this.typeOfPath(parentPath) === 'tp')
+      .map(path => this.graphData.nodes.find(node => node.path === path))
   }
 
   updateTpCirclePosition (tp) {

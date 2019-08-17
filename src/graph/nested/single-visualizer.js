@@ -77,12 +77,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
     this.makeGridLabels(xy)
   }
 
-  layerOf (node) {
-    return node.path.split('__').shift()
-  }
-
   colorOfNode (node) {
-    return this.colorTable[this.layerOf(node)]
+    return this.colorTable[this.networkPathOf(node.path)]
   }
 
   makeColorTable (nodes) {
@@ -94,7 +90,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       '#e3e9c2'
     ]
     let colorTable = {}
-    const layerNameList = nodes.map(node => this.layerOf(node))
+    const layerNameList = nodes.map(node => this.networkPathOf(node.path))
     Array.from(new Set(layerNameList)) // Array.uniq
       .forEach((d, i) => {
         colorTable[d] = colors[i % colors.length]

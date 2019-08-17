@@ -128,4 +128,34 @@ export default class SingleVisualizerBase extends BaseContainer {
     this.setClearHighlightButtonHandler(clearHighlightClickCB)
     this.setToggleDiffButtonHandler()
   }
+
+  childPathRegexp (path) {
+    return new RegExp(`${path}__.*`)
+  }
+
+  matchChildPath (parentPath, targetPath) {
+    return targetPath.match(this.childPathRegexp(parentPath))
+  }
+
+  typeOfPath (path) {
+    const length = path.split('__').length
+    if (length === 3) {
+      return 'tp'
+    } else if (length === 2) {
+      return 'node'
+    } else if (length === 1) {
+      return 'network'
+    }
+    return 'error'
+  }
+
+  networkPathOf (path) {
+    return path.split('__').shift() // head of path string
+  }
+
+  parentPathOf (path) {
+    const paths = path.split('__')
+    paths.pop() // remove latest path
+    return paths.join('__')
+  }
 }
