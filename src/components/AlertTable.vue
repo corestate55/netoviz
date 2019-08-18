@@ -2,8 +2,10 @@
   <div>
     <el-row v-bind:gutter="20">
       <el-col v-bind:span="4">
+        Rows :
         <el-input-number
           size="small"
+          controls-position="right"
           v-model="alertLimit"
           v-on:change="changeTableLineNumber"
           v-bind:min="1"
@@ -30,6 +32,17 @@
           inactive-text="Disable Timer"
           active-color="#409EFF"
           inactive-color="#ff4949"
+        />
+      </el-col>
+      <el-col v-bind:span="6">
+        Interval(sec) :
+        <el-input-number
+          size="small"
+          controls-position="right"
+          v-model="alertPollingInterval"
+          v-on:change="resetAlertCheckTimer()"
+          v-bind:min="1"
+          v-bind:max="30"
         />
       </el-col>
     </el-row>
@@ -76,8 +89,9 @@ export default {
     return {
       alerts: [],
       alertLimit: 5,
-      enableTimer: true,
-      alertCheckTimer: null
+      alertPollingInterval: 10, // default: 10sec
+      alertCheckTimer: null,
+      enableTimer: true
     }
   },
   computed: {
@@ -95,6 +109,10 @@ export default {
     setAlertCheckTimer () {
       this.enableTimer ? this.startAlertCheckTimer() : this.stopAlertCheckTimer()
     },
+    resetAlertCheckTimer () {
+      this.stopAlertCheckTimer()
+      this.setAlertCheckTimer()
+    },
     stopAlertCheckTimer () {
       clearInterval(this.alertCheckTimer)
       this.alertCheckTimer = null
@@ -104,10 +122,11 @@ export default {
         // const now = new Date()
         // console.log('check alerts: ' + now.toISOString())
         this.updateAlerts()
-      }, 10000) // 10sec
+      }, this.alertPollingInterval * 1000) // sec
     },
     updateAlerts () {
       // update alerts and select head data
+      // console.log('updateAlerts: ', new Date())
       this.requestAlertData()
         .then(() => this.setAlertTableCurrentRow(this.alerts[0]))
     },
