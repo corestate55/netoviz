@@ -14,7 +14,7 @@ export default class GraphVisualizer extends BaseContainer {
     this.graphVisualizers = []
   }
 
-  drawJsonModel (jsonName) {
+  drawJsonModel (jsonName, alert) {
     json(`graph/topology/${jsonName}`).then((graphData) => {
       // graph object data to draw converted from topology json
       this.graphs = graphData
@@ -29,6 +29,7 @@ export default class GraphVisualizer extends BaseContainer {
       }, 5000)
       // draw
       this.drawGraphs()
+      this.highlightByAlert(alert)
     }, (error) => {
       throw error
     })

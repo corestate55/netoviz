@@ -41,7 +41,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['modelFile', 'selectedLayers', 'wholeLayers']),
+    ...mapGetters(['currentAlertRow', 'modelFile', 'selectedLayers', 'wholeLayers']),
     notSelectedLayers () {
       return this.wholeLayers.filter(
         // <0: index not found: not exist in selected layers
@@ -60,7 +60,7 @@ export default {
       }
     },
     drawJsonModel () {
-      this.visualizer.drawJsonModel(this.modelFile)
+      this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
       // When the visualizer draws topology graph,
       // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
       // so, these setLayerDisplayStyle() could not found target layer container
