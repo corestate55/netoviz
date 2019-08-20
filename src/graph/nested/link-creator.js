@@ -228,27 +228,39 @@ export default class InterTpLinkCreator {
     this.feedbackLineOverlap()
   }
 
+  _forEachTpTpLink (startIndex, callback) {
+    for (let i = startIndex; i < this.links.length; i++) {
+      // Overlapping check is necessary for each 'tp-tp' type links,
+      // except 'support-tp' links.
+      if (this.links[i].type === 'support-tp') {
+        continue // ignore support-tp link
+      }
+      callback(i, this.links[i])
+    }
+  }
+
   checkLineOverlap () {
     let overlapIndex = 0
     let overwriteIndex = {}
-    // to set overlapIndex for last entry, counter:i must loop at last
-    for (let i = 0; i < this.links.length; i++) {
+
+    // To set overlapIndex for last entry, counter:i must loop at last.
+    this._forEachTpTpLink(0, (i, linkI) => {
       let oi = overlapIndex
-      if (this.links[i].hasOverlapIndex()) {
-        oi = this.links[i].overlapIndex
+      if (linkI.hasOverlapIndex()) {
+        oi = linkI.overlapIndex
       } else {
-        this.links[i].overlapIndex = overlapIndex
+        linkI.overlapIndex = overlapIndex
         overlapIndex++
       }
-      for (let j = i + 1; j < this.links.length; j++) {
-        if (this.links[i].isOverlap(this.links[j])) {
-          if (this.links[j].hasOverlapIndex() && oi !== this.links[j].overlapIndex) {
-            overwriteIndex[oi] = this.links[j].overlapIndex
+      this._forEachTpTpLink(i + 1, (j, linkJ) => {
+        if (linkI.isOverlap(linkJ)) {
+          if (linkJ.hasOverlapIndex() && oi !== linkJ.overlapIndex) {
+            overwriteIndex[oi] = linkJ.overlapIndex
           }
-          this.links[j].overlapIndex = oi
+          linkJ.overlapIndex = oi
         }
-      }
-    }
+      })
+    })
     // integrate indirect overlapped links
     this.links.forEach(link => {
       if (link.overlapIndex in overwriteIndex) {
