@@ -46,6 +46,10 @@
         />
       </el-col>
     </el-row>
+    <p>
+      Updated alert table at:
+      <span id="alert-update-time">{{alertUpdatedTime}}</span>
+    </p>
     <!-- alert data table -->
     <el-table
       ref="alertTable"
@@ -91,6 +95,7 @@ export default {
       alertLimit: 5,
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
+      alertUpdatedTime: null,
       enableTimer: true
     }
   },
@@ -128,7 +133,10 @@ export default {
       // update alerts and select head data
       // console.log('updateAlerts: ', new Date())
       this.requestAlertData()
-        .then(() => this.setAlertTableCurrentRow(this.alerts[0]))
+        .then(() => {
+          this.alertUpdatedTime = new Date()
+          this.setAlertTableCurrentRow(this.alerts[0])
+        })
     },
     changeTableLineNumber () {
       this.requestAlertData()
@@ -201,5 +209,9 @@ export default {
     font-weight: bold;
     text-decoration: underline;
   }
+}
+#alert-update-time {
+  background-color: lightgoldenrodyellow;
+  color: #303030;
 }
 </style>
