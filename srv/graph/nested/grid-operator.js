@@ -1,14 +1,14 @@
 import NestLayout from './layout'
 
 export default class GridOperator {
-  constructor (reverse, nestType, layoutData) {
-    this.setLayoutData(reverse, nestType, layoutData)
+  constructor (reverse, layoutData) {
+    this.setLayoutData(reverse, layoutData)
     this.currentX = 0
     this.currentY = 0
   }
 
-  setLayoutData (reverse, nestType, layoutData) {
-    const layout = new NestLayout(reverse, nestType, layoutData)
+  setLayoutData (reverse, layoutData) {
+    const layout = new NestLayout(reverse, layoutData)
     this.layoutData = layout.toData()
     if (this.layoutData) {
       this.setXYGrid()

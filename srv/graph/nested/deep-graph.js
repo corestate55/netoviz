@@ -1,16 +1,11 @@
 import ShallowNestedGraph from './shallow-graph'
 import DeepNestedGraphNode from './deep-node'
-import GridOperator from './grid-operator'
 
 export default class DeepNestedGraph extends ShallowNestedGraph {
   setNodes (graphData) {
     this.setNodesAs(graphData, node => {
       return new DeepNestedGraphNode(node, this.reverse)
     })
-  }
-
-  setGrid (layoutData) {
-    this.grid = new GridOperator(this.reverse, 'deep', layoutData)
   }
 
   // childNode = target (to split)

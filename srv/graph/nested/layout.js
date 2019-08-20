@@ -1,12 +1,7 @@
 export default class NestLayout {
-  constructor (reverse, nestType, layoutData) {
+  constructor (reverse, layoutData) {
     this.reverse = reverse
-
-    if (layoutData && nestType in layoutData) {
-      this.layoutData = layoutData[nestType]
-    } else {
-      this.layoutData = null
-    }
+    this.layoutData = layoutData || null
   }
 
   toData () {

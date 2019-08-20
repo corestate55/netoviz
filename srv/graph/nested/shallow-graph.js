@@ -16,7 +16,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   }
 
   setGrid (layoutData) {
-    this.grid = new GridOperator(this.reverse, 'shallow', layoutData)
+    this.grid = new GridOperator(this.reverse, layoutData)
   }
 
   setNodes (graphData) {

@@ -1,58 +1,28 @@
 {
-  "shallow": {
-    "standard": {
-      "grid": {
-        "x": [50, 250, 450, 650],
-        "y": [50, 200, 350]
-      },
-      "layout": {
-        "layer3__seg_a": { "i": 0, "j": 0 },
-        "layer3__seg_b": { "i": 2, "j": 0 },
-        "layer3__seg_c": { "i": 2, "j": 1 },
-        "layer3__vm1": { "i": 0, "j": 2 },
-        "layer3__vm2": { "i": 1, "j": 2 },
-        "layer3__vm3": { "i": 2, "j": 2 },
-        "layer3__vm4": { "i": 3, "j": 2 }
-      }
+  "standard": {
+    "grid": {
+      "x": [50, 250, 450, 650],
+      "y": [50, 200, 350]
     },
-    "reverse": {
-      "grid": {
-        "x": [50, 400],
-        "y": [50, 250]
-      },
-      "layout": {
-        "layer1__sw1": { "i": 0, "j": 0 },
-        "layer1__sv1": { "i": 0, "j": 1 },
-        "layer1__sv2": { "i": 1, "j": 1 }
-      }
+    "layout": {
+      "layer3__seg_a": { "i": 0, "j": 0 },
+      "layer3__seg_b": { "i": 2, "j": 0 },
+      "layer3__seg_c": { "i": 2, "j": 1 },
+      "layer3__vm1": { "i": 0, "j": 2 },
+      "layer3__vm2": { "i": 1, "j": 2 },
+      "layer3__vm3": { "i": 2, "j": 2 },
+      "layer3__vm4": { "i": 3, "j": 2 }
     }
   },
-  "deep": {
-    "standard": {
-      "grid": {
-        "x": [50, 250, 450, 650],
-        "y": [50, 200, 350]
-      },
-      "layout": {
-        "layer3__seg_a": { "i": 0, "j": 0 },
-        "layer3__seg_b": { "i": 2, "j": 0 },
-        "layer3__seg_c": { "i": 2, "j": 1 },
-        "layer3__vm1": { "i": 0, "j": 2 },
-        "layer3__vm2": { "i": 1, "j": 2 },
-        "layer3__vm3": { "i": 2, "j": 2 },
-        "layer3__vm4": { "i": 3, "j": 2 }
-      }
+  "reverse": {
+    "grid": {
+      "x": [50, 400],
+      "y": [50, 250]
     },
-    "reverse": {
-      "grid": {
-        "x": [50, 400],
-        "y": [50, 250]
-      },
-      "layout": {
-        "layer1__sw1": { "i": 0, "j": 0 },
-        "layer1__sv1": { "i": 0, "j": 1 },
-        "layer1__sv2": { "i": 1, "j": 1 }
-      }
+    "layout": {
+      "layer1__sw1": { "i": 0, "j": 0 },
+      "layer1__sv1": { "i": 0, "j": 1 },
+      "layer1__sv2": { "i": 1, "j": 1 }
     }
   }
 }
