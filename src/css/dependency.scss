@@ -3,8 +3,10 @@
 @import "text-label";
 
 line.dep,
-line.dep2 {
-  stroke-opacity: .5;
+path.dep2 {
+  fill: none;
+  stroke-width: 2pt;
+  stroke-opacity: 0.5;
   &.node {
     stroke: lawngreen;
   }

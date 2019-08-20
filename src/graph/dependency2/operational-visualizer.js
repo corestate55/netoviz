@@ -2,6 +2,7 @@ import SingleDep2GraphVisualizer from './single-visualizer'
 import { event } from 'd3-selection'
 import { zoom } from 'd3-zoom'
 import { drag } from 'd3-drag'
+import { linkHorizontal } from 'd3-shape'
 
 export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisualizer {
   clearHighlight () {
@@ -13,7 +14,7 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
 
   clearDependencyLines (lineClass) {
     const selector = lineClass ? `.${lineClass}` : ''
-    this.svgGrp.selectAll(`line${selector}`).remove()
+    this.depLineSVGGrp.selectAll(`path${selector}`).remove()
     this.svgGrp.selectAll(`circle${selector}`).classed(lineClass, false)
     this.svgGrp.selectAll(`text${selector}`).classed(lineClass, false)
   }
@@ -56,15 +57,20 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   _makeDependencyLines (lines, lineClass) {
-    this.svgGrp.selectAll(`line.dep2.${lineClass}`)
-      .data(lines)
+    const link = linkHorizontal()
+    const shiftPointCenter = target => [target.x, target.y].map(d => d + this.p_r)
+    this.depLineSVGGrp.selectAll(`path.dep2.${lineClass}`)
+      .data(lines.map(d => {
+        return {
+          'source': shiftPointCenter(d.src),
+          'target': shiftPointCenter(d.dst),
+          'type': d.type
+        }
+      }))
       .enter()
-      .append('line')
+      .append('path')
+      .attr('d', link)
       .attr('class', d => `dep2 ${lineClass} ${d.type}`)
-      .attr('x1', d => d.src.x + this.p_r)
-      .attr('y1', d => d.src.y + this.p_r)
-      .attr('x2', d => d.dst.x + this.p_r)
-      .attr('y2', d => d.dst.y + this.p_r)
   }
 
   _highlightDependencyLineTp (lines, lineClass) {
