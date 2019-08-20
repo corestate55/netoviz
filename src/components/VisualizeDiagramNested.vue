@@ -11,12 +11,13 @@
         />
       </el-col>
       <el-col v-bind:span="5">
-        <el-switch
-          v-model="deep"
+        Depth :
+        <el-input-number
+          size="small"
+          controls-position="right"
+          v-model="depth"
           v-on:change="drawJsonModel()"
-          active-text="Deep"
-          inactive-text="Shallow"
-          inactive-color="#13ce66"
+          v-bind:min="1"
         />
       </el-col>
       <el-col v-bind:span="5">
@@ -52,7 +53,7 @@ export default {
     return {
       visualizer: null,
       reverse: true,
-      deep: false,
+      depth: 1,
       unwatchAlert: null,
       unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
@@ -63,12 +64,12 @@ export default {
   },
   methods: {
     saveLayout () {
-      this.visualizer.saveLayout(this.modelFile, this.reverse, this.deep)
+      this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
     },
     drawJsonModel () {
       if (this.modelFile) {
         this.visualizer.drawJsonModel(
-          this.modelFile, this.currentAlertRow, this.reverse, this.deep
+          this.modelFile, this.currentAlertRow, this.reverse, this.depth
         )
       }
     },
