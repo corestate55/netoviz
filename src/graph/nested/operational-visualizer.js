@@ -45,9 +45,9 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   selectTpTpLineByPath (path) {
     if (!path) { // all tp-tp line
-      return this.svgGrp.selectAll('polyline.tp-tp')
+      return this.svgGrp.selectAll('path.tp-tp')
     }
-    return this.svgGrp.select(`polyline[id='${path}']`)
+    return this.svgGrp.select(`path[id='${path}']`)
   }
 
   selectSupportTpLineByPath (path) {

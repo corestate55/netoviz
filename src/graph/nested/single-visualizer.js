@@ -1,4 +1,5 @@
 import { scaleLinear } from 'd3-scale'
+import { line as d3Line, curveLinear } from 'd3-shape'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 import InterTpLinkCreator from './link-creator'
 
@@ -133,16 +134,20 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeTpTpLines (tpTpLinks) {
-    const updatedLines = this.svgGrp.selectAll('polyline.tp-tp')
+    const line = d3Line()
+      .x(d => this.scale(d[0]))
+      .y(d => this.scale(d[1]))
+      .curve(curveLinear)
+    const updatedLines = this.svgGrp.selectAll('path.tp-tp')
       .data(tpTpLinks)
     const enteredLines = updatedLines
       .enter()
-      .append('polyline')
+      .append('path')
     const targetLines = enteredLines.merge(updatedLines)
     targetLines
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
-      .attr('points', d => d.polylineString(this.scale))
+      .attr('d', d => line(d.represent4Points()))
       .attr('stroke-width', this.scale(4))
   }
 

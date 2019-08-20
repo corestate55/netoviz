@@ -1,6 +1,6 @@
 @import "color-schema";
 
-polyline.nest.tp-tp {
+path.nest.tp-tp {
   stroke-linejoin: round;
   fill: none;
   stroke: $stroke_normal2;
@@ -14,7 +14,7 @@ line {
 
 line.topo.link,
 line.nest.support-tp,
-polyline.nest.tp-tp {
+path.nest.tp-tp {
   &.select-ready {
     @extend %select-ready;
   }
