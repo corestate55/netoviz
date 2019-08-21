@@ -2,8 +2,48 @@ import ShallowNestedGraph from './shallow-graph'
 import DeepNestedGraphNode from './deep-node'
 
 export default class DeepNestedGraph extends ShallowNestedGraph {
-  setNodes (graphData) {
-    this.setNodesAs(graphData, node => {
+  constructor (graphData, layoutData, reverse, depth, target) {
+    super(graphData, layoutData, reverse)
+    this.requestedDepth = depth
+    this.target = target
+  }
+
+  beforeCalcRootNodePosition () {
+    this.markFamilyOfTarget()
+  }
+
+  findAndMarkAsFamily (path, relationship) {
+    // console.log(`- START ${path} with ${relationship}`)
+    const node = this.findNodeByPath(path)
+    if (!node) {
+      // console.log(`-- node ${path} not found (in findAndMarkAsFamily)`)
+      return
+    }
+    // console.log(`-- mark ${node.path} as ${relationship}`)
+    node.family = relationship
+    // Find recursively: node.parents or node.children
+    for (const familyPath of node[relationship]) {
+      // console.log(`-- * next: ${familyPath} as ${relationship} of ${node.path}`)
+      this.findAndMarkAsFamily(familyPath, relationship)
+    }
+  }
+
+  markFamilyOfTarget () {
+    const targetNode = this.nodes
+      .reverse()
+      .find(d => d.type === 'node' && d.name === this.target)
+    if (!targetNode) {
+      // console.log(`- target: ${this.target} not found`)
+      return
+    }
+    // console.log(`- target: ${targetNode.path} found name as ${this.target}`)
+    this.findAndMarkAsFamily(targetNode.path, 'parents')
+    this.findAndMarkAsFamily(targetNode.path, 'children')
+    targetNode.family = 'target'
+  }
+
+  setNodes () {
+    this.setNodesAs(this.graphData, node => {
       return new DeepNestedGraphNode(node, this.reverse)
     })
   }
@@ -23,8 +63,23 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     return splitChildNode
   }
 
-  checkLeafNode (node) {
+  isLeaf (node) {
+    // simple leaf definition: node that does not have child is leaf.
     return node.childNodePaths().length < 1
+  }
+
+  overDepth (layerOrder) {
+    return (layerOrder + 2) >= this.requestedDepth * 2
+  }
+
+  assumeAsLeaf (node, layerOrder) {
+    // Layer depth selection for deep nested graph.
+    // If depth of the node (layerOrder) is lager than requested depth,
+    // the node is assumes as leaf node (ignore subtree).
+    if (node.family) {
+      return this.isLeaf(node)
+    }
+    return this.overDepth(layerOrder) || this.isLeaf(node)
   }
 
   childNodePathsToCalcPosition (node) {

@@ -60,8 +60,10 @@ export default class TopoogyDataAPI {
       } else if (graphName === 'nested') {
         const reverse = this.boolString2Bool(req.query.reverse)
         const depth = this.numberString2Number(req.query.depth)
-        console.log(`call nested: reverse=${reverse}, depth=${depth}`)
-        return await convertNestedGraphData(reverse, depth,
+        const target = req.query.target
+        console.log(`call nested: reverse=${reverse}, depth=${depth}, target=${target}`)
+        return await convertNestedGraphData(
+          reverse, depth, target,
           async () => this.convertTopoGraphData((jsonName)),
           async () => this.readLayoutJSON(jsonName)
         )

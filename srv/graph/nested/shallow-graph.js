@@ -4,23 +4,32 @@ import ShallowNestedGraphNode from './shallow-node'
 import NestedGraphLink from './link'
 
 export default class ShallowNestedGraph extends NestedGraphConstants {
-  constructor (graphData, layoutData, reverse, depth) {
+  constructor (graphData, layoutData, reverse) {
     super()
+    this.graphData = graphData
+    this.layoutData = layoutData
     this.reverse = reverse
-    this.depth = depth
-    this.setGrid(layoutData)
-    this.setNodes(graphData)
-    this.setLinks(graphData)
+  }
+
+  initialize () {
+    this.setGrid()
+    this.setNodes()
+    this.setLinks()
     this.setRootNodes()
+    this.beforeCalcRootNodePosition()
     this.calcRootNodePosition()
   }
 
-  setGrid (layoutData) {
-    this.grid = new GridOperator(this.reverse, layoutData)
+  beforeCalcRootNodePosition () {
+    // To be override
   }
 
-  setNodes (graphData) {
-    this.setNodesAs(graphData, node => {
+  setGrid () {
+    this.grid = new GridOperator(this.reverse, this.layoutData)
+  }
+
+  setNodes () {
+    this.setNodesAs(this.graphData, node => {
       return new ShallowNestedGraphNode(node, this.reverse)
     })
   }
@@ -40,9 +49,9 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     })
   }
 
-  setLinks (graphData) {
+  setLinks () {
     this.links = []
-    for (const layer of graphData) {
+    for (const layer of this.graphData) {
       for (const link of layer.links) {
         const reverseLink = this.findLinkBetween(link.targetPath, link.sourcePath)
         // filter (discard) reverse link of bi-directional link for visualizer
@@ -82,8 +91,15 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     })
   }
 
-  checkLeafNode (node) {
+  isLeaf (node) {
+    // For shallow graph:
+    // Only counted as child node when it has single parent.
+    // Because if it has multiple parents, it breaks tree structure.
     return this.singleParentChildNodePaths(node).length < 1
+  }
+
+  assumeAsLeaf (node, layerOrder) {
+    return this.isLeaf(node)
   }
 
   calcNodePosition (node, basePosition, layerOrder) {
@@ -92,14 +108,8 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     // node rectangle : layerOrder     (0, 2, 4, ...)
     // node tp circle : layerOrder + 1 (1, 3, 5, ...)
     this.calcTpPosition(node, basePosition, layerOrder + 1)
-
-    // if depth of the node (layerOrder) is lager than requested depth,
-    // the node is assumes as leaf node (ignore subtree).
-    // OR
-    // if the node is leaf:
-    // only counted as child node when it has single parent.
-    // if it has multiple parents, it breaks tree structure.
-    if ((layerOrder + 2) >= this.depth * 2 || this.checkLeafNode(node)) {
+    // calc node Width/Height when the node is leaf.
+    if (this.assumeAsLeaf(node, layerOrder)) {
       return this.calcLeafNodeWH(node, basePosition, layerOrder)
     }
     // recursive position calculation

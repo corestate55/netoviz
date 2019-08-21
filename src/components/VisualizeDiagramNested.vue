@@ -94,7 +94,8 @@ export default {
     this.unwatchAlert = this.$store.watch(
       state => state.currentAlertRow,
       (newRow, oldRow) => {
-        this.clearAllHighlight()
+        // this.clearAllHighlight()
+        this.drawJsonModel() // redraw suit to alert-target
         this.highlightByAlert(newRow)
       }
     )
