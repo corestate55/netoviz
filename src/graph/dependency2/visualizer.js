@@ -13,17 +13,18 @@ export default class Dep2GraphVisualizer extends OperationalDep2GraphVisualizer 
     })
   }
 
-  _findObjByName (name) {
+  _findNodeObjByName (name) {
     return this.reduceDrawGraphDataToList()
       .reverse() // find low layer at first
-      .find(d => d.name === name)
+      .find(d => d.type === 'node' && d.name === name)
   }
 
   highlightByAlert (alert) {
-    if (!alert) {
+    if (!alert || !this.svg) {
+      console.log('[dep2] Alert or svg not ready.')
       return
     }
-    const result = this._findObjByName(alert.host)
+    const result = this._findNodeObjByName(alert.host)
     if (result) {
       this.clearWarningMessage()
       this.clickHandler(result)

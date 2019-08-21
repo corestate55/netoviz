@@ -107,7 +107,8 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   reduceDrawGraphDataToList () {
-    return this.drawGraphData.reduce((acc, curr) => acc.concat(curr), [])
+    const callback = (acc, curr) => acc.concat(curr)
+    return this.drawGraphData ? this.drawGraphData.reduce(callback, []) : []
   }
 
   _visibleDrawGraphData () {
