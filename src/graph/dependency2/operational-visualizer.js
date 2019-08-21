@@ -1,8 +1,8 @@
-import SingleDep2GraphVisualizer from './single-visualizer'
-import { event } from 'd3-selection'
-import { zoom } from 'd3-zoom'
 import { drag } from 'd3-drag'
+import { event } from 'd3-selection'
 import { linkHorizontal } from 'd3-shape'
+import { zoom } from 'd3-zoom'
+import SingleDep2GraphVisualizer from './single-visualizer'
 
 export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisualizer {
   clearHighlight () {
@@ -19,7 +19,7 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     this.svgGrp.selectAll(`text${selector}`).classed(lineClass, false)
   }
 
-  clearAllSelection () {
+  clearAllHighlight () {
     this.clearHighlight()
     this.clearDependencyLines('')
   }
@@ -50,26 +50,29 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   reCalculatePositionOfVisibleObject () {
     // clear all to avoid leaving selected/select-ready dep lines
     // which created before node position changes.
-    this.clearAllSelection()
+    this.clearAllHighlight()
     // position calculation
     this.refreshGraphObjects()
     this._setOperationHandler()
   }
 
+  _lineConverter (line) {
+    return {
+      'source': [line.src.x, line.src.y],
+      'target': [line.dst.x, line.dst.y],
+      'type': line.type
+    }
+  }
+
   _makeDependencyLines (lines, lineClass) {
-    const link = linkHorizontal()
-    const shiftPointCenter = target => [target.x, target.y].map(d => d + this.p_r)
+    const linkGenerator = linkHorizontal()
+      .x(d => d[0] + this.p_r)
+      .y(d => d[1] + this.p_r)
     this.depLineSVGGrp.selectAll(`path.dep2.${lineClass}`)
-      .data(lines.map(d => {
-        return {
-          'source': shiftPointCenter(d.src),
-          'target': shiftPointCenter(d.dst),
-          'type': d.type
-        }
-      }))
+      .data(lines.map(line => this._lineConverter(line)))
       .enter()
       .append('path')
-      .attr('d', link)
+      .attr('d', linkGenerator)
       .attr('class', d => `dep2 ${lineClass} ${d.type}`)
   }
 

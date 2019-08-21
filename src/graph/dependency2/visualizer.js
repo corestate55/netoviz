@@ -30,6 +30,7 @@ export default class Dep2GraphVisualizer extends OperationalDep2GraphVisualizer 
       this.clickHandler(result)
     } else {
       const message = `Alerted host: [${alert.host}] is not found.`
+      this.clearAllHighlight()
       this.makeWarningMessage(message)
     }
   }

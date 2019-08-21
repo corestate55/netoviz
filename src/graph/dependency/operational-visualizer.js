@@ -1,5 +1,6 @@
-import { zoom } from 'd3-zoom'
 import { event } from 'd3-selection'
+import { linkVertical } from 'd3-shape'
+import { zoom } from 'd3-zoom'
 import SingleDepGraphVisualizer from './single-visualizer'
 
 export default class OperationalDepGraphVisualizer extends SingleDepGraphVisualizer {
@@ -7,49 +8,54 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     if (!this.svgGrp) {
       return // return if not ready svg (initial)
     }
-    this.svgGrp.selectAll('.selected')
-      .classed('selected', false)
+    this.svgGrp.selectAll('.selected').classed('selected', false)
   }
 
   clearDependencyLines (lineClass) {
-    const selector = lineClass ? `line.${lineClass}` : 'line'
-    this.depLineGrp.selectAll(selector)
-      .remove()
+    const selector = lineClass ? `path.${lineClass}` : 'path'
+    this.depLineGrp.selectAll(selector).remove()
   }
 
-  makeTpDepLine (lineClass, src, dst) {
-    this.depLineGrp.append('line')
-      .attr('class', `dep tp ${lineClass}`)
-      .attr('x1', this.scale(src.cx))
-      .attr('y1', this.scale(src.cy < dst.cy ? src.cy + src.r : src.cy - src.r))
-      .attr('x2', this.scale(dst.cx))
-      .attr('y2', this.scale(src.cy < dst.cy ? dst.cy - dst.r : dst.cy + dst.r))
-      .attr('marker-end', 'url(#tp-dep-arrow-end)')
-      .attr('stroke-width', this.scale(5))
+  clearAllHighlight () {
+    this.clearHighlight()
+    this.clearDependencyLines('')
   }
 
-  makeNodeDepLine (lineClass, src, dst) {
-    this.depLineGrp.append('line')
-      .attr('class', `dep node ${lineClass}`)
-      .attr('x1', this.scale(src.x + src.width / 2))
-      .attr('y1', this.scale(src.y < dst.y ? src.y + src.height : src.y))
-      .attr('x2', this.scale(dst.x + dst.width / 2))
-      .attr('y2', this.scale(src.y < dst.y ? dst.y : dst.y + dst.height))
-      .attr('marker-end', 'url(#node-dep-arrow-end)')
-      .attr('stroke-width', this.scale(5))
+  _lineConverter (line) {
+    if (line.src.type === 'tp') {
+      return {
+        'source': [line.src.cx, line.src.cy],
+        'target': [line.dst.cx, line.dst.cy],
+        'type': 'tp'
+      }
+    }
+    // else line.src.type === 'node'
+    const srcNodeY = (line) => {
+      return line.src.y < line.dst.y ? line.src.y + line.src.height : line.src.y
+    }
+    const dstNodeY = (line) => {
+      return line.src.y < line.dst.y ? line.dst.y : line.dst.y + line.dst.height
+    }
+    return {
+      'source': [line.src.x + line.src.width / 2, srcNodeY(line)],
+      'target': [line.dst.x + line.dst.width / 2, dstNodeY(line)],
+      'type': 'node'
+    }
   }
 
   makeDependencyLines (lines, lineClass) {
-    for (const line of lines) {
-      if (line.src.type !== line.dst.type) {
-        continue
-      }
-      if (line.src.type === 'tp') {
-        this.makeTpDepLine(lineClass, line.src, line.dst)
-      } else if (line.src.type === 'node') {
-        this.makeNodeDepLine(lineClass, line.src, line.dst)
-      }
-    }
+    const lineGenerator = linkVertical()
+      .x(d => this.scale(d[0]))
+      .y(d => this.scale(d[1]))
+    this.depLineGrp.selectAll(`path.${lineClass}`)
+      .data(lines
+        .filter(line => line.src.type === line.dst.type)
+        .map(line => this._lineConverter(line)))
+      .enter()
+      .append('path')
+      .attr('class', d => `dep ${d.type} ${lineClass}`)
+      .attr('d', lineGenerator)
+      .attr('stroke-width', this.scale(5))
   }
 
   pathsFromPairs (selfObj, pairs) {

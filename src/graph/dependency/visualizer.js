@@ -31,6 +31,7 @@ export default class DepGraphVisualizer extends OperationalDepGraphVisualizer {
         break
       } else {
         const message = `Alerted host: [${alert.host}] is not found.`
+        this.clearAllHighlight()
         this.makeWarningMessage(message)
       }
     }

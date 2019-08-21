@@ -92,28 +92,6 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .text(d => d.name)
   }
 
-  makeArrowEnd (defs, arrowId, arrowClass) {
-    const size = this.scale(5)
-    const linePath = `M 0,0 V ${size} L${size},${size / 2} Z`
-    defs.append('marker')
-      .attr('id', arrowId)
-      .attr('class', arrowClass)
-      .attr('refX', size)
-      .attr('refY', size / 2)
-      .attr('markerWidth', size)
-      .attr('markerHeight', size)
-      .attr('orient', 'auto')
-      .attr('stroke-width', this.scale(5))
-      .append('path')
-      .attr('d', linePath)
-  }
-
-  makeDepArrowEndDefs () {
-    const defs = this.svg.append('defs')
-    this.makeArrowEnd(defs, 'node-dep-arrow-end', 'dep node')
-    this.makeArrowEnd(defs, 'tp-dep-arrow-end', 'dep tp')
-  }
-
   makeDepLineGroup () {
     return this.svgGrp.append('g')
       .attr('class', 'dep-lines')
@@ -160,6 +138,5 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
     // for dependency line
     // NOTICE priority: lines at upper object
     this.depLineGrp = this.makeDepLineGroup()
-    this.makeDepArrowEndDefs()
   }
 }
