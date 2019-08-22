@@ -69,7 +69,12 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
   }
 
   overDepth (layerOrder) {
-    return (layerOrder + 2) >= this.requestedDepth * 2
+    return layerOrder >= (this.requestedDepth - 1) * 2
+  }
+
+  inTargetDepth (layerOrder) {
+    return (this.requestedDepth - 1) * 2 <= layerOrder &&
+      layerOrder < this.requestedDepth * 2
   }
 
   assumeAsLeaf (node, layerOrder) {
@@ -82,8 +87,15 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     return this.overDepth(layerOrder) || this.isLeaf(node)
   }
 
-  childNodePathsToCalcPosition (node) {
-    return node.childNodePaths()
+  childNodePathsToCalcPosition (node, layerOrder) {
+    if (this.inTargetDepth(layerOrder) || !this.overDepth(layerOrder)) {
+      return node.childNodePaths()
+    }
+    return node.childNodePaths().filter(nodePath => {
+      const node = this.findNodeByPath(nodePath)
+      // console.log(`  * child=${nodePath}, family?=${node.family}`)
+      return node ? node.family : false
+    })
   }
 
   childNodeFrom (parentNode, childNodePath) {

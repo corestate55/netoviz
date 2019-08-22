@@ -117,7 +117,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
   }
 
-  childNodePathsToCalcPosition (node) {
+  childNodePathsToCalcPosition (node, layerOrder) {
     return this.singleParentChildNodePaths(node)
   }
 
@@ -130,7 +130,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
 
-    for (const childNodePath of this.childNodePathsToCalcPosition(node)) {
+    for (const childNodePath of this.childNodePathsToCalcPosition(node, layerOrder)) {
       // console.log(`  childrenNodePath: ${childNodePath}`)
       const childNode = this.childNodeFrom(node, childNodePath)
       // recursive search
