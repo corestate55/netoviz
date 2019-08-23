@@ -160,7 +160,8 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
 
   makeDependencyLineSVGGroup () {
     // group to insert dependency lines under other point-circles and labels.
-    this.depLineSVGGrp = this.svg.insert('g', '#whole-dep2-graph')
+    this.depLineSVGGrp = this.svgGrp
+      .append('g')
       .attr('id', 'dep-lines')
   }
 
