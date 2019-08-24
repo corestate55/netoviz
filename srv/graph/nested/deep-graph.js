@@ -12,19 +12,20 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     this.markFamilyOfTarget()
   }
 
-  findAndMarkAsFamily (path, relationship) {
-    // console.log(`- START ${path} with ${relationship}`)
+  findAndMarkAsFamily (path, relationship, depth) {
+    this._consoleDebug(depth, 'findAndMark', `FIND ${path} with ${relationship}`)
     const node = this.findNodeByPath(path)
     if (!node) {
-      // console.log(`-- node ${path} not found (in findAndMarkAsFamily)`)
+      this._consoleDebug(depth, 'findAndMark', `node ${path} not found`)
+      console.log(`    `)
       return
     }
-    // console.log(`-- mark ${node.path} as ${relationship}`)
+    this._consoleDebug(depth, 'findAndMark', `mark ${node.path} as ${relationship}`)
     node.family = relationship
     // Find recursively: node.parents or node.children
     for (const familyPath of node[relationship]) {
-      // console.log(`-- * next: ${familyPath} as ${relationship} of ${node.path}`)
-      this.findAndMarkAsFamily(familyPath, relationship)
+      this._consoleDebug(depth, 'findAndMark', `next: ${familyPath} as ${relationship} of ${node.path}`)
+      this.findAndMarkAsFamily(familyPath, relationship, depth + 1)
     }
   }
 
@@ -33,13 +34,16 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
       .reverse()
       .find(d => d.type === 'node' && d.name === this.target)
     if (!targetNode) {
-      // console.log(`- target: ${this.target} not found`)
+      this._consoleDebug(0, 'markTarget', `target: ${this.target} not found`)
       return
     }
-    // console.log(`- target: ${targetNode.path} found name as ${this.target}`)
-    this.findAndMarkAsFamily(targetNode.path, 'parents')
-    this.findAndMarkAsFamily(targetNode.path, 'children')
+    this._consoleDebug(0, 'markTarget', `target: ${targetNode.path} found name as ${this.target}`)
+    this._consoleDebug(0, 'markTarget', `find and mark as parents`)
+    this.findAndMarkAsFamily(targetNode.path, 'parents', 1)
+    this._consoleDebug(0, 'markTarget', `find and mark as children`)
+    this.findAndMarkAsFamily(targetNode.path, 'children', 1)
     targetNode.family = 'target'
+    this._consoleDebug(0, 'markTarget', `target: ${targetNode.path} mark as ${targetNode.family}`)
   }
 
   setNodes () {

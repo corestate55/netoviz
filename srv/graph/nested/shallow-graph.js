@@ -9,6 +9,8 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.graphData = graphData
     this.layoutData = layoutData
     this.reverse = reverse
+    // to debug recursive operation
+    this.debugCalc = true
   }
 
   initialize () {
@@ -102,19 +104,35 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return this.isLeaf(node)
   }
 
+  _consoleDebug (order, pos, message, value) {
+    if (!this.debugCalc) {
+      return
+    }
+    if (typeof value === 'undefined') {
+      value = ''
+    }
+    const indent = ' '.repeat(order)
+    console.log(`[${order}]${indent} * [${pos}] ${message}`, value)
+  }
+
   calcNodePosition (node, basePosition, layerOrder) {
-    // console.log(`path: ${node.path}`)
+    this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, family?=${node.family}`)
 
     // node rectangle : layerOrder     (0, 2, 4, ...)
     // node tp circle : layerOrder + 1 (1, 3, 5, ...)
     this.calcTpPosition(node, basePosition, layerOrder + 1)
     // calc node Width/Height when the node is leaf.
     if (this.assumeAsLeaf(node, layerOrder)) {
-      return this.calcLeafNodeWH(node, basePosition, layerOrder)
+      const wh = this.calcLeafNodeWH(node, basePosition, layerOrder)
+      this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, lo=${layerOrder} is assumed leaf, return: `, wh)
+      return wh
     }
     // recursive position calculation
     const childrenWHList = this.calcChildNodePosition(node, basePosition, layerOrder + 2)
-    return this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
+    this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, children WH list:`, childrenWHList)
+    const wh = this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
+    this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, return node wh:`, wh)
+    return wh
   }
 
   childNodePathsToCalcPosition (node, layerOrder) {
@@ -130,9 +148,10 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
 
+    this._consoleDebug(layerOrder, 'childNodePos', `node=${node.path}, lo=${layerOrder}`)
     for (const childNodePath of this.childNodePathsToCalcPosition(node, layerOrder)) {
-      // console.log(`  childrenNodePath: ${childNodePath}`)
       const childNode = this.childNodeFrom(node, childNodePath)
+      this._consoleDebug(layerOrder, 'childNodePos', `childrenNodePath=${childNodePath}, family?=${childNode.family}`)
       // recursive search
       const basePosition = { x: nx11, y: ny1x }
       const wh = this.calcNodePosition(childNode, basePosition, layerOrder)
