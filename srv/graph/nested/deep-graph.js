@@ -110,10 +110,4 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     // split multi-parents child node to single parent node
     return this.splitNode(parentNode, childNode)
   }
-
-  widthByChildNodes (node, childrenWHList) {
-    return this.nodeXPad * 2 +
-      childrenWHList.reduce((sum, d) => { return sum + d.width }, 0) +
-      this.nodeXPad * (node.childNodePaths().length - 1)
-  }
 }

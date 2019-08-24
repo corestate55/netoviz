@@ -10,7 +10,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.layoutData = layoutData
     this.reverse = reverse
     // to debug recursive operation
-    this.debugCalc = true
+    this.debugCalc = false
   }
 
   initialize () {
@@ -171,9 +171,11 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   }
 
   widthByChildNodes (node, childrenWHList) {
+    // childrenWHList is { width:, height: } object list mapped of node.children.
+    // childrenWHList.length is same as a number of children of the node.
     return this.nodeXPad * 2 +
       childrenWHList.reduce((sum, d) => { return sum + d.width }, 0) +
-      this.nodeXPad * (this.singleParentChildNodePaths(node).length - 1)
+      this.nodeXPad * (childrenWHList.length - 1)
   }
 
   heightByChildNodes (childrenWHList) {
