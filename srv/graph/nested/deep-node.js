@@ -4,6 +4,7 @@ export default class DeepNestedGraphNode extends ShallowNestedGraphNode {
   constructor (nodeData, reverse) {
     super(nodeData, reverse)
     this.split = 'split' in nodeData ? nodeData.split : 0
+    this.family = nodeData.family || null
   }
 
   renameChildPath (oldChildPath, newChildPath) {
