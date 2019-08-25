@@ -24,16 +24,16 @@ import AlertTable from './components/AlertTable'
 import VisualizeDiagram from './components/VisualizeDiagram'
 
 export default {
-  name: 'app',
-  data () {
-    return {
-      activeNames: ['AppSelectDataTable', 'AlertTable']
-    }
-  },
+  name: 'App',
   components: {
     AppSelectDataTable,
     AlertTable,
     VisualizeDiagram
+  },
+  data () {
+    return {
+      activeNames: ['AppSelectDataTable', 'AlertTable']
+    }
   }
 }
 </script>

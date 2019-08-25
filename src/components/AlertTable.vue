@@ -4,12 +4,12 @@
       <el-col v-bind:span="4">
         Rows :
         <el-input-number
+          v-model="alertLimit"
           size="small"
           controls-position="right"
-          v-model="alertLimit"
-          v-on:change="changeTableLineNumber"
           v-bind:min="1"
           v-bind:max="15"
+          v-on:change="changeTableLineNumber"
         />
       </el-col>
       <el-col v-bind:span="4">
@@ -27,28 +27,28 @@
       <el-col v-bind:span="6">
         <el-switch
           v-model="enableTimer"
-          v-on:change="setAlertCheckTimer()"
           active-text="Enable Timer"
           inactive-text="Disable Timer"
           active-color="#409EFF"
           inactive-color="#ff4949"
+          v-on:change="setAlertCheckTimer()"
         />
       </el-col>
       <el-col v-bind:span="6">
         Interval(sec) :
         <el-input-number
+          v-model="alertPollingInterval"
           size="small"
           controls-position="right"
-          v-model="alertPollingInterval"
-          v-on:change="resetAlertCheckTimer()"
           v-bind:min="1"
           v-bind:max="30"
+          v-on:change="resetAlertCheckTimer()"
         />
       </el-col>
     </el-row>
     <p>
       Updated alert table at:
-      <span id="alert-update-time">{{alertUpdatedTime}}</span>
+      <span id="alert-update-time">{{ alertUpdatedTime }}</span>
     </p>
     <!-- alert data table -->
     <el-table

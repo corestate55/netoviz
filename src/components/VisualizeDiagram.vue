@@ -17,7 +17,8 @@
         <ul>
           <li
             v-for="layer in selectedLayers"
-            v-bind:key="layer">
+            v-bind:key="layer"
+          >
             {{ layer }}
           </li>
         </ul>
@@ -47,16 +48,16 @@ import VisualizeDiagramNested from './VisualizeDiagramNested'
 import '../css/tooltip.scss'
 
 export default {
-  data () {
-    return {
-      debug: 'none' // 'none' or 'block' to appear debug container
-    }
-  },
   components: {
     VisualizeDiagramTopology,
     VisualizeDiagramDependency,
     VisualizeDiagramDependency2,
     VisualizeDiagramNested
+  },
+  data () {
+    return {
+      debug: 'none' // 'none' or 'block' to appear debug container
+    }
   },
   computed: {
     ...mapGetters(['visualizer', 'modelFile', 'selectedLayers'])

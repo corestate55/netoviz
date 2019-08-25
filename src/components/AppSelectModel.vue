@@ -1,16 +1,16 @@
 <template>
   <div id="model-selector">
     <el-select
-      size="small"
       v-model="modelFile"
+      size="small"
       placeholder="Select"
     >
       <el-option
         v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </el-option>
+        v-bind:key="item.value"
+        v-bind:label="item.label"
+        v-bind:value="item.value"
+      />
     </el-select>
   </div>
 </template>
@@ -46,15 +46,15 @@ export default {
       }]
     }
   },
-  mounted () {
-    // select head model at first
-    this.modelFile = this.options[0].value
-  },
   computed: {
     modelFile: {
       get () { return this.$store.getters.modelFile },
       set (value) { this.$store.dispatch('updateModelFile', value) }
     }
+  },
+  mounted () {
+    // select head model at first
+    this.modelFile = this.options[0].value
   }
 }
 </script>

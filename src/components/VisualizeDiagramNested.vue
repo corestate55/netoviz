@@ -4,20 +4,20 @@
       <el-col v-bind:span="5">
         <el-switch
           v-model="reverse"
-          v-on:change="drawJsonModel()"
           active-text="Bottom View"
           inactive-text="Top View"
           inactive-color="#13ce66"
+          v-on:change="drawJsonModel()"
         />
       </el-col>
       <el-col v-bind:span="5">
         Depth :
         <el-input-number
+          v-model="depth"
           size="small"
           controls-position="right"
-          v-model="depth"
-          v-on:change="drawJsonModel()"
           v-bind:min="1"
+          v-on:change="drawJsonModel()"
         />
       </el-col>
       <el-col v-bind:span="5">
@@ -48,7 +48,7 @@ import NestedGraphVisualizer from '../graph/nested/visualizer'
 import '../css/nested.scss'
 
 export default {
-  name: 'VisualizeDiagramNested.vue',
+  name: 'VisualizeDiagramNestedVue',
   data () {
     return {
       visualizer: null,
@@ -61,28 +61,6 @@ export default {
   },
   computed: {
     ...mapGetters(['currentAlertRow', 'modelFile'])
-  },
-  methods: {
-    saveLayout () {
-      this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
-    },
-    drawJsonModel () {
-      if (this.modelFile) {
-        this.visualizer.drawJsonModel(
-          this.modelFile, this.currentAlertRow, this.reverse, this.depth
-        )
-      }
-    },
-    clearAllHighlight () {
-      this.visualizer.clearAllAlertHighlight()
-    },
-    highlightByAlert (alertRow) {
-      if (alertRow) {
-        this.visualizer.highlightByAlert(alertRow)
-      } else {
-        this.clearAllHighlight()
-      }
-    }
   },
   mounted () {
     console.log('[nested] mounted')
@@ -113,6 +91,28 @@ export default {
     delete this.visualizer
     this.unwatchAlert()
     this.unwatchModelFile()
+  },
+  methods: {
+    saveLayout () {
+      this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
+    },
+    drawJsonModel () {
+      if (this.modelFile) {
+        this.visualizer.drawJsonModel(
+          this.modelFile, this.currentAlertRow, this.reverse, this.depth
+        )
+      }
+    },
+    clearAllHighlight () {
+      this.visualizer.clearAllAlertHighlight()
+    },
+    highlightByAlert (alertRow) {
+      if (alertRow) {
+        this.visualizer.highlightByAlert(alertRow)
+      } else {
+        this.clearAllHighlight()
+      }
+    }
   }
 }
 </script>

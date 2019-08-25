@@ -1,7 +1,7 @@
 <template>
   <div id="visualizer">
     <AppSelectLayer />
-    <div  v-bind:style="{ display: debug }">
+    <div v-bind:style="{ display: debug }">
       <ul>
         <li>
           Topology model: {{ modelFile }}
@@ -49,6 +49,35 @@ export default {
       )
     }
   },
+  mounted () {
+    console.log('[topo] mounted')
+    this.visualizer = new TopoGraphVisualizer()
+
+    this.drawJsonModel()
+    this.unwatchAlert = this.$store.watch(
+      state => state.currentAlertRow,
+      (newRow, oldRow) => { this.highlightByAlert(newRow) }
+    )
+    this.unwatchSelectedLayers = this.$store.watch(
+      state => state.selectedLayers,
+      (newLayers) => { this.displaySelectedLayers() }
+    )
+    this.unwatchModelFile = this.$store.watch(
+      state => state.modelFile,
+      (newModelFile, oldModelFile) => {
+        console.log(`[topo] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        this.clearAllHighlight()
+        this.drawJsonModel()
+      }
+    )
+  },
+  beforeDestroy () {
+    console.log('[topo] before destroy')
+    delete this.visualizer
+    this.unwatchAlert()
+    this.unwatchSelectedLayers()
+    this.unwatchModelFile()
+  },
   methods: {
     ...mapActions(['selectAllLayers']),
     setLayerDisplayStyle (layers, display) {
@@ -85,35 +114,6 @@ export default {
         this.clearAllHighlight()
       }
     }
-  },
-  mounted () {
-    console.log('[topo] mounted')
-    this.visualizer = new TopoGraphVisualizer()
-
-    this.drawJsonModel()
-    this.unwatchAlert = this.$store.watch(
-      state => state.currentAlertRow,
-      (newRow, oldRow) => { this.highlightByAlert(newRow) }
-    )
-    this.unwatchSelectedLayers = this.$store.watch(
-      state => state.selectedLayers,
-      (newLayers) => { this.displaySelectedLayers() }
-    )
-    this.unwatchModelFile = this.$store.watch(
-      state => state.modelFile,
-      (newModelFile, oldModelFile) => {
-        console.log(`[topo] modelFile changed from ${oldModelFile} to ${newModelFile}`)
-        this.clearAllHighlight()
-        this.drawJsonModel()
-      }
-    )
-  },
-  beforeDestroy () {
-    console.log('[topo] before destroy')
-    delete this.visualizer
-    this.unwatchAlert()
-    this.unwatchSelectedLayers()
-    this.unwatchModelFile()
   }
 }
 </script>

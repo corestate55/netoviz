@@ -4,10 +4,10 @@
     size="small"
   >
     <el-checkbox-button
-      border
       v-for="layer in wholeLayers"
-      v-bind:label="layer"
       v-bind:key="layer"
+      border
+      v-bind:label="layer"
     >
       {{ layer }}
     </el-checkbox-button>

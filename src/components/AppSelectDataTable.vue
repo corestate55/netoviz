@@ -2,7 +2,9 @@
   <div>
     <el-row>
       <el-col v-bind:span="3">
-        <div class="item">Visualizer</div>
+        <div class="item">
+          Visualizer
+        </div>
       </el-col>
       <el-col v-bind:span="12">
         <AppSelectVisualizer />
@@ -10,7 +12,9 @@
     </el-row>
     <el-row>
       <el-col v-bind:span="3">
-        <div class="item">Topology Data</div>
+        <div class="item">
+          Topology Data
+        </div>
       </el-col>
       <el-col v-bind:span="12">
         <AppSelectModel />

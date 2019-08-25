@@ -5,7 +5,7 @@
     >
       Dependency2 Graph ::
       Dependency model: {{ modelFile }}
-      Alert Row: {{ currentAlertRow ? currentAlertRow.id : 'NOT selected'}}
+      Alert Row: {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
     </div>
     <!-- entry point of d3 graph(s) -->
   </div>
@@ -28,24 +28,6 @@ export default {
   },
   computed: {
     ...mapGetters(['currentAlertRow', 'modelFile'])
-  },
-  methods: {
-    drawJsonModel () {
-      if (this.modelFile) {
-        this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
-      }
-    },
-    clearAllHighlight () {
-      this.visualizer.clearDependencyLines()
-      this.visualizer.clearHighlight()
-    },
-    highlightByAlert (alertRow) {
-      if (alertRow) {
-        this.visualizer.highlightByAlert(alertRow)
-      } else {
-        this.clearAllHighlight()
-      }
-    }
   },
   mounted () {
     console.log('[dep2] mounted')
@@ -73,6 +55,24 @@ export default {
     delete this.visualizer
     this.unwatchAlert()
     this.unwatchModelFile()
+  },
+  methods: {
+    drawJsonModel () {
+      if (this.modelFile) {
+        this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
+      }
+    },
+    clearAllHighlight () {
+      this.visualizer.clearDependencyLines()
+      this.visualizer.clearHighlight()
+    },
+    highlightByAlert (alertRow) {
+      if (alertRow) {
+        this.visualizer.highlightByAlert(alertRow)
+      } else {
+        this.clearAllHighlight()
+      }
+    }
   }
 }
 </script>
