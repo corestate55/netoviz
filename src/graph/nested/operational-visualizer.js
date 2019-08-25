@@ -353,6 +353,55 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       })
   }
 
+  _maxWHOnGrid (xy, i) {
+    // calc width or height between Grid[i] and Grid[i+1]
+    const rootNodes = this.findTargetRootNodes(
+      ...this.selectXY(xy, [i, -1], [-1, i])
+    )
+    if (!rootNodes || rootNodes.length < 1) {
+      return 0
+    }
+    const selectAttribute = this.selectXY(xy, n => n.width, n => n.height)
+    return Math.max(...rootNodes.map(selectAttribute))
+  }
+
+  _gridFittingXY (xy) {
+    const fitPadding = this.fontSize * 2
+    const grids = this.selectXY(xy, this.xGrids, this.yGrids)
+    for (let i = 0; i < grids.length - 1; i++) {
+      const targetGrid = grids[i]
+      const nextGrid = grids[i + 1]
+      const maxWH = this._maxWHOnGrid(xy, i)
+      // move grid
+      nextGrid.position = targetGrid.position + maxWH + fitPadding
+      this.updateGridLine(nextGrid, xy, i + 1)
+      // move root node
+      const nextGridRootNodes = this.findTargetRootNodes(
+        ...this.selectXY(xy, [i + 1, -1], [-1, i + 1])
+      )
+      for (const nextGridRootNode of nextGridRootNodes) {
+        this.moveRootNode(
+          ...this.selectXY(xy,
+            [nextGridRootNode, nextGrid.position - nextGridRootNode.x, 0],
+            [nextGridRootNode, 0, nextGrid.position - nextGridRootNode.y]))
+      }
+      // update Links
+      this.redrawLinkLines()
+    }
+  }
+
+  setGridFittingButtonHandler () {
+    const gridFitting = () => {
+      this._gridFittingXY('x')
+      this._gridFittingXY('y')
+    }
+    const selector = 'text#grid-fitting-button'
+    this.svg.select(selector)
+      .on('click', gridFitting)
+      .on('mouseover', this.controlButtonMouseOverCallback(selector))
+      .on('mouseout', this.controlButtonMouseOutCallback(selector))
+  }
+
   setOperationHandler (graphData) {
     this.graphData = graphData
     this.setGraphControlButtons(() => this.clearAllAlertHighlight())
@@ -361,6 +410,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     this.setLinkMouseHandler()
     this.setTpMouseHandler()
     this.setNodeMouseHandler()
+    this.setGridFittingButtonHandler()
     this.setSVGZoom()
   }
 }

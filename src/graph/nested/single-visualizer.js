@@ -17,12 +17,12 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
     this.gridFontSize = 25
   }
 
-  selectXY (xy, a, b) {
-    const selectedValue = xy === 'x' ? a : b
-    if (Array.isArray(selectedValue)) {
-      return selectedValue
+  selectXY (xy, xValue, yValue) {
+    const selectedValue = xy === 'x' ? xValue : yValue
+    if (isNaN(selectedValue)) {
+      return selectedValue // Raw value(object) when a/b is not number
     }
-    return this.scale(selectedValue) // single value
+    return this.scale(selectedValue) // scaling when a/b is number
   }
 
   makeGridHandles (xy) {
@@ -205,11 +205,21 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .range([0, this.height])
   }
 
+  makeGridFittingButton () {
+    this.svg.append('text')
+      .attr('id', 'grid-fitting-button')
+      .attr('class', 'control-button')
+      .attr('x', 6)
+      .attr('y', 50)
+      .text('[Grid Fitting]')
+  }
+
   makeGraphObjects (graphData) {
     this.makeGraphSVG(
       'nested-view', null, 'whole-nested-graph'
     )
     this.makeGraphControlButtons()
+    this.makeGridFittingButton()
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
     this.scale = this.makeScale(nodes)

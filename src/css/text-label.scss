@@ -23,10 +23,6 @@ text.nest {
       @extend %active;
     }
   }
-  &.warning {
-    fill: red;
-    font-weight: bold;
-  }
 }
 
 text.tp {
@@ -47,7 +43,12 @@ text.tp {
   }
 }
 
-text#diff-toggle-button, text#clear-button {
+text.warning {
+  fill: red;
+  font-weight: bold;
+}
+
+text.control-button {
   fill: $stroke_text;
   &.select-ready {
     font-weight: bold;
