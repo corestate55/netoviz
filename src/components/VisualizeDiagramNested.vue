@@ -48,7 +48,6 @@ import NestedGraphVisualizer from '../graph/nested/visualizer'
 import '../css/nested.scss'
 
 export default {
-  name: 'VisualizeDiagramNestedVue',
   data () {
     return {
       visualizer: null,

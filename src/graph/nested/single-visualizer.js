@@ -20,9 +20,9 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   selectXY (xy, xValue, yValue) {
     const selectedValue = xy === 'x' ? xValue : yValue
     if (isNaN(selectedValue)) {
-      return selectedValue // Raw value(object) when a/b is not number
+      return selectedValue // Raw value(object) when [xy]Value is not a number
     }
-    return this.scale(selectedValue) // scaling when a/b is number
+    return this.scale(selectedValue) // scaling when [xy]Value is a number
   }
 
   makeGridHandles (xy) {

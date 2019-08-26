@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div
+      v-bind:style="{ display: debug }"
+    >
+      currentAlertRow: {{ currentAlertRow }}
+    </div>
     <el-row v-bind:gutter="20">
       <el-col v-bind:span="4">
         Rows :
@@ -18,8 +23,8 @@
           size="small"
           type="info"
           icon="el-icon-delete"
-          v-bind:disabled="!currentAlertRow"
-          v-on:click="setAlertTableCurrentRow()"
+          v-bind:disabled="currentAlertRow && Object.keys(currentAlertRow).length < 1"
+          v-on:click="setAlertTableCurrentRow({})"
         >
           Clear selection
         </el-button>
@@ -96,7 +101,8 @@ export default {
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
       alertUpdatedTime: null,
-      enableTimer: true
+      enableTimer: true,
+      debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   computed: {
