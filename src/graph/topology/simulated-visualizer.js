@@ -23,15 +23,20 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   }
 
   makeSimulation () {
-    return d3.forceSimulation()
-      .force('link',
-        d3.forceLink()
+    return d3
+      .forceSimulation()
+      .force(
+        'link',
+        d3
+          .forceLink()
           .id(d => d.id)
-          .distance((d) => this.linkDistance(d))
+          .distance(d => this.linkDistance(d))
           .iterations(8)
       )
-      .force('collide',
-        d3.forceCollide()
+      .force(
+        'collide',
+        d3
+          .forceCollide()
           .strength(1.0) // collision not allowed
           .iterations(8)
       )
@@ -71,7 +76,7 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
     this.tpLabel
       .attr('x', d => d.x)
       .attr('y', d => d.y)
-      .attr('dx', 1.5 * this.tpSize / 2) // offset to click tp easily
+      .attr('dx', (1.5 * this.tpSize) / 2) // offset to click tp easily
   }
 
   tickedNode () {
@@ -83,9 +88,7 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
       .attr('r', this.nodeSize)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-    this.nodeLabel
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
+    this.nodeLabel.attr('x', d => d.x).attr('y', d => d.y)
   }
 
   // Set event callbacks for node/tp object (mouse dragging)
@@ -112,7 +115,10 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
         this.simStopCallback.stop()
       }
       // stop simulation after delay
-      this.simStopCallback = timeout(() => this.stopSimulation(), this.simStopDelay)
+      this.simStopCallback = timeout(
+        () => this.stopSimulation(),
+        this.simStopDelay
+      )
     }
   }
 }

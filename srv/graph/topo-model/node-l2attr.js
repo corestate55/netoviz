@@ -9,7 +9,8 @@ export default class L2NodeAttribute extends TopoBaseContainer {
     this.name = data.name || ''
     this.description = data.description || ''
     this.mgmtAddr = data['management-address'] || data.mgmtAddr || [] // ip addr list
-    this.sysMacAddr = data['sys-mac-address'] || data.sysMacAddr || 'zz:zz:zz:zz:zz:zz'
+    this.sysMacAddr =
+      data['sys-mac-address'] || data.sysMacAddr || 'zz:zz:zz:zz:zz:zz'
     this.mgmtVid = data['management-vid'] || data.mgmtVid || 1
     this.flag = data.flag || [] // list
   }

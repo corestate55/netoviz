@@ -19,16 +19,16 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
 
   makeDrawNetworkData (nw) {
     return {
-      'visible': true,
-      'type': 'network',
-      'name': nw.name,
-      'path': nw.path,
-      'x': null, // must be initialized
-      'y': null,
-      'parents': [], // TODO: support-network (parents/children) is ignored (currently)
-      'children': [],
-      'attribute': nw.attribute || {}, // TODO: network attribute is ignored
-      'diffState': nw.diffState || {} // TODO: network diffState is ignored
+      visible: true,
+      type: 'network',
+      name: nw.name,
+      path: nw.path,
+      x: null, // must be initialized
+      y: null,
+      parents: [], // TODO: support-network (parents/children) is ignored (currently)
+      children: [],
+      attribute: nw.attribute || {}, // TODO: network attribute is ignored
+      diffState: nw.diffState || {} // TODO: network diffState is ignored
     }
   }
 
@@ -79,9 +79,9 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
 
   _indentOf (nwObj) {
     const type2indentNum = {
-      'network': 0,
-      'node': 1,
-      'tp': 2
+      network: 0,
+      node: 1,
+      tp: 2
     }
     return type2indentNum[nwObj.type]
   }
@@ -99,7 +99,8 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
         if (!nwObjects[j].visible) {
           continue
         }
-        nwObjects[j].x = nwObjects[0].x + this._indentOf(nwObjects[j]) * this.p_xpad
+        nwObjects[j].x =
+          nwObjects[0].x + this._indentOf(nwObjects[j]) * this.p_xpad
         nwObjects[j].y = nwObjects[0].y + v * this.p_ypad
         v++
       }
@@ -116,14 +117,11 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   makeEntryCircles () {
-    const updatedEntries = this.svgGrp.selectAll('circle.dep2')
+    const updatedEntries = this.svgGrp
+      .selectAll('circle.dep2')
       .data(this._visibleDrawGraphData())
-    const enteredEntries = updatedEntries
-      .enter()
-      .append('circle')
-    updatedEntries
-      .exit()
-      .remove()
+    const enteredEntries = updatedEntries.enter().append('circle')
+    updatedEntries.exit().remove()
     const targetEntries = enteredEntries.merge(updatedEntries)
     targetEntries
       .attr('class', d => this.objClassDef(d, `dep2 ${d.type}`))
@@ -134,14 +132,11 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
   }
 
   makeEntryLabels () {
-    const updatedEntries = this.svgGrp.selectAll('text.dep2')
+    const updatedEntries = this.svgGrp
+      .selectAll('text.dep2')
       .data(this._visibleDrawGraphData())
-    const enteredEntries = updatedEntries
-      .enter()
-      .append('text')
-    updatedEntries
-      .exit()
-      .remove()
+    const enteredEntries = updatedEntries.enter().append('text')
+    updatedEntries.exit().remove()
     const targetEntries = enteredEntries.merge(updatedEntries)
     targetEntries
       .attr('class', d => this.objClassDef(d, `dep2 ${d.type}`))
@@ -160,16 +155,12 @@ export default class SingleDep2GraphVisualizer extends SingleVisualizerBase {
 
   makeDependencyLineSVGGroup () {
     // group to insert dependency lines under other point-circles and labels.
-    this.depLineSVGGrp = this.svgGrp
-      .append('g')
-      .attr('id', 'dep-lines')
+    this.depLineSVGGrp = this.svgGrp.append('g').attr('id', 'dep-lines')
   }
 
   makeGraphObjects (graphData) {
     this._deleteUnusedProps(graphData)
-    this.makeGraphSVG(
-      'dependency2-view', null, 'whole-dep2-graph'
-    )
+    this.makeGraphSVG('dependency2-view', null, 'whole-dep2-graph')
     this.makeDependencyLineSVGGroup()
     this.makeGraphControlButtons()
     this.drawGraphData = this.makeDrawGraphData(graphData)

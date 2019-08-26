@@ -15,24 +15,27 @@ export default class GraphVisualizer extends BaseContainer {
   }
 
   drawJsonModel (jsonName, alert) {
-    json(`graph/topology/${jsonName}`).then((graphData) => {
-      // graph object data to draw converted from topology json
-      this.graphs = graphData
+    json(`graph/topology/${jsonName}`).then(
+      graphData => {
+        // graph object data to draw converted from topology json
+        this.graphs = graphData
 
-      // for debug
-      // console.log('graphs: ', this.graphs)
+        // for debug
+        // console.log('graphs: ', this.graphs)
 
-      // set auto save fixed node position function
-      this.storageKey = `netoviz-${jsonName}`
-      interval(() => {
-        this.posCache.saveGraphs(this.storageKey, this.graphs)
-      }, 5000)
-      // draw
-      this.drawGraphs()
-      this.highlightByAlert(alert)
-    }, (error) => {
-      throw error
-    })
+        // set auto save fixed node position function
+        this.storageKey = `netoviz-${jsonName}`
+        interval(() => {
+          this.posCache.saveGraphs(this.storageKey, this.graphs)
+        }, 5000)
+        // draw
+        this.drawGraphs()
+        this.highlightByAlert(alert)
+      },
+      error => {
+        throw error
+      }
+    )
   }
 
   findGraphNodeByPath (path) {

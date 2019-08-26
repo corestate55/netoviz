@@ -41,13 +41,13 @@ export default class Link extends TopoBaseContainer {
 
   graphLink () {
     return new GraphLink({
-      'type': 'tp-tp',
-      'sourcePath': this.source.refPath,
-      'targetPath': this.destination.refPath,
-      'name': this.name,
-      'path': this.path,
-      'attribute': this.attribute || {},
-      'diffState': this.diffState
+      type: 'tp-tp',
+      sourcePath: this.source.refPath,
+      targetPath: this.destination.refPath,
+      name: this.name,
+      path: this.path,
+      attribute: this.attribute || {},
+      diffState: this.diffState
     })
   }
 }

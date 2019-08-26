@@ -3,14 +3,17 @@ import OperationalDep2GraphVisualizer from './operational-visualizer'
 
 export default class Dep2GraphVisualizer extends OperationalDep2GraphVisualizer {
   drawJsonModel (jsonName, alert) {
-    json(`graph/dependency/${jsonName}`).then((graphData) => {
-      this.clearCanvas()
-      this.makeGraphObjects(graphData)
-      this.setOperationHandler()
-      this.highlightByAlert(alert)
-    }, (error) => {
-      throw error
-    })
+    json(`graph/dependency/${jsonName}`).then(
+      graphData => {
+        this.clearCanvas()
+        this.makeGraphObjects(graphData)
+        this.setOperationHandler()
+        this.highlightByAlert(alert)
+      },
+      error => {
+        throw error
+      }
+    )
   }
 
   _findNodeObjByName (name) {

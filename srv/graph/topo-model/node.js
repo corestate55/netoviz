@@ -58,13 +58,13 @@ export default class Node extends TopoBaseContainer {
 
   graphNode () {
     return new GraphNode({
-      'type': 'node',
-      'name': this.name,
-      'id': this.id,
-      'path': this.path,
-      'children': this.makeChildren(),
-      'attribute': this.attribute,
-      'diffState': this.diffState
+      type: 'node',
+      name: this.name,
+      id: this.id,
+      path: this.path,
+      children: this.makeChildren(),
+      attribute: this.attribute,
+      diffState: this.diffState
     })
   }
 }

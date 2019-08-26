@@ -26,7 +26,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeGridHandles (xy) {
-    this.svgGrp.selectAll(`circle.grid-${xy}-handle`)
+    this.svgGrp
+      .selectAll(`circle.grid-${xy}-handle`)
       .data(this.selectXY(xy, this.xGrids, this.yGrids))
       .enter()
       .append('circle')
@@ -38,7 +39,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeGridLines (xy) {
-    this.svgGrp.selectAll(`line.grid-${xy}`)
+    this.svgGrp
+      .selectAll(`line.grid-${xy}`)
       .data(this.selectXY(xy, this.xGrids, this.yGrids))
       .enter()
       .append('line')
@@ -53,7 +55,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeGridLabels (xy) {
-    this.svgGrp.selectAll(`text.grid-${xy}-handle`)
+    this.svgGrp
+      .selectAll(`text.grid-${xy}-handle`)
       .data(this.selectXY(xy, this.xGrids, this.yGrids))
       .enter()
       .append('text')
@@ -83,14 +86,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeColorTable (nodes) {
-    const colors = [
-      '#e1f1e0',
-      '#d5e5d5',
-      '#F9FBB2',
-      '#F8FCDA',
-      '#e3e9c2'
-    ]
-    let colorTable = {}
+    const colors = ['#e1f1e0', '#d5e5d5', '#F9FBB2', '#F8FCDA', '#e3e9c2']
+    const colorTable = {}
     const layerNameList = nodes.map(node => this.networkPathOf(node.path))
     Array.from(new Set(layerNameList)) // Array.uniq
       .forEach((d, i) => {
@@ -100,7 +97,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeNodes (nodes) {
-    this.svgGrp.selectAll('rect.node')
+    this.svgGrp
+      .selectAll('rect.node')
       .data(nodes)
       .enter()
       .append('rect')
@@ -116,11 +114,10 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeSupportTpLines (supportTpLinks) {
-    const updatedLines = this.svgGrp.selectAll('line.support-tp')
+    const updatedLines = this.svgGrp
+      .selectAll('line.support-tp')
       .data(supportTpLinks)
-    const enteredLines = updatedLines
-      .enter()
-      .append('line')
+    const enteredLines = updatedLines.enter().append('line')
     const targetLines = enteredLines.merge(updatedLines)
     targetLines
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
@@ -138,11 +135,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .x(d => this.scale(d[0]))
       .y(d => this.scale(d[1]))
       .curve(curveLinear)
-    const updatedLines = this.svgGrp.selectAll('path.tp-tp')
-      .data(tpTpLinks)
-    const enteredLines = updatedLines
-      .enter()
-      .append('path')
+    const updatedLines = this.svgGrp.selectAll('path.tp-tp').data(tpTpLinks)
+    const enteredLines = updatedLines.enter().append('path')
     const targetLines = enteredLines.merge(updatedLines)
     targetLines
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
@@ -152,7 +146,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeTp (tps) {
-    this.svgGrp.selectAll('circle.tp')
+    this.svgGrp
+      .selectAll('circle.tp')
       .data(tps)
       .enter()
       .append('circle')
@@ -164,7 +159,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeNodeLabels (nodes) {
-    this.svgGrp.selectAll('text.node')
+    this.svgGrp
+      .selectAll('text.node')
       .data(nodes)
       .enter()
       .append('text')
@@ -178,7 +174,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeTpLabels (tps) {
-    this.svgGrp.selectAll('text.tp')
+    this.svgGrp
+      .selectAll('text.tp')
       .data(tps)
       .enter()
       .append('text')
@@ -206,7 +203,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeGridFittingButton () {
-    this.svg.append('text')
+    this.svg
+      .append('text')
       .attr('id', 'grid-fitting-button')
       .attr('class', 'control-button')
       .attr('x', 6)
@@ -215,9 +213,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeGraphObjects (graphData) {
-    this.makeGraphSVG(
-      'nested-view', null, 'whole-nested-graph'
-    )
+    this.makeGraphSVG('nested-view', null, 'whole-nested-graph')
     this.makeGraphControlButtons()
     this.makeGridFittingButton()
 

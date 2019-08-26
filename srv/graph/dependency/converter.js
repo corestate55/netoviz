@@ -19,7 +19,7 @@ class DepGraphConverter {
   }
 }
 
-const convertDependencyGraphData = async (topoGraphDataCB) => {
+const convertDependencyGraphData = async topoGraphDataCB => {
   const topoJsonString = await topoGraphDataCB() // callback
   const depGraphConverter = new DepGraphConverter(JSON.parse(topoJsonString))
   return JSON.stringify(depGraphConverter.toData())

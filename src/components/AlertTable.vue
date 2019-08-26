@@ -187,10 +187,10 @@ export default {
     },
     setAlertByInput () {
       const rowData = {
-        'host': this.alertHost,
-        'message': 'selected directly',
-        'severity': 'information',
-        'date': (new Date()).toISOString()
+        host: this.alertHost,
+        message: 'selected directly',
+        severity: 'information',
+        date: (new Date()).toISOString()
       }
       // console.log('setAlertByInput: ', rowData)
       this.clearAlertTableSelection()

@@ -27,7 +27,10 @@ export default class DepGraphLayer extends DepGraphConstants {
   }
 
   calcY () {
-    return this.layerYPad1 + (this.layerHeight() + this.layerYPad2) * (this.number - 1)
+    return (
+      this.layerYPad1 +
+      (this.layerHeight() + this.layerYPad2) * (this.number - 1)
+    )
   }
 
   setNodes (graphData) {
@@ -65,14 +68,14 @@ export default class DepGraphLayer extends DepGraphConstants {
 
   toData () {
     return {
-      'number': this.number,
-      'x': this.x,
-      'y': this.y,
-      'height': this.layerHeight(),
-      'name': this.name,
-      'path': this.path,
-      'nodes': this.nodes.map(node => node.toData()),
-      'tps': this.tps.map(tps => tps.toData())
+      number: this.number,
+      x: this.x,
+      y: this.y,
+      height: this.layerHeight(),
+      name: this.name,
+      path: this.path,
+      nodes: this.nodes.map(node => node.toData()),
+      tps: this.tps.map(tps => tps.toData())
     }
   }
 }

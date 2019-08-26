@@ -21,7 +21,8 @@ export default class ShallowNestedGraphNode {
         const parentNodes = this.parentNodePaths()
         this.parents = childNodes.concat(tps)
         this.children = parentNodes
-      } else { // tp
+      } else {
+        // tp
         const nodes = this.childNodePaths()
         const childTps = this.childTpPaths()
         const parentTps = this.parentTpPaths()

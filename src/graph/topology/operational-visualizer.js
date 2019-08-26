@@ -23,9 +23,10 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   }
 
   setZoomEvnetCallback () {
-    this.svg.call(zoom()
-      .scaleExtent([1 / 4, 5])
-      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    this.svg.call(
+      zoom()
+        .scaleExtent([1 / 4, 5])
+        .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
     this.svg.on('dblclick.zoom', null) // remove zoom-by-double-click
   }
@@ -159,7 +160,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
   mouseOver (element) {
     const path = this.pathFromElement(element)
     // avoid loop: DO NOT make tp info table when the element is in tp info
-    if (!(element.id.match(/-tpinfo$/))) {
+    if (!element.id.match(/-tpinfo$/)) {
       this.reMakeTpInfoTable(path)
     }
     // set highlight style
@@ -225,17 +226,26 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
       .append('tr')
       .append('th')
       .html('Term Point')
-    this.tpInfoTable.selectAll('td')
+    this.tpInfoTable
+      .selectAll('td')
       .data(tpList)
       .enter()
       .append('tr')
       .append('td')
       .attr('id', d => `${d.path}-tpinfo`)
       .attr('class', d => document.getElementById(d.path).classList) // copy from svg tp
-      .on('mouseover', function () { self.mouseOver(this) })
-      .on('mouseout', function () { self.mouseOut(this) })
-      .on('click', function () { self.click(this) })
-      .on('dblclick', function (d) { self.dblClick(d, this) })
+      .on('mouseover', function () {
+        self.mouseOver(this)
+      })
+      .on('mouseout', function () {
+        self.mouseOut(this)
+      })
+      .on('click', function () {
+        self.click(this)
+      })
+      .on('dblclick', function (d) {
+        self.dblClick(d, this)
+      })
       .html(d => d.name)
   }
 
@@ -245,8 +255,9 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
       path = this.parentPathOf(path)
     }
     this.clearTpInfoTable()
-    const tpList = this.tpTypeNodes()
-      .filter(d => this.matchChildPath(path, d.path))
+    const tpList = this.tpTypeNodes().filter(d =>
+      this.matchChildPath(path, d.path)
+    )
     this.addTpInfoTableRecord(tpList)
   }
 
@@ -255,39 +266,69 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
 
     // objects need to set event handler
     const nodeRelateObjs = [
-      this.tp, this.node, this.nodeCircle, this.tpLabel, this.nodeLabel
+      this.tp,
+      this.node,
+      this.nodeCircle,
+      this.tpLabel,
+      this.nodeLabel
     ]
     // set event callbacks for circle/labels that means node/tp
     for (const obj of nodeRelateObjs) {
       // use `function() {}` NOT arrow-function `() => {}`.
       // arrow-function bind `this` according to decrared position
       obj
-        .on('click', function () { self.click(this) })
-        .on('dblclick', function (d) { self.dblClick(d, this) })
-        .on('mouseover', function () { self.mouseOver(this) })
-        .on('mouseout', function () { self.mouseOut(this) })
-        .call(drag()
-          .on('start', function (d) { self.dragStarted(d, this) })
-          .on('drag', function (d) { self.dragged(d) })
-          .on('end', function (d) { self.dragFinished(d) }))
+        .on('click', function () {
+          self.click(this)
+        })
+        .on('dblclick', function (d) {
+          self.dblClick(d, this)
+        })
+        .on('mouseover', function () {
+          self.mouseOver(this)
+        })
+        .on('mouseout', function () {
+          self.mouseOut(this)
+        })
+        .call(
+          drag()
+            .on('start', function (d) {
+              self.dragStarted(d, this)
+            })
+            .on('drag', function (d) {
+              self.dragged(d)
+            })
+            .on('end', function (d) {
+              self.dragFinished(d)
+            })
+        )
     }
   }
 
   setNodeInfoTableEventCallback () {
     const self = this // alias to use event callback closure
     // set event callbacks for node info table
-    this.nodeInfoTable.selectAll('td')
-      .on('click', function () { self.click(this) })
-      .on('dblclick', function (d) { self.dblClick(d, this) })
-      .on('mouseover', function () { self.mouseOver(this) })
-      .on('mouseout', function () { self.mouseOut(this) })
+    this.nodeInfoTable
+      .selectAll('td')
+      .on('click', function () {
+        self.click(this)
+      })
+      .on('dblclick', function (d) {
+        self.dblClick(d, this)
+      })
+      .on('mouseover', function () {
+        self.mouseOver(this)
+      })
+      .on('mouseout', function () {
+        self.mouseOut(this)
+      })
   }
 
   clearHighlight () {
     // clear all highlighted object
     const classList = ['selected-children', 'selected-parents', 'selected']
     for (const cls of classList) {
-      selectAll('div#visualizer').selectAll(`.${cls}`)
+      selectAll('div#visualizer')
+        .selectAll(`.${cls}`)
         .classed(cls, false)
     }
   }

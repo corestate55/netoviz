@@ -13,18 +13,30 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
   }
 
   findAndMarkAsFamily (path, relationship, depth) {
-    this._consoleDebug(depth, 'findAndMark', `FIND ${path} with ${relationship}`)
+    this._consoleDebug(
+      depth,
+      'findAndMark',
+      `FIND ${path} with ${relationship}`
+    )
     const node = this.findNodeByPath(path)
     if (!node) {
       this._consoleDebug(depth, 'findAndMark', `node ${path} not found`)
       console.log(`    `)
       return
     }
-    this._consoleDebug(depth, 'findAndMark', `mark ${node.path} as ${relationship}`)
+    this._consoleDebug(
+      depth,
+      'findAndMark',
+      `mark ${node.path} as ${relationship}`
+    )
     node.family = relationship
     // Find recursively: node.parents or node.children
     for (const familyPath of node[relationship]) {
-      this._consoleDebug(depth, 'findAndMark', `next: ${familyPath} as ${relationship} of ${node.path}`)
+      this._consoleDebug(
+        depth,
+        'findAndMark',
+        `next: ${familyPath} as ${relationship} of ${node.path}`
+      )
       this.findAndMarkAsFamily(familyPath, relationship, depth + 1)
     }
   }
@@ -37,13 +49,21 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
       this._consoleDebug(0, 'markTarget', `target: ${this.target} not found`)
       return
     }
-    this._consoleDebug(0, 'markTarget', `target: ${targetNode.path} found name as ${this.target}`)
+    this._consoleDebug(
+      0,
+      'markTarget',
+      `target: ${targetNode.path} found name as ${this.target}`
+    )
     this._consoleDebug(0, 'markTarget', `find and mark as parents`)
     this.findAndMarkAsFamily(targetNode.path, 'parents', 1)
     this._consoleDebug(0, 'markTarget', `find and mark as children`)
     this.findAndMarkAsFamily(targetNode.path, 'children', 1)
     targetNode.family = 'target'
-    this._consoleDebug(0, 'markTarget', `target: ${targetNode.path} mark as ${targetNode.family}`)
+    this._consoleDebug(
+      0,
+      'markTarget',
+      `target: ${targetNode.path} mark as ${targetNode.family}`
+    )
   }
 
   setNodes () {
@@ -77,8 +97,10 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
   }
 
   inTargetDepth (layerOrder) {
-    return (this.requestedDepth - 1) * 2 <= layerOrder &&
+    return (
+      (this.requestedDepth - 1) * 2 <= layerOrder &&
       layerOrder < this.requestedDepth * 2
+    )
   }
 
   assumeAsLeaf (node, layerOrder) {

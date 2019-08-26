@@ -10,9 +10,11 @@ class TopologyGraphConverter {
   }
 }
 
-const convertTopologyGraphData = async (graphDataCB) => {
+const convertTopologyGraphData = async graphDataCB => {
   const graphDataString = await graphDataCB()
-  const topoGraphConverter = new TopologyGraphConverter(JSON.parse(graphDataString))
+  const topoGraphConverter = new TopologyGraphConverter(
+    JSON.parse(graphDataString)
+  )
   return JSON.stringify(topoGraphConverter.toData())
 }
 

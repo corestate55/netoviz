@@ -24,22 +24,22 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
   _lineConverter (line) {
     if (line.src.type === 'tp') {
       return {
-        'source': [line.src.cx, line.src.cy],
-        'target': [line.dst.cx, line.dst.cy],
-        'type': 'tp'
+        source: [line.src.cx, line.src.cy],
+        target: [line.dst.cx, line.dst.cy],
+        type: 'tp'
       }
     }
     // else line.src.type === 'node'
-    const srcNodeY = (line) => {
+    const srcNodeY = line => {
       return line.src.y < line.dst.y ? line.src.y + line.src.height : line.src.y
     }
-    const dstNodeY = (line) => {
+    const dstNodeY = line => {
       return line.src.y < line.dst.y ? line.dst.y : line.dst.y + line.dst.height
     }
     return {
-      'source': [line.src.x + line.src.width / 2, srcNodeY(line)],
-      'target': [line.dst.x + line.dst.width / 2, dstNodeY(line)],
-      'type': 'node'
+      source: [line.src.x + line.src.width / 2, srcNodeY(line)],
+      target: [line.dst.x + line.dst.width / 2, dstNodeY(line)],
+      type: 'node'
     }
   }
 
@@ -47,10 +47,13 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     const lineGenerator = linkVertical()
       .x(d => this.scale(d[0]))
       .y(d => this.scale(d[1]))
-    this.depLineGrp.selectAll(`path.${lineClass}`)
-      .data(lines
-        .filter(line => line.src.type === line.dst.type)
-        .map(line => this._lineConverter(line)))
+    this.depLineGrp
+      .selectAll(`path.${lineClass}`)
+      .data(
+        lines
+          .filter(line => line.src.type === line.dst.type)
+          .map(line => this._lineConverter(line))
+      )
       .enter()
       .append('path')
       .attr('class', d => `dep ${d.type} ${lineClass}`)
@@ -85,19 +88,18 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
 
   clickEventHandler (d) {
     // console.log('click event: ', d)
-    const makeSelectDepLines = (pairs) => {
+    const makeSelectDepLines = pairs => {
       this.clearDependencyLines('')
       this.makeDependencyLines(pairs, 'selected')
     }
-    const setHighlightByPath = (paths) => {
+    const setHighlightByPath = paths => {
       this.clearHighlight()
       for (const path of paths) {
         const elm = document.getElementById(path)
         elm.classList.add('selected')
       }
     }
-    this.runParentsAndChildren(d,
-      makeSelectDepLines, setHighlightByPath)
+    this.runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
   }
 
   selectReadyByPath (path, turnOn) {
@@ -111,31 +113,33 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
 
   mouseOverHandler (d) {
     // console.log(`mouseover: ${d.path}`)
-    const makeSelectReadyDepLines = (pairs) => {
+    const makeSelectReadyDepLines = pairs => {
       this.makeDependencyLines(pairs, 'select-ready')
     }
-    const setSelectReadyByPath = (paths) => {
+    const setSelectReadyByPath = paths => {
       for (const path of paths) {
         this.selectReadyByPath(path, true)
       }
     }
-    this.runParentsAndChildren(d,
-      makeSelectReadyDepLines, setSelectReadyByPath)
+    this.runParentsAndChildren(d, makeSelectReadyDepLines, setSelectReadyByPath)
     this.tooltip.enableTooltip(d)
   }
 
   mouseOutHandler (d) {
     // console.log(`mouseout: ${d.path}`)
-    const clearSelectReadyDepLines = (pairs) => {
+    const clearSelectReadyDepLines = pairs => {
       this.clearDependencyLines('select-ready')
     }
-    const unsetSelectReadyByPath = (paths) => {
+    const unsetSelectReadyByPath = paths => {
       for (const path of paths) {
         this.selectReadyByPath(path, false)
       }
     }
-    this.runParentsAndChildren(d,
-      clearSelectReadyDepLines, unsetSelectReadyByPath)
+    this.runParentsAndChildren(
+      d,
+      clearSelectReadyDepLines,
+      unsetSelectReadyByPath
+    )
     this.tooltip.disableTooltip(d)
   }
 
@@ -156,9 +160,10 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       this.clearDependencyLines('')
     })
 
-    this.svg.call(zoom()
-      .scaleExtent([1 / 4, 5])
-      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    this.svg.call(
+      zoom()
+        .scaleExtent([1 / 4, 5])
+        .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
   }
 
@@ -180,9 +185,10 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     for (const parentPath of objData.parents) {
       const parentObj = this.findGraphObjByPath(parentPath)
       if (parentObj) {
-        pathList.push({ // push myself and parent
-          'src': objData,
-          'dst': parentObj
+        pathList.push({
+          // push myself and parent
+          src: objData,
+          dst: parentObj
         })
         // push parent and parents of parent
         pathList.push(this.getParentsTree(parentObj))
@@ -196,9 +202,10 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     for (const childPath of objData.children) {
       const childObj = this.findGraphObjByPath(childPath)
       if (childObj) {
-        pathList.push({ // push myself and child
-          'dst': objData,
-          'src': childObj
+        pathList.push({
+          // push myself and child
+          dst: objData,
+          src: childObj
         })
         // push child and children of child
         pathList.push(this.getChildrenTree(childObj))

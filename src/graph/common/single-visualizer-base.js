@@ -24,9 +24,7 @@ export default class SingleVisualizerBase extends BaseContainer {
       .attr('height', this.height)
       .attr('id', svgId)
       .attr('class', svgClass)
-    this.svgGrp = this.svg
-      .append('g')
-      .attr('id', svgGroupId)
+    this.svgGrp = this.svg.append('g').attr('id', svgGroupId)
   }
 
   objClassDef (obj, classString) {
@@ -53,22 +51,19 @@ export default class SingleVisualizerBase extends BaseContainer {
   }
 
   clearToolTip (originSelection) {
-    originSelection
-      .select('div.tool-tip')
-      .remove()
+    originSelection.select('div.tool-tip').remove()
   }
 
   makeToolTip (originSelection) {
     this.clearToolTip(originSelection)
-    const toolTip = originSelection
-      .append('div')
-      .attr('class', 'tool-tip')
+    const toolTip = originSelection.append('div').attr('class', 'tool-tip')
     return new TooltipCreator(toolTip)
   }
 
   makeClearHighlightButton () {
     const clearButtonFontSize = 12
-    this.svg.append('text')
+    this.svg
+      .append('text')
       .attr('id', 'clear-button')
       .attr('class', 'control-button')
       .attr('x', clearButtonFontSize / 2)
@@ -78,7 +73,8 @@ export default class SingleVisualizerBase extends BaseContainer {
 
   makeToggleDiffButton () {
     const clearButtonFontSize = 12
-    this.svg.append('text')
+    this.svg
+      .append('text')
       .attr('id', 'diff-toggle-button')
       .attr('class', 'control-button')
       .attr('x', clearButtonFontSize / 2)
@@ -101,7 +97,8 @@ export default class SingleVisualizerBase extends BaseContainer {
 
   setClearHighlightButtonHandler (clickCallback) {
     const selector = 'text#clear-button'
-    this.svg.select(selector)
+    this.svg
+      .select(selector)
       .on('click', clickCallback)
       .on('mouseover', this.controlButtonMouseOverCallback(selector))
       .on('mouseout', this.controlButtonMouseOutCallback(selector))
@@ -109,18 +106,22 @@ export default class SingleVisualizerBase extends BaseContainer {
 
   toggleActiveDiff () {
     const visualizer = selectAll('div#visualizer')
-    visualizer.selectAll(`.${this.currentInactive}`)
+    visualizer
+      .selectAll(`.${this.currentInactive}`)
       .classed('inactive', false)
       .classed('active', true)
-    this.currentInactive = this.currentInactive === 'deleted' ? 'added' : 'deleted'
-    visualizer.selectAll(`.${this.currentInactive}`)
+    this.currentInactive =
+      this.currentInactive === 'deleted' ? 'added' : 'deleted'
+    visualizer
+      .selectAll(`.${this.currentInactive}`)
       .classed('inactive', true)
       .classed('active', false)
   }
 
   setToggleDiffButtonHandler () {
     const selector = 'text#diff-toggle-button'
-    this.svg.select(selector)
+    this.svg
+      .select(selector)
       .on('click', this.toggleActiveDiff)
       .on('mouseover', this.controlButtonMouseOverCallback(selector))
       .on('mouseout', this.controlButtonMouseOutCallback(selector))
@@ -136,7 +137,8 @@ export default class SingleVisualizerBase extends BaseContainer {
   }
 
   makeWarningMessage (message) {
-    this.svg.selectAll('text.warning')
+    this.svg
+      .selectAll('text.warning')
       .data([{ message: message, x: 150, y: 12 }])
       .enter()
       .append('text')

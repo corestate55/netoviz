@@ -41,13 +41,17 @@ class InterTpLink {
   }
 
   onQuadrant24 () {
-    return (this.y1 > this.y2 && this.x1 < this.x2) ||
+    return (
+      (this.y1 > this.y2 && this.x1 < this.x2) ||
       (this.y1 < this.y2 && this.x1 > this.x2)
+    )
   }
 
   onQuadrant13 () {
-    return (this.y1 > this.y2 && this.x1 > this.x2) ||
+    return (
+      (this.y1 > this.y2 && this.x1 > this.x2) ||
       (this.y1 < this.y2 && this.x1 < this.x2)
+    )
   }
 
   skewType () {
@@ -79,7 +83,7 @@ class InterTpLink {
   }
 
   inRange (val, s1, s2) {
-    return (s1 <= val) && (val <= s2)
+    return s1 <= val && val <= s2
   }
 
   inRangeX (val, link) {
@@ -122,13 +126,16 @@ class InterTpLink {
     if (!link) {
       link = this
     }
-    return this.inRangeX(link.xMin()) || this.inRangeX(link.xMax()) ||
-      link.inRangeX(this.xMin()) || link.inRangeX(this.xMax())
+    return (
+      this.inRangeX(link.xMin()) ||
+      this.inRangeX(link.xMax()) ||
+      link.inRangeX(this.xMin()) ||
+      link.inRangeX(this.xMax())
+    )
   }
 
   isSameSkew (link, type) {
-    return this.skewType() === link.skewType() &&
-      this.skewType() === type
+    return this.skewType() === link.skewType() && this.skewType() === type
   }
 
   isCrossingBackslashPatternA (link) {
@@ -138,8 +145,11 @@ class InterTpLink {
     //    a --(--+
     // b -----+
     //              --->y
-    return this.inRangeYLow(link.yMid) &&
-      this.inRangeX(link.xMax()) && !this.inRangeX(link.xMin())
+    return (
+      this.inRangeYLow(link.yMid) &&
+      this.inRangeX(link.xMax()) &&
+      !this.inRangeX(link.xMin())
+    )
   }
 
   isCrossingBackslashPatternB (link) {
@@ -149,16 +159,19 @@ class InterTpLink {
     //    b --(--+
     // a -----+
     //              --->y
-    return this.inRangeYHigh(link.yMid) &&
-      this.inRangeX(link.xMin()) && !this.inRangeX(link.xMax())
+    return (
+      this.inRangeYHigh(link.yMid) &&
+      this.inRangeX(link.xMin()) &&
+      !this.inRangeX(link.xMax())
+    )
   }
 
   isCrossingBackslash (link) {
-    return this.isSameSkew(link, 'backslash') &&
-      (
-        this.isCrossingBackslashPatternA(link) ||
-        this.isCrossingBackslashPatternB(link)
-      )
+    return (
+      this.isSameSkew(link, 'backslash') &&
+      (this.isCrossingBackslashPatternA(link) ||
+        this.isCrossingBackslashPatternB(link))
+    )
   }
 
   isCrossingSlashPatternA (link) {
@@ -168,8 +181,11 @@ class InterTpLink {
     //        +--(-- b    : other link
     //           +----- a : this
     //              --->y
-    return this.inRangeYLow(link.yMid) &&
-      this.inRangeX(link.xMin()) && !this.inRangeX(link.xMax())
+    return (
+      this.inRangeYLow(link.yMid) &&
+      this.inRangeX(link.xMin()) &&
+      !this.inRangeX(link.xMax())
+    )
   }
 
   isCrossingSlashPatternB (link) {
@@ -179,25 +195,27 @@ class InterTpLink {
     //        +--(-- a    : this
     //           +----- b : other link
     //              --->y
-    return this.inRangeYHigh(link.yMid) &&
-      this.inRangeX(link.xMax()) && !this.inRangeX(link.xMin())
+    return (
+      this.inRangeYHigh(link.yMid) &&
+      this.inRangeX(link.xMax()) &&
+      !this.inRangeX(link.xMin())
+    )
   }
 
   isCrossingSlash (link) {
-    return this.isSameSkew(link, 'slash') &&
-      (
-        this.isCrossingSlashPatternA(link) ||
-        this.isCrossingSlashPatternB(link)
-      )
+    return (
+      this.isSameSkew(link, 'slash') &&
+      (this.isCrossingSlashPatternA(link) || this.isCrossingSlashPatternB(link))
+    )
   }
 
   isOverlap (link) {
-    return this.isOverlapX(link) &&
-      (
-        this.isNearYMid(link) ||
+    return (
+      this.isOverlapX(link) &&
+      (this.isNearYMid(link) ||
         this.isCrossingBackslash(link) ||
-        this.isCrossingSlash(link)
-      )
+        this.isCrossingSlash(link))
+    )
   }
 
   yMiddlePoint () {
@@ -257,7 +275,7 @@ export default class InterTpLinkCreator {
 
   checkLineOverlap () {
     let overlapIndex = 0
-    let overwriteIndex = {}
+    const overwriteIndex = {}
 
     // To set overlapIndex for last entry, counter:i must loop at last.
     this._forEachTpTpLink(0, (i, linkI) => {
@@ -294,7 +312,7 @@ export default class InterTpLinkCreator {
     //  a b   (a -> b)
     return overlappedLinks
       .filter(link => link.isSkewSlash())
-      .sort((a, b) => a.xMax() < b.xMax() ? -1 : 1)
+      .sort((a, b) => (a.xMax() < b.xMax() ? -1 : 1))
   }
 
   backslashLinks (overlappedLinks) {
@@ -306,7 +324,7 @@ export default class InterTpLinkCreator {
     //         b a           a b  b a   (a -> b)
     return overlappedLinks
       .filter(link => !link.isSkewSlash()) // backslash, horizontal, vertical
-      .sort((a, b) => a.xMax() < b.xMax() ? 1 : -1)
+      .sort((a, b) => (a.xMax() < b.xMax() ? 1 : -1))
   }
 
   setYMidOfLinksIn (overlappedLinks) {
@@ -314,8 +332,9 @@ export default class InterTpLinkCreator {
     const backslashLinks = this.backslashLinks(overlappedLinks)
     const links = slashLinks.concat(backslashLinks)
 
-    const yMidBase = links.map(link => link.yMid)
-      .reduce((sum, val) => sum + val) / links.length // average of yMid
+    const yMidBase =
+      links.map(link => link.yMid).reduce((sum, val) => sum + val) /
+      links.length // average of yMid
     let yMidOffset = 0
 
     for (const [i, link] of links.entries()) {

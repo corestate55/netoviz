@@ -9,14 +9,14 @@ import L2TPAttribute from '../../../srv/graph/topo-model/term-point-l2attr'
 import L3TPAttribute from '../../../srv/graph/topo-model/term-point-l3attr'
 
 const AttrClassOf = {
-  'L2LinkAttribute': L2LinkAttribute,
-  'L3LinkAttribute': L3LinkAttribute,
-  'L2NetworkAttribute': L2NetworkAttribute,
-  'L3NetworkAttribute': L3NetworkAttribute,
-  'L2NodeAttribute': L2NodeAttribute,
-  'L3NodeAttribute': L3NodeAttribute,
-  'L2TPAttribute': L2TPAttribute,
-  'L3TPAttribute': L3TPAttribute
+  L2LinkAttribute: L2LinkAttribute,
+  L3LinkAttribute: L3LinkAttribute,
+  L2NetworkAttribute: L2NetworkAttribute,
+  L3NetworkAttribute: L3NetworkAttribute,
+  L2NodeAttribute: L2NodeAttribute,
+  L3NodeAttribute: L3NodeAttribute,
+  L2TPAttribute: L2TPAttribute,
+  L3TPAttribute: L3TPAttribute
 }
 
 export default class TooltipCreator {
@@ -51,8 +51,6 @@ export default class TooltipCreator {
   }
 
   disableTooltip () {
-    this.tooltip
-      .classed('pop-up', false)
-      .classed('pop-down', true)
+    this.tooltip.classed('pop-up', false).classed('pop-down', true)
   }
 }

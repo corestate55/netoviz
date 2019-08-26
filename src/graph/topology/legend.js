@@ -2,12 +2,12 @@ import { select } from 'd3-selection'
 
 export default function drawLegend () {
   const styles = [
-    { 'class': 'normal', 'label': 'normal' },
-    { 'class': 'fixed', 'label': 'fixed' },
-    { 'class': 'select-ready', 'label': 'ready' },
-    { 'class': 'selected', 'label': 'selected' },
-    { 'class': 'selected-children', 'label': 'child' },
-    { 'class': 'selected-parents', 'label': 'parent' }
+    { class: 'normal', label: 'normal' },
+    { class: 'fixed', label: 'fixed' },
+    { class: 'select-ready', label: 'ready' },
+    { class: 'selected', label: 'selected' },
+    { class: 'selected-children', label: 'child' },
+    { class: 'selected-parents', label: 'parent' }
   ]
   const objSize = 20
   const xdp = 40
@@ -22,7 +22,8 @@ export default function drawLegend () {
     return xdp + objSize / 2 + (xdp + objSize) * i
   }
 
-  legend.selectAll('circle.node-circle')
+  legend
+    .selectAll('circle.node-circle')
     .data(styles)
     .enter()
     .append('circle')
@@ -30,17 +31,19 @@ export default function drawLegend () {
     .attr('cx', nodeCircleX)
     .attr('cy', nodeY)
     .attr('class', d => ['node-circle', d.class].join(' '))
-  legend.selectAll('circle.node')
+  legend
+    .selectAll('circle.node')
     .data(styles)
     .enter()
     .append('circle')
-    .attr('r', 0.7 * objSize / 2)
+    .attr('r', (0.7 * objSize) / 2)
     .attr('cx', nodeCircleX)
     .attr('cy', nodeY)
     .attr('class', d => ['node', d.class].join(' '))
 
   const tpY = nodeY + objSize / 2 + ydp + objSize / 4
-  legend.selectAll('circle.tp')
+  legend
+    .selectAll('circle.tp')
     .data(styles)
     .enter()
     .append('circle')
@@ -50,7 +53,8 @@ export default function drawLegend () {
     .attr('class', d => ['tp', d.class].join(' '))
 
   const textY = tpY + objSize / 4 + ydp * 2
-  legend.selectAll('text')
+  legend
+    .selectAll('text')
     .data(styles)
     .enter()
     .append('text')

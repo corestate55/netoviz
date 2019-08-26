@@ -87,7 +87,7 @@ export default class Network extends TopoBaseContainer {
     this.links = []
     const linkKey = 'ietf-network-topology:link' // alias
     if (data[linkKey]) {
-      this.links = data[linkKey].map((d) => {
+      this.links = data[linkKey].map(d => {
         return this.newLink(d)
       })
     }

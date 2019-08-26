@@ -58,14 +58,17 @@ export default new Vuex.Store({
     },
     initializeLayersFromModelFile ({ getters, commit }) {
       const modelFile = getters.modelFile
-      json(`/graph/topology/${modelFile}`).then((modelData) => {
-        // graph object data to draw converted from topology json
-        const layers = modelData.map(d => d.name)
-        commit('setWholeLayers', layers)
-        commit('setSelectedLayers', layers)
-      }, (error) => {
-        throw error
-      })
+      json(`/graph/topology/${modelFile}`).then(
+        modelData => {
+          // graph object data to draw converted from topology json
+          const layers = modelData.map(d => d.name)
+          commit('setWholeLayers', layers)
+          commit('setSelectedLayers', layers)
+        },
+        error => {
+          throw error
+        }
+      )
     }
   }
 })

@@ -12,12 +12,12 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeLayerGroup () {
-    return this.svgGrp.append('g')
-      .attr('class', 'layer-labels')
+    return this.svgGrp.append('g').attr('class', 'layer-labels')
   }
 
   makeLayerLabel (graphData, origin) {
-    return origin.selectAll('text')
+    return origin
+      .selectAll('text')
       .data(graphData)
       .enter()
       .append('text')
@@ -29,12 +29,12 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeLayerObjGroup () {
-    return this.svgGrp.append('g')
-      .attr('class', 'layer-objects')
+    return this.svgGrp.append('g').attr('class', 'layer-objects')
   }
 
   makeLayerNode (layer, origin) {
-    return origin.selectAll('rect')
+    return origin
+      .selectAll('rect')
       .data(layer.nodes)
       .enter()
       .append('rect')
@@ -46,12 +46,13 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .attr('ry', 5)
       .attr('width', d => this.scale(d.width))
       .attr('height', d => this.scale(d.height))
-      // .append('title')
-      // .text(d => d.path)
+    // .append('title')
+    // .text(d => d.path)
   }
 
   makeLayerNodeTp (layer, origin) {
-    return origin.selectAll('circle')
+    return origin
+      .selectAll('circle')
       .data(layer.tps)
       .enter()
       .append('circle')
@@ -60,12 +61,13 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .attr('cx', d => this.scale(d.cx))
       .attr('cy', d => this.scale(d.cy))
       .attr('r', d => this.scale(d.r))
-      // .append('title')
-      // .text(d => d.path)
+    // .append('title')
+    // .text(d => d.path)
   }
 
   makeLayerNodeLabel (layer, origin) {
-    return origin.selectAll('text.node')
+    return origin
+      .selectAll('text.node')
       .data(layer.nodes)
       .enter()
       .append('text')
@@ -79,7 +81,8 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeLayerNodeTpLabel (layer, origin) {
-    return origin.selectAll('text.tp')
+    return origin
+      .selectAll('text.tp')
       .data(layer.tps)
       .enter()
       .append('text')
@@ -93,16 +96,19 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeDepLineGroup () {
-    return this.svgGrp.append('g')
-      .attr('class', 'dep-lines')
+    return this.svgGrp.append('g').attr('class', 'dep-lines')
   }
 
   makeScale (graphData) {
-    const lastNodes = graphData.map(layer => layer.nodes[layer.nodes.length - 1])
+    const lastNodes = graphData.map(
+      layer => layer.nodes[layer.nodes.length - 1]
+    )
     // Use single scale to use to objects,
     // because to KEEP aspect ratio of original object.
     const maxX = Math.max(...lastNodes.map(n => n.x + n.width))
-    const maxY = Math.max(...lastNodes.map(n => n.y + n.height + this.fontSize * 2))
+    const maxY = Math.max(
+      ...lastNodes.map(n => n.y + n.height + this.fontSize * 2)
+    )
     const scaleX = scaleLinear()
       .domain([0, maxX])
       .range([0, this.width])
@@ -117,9 +123,7 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeGraphObjects (graphData) {
-    this.makeGraphSVG(
-      'dependency-view', null, 'whole-dep-graph'
-    )
+    this.makeGraphSVG('dependency-view', null, 'whole-dep-graph')
     this.makeGraphControlButtons()
     this.scale = this.makeScale(graphData)
 

@@ -11,14 +11,17 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   drawJsonModel (jsonName, alert, reverse, depth) {
     const url = this.apiUrl(jsonName, reverse, depth, alert)
     console.log(`[nested] query ${url}`)
-    json(url).then((graphData) => {
-      this.clearCanvas()
-      this.makeGraphObjects(graphData)
-      this.setOperationHandler(graphData)
-      this.highlightByAlert(alert)
-    }, (error) => {
-      throw error
-    })
+    json(url).then(
+      graphData => {
+        this.clearCanvas()
+        this.makeGraphObjects(graphData)
+        this.setOperationHandler(graphData)
+        this.highlightByAlert(alert)
+      },
+      error => {
+        throw error
+      }
+    )
   }
 
   saveLayout (jsonName, reverse, depth) {
@@ -31,7 +34,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     json(url, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(layoutData)

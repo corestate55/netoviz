@@ -1,12 +1,21 @@
 import Vue from 'vue'
 import {
-  RadioGroup, RadioButton,
-  CheckboxGroup, CheckboxButton,
-  Select, Option,
-  Table, TableColumn,
-  Button, Input, InputNumber,
-  Collapse, CollapseItem,
-  Row, Col, Switch
+  RadioGroup,
+  RadioButton,
+  CheckboxGroup,
+  CheckboxButton,
+  Select,
+  Option,
+  Table,
+  TableColumn,
+  Button,
+  Input,
+  InputNumber,
+  Collapse,
+  CollapseItem,
+  Row,
+  Col,
+  Switch
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ja'
 import locale from 'element-ui/lib/locale'

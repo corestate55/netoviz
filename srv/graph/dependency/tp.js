@@ -16,8 +16,12 @@ export default class DepGraphTp extends DepGraphNodeBase {
   }
 
   calcX (nx) {
-    return nx + this.tpXPad1 +
-      (2 * this.tpR + this.tpXPad2) * (this.number - 1) + this.tpR
+    return (
+      nx +
+      this.tpXPad1 +
+      (2 * this.tpR + this.tpXPad2) * (this.number - 1) +
+      this.tpR
+    )
   }
 
   calcY (ny) {
@@ -32,17 +36,17 @@ export default class DepGraphTp extends DepGraphNodeBase {
 
   toData () {
     return {
-      'number': this.number,
-      'cx': this.cx,
-      'cy': this.cy,
-      'r': this.tpR,
-      'name': this.name,
-      'path': this.path,
-      'type': this.type,
-      'parents': this.parents,
-      'children': this.children,
-      'attribute': this.attribute,
-      'diffState': this.diffState
+      number: this.number,
+      cx: this.cx,
+      cy: this.cy,
+      r: this.tpR,
+      name: this.name,
+      path: this.path,
+      type: this.type,
+      parents: this.parents,
+      children: this.children,
+      attribute: this.attribute,
+      diffState: this.diffState
     }
   }
 }

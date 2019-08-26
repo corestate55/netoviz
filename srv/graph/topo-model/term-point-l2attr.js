@@ -36,9 +36,7 @@ export default class L2TPAttribute extends TopoBaseContainer {
   }
 
   toHtml () {
-    const portIdNameStr = this.vlanIdName.map(
-      d => `<li>${d.toHtml()}</li>`
-    )
+    const portIdNameStr = this.vlanIdName.map(d => `<li>${d.toHtml()}</li>`)
     return `
 <ul>
   <li><span class="attr">Description:</span> ${this.description}</li>

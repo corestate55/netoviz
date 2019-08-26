@@ -57,7 +57,8 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
       .append('tr') // table header
       .append('th')
       .html('Node')
-    this.nodeInfoTable.selectAll('td')
+    this.nodeInfoTable
+      .selectAll('td')
       .data(this.nodeTypeNodes())
       .enter()
       .append('tr')
@@ -85,7 +86,8 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeLinkObjects () {
-    return this.svgGrp.append('g')
+    return this.svgGrp
+      .append('g')
       .attr('class', 'links')
       .selectAll('line')
       .data(this.graph.links)
@@ -96,19 +98,23 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeTpObjects () {
-    return this.svgGrp.append('g')
-      .attr('class', 'term-points')
-      .selectAll('circle.tp')
-      .data(this.tpTypeNodes())
-      .enter()
-      .append('circle')
-      .attr('class', d => this.objClassDef(d, 'topo tp'))
-      // d => ['tp', d.diffState.detect()].join(' ')
-      .attr('id', d => d.path)
+    return (
+      this.svgGrp
+        .append('g')
+        .attr('class', 'term-points')
+        .selectAll('circle.tp')
+        .data(this.tpTypeNodes())
+        .enter()
+        .append('circle')
+        .attr('class', d => this.objClassDef(d, 'topo tp'))
+        // d => ['tp', d.diffState.detect()].join(' ')
+        .attr('id', d => d.path)
+    )
   }
 
   makeNodeObjects () {
-    return this.svgGrp.append('g')
+    return this.svgGrp
+      .append('g')
       .attr('class', 'nodes')
       .selectAll('circle')
       .data(this.nodeTypeNodes())
@@ -119,7 +125,8 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeNodeCircleObjects () {
-    return this.svgGrp.append('g')
+    return this.svgGrp
+      .append('g')
       .attr('class', 'node-circles')
       .selectAll('circle.node-circle')
       .data(this.nodeTypeNodes())
@@ -130,7 +137,8 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeTpLabelObjects () {
-    return this.svgGrp.append('g')
+    return this.svgGrp
+      .append('g')
       .attr('class', 'tp-labels')
       .selectAll('text.tp-label')
       .data(this.tpTypeNodes())
@@ -142,7 +150,8 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   makeNodeLabelObjects () {
-    return this.svgGrp.append('g')
+    return this.svgGrp
+      .append('g')
       .attr('class', 'node-labels')
       .selectAll('text.node-label')
       .data(this.nodeTypeNodes())
@@ -171,8 +180,7 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
   }
 
   setStyleOfInactiveObjects () {
-    selectAll(`.${this.currentInactive}`)
-      .classed('inactive', true)
+    selectAll(`.${this.currentInactive}`).classed('inactive', true)
   }
 
   renameLinkKey () {

@@ -5,13 +5,13 @@ import localStorage from 'localStorage'
 export default class PositionCache {
   // save node position in all graphs
   saveGraphs (key, graphs) {
-    let positionData = { 'graphs': [] }
+    const positionData = { graphs: [] }
     for (const graph of graphs) {
       const g = {}
       g.name = graph.name
       g.nodes = graph.nodes
         .filter(node => node.fx && node.fy)
-        .map((node) => {
+        .map(node => {
           const n = {}
           n.path = node.path
           n.id = node.id

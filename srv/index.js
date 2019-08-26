@@ -6,8 +6,8 @@ const port = process.env.PORT || 3000 // process.env.PORT for Heroku
 const topoDataAPI = new TopologyDataAPI(process.env.NODE_ENV)
 
 const debugEnv = {
-  'development': true,
-  'production': false
+  development: true,
+  production: false
 }
 if (process.env.NODE_ENV in debugEnv && debugEnv[process.env.NODE_ENV]) {
   process.on('unhandledRejection', (err, p) => {
@@ -26,7 +26,7 @@ export default app => {
     const date = new Date()
     alertData.created_at = date.toISOString()
     alertData.updated_at = date.toISOString()
-    db.alert.create(alertData).then((instance) => {
+    db.alert.create(alertData).then(instance => {
       console.log('create instance: ', instance.dataValues)
     })
     res.send('Log message received.')

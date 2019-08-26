@@ -37,7 +37,7 @@ export default class CacheTopologyGraphConverter {
 
   writeCache (resJsonString) {
     console.log('create cache: ', this.cacheJsonPath)
-    fs.writeFile(this.cacheJsonPath, resJsonString, 'utf8', (error) => {
+    fs.writeFile(this.cacheJsonPath, resJsonString, 'utf8', error => {
       if (error) {
         throw error
       }
@@ -52,8 +52,10 @@ export default class CacheTopologyGraphConverter {
   }
 
   foundCache () {
-    return this.timeStampOf[this.jsonPath] &&
+    return (
+      this.timeStampOf[this.jsonPath] &&
       this.timeStampOf[this.jsonPath] === this.timeStamp.mtimeMs
+    )
   }
 
   updateCacheTimeStamp () {
@@ -71,8 +73,8 @@ export default class CacheTopologyGraphConverter {
       } else {
         // the json file was changed.
         this.updateCacheTimeStamp()
-        resJsonString = await convertTopologyGraphData(
-          async () => this.readTopologyDataFromJSON()
+        resJsonString = await convertTopologyGraphData(async () =>
+          this.readTopologyDataFromJSON()
         )
         this.writeCache(resJsonString)
       }

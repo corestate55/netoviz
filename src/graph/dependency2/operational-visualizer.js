@@ -40,10 +40,15 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     for (const nwObjs of this.drawGraphData) {
       nwObjs
         .filter(d => {
-          return d.type === 'tp' && d.visible &&
+          return (
+            d.type === 'tp' &&
+            d.visible &&
             !this.matchChildPath(targetNodePath, d.path)
+          )
         })
-        .forEach(d => { d.visible = false })
+        .forEach(d => {
+          d.visible = false
+        })
     }
   }
 
@@ -58,9 +63,9 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
 
   _lineConverter (line) {
     return {
-      'source': [line.src.x, line.src.y],
-      'target': [line.dst.x, line.dst.y],
-      'type': line.type
+      source: [line.src.x, line.src.y],
+      target: [line.dst.x, line.dst.y],
+      type: line.type
     }
   }
 
@@ -68,7 +73,8 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
     const linkGenerator = linkHorizontal()
       .x(d => d[0] + this.p_r)
       .y(d => d[1] + this.p_r)
-    this.depLineSVGGrp.selectAll(`path.dep2.${lineClass}`)
+    this.depLineSVGGrp
+      .selectAll(`path.dep2.${lineClass}`)
       .data(lines.map(line => this._lineConverter(line)))
       .enter()
       .append('path')
@@ -104,9 +110,9 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
       if (parentObjData) {
         parentObjData.visible = true
         pathList.push({
-          'type': objData.type,
-          'src': objData,
-          'dst': parentObjData
+          type: objData.type,
+          src: objData,
+          dst: parentObjData
         })
         // push parent and parents of parent
         pathList.push(this.getParentsTree(parentObjData))
@@ -123,9 +129,9 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
       if (childObjData) {
         childObjData.visible = true
         pathList.push({
-          'type': objData.type,
-          'src': childObjData,
-          'dst': objData
+          type: objData.type,
+          src: childObjData,
+          dst: objData
         })
         // push child and children of child
         pathList.push(this.getChildrenTree(childObjData))
@@ -176,33 +182,36 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   _setOperationHandler () {
-    const dragStarted = (d) => {
+    const dragStarted = d => {
       d.dragY = event.y
     }
-    const dragged = (d) => {
+    const dragged = d => {
       this._moveNetworkLayer(d.path, event.y - d.dragY)
       d.dragY = event.y
     }
-    const dragEnded = (d) => {
+    const dragEnded = d => {
       delete d.dragY
     }
 
     // add event hunder to current svg object
-    this.svgGrp.selectAll('.dep2')
+    this.svgGrp
+      .selectAll('.dep2')
       .on('click', d => this.clickHandler(d))
       .on('mouseover', d => this.mouseOverHandler(d))
       .on('mouseout', d => this.mouseOutHandler(d))
-      .call(drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded)
+      .call(
+        drag()
+          .on('start', dragStarted)
+          .on('drag', dragged)
+          .on('end', dragEnded)
       )
   }
 
   _setSVGZoom () {
-    this.svg.call(zoom()
-      .scaleExtent([1 / 4, 5])
-      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    this.svg.call(
+      zoom()
+        .scaleExtent([1 / 4, 5])
+        .on('zoom', () => this.svgGrp.attr('transform', event.transform))
     )
   }
 

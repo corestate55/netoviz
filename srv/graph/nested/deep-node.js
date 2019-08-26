@@ -25,7 +25,7 @@ export default class DeepNestedGraphNode extends ShallowNestedGraphNode {
     splitNode.path = `${this.path}::${this.split}`
     // overwrite children and parents (selected by reverse flag in constructor)
     splitNode.children = this.children
-    splitNode.parents = [ parentPath ]
+    splitNode.parents = [parentPath]
     // delete and ignore tp path
     this.parents = this.parentNodePaths().filter(d => d !== parentPath)
 

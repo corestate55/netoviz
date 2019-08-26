@@ -36,7 +36,7 @@ export default class Graphs extends BaseContainer {
     }
   }
 
-  checkFoundNode(targetStr, target, link) {
+  checkFoundNode (targetStr, target, link) {
     if (!target) {
       console.error(`${targetStr} does not found, in link:`, link)
     }

@@ -55,7 +55,10 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.links = []
     for (const layer of this.graphData) {
       for (const link of layer.links) {
-        const reverseLink = this.findLinkBetween(link.targetPath, link.sourcePath)
+        const reverseLink = this.findLinkBetween(
+          link.targetPath,
+          link.sourcePath
+        )
         // filter (discard) reverse link of bi-directional link for visualizer
         if (!reverseLink) {
           this.links.push(new NestedGraphLink(link))
@@ -116,7 +119,11 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   }
 
   calcNodePosition (node, basePosition, layerOrder) {
-    this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, family?=${node.family}`)
+    this._consoleDebug(
+      layerOrder,
+      'nodePos',
+      `node=${node.path}, family?=${node.family}`
+    )
 
     // node rectangle : layerOrder     (0, 2, 4, ...)
     // node tp circle : layerOrder + 1 (1, 3, 5, ...)
@@ -124,14 +131,38 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     // calc node Width/Height when the node is leaf.
     if (this.assumeAsLeaf(node, layerOrder)) {
       const wh = this.calcLeafNodeWH(node, basePosition, layerOrder)
-      this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, lo=${layerOrder} is assumed leaf, return: `, wh)
+      this._consoleDebug(
+        layerOrder,
+        'nodePos',
+        `node=${node.path}, lo=${layerOrder} is assumed leaf, return: `,
+        wh
+      )
       return wh
     }
     // recursive position calculation
-    const childrenWHList = this.calcChildNodePosition(node, basePosition, layerOrder + 2)
-    this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, children WH list:`, childrenWHList)
-    const wh = this.calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder)
-    this._consoleDebug(layerOrder, 'nodePos', `node=${node.path}, return node wh:`, wh)
+    const childrenWHList = this.calcChildNodePosition(
+      node,
+      basePosition,
+      layerOrder + 2
+    )
+    this._consoleDebug(
+      layerOrder,
+      'nodePos',
+      `node=${node.path}, children WH list:`,
+      childrenWHList
+    )
+    const wh = this.calcSubRootNodeWH(
+      node,
+      basePosition,
+      childrenWHList,
+      layerOrder
+    )
+    this._consoleDebug(
+      layerOrder,
+      'nodePos',
+      `node=${node.path}, return node wh:`,
+      wh
+    )
     return wh
   }
 
@@ -148,10 +179,21 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
 
-    this._consoleDebug(layerOrder, 'childNodePos', `node=${node.path}, lo=${layerOrder}`)
-    for (const childNodePath of this.childNodePathsToCalcPosition(node, layerOrder)) {
+    this._consoleDebug(
+      layerOrder,
+      'childNodePos',
+      `node=${node.path}, lo=${layerOrder}`
+    )
+    for (const childNodePath of this.childNodePathsToCalcPosition(
+      node,
+      layerOrder
+    )) {
       const childNode = this.childNodeFrom(node, childNodePath)
-      this._consoleDebug(layerOrder, 'childNodePos', `childrenNodePath=${childNodePath}, family?=${childNode.family}`)
+      this._consoleDebug(
+        layerOrder,
+        'childNodePos',
+        `childrenNodePath=${childNodePath}, family?=${childNode.family}`
+      )
       // recursive search
       const basePosition = { x: nx11, y: ny1x }
       const wh = this.calcNodePosition(childNode, basePosition, layerOrder)
@@ -163,7 +205,9 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
 
   widthByTp (node) {
     const tpNum = node.numberOfTps()
-    return this.nodeXPad * 2 + 2 * this.r * tpNum + this.tpInterval * (tpNum - 1)
+    return (
+      this.nodeXPad * 2 + 2 * this.r * tpNum + this.tpInterval * (tpNum - 1)
+    )
   }
 
   heightByTp () {
@@ -173,9 +217,13 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   widthByChildNodes (node, childrenWHList) {
     // childrenWHList is { width:, height: } object list mapped of node.children.
     // childrenWHList.length is same as a number of children of the node.
-    return this.nodeXPad * 2 +
-      childrenWHList.reduce((sum, d) => { return sum + d.width }, 0) +
+    return (
+      this.nodeXPad * 2 +
+      childrenWHList.reduce((sum, d) => {
+        return sum + d.width
+      }, 0) +
       this.nodeXPad * (childrenWHList.length - 1)
+    )
   }
 
   heightByChildNodes (childrenWHList) {
