@@ -3,9 +3,10 @@
     <div
       v-bind:style="{ display: debug }"
     >
+      host (input): {{ alertHost }},
       currentAlertRow: {{ currentAlertRow }}
     </div>
-    <el-row v-bind:gutter="20">
+    <el-row v-bind:gutter="10">
       <el-col v-bind:span="4">
         Rows :
         <el-input-number
@@ -24,11 +25,22 @@
           type="info"
           icon="el-icon-delete"
           v-bind:disabled="currentAlertRow && Object.keys(currentAlertRow).length < 1"
-          v-on:click="setAlertTableCurrentRow({})"
+          v-on:click="clearAlertTableSelection"
         >
           Clear selection
         </el-button>
       </el-col>
+      <el-col v-bind:span="12">
+        Host to Highlight:
+        <el-input
+          v-model="alertHost"
+          class="host-input"
+          size="small"
+          v-on:input="setAlertByInput"
+        />
+      </el-col>
+    </el-row>
+    <el-row v-bind:gutter="10">
       <el-col v-bind:span="6">
         <el-switch
           v-model="enableTimer"
@@ -50,11 +62,11 @@
           v-on:change="resetAlertCheckTimer()"
         />
       </el-col>
+      <el-col v-bind:span="8">
+        Updated alert table at:<br>
+        <span id="alert-update-time">{{ alertUpdatedTime }}</span>
+      </el-col>
     </el-row>
-    <p>
-      Updated alert table at:
-      <span id="alert-update-time">{{ alertUpdatedTime }}</span>
-    </p>
     <!-- alert data table -->
     <el-table
       ref="alertTable"
@@ -101,6 +113,7 @@ export default {
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
       alertUpdatedTime: null,
+      alertHost: '',
       enableTimer: true,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -166,11 +179,38 @@ export default {
       }
       return 'not-classifed-row'
     },
+    clearAlertHostInput () {
+      this.alertHost = ''
+    },
+    clearAlertTableSelection () {
+      this.$refs.alertTable.setCurrentRow({})
+    },
+    setAlertByInput () {
+      const rowData = {
+        'host': this.alertHost,
+        'message': 'selected directly',
+        'severity': 'information',
+        'date': (new Date()).toISOString()
+      }
+      // console.log('setAlertByInput: ', rowData)
+      this.clearAlertTableSelection()
+      this.setCurrentAlertRow(rowData)
+    },
     setAlertTableCurrentRow (row) {
-      this.$refs.alertTable.setCurrentRow(row)
+      // console.log('setAlertTableCurrentRow: ', row)
+      if (row && 'host' in row) {
+        this.alertHost = row.host
+        this.$refs.alertTable.setCurrentRow(row)
+      } else {
+        this.clearAlertHostInput()
+        this.clearAlertTableSelection()
+      }
     },
     handleAlertTableCurrentChange (row) {
       // console.log('handle current change: ', row)
+      if (row && 'host' in row) {
+        this.alertHost = row.host
+      }
       this.setCurrentAlertRow(row)
     }
   }
@@ -180,6 +220,12 @@ export default {
 <style lang="scss" scoped>
 .el-button {
   margin-left: 10px;
+}
+.el-row {
+  margin-bottom: 15px;
+}
+.host-input {
+  width: 200px;
 }
 .el-table /deep/ {
   table {

@@ -4,7 +4,7 @@ import {
   CheckboxGroup, CheckboxButton,
   Select, Option,
   Table, TableColumn,
-  Button, InputNumber,
+  Button, Input, InputNumber,
   Collapse, CollapseItem,
   Row, Col, Switch
 } from 'element-ui'
@@ -23,6 +23,7 @@ Vue.use(Option)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Button)
+Vue.use(Input)
 Vue.use(InputNumber)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
