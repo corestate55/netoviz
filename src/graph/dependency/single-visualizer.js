@@ -102,7 +102,7 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
   makeScale (graphData) {
     const lastNodes = graphData.map(
       layer => layer.nodes[layer.nodes.length - 1]
-    )
+    ).filter(n => n) // ignore empty nodes case
     // Use single scale to use to objects,
     // because to KEEP aspect ratio of original object.
     const maxX = Math.max(...lastNodes.map(n => n.x + n.width))

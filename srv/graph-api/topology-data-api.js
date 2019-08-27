@@ -1,7 +1,7 @@
 import fs from 'fs'
 import CacheTopoGraphConverter from './cache-topo-graph-converter'
-import convertDependencyGraphData from './graph/dependency/converter'
-import convertNestedGraphData from './graph/nested/converter'
+import convertDependencyGraphData from '../graph/dependency/converter'
+import convertNestedGraphData from '../graph/nested/converter'
 import { promisify } from 'util'
 
 const readFile = promisify(fs.readFile)
@@ -23,12 +23,12 @@ export default class TopoogyDataAPI {
     try {
       const baseName = jsonName.split('.').shift()
       const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
-      return await readFile(layoutJsonName, 'utf-8')
+      return JSON.parse(await readFile(layoutJsonName, 'utf-8'))
     } catch (error) {
       console.log(`Layout file correspond with ${jsonName} was not found.`)
       // layout file is optional.
       // when found (layout file was not found), use default layout.
-      return JSON.stringify(null)
+      return null
     }
   }
 
@@ -50,33 +50,40 @@ export default class TopoogyDataAPI {
     return Number(strNum)
   }
 
+  async _getDependencyGraphData (jsonName, req) {
+    const target = req.query.target
+    console.log(`call dependency: target=${target}`)
+    return convertDependencyGraphData(target, async () =>
+      this.convertTopoGraphData(jsonName)
+    )
+  }
+
+  async _getNestedGraphData (jsonName, req) {
+    const reverse = this.boolString2Bool(req.query.reverse)
+    const depth = this.numberString2Number(req.query.depth)
+    const target = req.query.target
+    console.log(
+      `call nested: reverse=${reverse}, depth=${depth}, target=${target}`
+    )
+    return convertNestedGraphData(
+      reverse,
+      depth,
+      target,
+      async () => this.convertTopoGraphData(jsonName),
+      async () => this.readLayoutJSON(jsonName)
+    )
+  }
+
   async getGraphData (req) {
     const graphName = req.params.graphName
     const jsonName = req.params.jsonName
-    try {
-      if (graphName === 'topology') {
-        return await this.convertTopoGraphData(jsonName)
-      } else if (graphName === 'dependency') {
-        return await convertDependencyGraphData(async () =>
-          this.convertTopoGraphData(jsonName)
-        )
-      } else if (graphName === 'nested') {
-        const reverse = this.boolString2Bool(req.query.reverse)
-        const depth = this.numberString2Number(req.query.depth)
-        const target = req.query.target
-        console.log(
-          `call nested: reverse=${reverse}, depth=${depth}, target=${target}`
-        )
-        return await convertNestedGraphData(
-          reverse,
-          depth,
-          target,
-          async () => this.convertTopoGraphData(jsonName),
-          async () => this.readLayoutJSON(jsonName)
-        )
-      }
-    } catch (error) {
-      throw error
+
+    if (graphName === 'topology') {
+      return JSON.stringify(await this.convertTopoGraphData(jsonName))
+    } else if (graphName === 'dependency') {
+      return JSON.stringify(await this._getDependencyGraphData(jsonName, req))
+    } else if (graphName === 'nested') {
+      return JSON.stringify(await this._getNestedGraphData(jsonName, req))
     }
   }
 

@@ -1,10 +1,10 @@
 import DepGraphNodeBase from './base'
 
 export default class DepGraphNode extends DepGraphNodeBase {
-  constructor (graphData) {
+  constructor (graphData, tpListCB) {
     super(graphData)
     this.number = Math.floor((graphData.id % 10000) / 100)
-    this.tpList = this.tpPaths() // path list of tps in this node
+    this.tpList = tpListCB(graphData) // path list of tps in this node
   }
 
   setPos (nx, ny) {
@@ -19,12 +19,6 @@ export default class DepGraphNode extends DepGraphNodeBase {
     )
   }
 
-  tpPaths () {
-    return this.parents.filter(parent => {
-      return parent.match(new RegExp(this.path))
-    })
-  }
-
   toData () {
     return {
       number: this.number,
@@ -35,6 +29,7 @@ export default class DepGraphNode extends DepGraphNodeBase {
       name: this.name,
       path: this.path,
       type: this.type,
+      family: this.family,
       parents: this.parents,
       children: this.children,
       attribute: this.attribute,

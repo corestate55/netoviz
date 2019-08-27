@@ -1,5 +1,5 @@
 import express from 'express'
-import TopologyDataAPI from './topology-data-api'
+import TopologyDataAPI from './graph-api/topology-data-api'
 import db from './models'
 
 const port = process.env.PORT || 3000 // process.env.PORT for Heroku

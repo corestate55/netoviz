@@ -24,16 +24,14 @@ const convertNestedGraphData = async (
   topoGraphDataCB,
   layoutDataCB
 ) => {
-  const topoJsonString = await topoGraphDataCB()
-  const layoutJsonString = await layoutDataCB()
   const nestedGraphConverter = new NestedGraphConverter(
-    JSON.parse(topoJsonString),
-    JSON.parse(layoutJsonString),
+    await topoGraphDataCB(),
+    await layoutDataCB(),
     reverse,
     depth,
     target
   )
-  return JSON.stringify(nestedGraphConverter.toData())
+  return nestedGraphConverter.toData()
 }
 
 export default convertNestedGraphData

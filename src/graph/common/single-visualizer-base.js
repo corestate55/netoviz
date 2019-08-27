@@ -146,7 +146,6 @@ export default class SingleVisualizerBase extends BaseContainer {
       .attr('x', d => d.x)
       .attr('y', d => d.y)
       .text(d => d.message)
-    console.log(message)
   }
 
   childPathRegexp (path) {

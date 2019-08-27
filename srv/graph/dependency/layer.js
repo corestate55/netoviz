@@ -3,8 +3,9 @@ import DepGraphNode from './node'
 import DepGraphTp from './tp'
 
 export default class DepGraphLayer extends DepGraphConstants {
-  constructor (layerNum, graphData) {
+  constructor (layerNum, graphData, foundTarget) {
     super()
+    this.useAll = !foundTarget
     this.number = layerNum
     this.name = graphData.name
     this.path = this.name // alias
@@ -36,8 +37,17 @@ export default class DepGraphLayer extends DepGraphConstants {
   setNodes (graphData) {
     this.nodes = []
     let nx = this.x + this.nodeXPad1
+    const tps = this.tpsFrom(graphData)
     for (const node of this.nodesFrom(graphData)) {
-      const dgNode = new DepGraphNode(node)
+      const dgNode = new DepGraphNode(node, (nodeData) => {
+        return nodeData.parents.filter(parentPath => {
+          // With family-filtered dependency graph,
+          // term-points of child node (of the target node) is ignored.
+          // Because these term-points are 'parents of child of the target,
+          // so these are not under children-tree.
+          return tps.find(tp => tp.path === parentPath)
+        })
+      })
       dgNode.setPos(nx, this.y + this.nodeYPad1)
       this.nodes.push(dgNode)
       nx += dgNode.nodeWidth() + this.nodeXPad2
@@ -58,12 +68,16 @@ export default class DepGraphLayer extends DepGraphConstants {
     }
   }
 
+  _isType (d, type) {
+    return (d.type === type) && (this.useAll || d.family)
+  }
+
   nodesFrom (graphData) {
-    return graphData.nodes.filter(d => d.type === 'node')
+    return graphData.nodes.filter(d => this._isType(d, 'node'))
   }
 
   tpsFrom (graphData) {
-    return graphData.nodes.filter(d => d.type === 'tp')
+    return graphData.nodes.filter(d => this._isType(d, 'tp'))
   }
 
   toData () {

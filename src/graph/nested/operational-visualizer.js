@@ -202,7 +202,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       this.redrawLinkLines()
     }
 
-    [this.selectGridHandle(xy, -1), this.selectGridLabel(xy, -1)].forEach(
+    ;[this.selectGridHandle(xy, -1), this.selectGridLabel(xy, -1)].forEach(
       target => {
         target.call(
           drag()

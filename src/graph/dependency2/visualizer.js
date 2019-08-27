@@ -2,8 +2,13 @@ import { json } from 'd3-fetch'
 import OperationalDep2GraphVisualizer from './operational-visualizer'
 
 export default class Dep2GraphVisualizer extends OperationalDep2GraphVisualizer {
+  apiUrl (jsonName, alert) {
+    const targetString = alert && alert.host ? `?target=${alert.host}` : ''
+    return `graph/dependency/${jsonName}${targetString}`
+  }
+
   drawJsonModel (jsonName, alert) {
-    json(`graph/dependency/${jsonName}`).then(
+    json(this.apiUrl(jsonName, alert)).then(
       graphData => {
         this.clearCanvas()
         this.makeGraphObjects(graphData)

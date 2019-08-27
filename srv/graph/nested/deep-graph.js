@@ -1,5 +1,6 @@
 import ShallowNestedGraph from './shallow-graph'
 import DeepNestedGraphNode from './deep-node'
+import markFamilyWithTarget from '../common/family-maker'
 
 export default class DeepNestedGraph extends ShallowNestedGraph {
   constructor (graphData, layoutData, reverse, depth, target) {
@@ -9,61 +10,9 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
   }
 
   beforeCalcRootNodePosition () {
-    this.markFamilyOfTarget()
-  }
-
-  findAndMarkAsFamily (path, relationship, depth) {
-    this._consoleDebug(
-      depth,
-      'findAndMark',
-      `FIND ${path} with ${relationship}`
-    )
-    const node = this.findNodeByPath(path)
-    if (!node) {
-      this._consoleDebug(depth, 'findAndMark', `node ${path} not found`)
-      console.log(`    `)
-      return
-    }
-    this._consoleDebug(
-      depth,
-      'findAndMark',
-      `mark ${node.path} as ${relationship}`
-    )
-    node.family = relationship
-    // Find recursively: node.parents or node.children
-    for (const familyPath of node[relationship]) {
-      this._consoleDebug(
-        depth,
-        'findAndMark',
-        `next: ${familyPath} as ${relationship} of ${node.path}`
-      )
-      this.findAndMarkAsFamily(familyPath, relationship, depth + 1)
-    }
-  }
-
-  markFamilyOfTarget () {
-    const targetNode = this.nodes
-      .reverse()
-      .find(d => d.type === 'node' && d.name === this.target)
-    if (!targetNode) {
-      this._consoleDebug(0, 'markTarget', `target: ${this.target} not found`)
-      return
-    }
-    this._consoleDebug(
-      0,
-      'markTarget',
-      `target: ${targetNode.path} found name as ${this.target}`
-    )
-    this._consoleDebug(0, 'markTarget', `find and mark as parents`)
-    this.findAndMarkAsFamily(targetNode.path, 'parents', 1)
-    this._consoleDebug(0, 'markTarget', `find and mark as children`)
-    this.findAndMarkAsFamily(targetNode.path, 'children', 1)
-    targetNode.family = 'target'
-    this._consoleDebug(
-      0,
-      'markTarget',
-      `target: ${targetNode.path} mark as ${targetNode.family}`
-    )
+    // It must check family after setNodes(),
+    // Because, it "reverse" parent/children relation.
+    markFamilyWithTarget(this.nodes, this.target)
   }
 
   setNodes () {

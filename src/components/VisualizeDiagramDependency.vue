@@ -37,7 +37,10 @@ export default {
     // set watcher for alert selection change
     this.unwatchAlert = this.$store.watch(
       state => state.currentAlertRow,
-      (newRow, oldRow) => { this.highlightByAlert(newRow) }
+      (newRow, oldRow) => {
+        this.drawJsonModel()
+        this.highlightByAlert(newRow)
+      }
     )
     this.unwatchModelFile = this.$store.watch(
       state => state.modelFile,

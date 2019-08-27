@@ -1,15 +1,24 @@
 import DepGraphLayer from './layer'
+import markFamilyWithTarget from '../common/family-maker'
 
 class DepGraphConverter {
-  constructor (graphData) {
-    this.setLayers(graphData)
+  constructor (graphData, target) {
+    this.markFamilyWithTarget(graphData, target)
+    this.setLayers(graphData, target)
   }
 
-  setLayers (graphData) {
+  markFamilyWithTarget (graphData, target) {
+    const nodes = graphData.map(l => l.nodes).reduce((sum, nodes) => {
+      return sum.concat(nodes)
+    }, [])
+    this.foundTarget = markFamilyWithTarget(nodes, target)
+  }
+
+  setLayers (graphData, target) {
     this.layers = []
     let layerNum = 1
     for (const layer of graphData) {
-      this.layers.push(new DepGraphLayer(layerNum, layer))
+      this.layers.push(new DepGraphLayer(layerNum, layer, this.foundTarget))
       layerNum += 1
     }
   }
@@ -19,10 +28,10 @@ class DepGraphConverter {
   }
 }
 
-const convertDependencyGraphData = async topoGraphDataCB => {
-  const topoJsonString = await topoGraphDataCB() // callback
-  const depGraphConverter = new DepGraphConverter(JSON.parse(topoJsonString))
-  return JSON.stringify(depGraphConverter.toData())
+const convertDependencyGraphData = async (target, topoGraphDataCB) => {
+  const graphData = await topoGraphDataCB() // callback
+  const depGraphConverter = new DepGraphConverter(graphData, target)
+  return depGraphConverter.toData()
 }
 
 export default convertDependencyGraphData

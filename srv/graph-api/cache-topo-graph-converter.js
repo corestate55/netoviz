@@ -1,4 +1,4 @@
-import convertTopologyGraphData from './graph/topo-graph/converter'
+import convertTopologyGraphData from '../graph/topo-graph/converter'
 import fs from 'fs'
 import { promisify } from 'util'
 
@@ -18,26 +18,20 @@ export default class CacheTopologyGraphConverter {
     }
   }
 
-  async readCache () {
+  async readTopologyDataFromCacheJSON () {
     console.log('use cache: ', this.cacheJsonPath)
-    try {
-      return await readFile(this.cacheJsonPath, 'utf8')
-    } catch (error) {
-      throw error
-    }
+    const jsonString = await readFile(this.cacheJsonPath, 'utf8')
+    return JSON.parse(jsonString)
   }
 
   async readTopologyDataFromJSON () {
-    try {
-      return await readFile(this.jsonPath, 'utf8')
-    } catch (error) {
-      throw error
-    }
+    const jsonString = await readFile(this.jsonPath, 'utf8')
+    return JSON.parse(jsonString)
   }
 
-  writeCache (resJsonString) {
+  writeCache (jsonString) {
     console.log('create cache: ', this.cacheJsonPath)
-    fs.writeFile(this.cacheJsonPath, resJsonString, 'utf8', error => {
+    fs.writeFile(this.cacheJsonPath, jsonString, 'utf8', error => {
       if (error) {
         throw error
       }
@@ -63,26 +57,19 @@ export default class CacheTopologyGraphConverter {
   }
 
   async toData (jsonName) {
-    let resJsonString = '' // stringified json (NOT object)
-    try {
-      this.updateStatsOfTopoJSON(jsonName)
-      console.log('Requested: ', this.jsonPath)
+    this.updateStatsOfTopoJSON(jsonName)
+    console.log('Requested: ', this.jsonPath)
 
-      if (this.foundCache()) {
-        resJsonString = await this.readCache()
-      } else {
-        // the json file was changed.
-        this.updateCacheTimeStamp()
-        resJsonString = await convertTopologyGraphData(async () =>
-          this.readTopologyDataFromJSON()
-        )
-        this.writeCache(resJsonString)
-      }
-    } catch (error) {
-      resJsonString = ''
-      console.log('return null because error found in convertTopoGraphData()')
-      console.log(error)
+    if (this.foundCache()) {
+      return this.readTopologyDataFromCacheJSON()
+    } else {
+      // the json file was changed.
+      this.updateCacheTimeStamp()
+      const graphData = await convertTopologyGraphData(async () => {
+        return this.readTopologyDataFromJSON()
+      })
+      this.writeCache(JSON.stringify(graphData))
+      return graphData
     }
-    return resJsonString
   }
 }
