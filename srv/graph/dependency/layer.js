@@ -63,8 +63,12 @@ export default class DepGraphLayer extends DepGraphConstants {
     for (const tp of this.tpsFrom(graphData)) {
       const dgTp = new DepGraphTp(tp)
       const pNode = this.findNodeByPath(dgTp.parentPath())
-      dgTp.calcCenterPos(pNode.x, pNode.y)
-      this.tps.push(dgTp)
+      if (pNode) {
+        dgTp.calcCenterPos(pNode.x, pNode.y)
+        this.tps.push(dgTp)
+      } else {
+        console.log(`[dep] Error: parent node (path=${dgTp.parentPath()}) of tp=${dgTp.path} not found.`)
+      }
     }
   }
 
