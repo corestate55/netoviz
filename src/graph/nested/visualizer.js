@@ -2,16 +2,13 @@ import { json } from 'd3-fetch'
 import OperationalNestedGraphVisualizer from './operational-visualizer'
 
 export default class NestedGraphVisualizer extends OperationalNestedGraphVisualizer {
-  apiUrl (jsonName, reverse, depth, alert) {
-    const baseUrl = `graph/nested/${jsonName}?reverse=${reverse}&depth=${depth}`
-    const targetOption = alert ? `&target=${alert.host}` : ''
-    return baseUrl + targetOption
-  }
-
   drawJsonModel (jsonName, alert, reverse, depth) {
-    const url = this.apiUrl(jsonName, reverse, depth, alert)
-    console.log(`[nested] query ${url}`)
-    json(url).then(
+    const params = {
+      target: this.targetNameFromAlert(alert),
+      reverse: reverse,
+      depth: depth
+    }
+    json(this.apiURI('nested', jsonName, params)).then(
       graphData => {
         this.clearCanvas()
         this.makeGraphObjects(graphData)

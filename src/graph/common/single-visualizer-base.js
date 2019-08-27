@@ -177,4 +177,22 @@ export default class SingleVisualizerBase extends BaseContainer {
     paths.pop() // remove latest path
     return paths.join('__')
   }
+
+  targetNameFromAlert (alert) {
+    return (alert && alert.host) || ''
+  }
+
+  apiURI (graphName, jsonName, params) {
+    const paramStrings = []
+    for (const [key, value] of Object.entries(params)) {
+      if (!value) {
+        continue
+      }
+      paramStrings.push(`${key}=${encodeURIComponent(value)}`)
+    }
+    const baseUri = `graph/${graphName}/${jsonName}`
+    const uri = [baseUri, paramStrings.join('&')].join('?')
+    console.log('Query URI :', uri)
+    return uri
+  }
 }

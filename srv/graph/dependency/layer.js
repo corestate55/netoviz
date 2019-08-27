@@ -39,7 +39,7 @@ export default class DepGraphLayer extends DepGraphConstants {
     let nx = this.x + this.nodeXPad1
     const tps = this.tpsFrom(graphData)
     for (const node of this.nodesFrom(graphData)) {
-      const dgNode = new DepGraphNode(node, (nodeData) => {
+      const dgNode = new DepGraphNode(node, nodeData => {
         return nodeData.parents.filter(parentPath => {
           // With family-filtered dependency graph,
           // term-points of child node (of the target node) is ignored.
@@ -67,13 +67,17 @@ export default class DepGraphLayer extends DepGraphConstants {
         dgTp.calcCenterPos(pNode.x, pNode.y)
         this.tps.push(dgTp)
       } else {
-        console.log(`[dep] Error: parent node (path=${dgTp.parentPath()}) of tp=${dgTp.path} not found.`)
+        console.log(
+          `[dep] Error: parent node (path=${dgTp.parentPath()}) of tp=${
+            dgTp.path
+          } not found.`
+        )
       }
     }
   }
 
   _isType (d, type) {
-    return (d.type === type) && (this.useAll || d.family)
+    return d.type === type && (this.useAll || d.family)
   }
 
   nodesFrom (graphData) {

@@ -3,22 +3,22 @@ import markFamilyWithTarget from '../common/family-maker'
 
 class DepGraphConverter {
   constructor (graphData, target) {
-    this.markFamilyWithTarget(graphData, target)
-    this.setLayers(graphData, target)
+    const foundTarget = this.markFamilyWithTarget(graphData, target)
+    this.setLayers(graphData, foundTarget)
   }
 
   markFamilyWithTarget (graphData, target) {
-    const nodes = graphData.map(l => l.nodes).reduce((sum, nodes) => {
-      return sum.concat(nodes)
-    }, [])
-    this.foundTarget = markFamilyWithTarget(nodes, target)
+    const nodes = graphData
+      .map(l => l.nodes)
+      .reduce((sum, nodes) => sum.concat(nodes), [])
+    return markFamilyWithTarget(nodes, target)
   }
 
-  setLayers (graphData, target) {
+  setLayers (graphData, foundTarget) {
     this.layers = []
     let layerNum = 1
     for (const layer of graphData) {
-      this.layers.push(new DepGraphLayer(layerNum, layer, this.foundTarget))
+      this.layers.push(new DepGraphLayer(layerNum, layer, foundTarget))
       layerNum += 1
     }
   }
