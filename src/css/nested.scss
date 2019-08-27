@@ -23,7 +23,7 @@ circle.nest {
 }
 
 text.nest {
-  &.grid-x-handle, &.grid-y-handle {
+  &.grid-x-label, &.grid-y-label {
     text-anchor: middle;
     fill: white;
     font-weight: bold;

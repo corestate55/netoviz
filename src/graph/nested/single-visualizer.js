@@ -56,11 +56,11 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
 
   makeGridLabels (xy) {
     this.svgGrp
-      .selectAll(`text.grid-${xy}-handle`)
+      .selectAll(`text.grid-${xy}-label`)
       .data(this.selectXY(xy, this.xGrids, this.yGrids))
       .enter()
       .append('text')
-      .attr('class', `nest grid-${xy}-handle`)
+      .attr('class', `nest grid-${xy}-label`)
       .attr('id', d => `grid-${xy}${d.index}-label`)
       .attr('x', d => this.selectXY(xy, d.position, this.gridStart))
       .attr('y', d => this.selectXY(xy, this.gridStart, d.position))

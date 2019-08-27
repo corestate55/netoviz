@@ -23,7 +23,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
   }
 
   beforeCalcRootNodePosition () {
-    // To be override
+    // To be overridden
   }
 
   setGrid () {

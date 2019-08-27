@@ -6,9 +6,9 @@ export default class DiffState {
     this.backward = 'kept'
     this.pair = {}
     if (data !== {}) {
-      this.forward = data['forward'] || 'kept'
-      this.backward = data['backward'] || 'kept'
-      this.pair = data['pair'] || {}
+      this.forward = data.forward || 'kept'
+      this.backward = data.backward || 'kept'
+      this.pair = data.pair || {}
     }
   }
 
