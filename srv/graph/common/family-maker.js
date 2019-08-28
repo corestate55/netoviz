@@ -1,3 +1,14 @@
+class FamilyRelation {
+  constructor (relationship, degree) {
+    this.relation = relationship
+    this.degree = degree
+  }
+
+  toString () {
+    return `{ relation: ${this.relation}, degree: ${this.degree} }`
+  }
+}
+
 class FamilyMaker {
   constructor (nodes) {
     this.debugCalc = false
@@ -36,7 +47,7 @@ class FamilyMaker {
       'findAndMark',
       `mark ${node.path} as ${relationship}`
     )
-    node.family = relationship
+    node.family = new FamilyRelation(relationship, depth)
     // Find recursively: node.parents or node.children
     for (const familyPath of node[relationship]) {
       this._consoleDebug(

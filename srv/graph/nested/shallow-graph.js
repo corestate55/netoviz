@@ -118,6 +118,48 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     console.log(`[${order}]${indent} * [${pos}] ${message}`, value)
   }
 
+  _calcNodeWHAsLeaf (node, basePosition, layerOrder) {
+    const wh = this.calcLeafNodeWH(node, basePosition, layerOrder)
+    this._consoleDebug(
+      layerOrder,
+      'nodePos',
+      `node=${node.path}, lo=${layerOrder} is assumed leaf, return: `,
+      wh
+    )
+    return wh
+  }
+
+  _calcChildrenWHList (node, basePosition, layerOrder) {
+    const childrenWHList = this.calcChildNodePosition(
+      node,
+      basePosition,
+      layerOrder + 2
+    )
+    this._consoleDebug(
+      layerOrder,
+      'nodePos',
+      `node=${node.path}, children WH list:`,
+      childrenWHList
+    )
+    return childrenWHList
+  }
+
+  _calcNodeWHAsSubRoot (node, basePosition, layerOrder, childrenWHList) {
+    const nodeWH = this.calcSubRootNodeWH(
+      node,
+      basePosition,
+      childrenWHList,
+      layerOrder
+    )
+    this._consoleDebug(
+      layerOrder,
+      'nodePos',
+      `node=${node.path}, return node wh:`,
+      nodeWH
+    )
+    return nodeWH
+  }
+
   calcNodePosition (node, basePosition, layerOrder) {
     this._consoleDebug(
       layerOrder,
@@ -130,40 +172,24 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.calcTpPosition(node, basePosition, layerOrder + 1)
     // calc node Width/Height when the node is leaf.
     if (this.assumeAsLeaf(node, layerOrder)) {
-      const wh = this.calcLeafNodeWH(node, basePosition, layerOrder)
-      this._consoleDebug(
-        layerOrder,
-        'nodePos',
-        `node=${node.path}, lo=${layerOrder} is assumed leaf, return: `,
-        wh
-      )
-      return wh
+      return this._calcNodeWHAsLeaf(node, basePosition, layerOrder)
     }
     // recursive position calculation
-    const childrenWHList = this.calcChildNodePosition(
+    const childrenWHList = this._calcChildrenWHList(
       node,
       basePosition,
-      layerOrder + 2
-    )
-    this._consoleDebug(
-      layerOrder,
-      'nodePos',
-      `node=${node.path}, children WH list:`,
-      childrenWHList
-    )
-    const wh = this.calcSubRootNodeWH(
-      node,
-      basePosition,
-      childrenWHList,
       layerOrder
     )
-    this._consoleDebug(
+    if (childrenWHList.length < 1) {
+      // if children is empty as a result, the node is same as leaf.
+      return this._calcNodeWHAsLeaf(node, basePosition, layerOrder)
+    }
+    return this._calcNodeWHAsSubRoot(
+      node,
+      basePosition,
       layerOrder,
-      'nodePos',
-      `node=${node.path}, return node wh:`,
-      wh
+      childrenWHList
     )
-    return wh
   }
 
   childNodePathsToCalcPosition (node, layerOrder) {
@@ -184,10 +210,8 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
       'childNodePos',
       `node=${node.path}, lo=${layerOrder}`
     )
-    for (const childNodePath of this.childNodePathsToCalcPosition(
-      node,
-      layerOrder
-    )) {
+    const childNodePaths = this.childNodePathsToCalcPosition(node, layerOrder)
+    for (const childNodePath of childNodePaths) {
       const childNode = this.childNodeFrom(node, childNodePath)
       this._consoleDebug(
         layerOrder,

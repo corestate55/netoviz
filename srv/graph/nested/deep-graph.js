@@ -66,10 +66,21 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
     if (this.inTargetDepth(layerOrder) || !this.overDepth(layerOrder)) {
       return node.childNodePaths()
     }
-    return node.childNodePaths().filter(nodePath => {
-      const node = this.findNodeByPath(nodePath)
-      // console.log(`  * child=${nodePath}, family?=${node.family}`)
-      return node ? node.family : false
+    return node.childNodePaths().filter(childNodePath => {
+      const childNode = this.findNodeByPath(childNodePath)
+      const result =
+        childNode && // ignore if childNodePath not found
+        childNode.family && // ignore childNode is not a family of target
+        // select family of target, from root (parent) until child of target:
+        // root(parent)-...-parent-target-child <-select ignore-> -child-...-child
+        (childNode.family.relation !== 'children' ||
+          childNode.family.degree < 3)
+      this._consoleDebug(
+        layerOrder,
+        'childNodePathsToCalcPosition',
+        `child=${childNodePath}, family?=${childNode.family}, result=${result}`
+      )
+      return result
     })
   }
 
