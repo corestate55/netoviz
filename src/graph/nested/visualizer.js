@@ -9,16 +9,18 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     return super.apiURI(graphName, jsonName, params)
   }
 
-  apiParamFrom (alert, reverse, depth) {
+  apiParamFrom (alert, reverse, depth, layer) {
     return {
       target: this.targetNameFromAlert(alert),
       reverse: reverse,
-      depth: depth
+      depth: depth,
+      layer: layer
     }
   }
 
-  drawJsonModel (jsonName, alert, reverse, depth) {
-    const param = this.apiParamFrom(alert, reverse, depth)
+  // arg: layer is optional (used-in click-hook, to drill-down by click)
+  drawJsonModel (jsonName, alert, reverse, depth, layer) {
+    const param = this.apiParamFrom(alert, reverse, depth, layer)
     json(this.apiURI('nested', jsonName, param)).then(
       graphData => {
         this.clearCanvas()
@@ -53,7 +55,8 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       this.jsonName,
       { host: d.name },
       this.uriParams.reverse,
-      this.uriParams.depth
+      this.uriParams.depth,
+      this.networkPathOf(d.path)
     )
   }
 

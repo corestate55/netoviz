@@ -1,13 +1,14 @@
 import DeepNestedGraph from './deep-graph'
 
 class NestedGraphConverter {
-  constructor (graphData, layoutData, reverse, depth, target) {
+  constructor (graphData, layoutData, reverse, depth, target, layer) {
     this.nestedGraph = new DeepNestedGraph(
       graphData,
       layoutData,
       reverse,
       depth,
-      target
+      target,
+      layer
     )
     this.nestedGraph.initialize()
   }
@@ -21,6 +22,7 @@ const convertNestedGraphData = async (
   reverse,
   depth,
   target,
+  layer,
   topoGraphDataCB,
   layoutDataCB
 ) => {
@@ -29,7 +31,8 @@ const convertNestedGraphData = async (
     await layoutDataCB(),
     reverse,
     depth,
-    target
+    target,
+    layer
   )
   return nestedGraphConverter.toData()
 }

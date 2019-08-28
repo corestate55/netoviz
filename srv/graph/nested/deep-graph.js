@@ -3,16 +3,17 @@ import DeepNestedGraphNode from './deep-node'
 import markFamilyWithTarget from '../common/family-maker'
 
 export default class DeepNestedGraph extends ShallowNestedGraph {
-  constructor (graphData, layoutData, reverse, depth, target) {
+  constructor (graphData, layoutData, reverse, depth, target, layer) {
     super(graphData, layoutData, reverse)
     this.requestedDepth = depth
     this.target = target
+    this.layer = layer // optional, layer(network) name in target node (for drill-down)
   }
 
   beforeCalcRootNodePosition () {
     // It must check family after setNodes(),
     // Because, it "reverse" parent/children relation.
-    markFamilyWithTarget(this.nodes, this.target)
+    markFamilyWithTarget(this.nodes, this.target, this.layer)
   }
 
   setNodes () {

@@ -63,10 +63,32 @@ class FamilyMaker {
     return this.nodes.reverse().find(d => d.type === 'node' && d.name === name)
   }
 
-  markFamilyWithTarget (targetNodeName) {
-    const targetNode = this.findTargetNodeByName(targetNodeName)
+  findTargetNodeByPath (path) {
+    return this.nodes.find(d => d.path === path)
+  }
+
+  findTargetNode (targetNodeName, targetNodeLayer) {
+    this._consoleDebug(
+      1,
+      'findTargetNode',
+      `Search ${targetNodeLayer}__${targetNodeName}`
+    )
+    if (targetNodeLayer) {
+      return this.findTargetNodeByPath(`${targetNodeLayer}__${targetNodeName}`)
+    } else {
+      return this.findTargetNodeByName(targetNodeName)
+    }
+  }
+
+  markFamilyWithTarget (targetNodeName, targetNodeLayer) {
+    this._consoleDebug(0, 'markTarget', 'START')
+    const targetNode = this.findTargetNode(targetNodeName, targetNodeLayer)
     if (!targetNode) {
-      this._consoleDebug(0, 'markTarget', `target: ${targetNodeName} not found`)
+      this._consoleDebug(
+        0,
+        'markTarget',
+        `target: ${targetNodeName} (in layer: ${targetNodeLayer}) not found`
+      )
       return false
     }
     this._consoleDebug(
@@ -88,10 +110,10 @@ class FamilyMaker {
   }
 }
 
-const markFamilyWithTarget = (nodes, targetNodeName) => {
+const markFamilyWithTarget = (nodes, targetNodeName, targetNodeLayer) => {
   const familyMaker = new FamilyMaker(nodes)
   // append 'family' attribute directly
-  return familyMaker.markFamilyWithTarget(targetNodeName)
+  return familyMaker.markFamilyWithTarget(targetNodeName, targetNodeLayer)
 }
 
 export default markFamilyWithTarget
