@@ -2,13 +2,24 @@ import { json } from 'd3-fetch'
 import OperationalNestedGraphVisualizer from './operational-visualizer'
 
 export default class NestedGraphVisualizer extends OperationalNestedGraphVisualizer {
-  drawJsonModel (jsonName, alert, reverse, depth) {
-    const params = {
+  apiURI (graphName, jsonName, params) {
+    // keep to use in click-hook
+    this.jsonName = jsonName
+    this.uriParams = params
+    return super.apiURI(graphName, jsonName, params)
+  }
+
+  apiParamFrom (alert, reverse, depth) {
+    return {
       target: this.targetNameFromAlert(alert),
       reverse: reverse,
       depth: depth
     }
-    json(this.apiURI('nested', jsonName, params)).then(
+  }
+
+  drawJsonModel (jsonName, alert, reverse, depth) {
+    const param = this.apiParamFrom(alert, reverse, depth)
+    json(this.apiURI('nested', jsonName, param)).then(
       graphData => {
         this.clearCanvas()
         this.makeGraphObjects(graphData)
@@ -22,13 +33,12 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   }
 
   saveLayout (jsonName, reverse, depth) {
-    const url = this.apiUrl(jsonName, reverse, depth)
+    const param = this.apiParamFrom(alert, reverse, depth)
     const layoutData = {
       x: this.xGrids.map(d => d.position),
       y: this.yGrids.map(d => d.position)
     }
-    console.log(`[nested] query ${url}`)
-    json(url, {
+    json(this.apiURI('nested', jsonName, param), {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -36,6 +46,15 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       },
       body: JSON.stringify(layoutData)
     }).then(response => console.log(response.message))
+  }
+
+  nodeClickHook (d) {
+    this.drawJsonModel(
+      this.jsonName,
+      { host: d.name },
+      this.uriParams.reverse,
+      this.uriParams.depth
+    )
   }
 
   highlightParentOfInoperativeNodes (alertNodes) {

@@ -330,12 +330,17 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     )
   }
 
+  nodeClickHook (d) {
+    // to be overridden
+  }
+
   setNodeMouseHandler () {
     const nodeClick = d => {
       this.clearAllAlertHighlight()
       this.operativeNodesByName(d.name).forEach(node => {
         this.highlight(node, 'selected')
       })
+      this.nodeClickHook(d)
     }
     const nodeMouseOver = d => {
       this.setSelectReady(d)
