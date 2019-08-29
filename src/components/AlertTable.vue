@@ -33,10 +33,10 @@
       <el-col v-bind:span="12">
         Host to Highlight:
         <el-input
-          v-model="alertHost"
+          v-model="alertHostInput"
           class="host-input"
           size="small"
-          v-on:input="setAlertByInput"
+          v-on:input="inputAlertHost"
         />
       </el-col>
     </el-row>
@@ -112,6 +112,8 @@ export default {
       alertCheckTimer: null,
       alertUpdatedTime: null,
       enableTimer: true,
+      alertHostInput: '',
+      unwatchAlertHost: null,
       fromAlertHostInput: false,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -129,6 +131,13 @@ export default {
   mounted () {
     this.updateAlerts() // initial data
     this.startAlertCheckTimer()
+    this.unwatchAlertHost = this.$store.watch(
+      state => state.alertHost,
+      (newHost, oldHost) => {
+        this.alertHostInput = newHost
+        this.inputAlertHost()
+      }
+    )
   },
   beforeDestroy () {
     this.stopAlertCheckTimer()
@@ -147,8 +156,6 @@ export default {
     },
     startAlertCheckTimer () {
       this.alertCheckTimer = setInterval(() => {
-        // const now = new Date()
-        // console.log('check alerts: ' + now.toISOString())
         this.updateAlerts()
       }, this.alertPollingInterval * 1000) // sec
     },
@@ -169,7 +176,7 @@ export default {
         // console.log('[AlertTable] request alert data')
         const response = await fetch(`/alert/${this.alertLimit}`)
         const newAlerts = await response.json()
-        // check alets (alert table rows) update:
+        // check alerts (alert table rows) update:
         // changed table rows OR comes new data(id)
         if (this.alerts.length !== newAlerts.length || newAlerts[0].id !== this.alerts[0].id) {
           this.alerts = newAlerts
@@ -187,19 +194,19 @@ export default {
       if (severities.find(s => s.match(severityRegexp))) {
         return `${severity.toLowerCase()}-row`
       }
-      return 'not-classifed-row'
+      return 'not-classified-row'
     },
     clickClearSelectionButton () {
-      this.alertHost = ''
+      this.alertHostInput = ''
       this.setAlertTableCurrentRow({})
     },
-    setAlertByInput () {
+    inputAlertHost () {
       this.fromAlertHostInput = true
       // clear table selection
       this.setAlertTableCurrentRow({})
       // set dummy alert to redraw diagram.
       this.setAlertTableCurrentRow({
-        host: this.alertHost,
+        host: this.alertHostInput,
         message: 'selected directly',
         severity: 'information',
         date: (new Date()).toISOString()
@@ -218,12 +225,12 @@ export default {
 
       // from 'update alert-table' or 'click alert-table'
       if (!this.fromAlertHostInput) {
-        this.alertHost = row.host
+        this.alertHostInput = row && row.host ? row.host : ''
         this.currentAlertRow = row
       }
       // from alert-host input:
       // when row is empty, it clear before redraw diagram (NOP).
-      if (Object.keys(row).length > 0) {
+      if (row && Object.keys(row).length > 0) {
         this.currentAlertRow = row
       }
     }
@@ -265,7 +272,7 @@ export default {
     background-color: honeydew; // bright green
   }
   .not-classified-row {
-    background-color: grey; // grey
+    background-color: lightgray; // grey
   }
   .current-row {
     td {
