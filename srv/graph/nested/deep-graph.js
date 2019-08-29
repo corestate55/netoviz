@@ -3,11 +3,11 @@ import DeepNestedGraphNode from './deep-node'
 import markFamilyWithTarget from '../common/family-maker'
 
 export default class DeepNestedGraph extends ShallowNestedGraph {
-  constructor (graphData, layoutData, reverse, depth, target, layer) {
-    super(graphData, layoutData, reverse)
-    this.requestedDepth = depth
-    this.target = target
-    this.layer = layer // optional, layer(network) name in target node (for drill-down)
+  constructor (graphQuery) {
+    super(graphQuery.graphData, graphQuery.layoutData, graphQuery.reverse)
+    this.baseDepth = graphQuery.depth
+    this.target = graphQuery.target
+    this.layer = graphQuery.layer // optional, layer(network) name in target node (for drill-down)
   }
 
   beforeCalcRootNodePosition () {
@@ -43,13 +43,12 @@ export default class DeepNestedGraph extends ShallowNestedGraph {
   }
 
   overDepth (layerOrder) {
-    return layerOrder >= (this.requestedDepth - 1) * 2
+    return layerOrder >= (this.baseDepth - 1) * 2
   }
 
   inTargetDepth (layerOrder) {
     return (
-      (this.requestedDepth - 1) * 2 <= layerOrder &&
-      layerOrder < this.requestedDepth * 2
+      (this.baseDepth - 1) * 2 <= layerOrder && layerOrder < this.baseDepth * 2
     )
   }
 

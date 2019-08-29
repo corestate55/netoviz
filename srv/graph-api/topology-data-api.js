@@ -50,30 +50,43 @@ export default class TopoogyDataAPI {
     return Number(strNum)
   }
 
+  _makeGraphQuery (graphType, query, keys) {
+    const graphQuery = {}
+    for (const [key, keyType] of keys) {
+      if (keyType === 'number') {
+        graphQuery[key] = this.numberString2Number(query[key])
+      } else if (keyType === 'bool') {
+        graphQuery[key] = this.boolString2Bool(query[key])
+      } else {
+        // string
+        graphQuery[key] = query[key]
+      }
+    }
+    const paramString = Object.entries(graphQuery)
+      .map(([key, value]) => `${key}=${value}`)
+      .join(', ')
+    console.log(`call ${graphType}: ${paramString}`)
+    return graphQuery
+  }
+
   async _getDependencyGraphData (jsonName, req) {
-    const target = req.query.target
-    console.log(`call dependency: target=${target}`)
-    return convertDependencyGraphData(target, async () =>
-      this.convertTopoGraphData(jsonName)
-    )
+    const graphQuery = this._makeGraphQuery('dependency', req.query, [
+      ['target', 'string']
+    ])
+    graphQuery.graphData = await this.convertTopoGraphData(jsonName)
+    return convertDependencyGraphData(graphQuery)
   }
 
   async _getNestedGraphData (jsonName, req) {
-    const reverse = this.boolString2Bool(req.query.reverse)
-    const depth = this.numberString2Number(req.query.depth)
-    const target = req.query.target
-    const layer = req.query.layer
-    console.log(
-      `call nested: reverse=${reverse}, depth=${depth}, target=${target}, layer=${layer}`
-    )
-    return convertNestedGraphData(
-      reverse,
-      depth,
-      target,
-      layer,
-      async () => this.convertTopoGraphData(jsonName),
-      async () => this.readLayoutJSON(jsonName)
-    )
+    const graphQuery = this._makeGraphQuery('nested', req.query, [
+      ['reverse', 'bool'],
+      ['depth', 'number'],
+      ['target', 'string'],
+      ['layer', 'string']
+    ])
+    graphQuery.graphData = await this.convertTopoGraphData(jsonName)
+    graphQuery.layoutData = await this.readLayoutJSON(jsonName)
+    return convertNestedGraphData(graphQuery)
   }
 
   async getGraphData (req) {

@@ -65,9 +65,8 @@ export default class CacheTopologyGraphConverter {
     } else {
       // the json file was changed.
       this.updateCacheTimeStamp()
-      const graphData = await convertTopologyGraphData(async () => {
-        return this.readTopologyDataFromJSON()
-      })
+      const graphDataFromJSON = await this.readTopologyDataFromJSON()
+      const graphData = await convertTopologyGraphData(graphDataFromJSON)
       this.writeCache(JSON.stringify(graphData))
       return graphData
     }
