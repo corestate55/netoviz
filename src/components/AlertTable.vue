@@ -112,6 +112,7 @@ export default {
       alertCheckTimer: null,
       alertUpdatedTime: null,
       enableTimer: true,
+      fromAlertHostInput: false,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
@@ -193,23 +194,38 @@ export default {
       this.setAlertTableCurrentRow({})
     },
     setAlertByInput () {
-      this.currentAlertRow = {
+      this.fromAlertHostInput = true
+      // clear table selection
+      this.setAlertTableCurrentRow({})
+      // set dummy alert to redraw diagram.
+      this.setAlertTableCurrentRow({
         host: this.alertHost,
         message: 'selected directly',
         severity: 'information',
         date: (new Date()).toISOString()
-      }
+      })
+      this.fromAlertHostInput = false
     },
     setAlertTableCurrentRow (row) {
       // console.log('[AlertTable] set alert table current row: ', row)
+
+      // it fire current-change event of alertTable,
+      // so called handleAlertTableCurrentChange in continuity.
       this.$refs.alertTable.setCurrentRow(row)
     },
     handleAlertTableCurrentChange (row) {
       // console.log('[AlertTable] handle current change: ', row)
-      if (row && 'host' in row) {
+
+      // from 'update alert-table' or 'click alert-table'
+      if (!this.fromAlertHostInput) {
         this.alertHost = row.host
+        this.currentAlertRow = row
       }
-      this.currentAlertRow = row
+      // from alert-host input:
+      // when row is empty, it clear before redraw diagram (NOP).
+      if (Object.keys(row).length > 0) {
+        this.currentAlertRow = row
+      }
     }
   }
 }
