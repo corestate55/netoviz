@@ -50,7 +50,12 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
     }).then(response => console.log(response.message))
   }
 
+  setUISideNodeClickHook (callback) {
+    this.uiSideNodeClickCallback = callback
+  }
+
   nodeClickHook (d) {
+    this.uiSideNodeClickCallback(d)
     this.drawJsonModel(
       this.jsonName,
       { host: d.name },

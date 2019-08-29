@@ -19,7 +19,7 @@ export default {
   data () {
     return {
       visualizer: null,
-      unwatchAlert: null,
+      unwatchCurrentAlertRow: null,
       unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -35,7 +35,7 @@ export default {
 
     this.drawJsonModel()
     // set watcher for alert selection change
-    this.unwatchAlert = this.$store.watch(
+    this.unwatchCurrentAlertRow = this.$store.watch(
       state => state.currentAlertRow,
       (newRow, oldRow) => {
         this.drawJsonModel()
@@ -54,7 +54,7 @@ export default {
   beforeDestroy () {
     console.log('[dep] before destroy')
     delete this.visualizer
-    this.unwatchAlert()
+    this.unwatchCurrentAlertRow()
     this.unwatchModelFile()
   },
   methods: {

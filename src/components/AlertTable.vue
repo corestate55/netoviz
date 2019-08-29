@@ -25,7 +25,7 @@
           type="info"
           icon="el-icon-delete"
           v-bind:disabled="currentAlertRow && Object.keys(currentAlertRow).length < 1"
-          v-on:click="clearAlertTableSelection"
+          v-on:click="clickClearSelectionButton"
         >
           Clear selection
         </el-button>
@@ -103,8 +103,6 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
-
 export default {
   data () {
     return {
@@ -113,13 +111,19 @@ export default {
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
       alertUpdatedTime: null,
-      alertHost: '',
       enableTimer: true,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow'])
+    currentAlertRow: {
+      get () { return this.$store.getters.currentAlertRow },
+      set (value) { this.$store.commit('setCurrentAlertRow', value) }
+    },
+    alertHost: {
+      get () { return this.$store.getters.alertHost },
+      set (value) { this.$store.commit('setAlertHost', value) }
+    }
   },
   mounted () {
     this.updateAlerts() // initial data
@@ -129,7 +133,6 @@ export default {
     this.stopAlertCheckTimer()
   },
   methods: {
-    ...mapMutations(['setCurrentAlertRow']),
     setAlertCheckTimer () {
       this.enableTimer ? this.startAlertCheckTimer() : this.stopAlertCheckTimer()
     },
@@ -151,19 +154,25 @@ export default {
     updateAlerts () {
       // update alerts and select head data
       // console.log('updateAlerts: ', new Date())
-      this.requestAlertData()
-        .then(() => {
-          this.alertUpdatedTime = new Date()
-          this.setAlertTableCurrentRow(this.alerts[0])
-        })
+      this.requestAlertData().then(() => {
+        // console.log('[AlertTable] updateAlerts')
+        this.alertUpdatedTime = new Date()
+        this.setAlertTableCurrentRow(this.alerts[0])
+      })
     },
     changeTableLineNumber () {
       this.requestAlertData()
     },
     async requestAlertData () {
       try {
+        // console.log('[AlertTable] request alert data')
         const response = await fetch(`/alert/${this.alertLimit}`)
-        this.alerts = await response.json()
+        const newAlerts = await response.json()
+        // check alets (alert table rows) update:
+        // changed table rows OR comes new data(id)
+        if (this.alerts.length !== newAlerts.length || newAlerts[0].id !== this.alerts[0].id) {
+          this.alerts = newAlerts
+        }
       } catch (error) {
         console.error('fetch alert failed: ', error)
       }
@@ -179,39 +188,28 @@ export default {
       }
       return 'not-classifed-row'
     },
-    clearAlertHostInput () {
+    clickClearSelectionButton () {
       this.alertHost = ''
-    },
-    clearAlertTableSelection () {
-      this.$refs.alertTable.setCurrentRow({})
+      this.setAlertTableCurrentRow({})
     },
     setAlertByInput () {
-      const rowData = {
+      this.currentAlertRow = {
         host: this.alertHost,
         message: 'selected directly',
         severity: 'information',
         date: (new Date()).toISOString()
       }
-      // console.log('setAlertByInput: ', rowData)
-      this.clearAlertTableSelection()
-      this.setCurrentAlertRow(rowData)
     },
     setAlertTableCurrentRow (row) {
-      // console.log('setAlertTableCurrentRow: ', row)
-      if (row && 'host' in row) {
-        this.alertHost = row.host
-        this.$refs.alertTable.setCurrentRow(row)
-      } else {
-        this.clearAlertHostInput()
-        this.clearAlertTableSelection()
-      }
+      // console.log('[AlertTable] set alert table current row: ', row)
+      this.$refs.alertTable.setCurrentRow(row)
     },
     handleAlertTableCurrentChange (row) {
-      // console.log('handle current change: ', row)
+      // console.log('[AlertTable] handle current change: ', row)
       if (row && 'host' in row) {
         this.alertHost = row.host
       }
-      this.setCurrentAlertRow(row)
+      this.currentAlertRow = row
     }
   }
 }

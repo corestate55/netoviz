@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       visualizer: null,
-      unwatchAlert: null,
+      unwatchCurrentAlertRow: null,
       unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -37,9 +37,10 @@ export default {
 
     this.drawJsonModel()
     // set watcher for alert selection change
-    this.unwatchAlert = this.$store.watch(
+    this.unwatchCurrentAlertRow = this.$store.watch(
       state => state.currentAlertRow,
       (newRow, oldRow) => {
+        // console.log('[dep2] change currentAlertRow: ', newRow, oldRow)
         this.drawJsonModel()
         this.highlightByAlert(newRow)
       }
@@ -56,11 +57,12 @@ export default {
   beforeDestroy () {
     console.log('[dep2] before destroy')
     delete this.visualizer
-    this.unwatchAlert()
+    this.unwatchCurrentAlertRow()
     this.unwatchModelFile()
   },
   methods: {
     drawJsonModel () {
+      // console.log('[dep2] drawJsonModel: ', this.modelFile, this.currentAlertRow)
       if (this.modelFile) {
         this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
       }

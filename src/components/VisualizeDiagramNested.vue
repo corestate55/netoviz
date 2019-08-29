@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import NestedGraphVisualizer from '../graph/nested/visualizer'
 import '../css/nested.scss'
 
@@ -53,7 +53,7 @@ export default {
       visualizer: null,
       reverse: true,
       depth: 1,
-      unwatchAlert: null,
+      unwatchCurrentAlertRow: null,
       unwatchModelFile: null,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -66,9 +66,10 @@ export default {
     const svgWidth = window.innerWidth * 0.95
     const svgHeight = window.innerHeight * 0.8
     this.visualizer = new NestedGraphVisualizer(svgWidth, svgHeight)
+    this.visualizer.setUISideNodeClickHook(this.nodeClickCallback)
     this.drawJsonModel()
 
-    this.unwatchAlert = this.$store.watch(
+    this.unwatchCurrentAlertRow = this.$store.watch(
       state => state.currentAlertRow,
       (newRow, oldRow) => {
         // this.clearAllHighlight()
@@ -88,12 +89,16 @@ export default {
   beforeDestroy () {
     console.log('[nested] before destroy')
     delete this.visualizer
-    this.unwatchAlert()
+    this.unwatchCurrentAlertRow()
     this.unwatchModelFile()
   },
   methods: {
+    ...mapMutations(['setAlertHost']),
     saveLayout () {
       this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
+    },
+    nodeClickCallback (nodeData) {
+      this.setAlertHost(nodeData.name)
     },
     drawJsonModel () {
       if (this.modelFile) {
