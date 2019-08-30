@@ -104,6 +104,7 @@
 </template>
 
 <script>
+import { debounce } from 'debounce'
 export default {
   data () {
     return {
@@ -205,7 +206,8 @@ export default {
       this.alertHostInput = ''
       this.setAlertTableCurrentRow({})
     },
-    inputAlertHost () {
+    inputAlertHost: debounce(function () {
+      // NOTICE: do not use arrow-function for debounce.
       this.fromAlertHostInput = true
       // clear table selection
       this.setAlertTableCurrentRow({})
@@ -217,7 +219,7 @@ export default {
         date: (new Date()).toISOString()
       })
       this.fromAlertHostInput = false
-    },
+    }, 500), // 0.5sec
     setAlertTableCurrentRow (row) {
       // console.log('[AlertTable] set alert table current row: ', row)
 
