@@ -24,7 +24,7 @@
           size="small"
           type="info"
           icon="el-icon-delete"
-          v-bind:disabled="currentAlertRow && Object.keys(currentAlertRow).length < 1"
+          v-bind:disabled="disableClearAlertTableButton"
           v-on:click="clickClearSelectionButton"
         >
           Clear selection
@@ -35,6 +35,7 @@
         <el-input
           v-model="alertHostInput"
           class="host-input"
+          clearable
           size="small"
           v-on:input="inputAlertHost"
         />
@@ -111,10 +112,10 @@ export default {
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
       alertUpdatedTime: null,
-      enableTimer: true,
       alertHostInput: '',
       unwatchAlertHost: null,
       fromAlertHostInput: false,
+      enableTimer: true,
       debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
@@ -126,6 +127,9 @@ export default {
     alertHost: {
       get () { return this.$store.getters.alertHost },
       set (value) { this.$store.commit('setAlertHost', value) }
+    },
+    disableClearAlertTableButton () {
+      return (this.currentAlertRow && Object.keys(this.currentAlertRow).length < 1)
     }
   },
   mounted () {
@@ -140,6 +144,7 @@ export default {
     )
   },
   beforeDestroy () {
+    this.unwatchAlertHost()
     this.stopAlertCheckTimer()
   },
   methods: {
@@ -216,7 +221,7 @@ export default {
     setAlertTableCurrentRow (row) {
       // console.log('[AlertTable] set alert table current row: ', row)
 
-      // it fire current-change event of alertTable,
+      // it fire current-change event on alertTable,
       // so called handleAlertTableCurrentChange in continuity.
       this.$refs.alertTable.setCurrentRow(row)
     },
