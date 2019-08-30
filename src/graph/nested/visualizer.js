@@ -19,7 +19,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   }
 
   // arg: layer is optional (used-in click-hook, to drill-down by click)
-  drawJsonModel (jsonName, alert, reverse, depth, layer) {
+  drawJsonModel (jsonName, alert, reverse, depth, layer, fitGrid) {
     const param = this.apiParamFrom(alert, reverse, depth, layer)
     json(this.apiURI('nested', jsonName, param)).then(
       graphData => {
@@ -31,7 +31,7 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
       error => {
         throw error
       }
-    )
+    ).then(() => fitGrid && this.fitGrid())
   }
 
   saveLayout (jsonName, reverse, depth) {

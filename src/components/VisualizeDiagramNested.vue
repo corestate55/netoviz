@@ -11,7 +11,16 @@
         />
       </el-col>
       <el-col v-bind:span="5">
-        Depth :
+        <el-switch
+          v-model="autoFitting"
+          active-text="Fit Auto"
+          inactive-text="Default Layout"
+          inactive-color="gray"
+          v-on:change="drawJsonModel()"
+        />
+      </el-col>
+      <el-col v-bind:span="5">
+        Base depth :
         <el-input-number
           v-model="depth"
           size="small"
@@ -37,6 +46,7 @@
       Nested model: {{ modelFile }},
       Alert Row: {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }},
       Reverse? : {{ reverse }}
+      Auto Fitting? : {{ autoFitting }}
     </div>
     <!-- entry point of d3 graph(s) -->
   </div>
@@ -52,6 +62,7 @@ export default {
     return {
       visualizer: null,
       reverse: true,
+      autoFitting: false,
       depth: 1,
       unwatchCurrentAlertRow: null,
       unwatchModelFile: null,
@@ -101,11 +112,17 @@ export default {
       this.setAlertHost(nodeData.name)
     },
     drawJsonModel () {
-      if (this.modelFile) {
-        this.visualizer.drawJsonModel(
-          this.modelFile, this.currentAlertRow, this.reverse, this.depth
-        )
+      if (!this.modelFile) {
+        return
       }
+      this.visualizer.drawJsonModel(
+        this.modelFile,
+        this.currentAlertRow,
+        this.reverse,
+        this.depth,
+        null, // layer
+        this.autoFitting
+      )
     },
     clearAllHighlight () {
       this.visualizer.clearAllAlertHighlight()
