@@ -409,7 +409,9 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     const selector = 'text#grid-fitting-button'
     this.svg
       .select(selector)
-      .on('click', () => { this.fitGrid() })
+      .on('click', () => {
+        this.fitGrid()
+      })
       .on('mouseover', this.controlButtonMouseOverCallback(selector))
       .on('mouseout', this.controlButtonMouseOutCallback(selector))
   }

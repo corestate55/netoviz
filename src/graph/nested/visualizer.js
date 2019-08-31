@@ -21,17 +21,19 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   // arg: layer is optional (used-in click-hook, to drill-down by click)
   drawJsonModel (jsonName, alert, reverse, depth, layer, fitGrid) {
     const param = this.apiParamFrom(alert, reverse, depth, layer)
-    json(this.apiURI('nested', jsonName, param)).then(
-      graphData => {
-        this.clearCanvas()
-        this.makeGraphObjects(graphData)
-        this.setOperationHandler(graphData)
-        this.highlightByAlert(alert)
-      },
-      error => {
-        throw error
-      }
-    ).then(() => fitGrid && this.fitGrid())
+    json(this.apiURI('nested', jsonName, param))
+      .then(
+        graphData => {
+          this.clearCanvas()
+          this.makeGraphObjects(graphData)
+          this.setOperationHandler(graphData)
+          this.highlightByAlert(alert)
+        },
+        error => {
+          throw error
+        }
+      )
+      .then(() => fitGrid && this.fitGrid())
   }
 
   saveLayout (jsonName, reverse, depth) {
@@ -55,14 +57,18 @@ export default class NestedGraphVisualizer extends OperationalNestedGraphVisuali
   }
 
   nodeClickHook (d) {
-    this.uiSideNodeClickCallback(d)
-    this.drawJsonModel(
-      this.jsonName,
-      { host: d.name },
-      this.uriParams.reverse,
-      this.uriParams.depth,
-      this.networkPathOf(d.path)
-    )
+    if (typeof this.uiSideNodeClickCallback === 'function') {
+      // if this callback exist, redraw event will be arise from UI-side.
+      this.uiSideNodeClickCallback(d)
+    } else {
+      this.drawJsonModel(
+        this.jsonName,
+        { host: d.name },
+        this.uriParams.reverse,
+        this.uriParams.depth,
+        this.networkPathOf(d.path)
+      )
+    }
   }
 
   highlightParentOfInoperativeNodes (alertNodes) {

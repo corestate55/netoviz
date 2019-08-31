@@ -109,7 +109,10 @@ export default {
       this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
     },
     nodeClickCallback (nodeData) {
-      this.setAlertHost(nodeData.name)
+      // re-construct path with layer-name and name attribute,
+      // because path has deep-copy identifier (::N).
+      const path = [nodeData.path.split('__').shift(), nodeData.name].join('__')
+      this.setAlertHost(path)
     },
     drawJsonModel () {
       if (!this.modelFile) {
@@ -120,7 +123,7 @@ export default {
         this.currentAlertRow,
         this.reverse,
         this.depth,
-        null, // layer
+        this.currentAlertRow && this.currentAlertRow.layer, // from AlertHost Input (layer__node)
         this.autoFitting
       )
     },

@@ -36,6 +36,7 @@
           v-model="alertHostInput"
           class="host-input"
           clearable
+          placeholder="node OR layer__node"
           size="small"
           v-on:input="inputAlertHost"
         />
@@ -206,18 +207,33 @@ export default {
       this.alertHostInput = ''
       this.setAlertTableCurrentRow({})
     },
+    layerOfAlertHostInput () {
+      if (this.alertHostInput.match(new RegExp('(.+)__(.+)'))) {
+        return this.alertHostInput.split('__').shift()
+      }
+      return null
+    },
+    alertFromAlertHostInput () {
+      const alert = {
+        message: 'selected directly',
+        severity: 'information',
+        date: (new Date()).toISOString(),
+        // for drill-down:
+        // it must identify object that has same name with layer (path)
+        layer: this.layerOfAlertHostInput()
+      }
+      alert.host = alert.layer
+        ? this.alertHostInput.split('__').pop() // when 'layer__node' format
+        : this.alertHostInput
+      return alert
+    },
     inputAlertHost: debounce(function () {
       // NOTICE: do not use arrow-function for debounce.
       this.fromAlertHostInput = true
       // clear table selection
       this.setAlertTableCurrentRow({})
       // set dummy alert to redraw diagram.
-      this.setAlertTableCurrentRow({
-        host: this.alertHostInput,
-        message: 'selected directly',
-        severity: 'information',
-        date: (new Date()).toISOString()
-      })
+      this.setAlertTableCurrentRow(this.alertFromAlertHostInput())
       this.fromAlertHostInput = false
     }, 500), // 0.5sec
     setAlertTableCurrentRow (row) {
