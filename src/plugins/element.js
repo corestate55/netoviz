@@ -15,7 +15,10 @@ import {
   CollapseItem,
   Row,
   Col,
-  Switch
+  Switch,
+  Menu,
+  Submenu,
+  MenuItem
 } from 'element-ui'
 import lang from 'element-ui/lib/locale/lang/ja'
 import locale from 'element-ui/lib/locale'
@@ -39,3 +42,6 @@ Vue.use(CollapseItem)
 Vue.use(Row)
 Vue.use(Col)
 Vue.use(Switch)
+Vue.use(Menu)
+Vue.use(Submenu)
+Vue.use(MenuItem)

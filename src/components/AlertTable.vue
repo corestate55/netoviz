@@ -6,101 +6,112 @@
       host (input): {{ alertHost }},
       currentAlertRow: {{ currentAlertRow }}
     </div>
-    <el-row v-bind:gutter="10">
-      <el-col v-bind:span="4">
-        Rows :
-        <el-input-number
-          v-model="alertLimit"
-          size="small"
-          controls-position="right"
-          v-bind:min="1"
-          v-bind:max="15"
-          v-on:change="changeTableLineNumber"
-        />
-      </el-col>
-      <el-col v-bind:span="4">
-        <el-button
-          round
-          size="small"
-          type="info"
-          icon="el-icon-delete"
-          v-bind:disabled="disableClearAlertTableButton"
-          v-on:click="clickClearSelectionButton"
+    <el-collapse v-model="activeNames">
+      <el-collapse-item
+        title="Alert Table Control"
+        name="AlertTableControl"
+      >
+        <el-row v-bind:gutter="10">
+          <el-col v-bind:span="4">
+            Rows :
+            <el-input-number
+              v-model="alertLimit"
+              size="small"
+              controls-position="right"
+              v-bind:min="1"
+              v-bind:max="15"
+              v-on:change="changeTableLineNumber"
+            />
+          </el-col>
+          <el-col v-bind:span="4">
+            <el-button
+              round
+              size="small"
+              type="info"
+              icon="el-icon-delete"
+              v-bind:disabled="disableClearAlertTableButton"
+              v-on:click="clickClearSelectionButton"
+            >
+              Clear selection
+            </el-button>
+          </el-col>
+          <el-col v-bind:span="7">
+            Host to Highlight:
+            <el-input
+              v-model="alertHostInput"
+              class="host-input"
+              clearable
+              placeholder="node OR layer__node"
+              size="small"
+              v-on:input="inputAlertHost"
+            />
+          </el-col>
+        </el-row>
+        <el-row v-bind:gutter="10">
+          <el-col v-bind:span="5">
+            <el-switch
+              v-model="enableTimer"
+              active-text="Enable Timer"
+              inactive-text="Disable Timer"
+              active-color="#409EFF"
+              inactive-color="#ff4949"
+              v-on:change="setAlertCheckTimer()"
+            />
+          </el-col>
+          <el-col v-bind:span="5">
+            Interval(sec) :
+            <el-input-number
+              v-model="alertPollingInterval"
+              size="small"
+              controls-position="right"
+              v-bind:min="1"
+              v-bind:max="30"
+              v-on:change="resetAlertCheckTimer()"
+            />
+          </el-col>
+        </el-row>
+      </el-collapse-item>
+      <el-collapse-item
+        title="Alert Table"
+        name="AlertTable"
+      >
+        <el-table
+          ref="alertTable"
+          highlight-current-row
+          v-bind:data="alerts"
+          v-bind:row-class-name="tableClassSelector"
+          v-on:current-change="handleAlertTableCurrentChange"
         >
-          Clear selection
-        </el-button>
-      </el-col>
-      <el-col v-bind:span="12">
-        Host to Highlight:
-        <el-input
-          v-model="alertHostInput"
-          class="host-input"
-          clearable
-          placeholder="node OR layer__node"
-          size="small"
-          v-on:input="inputAlertHost"
-        />
-      </el-col>
-    </el-row>
-    <el-row v-bind:gutter="10">
-      <el-col v-bind:span="6">
-        <el-switch
-          v-model="enableTimer"
-          active-text="Enable Timer"
-          inactive-text="Disable Timer"
-          active-color="#409EFF"
-          inactive-color="#ff4949"
-          v-on:change="setAlertCheckTimer()"
-        />
-      </el-col>
-      <el-col v-bind:span="6">
-        Interval(sec) :
-        <el-input-number
-          v-model="alertPollingInterval"
-          size="small"
-          controls-position="right"
-          v-bind:min="1"
-          v-bind:max="30"
-          v-on:change="resetAlertCheckTimer()"
-        />
-      </el-col>
-      <el-col v-bind:span="8">
-        Updated alert table at:<br>
-        <span id="alert-update-time">{{ alertUpdatedTime }}</span>
-      </el-col>
-    </el-row>
-    <!-- alert data table -->
-    <el-table
-      ref="alertTable"
-      highlight-current-row
-      v-bind:data="alerts"
-      v-bind:row-class-name="tableClassSelector"
-      v-on:current-change="handleAlertTableCurrentChange"
-    >
-      <el-table-column
-        prop="id"
-        label="ID"
-        width="100"
-      />
-      <el-table-column
-        prop="severity"
-        label="Severity"
-        width="100"
-      />
-      <el-table-column
-        prop="host"
-        label="Host"
-        width="100"
-      />
-      <el-table-column
-        prop="message"
-        label="Message"
-      />
-      <el-table-column
-        prop="date"
-        label="Date"
-      />
-    </el-table>
+          <el-table-column
+            prop="id"
+            label="ID"
+            width="100"
+          />
+          <el-table-column
+            prop="severity"
+            label="Severity"
+            width="100"
+          />
+          <el-table-column
+            prop="host"
+            label="Host"
+            width="100"
+          />
+          <el-table-column
+            prop="message"
+            label="Message"
+          />
+          <el-table-column
+            prop="date"
+            label="Date"
+          />
+        </el-table>
+        <div style="text-align:right;">
+          Updated alert table at:
+          <span id="alert-update-time">{{ alertUpdatedTime }}</span>
+        </div>
+      </el-collapse-item>
+    </el-collapse>
   </div>
 </template>
 
@@ -109,6 +120,7 @@ import { debounce } from 'debounce'
 export default {
   data () {
     return {
+      activeNames: ['AlertTable', 'AlertTableControl'],
       alerts: [],
       alertLimit: 5,
       alertPollingInterval: 10, // default: 10sec
