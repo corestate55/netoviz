@@ -106,11 +106,11 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   updateRootNodeRectPosition (rootNode) {
     this.selectNodeRectByPath(rootNode.path)
-      .attr('x', this.scale(rootNode.x))
-      .attr('y', this.scale(rootNode.y))
+      .attr('x', rootNode.x)
+      .attr('y', rootNode.y)
     this.selectNodeLabelByPath(rootNode.path) // label
-      .attr('x', this.scale(rootNode.x))
-      .attr('y', this.scale(rootNode.y + rootNode.height))
+      .attr('x', rootNode.x)
+      .attr('y', rootNode.y + rootNode.height)
   }
 
   tpsInNode (node) {
@@ -122,11 +122,11 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   updateTpCirclePosition (tp) {
     this.selectTpCircleByPath(tp.path)
-      .attr('cx', this.scale(tp.cx))
-      .attr('cy', this.scale(tp.cy))
+      .attr('cx', tp.cx)
+      .attr('cy', tp.cy)
     this.selectTpLabelByPath(tp.path) // label
-      .attr('x', this.scale(tp.cx))
-      .attr('y', this.scale(tp.cy))
+      .attr('x', tp.cx)
+      .attr('y', tp.cy)
   }
 
   childNodesOfNode (node) {
@@ -170,10 +170,10 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
 
   updateGridLine (d, xy, i) {
     this.selectGridLine(xy, i)
-      .attr(`${xy}1`, this.scale(d.position))
-      .attr(`${xy}2`, this.scale(d.position))
-    this.selectGridHandle(xy, i).attr(`c${xy}`, this.scale(d.position))
-    this.selectGridLabel(xy, i).attr(xy, this.scale(d.position))
+      .attr(`${xy}1`, d.position)
+      .attr(`${xy}2`, d.position)
+    this.selectGridHandle(xy, i).attr(`c${xy}`, d.position)
+    this.selectGridLabel(xy, i).attr(xy, d.position)
   }
 
   setGridHandler (xy) {
@@ -184,12 +184,11 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
       )
     }
     const dragged = (d, i) => {
-      d.position = this.scale.invert(event[xy])
+      d.position = event[xy]
       this.updateGridLine(d, xy, i)
     }
     const dragEnded = d => {
-      // inverse function: screen to data model scale.
-      d.position = this.scale.invert(event[xy])
+      d.position = event[xy]
       for (const rootNode of targetRootNodes) {
         this.moveRootNode(
           ...this.selectXY(
@@ -253,10 +252,21 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
     )
   }
 
+  setInitialZoom () {
+    const nodes = this.graphData.nodes.filter(d => d.type === 'node')
+    const maxX = Math.max(...nodes.map(d => d.x + d.width))
+    const maxY = Math.max(...nodes.map(d => d.y + d.height))
+    const zoomRatio = Math.min(this.width / maxX, this.height / maxY)
+    this.zoom.scaleTo(this.svg, zoomRatio)
+    this.zoom.translateTo(this.svg, 0, 0, [0, 0])
+  }
+
   setSVGZoom () {
-    this.svg.call(
-      zoom().on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    this.zoom = zoom().on('zoom', () =>
+      this.svgGrp.attr('transform', event.transform)
     )
+    this.svg.call(this.zoom)
+    this.setInitialZoom()
   }
 
   setSelectReady (node) {
@@ -403,6 +413,7 @@ export default class OperationalNestedGraphVisualizer extends SingleNestedGraphV
   fitGrid () {
     this._gridFittingXY('x')
     this._gridFittingXY('y')
+    this.setInitialZoom()
   }
 
   setGridFittingButtonHandler () {

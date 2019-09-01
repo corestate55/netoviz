@@ -1,4 +1,3 @@
-import { scaleLinear } from 'd3-scale'
 import { line as d3Line, curveLinear } from 'd3-shape'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 import InterTpLinkCreator from './link-creator'
@@ -18,11 +17,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   selectXY (xy, xValue, yValue) {
-    const selectedValue = xy === 'x' ? xValue : yValue
-    if (isNaN(selectedValue)) {
-      return selectedValue // Raw value(object) when [xy]Value is not a number
-    }
-    return this.scale(selectedValue) // scaling when [xy]Value is a number
+    return xy === 'x' ? xValue : yValue
   }
 
   makeGridHandles (xy) {
@@ -35,7 +30,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .attr('id', d => `grid-${xy}${d.index}-handle`)
       .attr('cx', d => this.selectXY(xy, d.position, this.gridStart))
       .attr('cy', d => this.selectXY(xy, this.gridStart, d.position))
-      .attr('r', this.scale(this.gridHandleRadius))
+      .attr('r', this.gridHandleRadius)
   }
 
   makeGridLines (xy) {
@@ -50,8 +45,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .attr('y1', d => this.selectXY(xy, this.gridStart, d.position))
       .attr('x2', d => this.selectXY(xy, d.position, this.gridEnd))
       .attr('y2', d => this.selectXY(xy, this.gridEnd, d.position))
-      .attr('stroke-width', this.scale(1))
-      .attr('stroke-dasharray', this.scale(5))
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', 5)
   }
 
   makeGridLabels (xy) {
@@ -64,8 +59,8 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .attr('id', d => `grid-${xy}${d.index}-label`)
       .attr('x', d => this.selectXY(xy, d.position, this.gridStart))
       .attr('y', d => this.selectXY(xy, this.gridStart, d.position))
-      .attr('dy', this.scale(this.gridFontSize / 2)) // vertical center
-      .attr('font-size', this.scale(this.gridFontSize))
+      .attr('dy', this.gridFontSize / 2) // vertical center
+      .attr('font-size', this.gridFontSize)
       .text(d => d.index)
   }
 
@@ -104,10 +99,10 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .append('rect')
       .attr('class', d => this.objClassDef(d, 'nest node'))
       .attr('id', d => d.path)
-      .attr('x', d => this.scale(d.x))
-      .attr('y', d => this.scale(d.y))
-      .attr('width', d => this.scale(d.width))
-      .attr('height', d => this.scale(d.height))
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('width', d => d.width)
+      .attr('height', d => d.height)
       .attr('rx', 5)
       .attr('ry', 5)
       .style('fill', d => this.colorOfNode(d))
@@ -122,18 +117,18 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
     targetLines
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
-      .attr('x1', d => this.scale(d.x1))
-      .attr('y1', d => this.scale(d.y1))
-      .attr('x2', d => this.scale(d.x2))
-      .attr('y2', d => this.scale(d.y2))
-      .attr('stroke-width', this.scale(4))
-      .attr('stroke-dasharray', this.scale(4))
+      .attr('x1', d => d.x1)
+      .attr('y1', d => d.y1)
+      .attr('x2', d => d.x2)
+      .attr('y2', d => d.y2)
+      .attr('stroke-width', 4)
+      .attr('stroke-dasharray', 4)
   }
 
   makeTpTpLines (tpTpLinks) {
     const line = d3Line()
-      .x(d => this.scale(d[0]))
-      .y(d => this.scale(d[1]))
+      .x(d => d[0])
+      .y(d => d[1])
       .curve(curveLinear)
     const updatedLines = this.svgGrp.selectAll('path.tp-tp').data(tpTpLinks)
     const enteredLines = updatedLines.enter().append('path')
@@ -142,7 +137,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
       .attr('d', d => line(d.represent4Points()))
-      .attr('stroke-width', this.scale(4))
+      .attr('stroke-width', 4)
   }
 
   makeTp (tps) {
@@ -153,9 +148,9 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .append('circle')
       .attr('class', d => this.objClassDef(d, 'nest tp'))
       .attr('id', d => d.path)
-      .attr('cx', d => this.scale(d.cx))
-      .attr('cy', d => this.scale(d.cy))
-      .attr('r', d => this.scale(d.r))
+      .attr('cx', d => d.cx)
+      .attr('cy', d => d.cy)
+      .attr('r', d => d.r)
   }
 
   makeNodeLabels (nodes) {
@@ -166,10 +161,10 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .append('text')
       .attr('class', d => this.objClassDef(d, 'nest node'))
       .attr('id', d => d.path)
-      .attr('x', d => this.scale(d.x))
-      .attr('y', d => this.scale(d.y + d.height))
-      .attr('dy', this.scale(this.fontSize))
-      .attr('font-size', this.scale(this.fontSize))
+      .attr('x', d => d.x)
+      .attr('y', d => d.y + d.height)
+      .attr('dy', this.fontSize)
+      .attr('font-size', this.fontSize)
       .text(d => d.name)
   }
 
@@ -181,25 +176,11 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
       .append('text')
       .attr('class', d => this.objClassDef(d, 'nest tp'))
       .attr('id', d => d.path)
-      .attr('x', d => this.scale(d.cx))
-      .attr('y', d => this.scale(d.cy + d.r))
-      .attr('dy', this.scale(this.fontSize))
-      .attr('font-size', this.scale(this.fontSize))
+      .attr('x', d => d.cx)
+      .attr('y', d => d.cy + d.r)
+      .attr('dy', this.fontSize)
+      .attr('font-size', this.fontSize)
       .text(d => d.name)
-  }
-
-  makeScale (nodes) {
-    const xMax = Math.max(...nodes.map(d => d.x + d.width))
-    const yMax = Math.max(...nodes.map(d => d.y + d.height))
-    const xScale = scaleLinear()
-      .domain([0, xMax])
-      .range([0, this.width])
-    if (xScale(yMax) < this.height) {
-      return xScale
-    }
-    return scaleLinear()
-      .domain([0, yMax])
-      .range([0, this.height])
   }
 
   makeGridFittingButton () {
@@ -218,7 +199,6 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
     this.makeGridFittingButton()
 
     const nodes = graphData.nodes.filter(d => d.type === 'node')
-    this.scale = this.makeScale(nodes)
 
     this.xGrids = this.gridObjectsFrom(graphData.grid.x)
     this.yGrids = this.gridObjectsFrom(graphData.grid.y)
