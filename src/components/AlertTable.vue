@@ -12,62 +12,72 @@
         name="AlertTableControl"
       >
         <el-row v-bind:gutter="10">
-          <el-col v-bind:span="4">
-            Rows :
-            <el-input-number
-              v-model="alertLimit"
-              size="small"
-              controls-position="right"
-              v-bind:min="1"
-              v-bind:max="15"
-              v-on:change="changeTableLineNumber"
-            />
+          <el-col v-bind:span="6">
+            <div class="alert-control">
+              Rows :
+              <el-input-number
+                v-model="alertLimit"
+                size="small"
+                controls-position="right"
+                v-bind:min="1"
+                v-bind:max="15"
+                v-on:change="changeTableLineNumber"
+              />
+            </div>
           </el-col>
-          <el-col v-bind:span="4">
-            <el-button
-              round
-              size="small"
-              type="info"
-              icon="el-icon-delete"
-              v-bind:disabled="disableClearAlertTableButton"
-              v-on:click="clickClearSelectionButton"
-            >
-              Clear selection
-            </el-button>
+          <el-col v-bind:span="6">
+            <div class="alert-control">
+              <el-button
+                round
+                size="small"
+                type="info"
+                icon="el-icon-delete"
+                v-bind:disabled="disableClearAlertTableButton"
+                v-on:click="clickClearSelectionButton"
+              >
+                Clear selection
+              </el-button>
+            </div>
           </el-col>
-          <el-col v-bind:span="7">
-            Host to Highlight:
-            <el-input
-              v-model="alertHostInput"
-              class="host-input"
-              clearable
-              placeholder="node OR layer__node"
-              size="small"
-              v-on:input="inputAlertHost"
-            />
+          <el-col v-bind:span="6">
+            <div class="alert-control">
+              Host to Highlight:
+              <el-input
+                v-model="alertHostInput"
+                class="host-input"
+                clearable
+                placeholder="node OR layer__node"
+                size="small"
+                v-on:input="inputAlertHost"
+              />
+            </div>
           </el-col>
         </el-row>
         <el-row v-bind:gutter="10">
-          <el-col v-bind:span="5">
-            <el-switch
-              v-model="enableTimer"
-              active-text="Enable Timer"
-              inactive-text="Disable Timer"
-              active-color="#409EFF"
-              inactive-color="#ff4949"
-              v-on:change="setAlertCheckTimer()"
-            />
+          <el-col v-bind:span="6">
+            <div class="alert-control">
+              <el-switch
+                v-model="enableTimer"
+                active-text="Enable Timer"
+                inactive-text="Disable Timer"
+                active-color="#409EFF"
+                inactive-color="#ff4949"
+                v-on:change="setAlertCheckTimer()"
+              />
+            </div>
           </el-col>
-          <el-col v-bind:span="5">
-            Interval(sec) :
-            <el-input-number
-              v-model="alertPollingInterval"
-              size="small"
-              controls-position="right"
-              v-bind:min="1"
-              v-bind:max="30"
-              v-on:change="resetAlertCheckTimer()"
-            />
+          <el-col v-bind:span="6">
+            <div class="alert-control">
+              Interval(sec) :
+              <el-input-number
+                v-model="alertPollingInterval"
+                size="small"
+                controls-position="right"
+                v-bind:min="1"
+                v-bind:max="30"
+                v-on:change="resetAlertCheckTimer()"
+              />
+            </div>
           </el-col>
         </el-row>
       </el-collapse-item>
@@ -281,7 +291,10 @@ export default {
   margin-bottom: 15px;
 }
 .host-input {
-  width: 200px;
+  width: 180px;
+}
+.alert-control {
+  background-color: transparent; // change some color to check layout
 }
 .el-table /deep/ {
   table {
