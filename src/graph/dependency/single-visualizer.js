@@ -1,4 +1,3 @@
-import { scaleLinear } from 'd3-scale'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 
 export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
@@ -21,10 +20,10 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .data(graphData)
       .enter()
       .append('text')
-      .attr('x', d => this.scale(d.x))
-      .attr('y', d => this.scale(d.y + d.height / 2))
+      .attr('x', d => d.x)
+      .attr('y', d => d.y + d.height / 2)
       .attr('class', 'dep layer')
-      .attr('font-size', this.scale(this.fontSize))
+      .attr('font-size', this.fontSize)
       .text(d => d.name)
   }
 
@@ -40,12 +39,12 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .append('rect')
       .attr('class', d => this.objClassDef(d, 'dep'))
       .attr('id', d => d.path)
-      .attr('x', d => this.scale(d.x))
-      .attr('y', d => this.scale(d.y))
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
       .attr('rx', 5)
       .attr('ry', 5)
-      .attr('width', d => this.scale(d.width))
-      .attr('height', d => this.scale(d.height))
+      .attr('width', d => d.width)
+      .attr('height', d => d.height)
     // .append('title')
     // .text(d => d.path)
   }
@@ -58,9 +57,9 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .append('circle')
       .attr('class', d => this.objClassDef(d, 'dep'))
       .attr('id', d => d.path)
-      .attr('cx', d => this.scale(d.cx))
-      .attr('cy', d => this.scale(d.cy))
-      .attr('r', d => this.scale(d.r))
+      .attr('cx', d => d.cx)
+      .attr('cy', d => d.cy)
+      .attr('r', d => d.r)
     // .append('title')
     // .text(d => d.path)
   }
@@ -73,10 +72,10 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .append('text')
       .attr('class', d => this.objClassDef(d, 'dep node'))
       .attr('id', d => `${d.path}-ndlb`)
-      .attr('x', d => this.scale(d.x))
-      .attr('y', d => this.scale(d.y + d.height))
-      .attr('dy', this.scale(this.fontSize))
-      .attr('font-size', this.scale(this.fontSize))
+      .attr('x', d => d.x)
+      .attr('y', d => d.y + d.height)
+      .attr('dy', this.fontSize)
+      .attr('font-size', this.fontSize)
       .text(d => d.name)
   }
 
@@ -88,10 +87,10 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
       .append('text')
       .attr('class', d => this.objClassDef(d, 'dep tp'))
       .attr('id', d => `${d.path}-tplb`)
-      .attr('x', d => this.scale(d.cx))
-      .attr('y', d => this.scale(d.cy + d.r))
-      .attr('dy', this.scale(this.fontSize / 2))
-      .attr('font-size', this.scale(this.fontSize))
+      .attr('x', d => d.cx)
+      .attr('y', d => d.cy + d.r)
+      .attr('dy', this.fontSize / 2)
+      .attr('font-size', this.fontSize)
       .text(d => d.name)
   }
 
@@ -99,33 +98,9 @@ export default class SingleDepGraphVisualizer extends SingleVisualizerBase {
     return this.svgGrp.append('g').attr('class', 'dep-lines')
   }
 
-  makeScale (graphData) {
-    const lastNodes = graphData
-      .map(layer => layer.nodes[layer.nodes.length - 1])
-      .filter(n => n) // ignore empty nodes case
-    // Use single scale to use to objects,
-    // because to KEEP aspect ratio of original object.
-    const maxX = Math.max(...lastNodes.map(n => n.x + n.width))
-    const maxY = Math.max(
-      ...lastNodes.map(n => n.y + n.height + this.fontSize * 2)
-    )
-    const scaleX = scaleLinear()
-      .domain([0, maxX])
-      .range([0, this.width])
-    if (scaleX(maxY) < this.height) {
-      // the last layer node did not run-off the canvas when fit by width
-      return scaleX
-    }
-    // else return scaleY (fit by height)
-    return scaleLinear()
-      .domain([0, maxY])
-      .range([0, this.height])
-  }
-
   makeGraphObjects (graphData) {
     this.makeGraphSVG('dependency-view', null, 'whole-dep-graph')
     this.makeGraphControlButtons()
-    this.scale = this.makeScale(graphData)
 
     // for each layer
     const layerLabelGroup = this.makeLayerGroup()

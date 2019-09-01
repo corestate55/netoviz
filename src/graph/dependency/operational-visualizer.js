@@ -45,8 +45,8 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
 
   makeDependencyLines (lines, lineClass) {
     const lineGenerator = linkVertical()
-      .x(d => this.scale(d[0]))
-      .y(d => this.scale(d[1]))
+      .x(d => d[0])
+      .y(d => d[1])
     this.depLineGrp
       .selectAll(`path.${lineClass}`)
       .data(
@@ -58,7 +58,7 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .append('path')
       .attr('class', d => `dep ${d.type} ${lineClass}`)
       .attr('d', lineGenerator)
-      .attr('stroke-width', this.scale(5))
+      .attr('stroke-width', 5)
   }
 
   pathsFromPairs (selfObj, pairs) {
@@ -143,6 +143,19 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     this.tooltip.disableTooltip(d)
   }
 
+  setInitialZoom () {
+    const lastNodes = this.graphData
+      .map(layer => layer.nodes[layer.nodes.length - 1])
+      .filter(n => n) // ignore empty nodes case
+    const maxX = Math.max(...lastNodes.map(n => n.x + n.width))
+    const maxY = Math.max(
+      ...lastNodes.map(n => n.y + n.height + this.fontSize * 2)
+    )
+    const zoomRatio = Math.min(this.width / maxX, this.height / maxY)
+    this.zoom.scaleTo(this.svg, zoomRatio)
+    this.zoom.translateTo(this.svg, 0, 0, [0, 0])
+  }
+
   setOperationHandler (graphData) {
     this.graphData = graphData
     this.allTargetObj = this.svgGrp
@@ -160,11 +173,11 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       this.clearDependencyLines('')
     })
 
-    this.svg.call(
-      zoom()
-        .scaleExtent([1 / 4, 5])
-        .on('zoom', () => this.svgGrp.attr('transform', event.transform))
-    )
+    this.zoom = zoom()
+      .scaleExtent([1 / 4, 5])
+      .on('zoom', () => this.svgGrp.attr('transform', event.transform))
+    this.svg.call(this.zoom)
+    this.setInitialZoom()
   }
 
   findGraphObjByPath (path) {
