@@ -8,12 +8,8 @@
         Visualizer Component (UI Debug)
       </p>
       <ul>
-        <li>
-          Visualizer = {{ visualizer }}
-        </li>
-        <li>
-          Model File = {{ modelFile }}
-        </li>
+        <li>Visualizer = {{ visualizer }}</li>
+        <li>Model File = {{ modelFile }}</li>
         <ul>
           <li
             v-for="layer in selectedLayers"
@@ -24,18 +20,10 @@
         </ul>
       </ul>
     </div>
-    <VisualizeDiagramTopology
-      v-if="visualizer === 'Topology'"
-    />
-    <VisualizeDiagramDependency
-      v-else-if="visualizer === 'Dependency'"
-    />
-    <VisualizeDiagramDependency2
-      v-else-if="visualizer === 'Dependency2'"
-    />
-    <VisualizeDiagramNested
-      v-else-if="visualizer === 'Nested'"
-    />
+    <VisualizeDiagramTopology v-if="visualizer === 'Topology'" />
+    <VisualizeDiagramDependency v-else-if="visualizer === 'Dependency'" />
+    <VisualizeDiagramDependency2 v-else-if="visualizer === 'Dependency2'" />
+    <VisualizeDiagramNested v-else-if="visualizer === 'Nested'" />
   </div>
 </template>
 
@@ -65,5 +53,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

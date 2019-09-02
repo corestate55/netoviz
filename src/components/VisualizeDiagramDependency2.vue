@@ -1,11 +1,8 @@
 <template>
   <div id="visualizer">
-    <div
-      v-bind:style="{ display: debug }"
-    >
-      Dependency2 Graph ::
-      Dependency model: {{ modelFile }}
-      Alert Row: {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+    <div v-bind:style="{ display: debug }">
+      Dependency2 Graph :: Dependency model: {{ modelFile }} Alert Row:
+      {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
     </div>
     <!-- entry point of d3 graph(s) -->
   </div>
@@ -48,7 +45,9 @@ export default {
     this.unwatchModelFile = this.$store.watch(
       state => state.modelFile,
       (newModelFile, oldModelFile) => {
-        console.log(`[dep2] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        console.log(
+          `[dep2] modelFile changed from ${oldModelFile} to ${newModelFile}`
+        )
         this.clearAllHighlight()
         this.drawJsonModel()
       }
@@ -82,5 +81,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

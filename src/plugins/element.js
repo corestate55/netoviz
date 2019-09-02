@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import {
-  RadioGroup,
-  RadioButton,
   CheckboxGroup,
   CheckboxButton,
-  Select,
-  Option,
   Table,
   TableColumn,
   Button,
@@ -26,12 +22,8 @@ import 'element-ui/lib/theme-chalk/index.css'
 
 locale.use(lang)
 
-Vue.use(RadioGroup)
-Vue.use(RadioButton)
 Vue.use(CheckboxGroup)
 Vue.use(CheckboxButton)
-Vue.use(Select)
-Vue.use(Option)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Button)

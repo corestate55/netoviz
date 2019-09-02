@@ -1,10 +1,7 @@
 <template>
   <div>
-    <div
-      v-bind:style="{ display: debug }"
-    >
-      host (input): {{ alertHost }},
-      currentAlertRow: {{ currentAlertRow }}
+    <div v-bind:style="{ display: debug }">
+      host (input): {{ alertHost }}, currentAlertRow: {{ currentAlertRow }}
     </div>
     <el-collapse v-model="activeNames">
       <el-collapse-item
@@ -145,15 +142,25 @@ export default {
   },
   computed: {
     currentAlertRow: {
-      get () { return this.$store.getters.currentAlertRow },
-      set (value) { this.$store.commit('setCurrentAlertRow', value) }
+      get () {
+        return this.$store.getters.currentAlertRow
+      },
+      set (value) {
+        this.$store.commit('setCurrentAlertRow', value)
+      }
     },
     alertHost: {
-      get () { return this.$store.getters.alertHost },
-      set (value) { this.$store.commit('setAlertHost', value) }
+      get () {
+        return this.$store.getters.alertHost
+      },
+      set (value) {
+        this.$store.commit('setAlertHost', value)
+      }
     },
     disableClearAlertTableButton () {
-      return (this.currentAlertRow && Object.keys(this.currentAlertRow).length < 1)
+      return (
+        this.currentAlertRow && Object.keys(this.currentAlertRow).length < 1
+      )
     }
   },
   mounted () {
@@ -173,7 +180,9 @@ export default {
   },
   methods: {
     setAlertCheckTimer () {
-      this.enableTimer ? this.startAlertCheckTimer() : this.stopAlertCheckTimer()
+      this.enableTimer
+        ? this.startAlertCheckTimer()
+        : this.stopAlertCheckTimer()
     },
     resetAlertCheckTimer () {
       this.stopAlertCheckTimer()
@@ -207,7 +216,10 @@ export default {
         const newAlerts = await response.json()
         // check alerts (alert table rows) update:
         // changed table rows OR comes new data(id)
-        if (this.alerts.length !== newAlerts.length || newAlerts[0].id !== this.alerts[0].id) {
+        if (
+          this.alerts.length !== newAlerts.length ||
+          newAlerts[0].id !== this.alerts[0].id
+        ) {
           this.alerts = newAlerts
         }
       } catch (error) {
@@ -218,7 +230,11 @@ export default {
       const severity = row.row.severity
       const severityRegexp = new RegExp(severity, 'i')
       const severities = [
-        'disaster', 'high', 'average', 'warning', 'information'
+        'disaster',
+        'high',
+        'average',
+        'warning',
+        'information'
       ]
       if (severities.find(s => s.match(severityRegexp))) {
         return `${severity.toLowerCase()}-row`
@@ -239,7 +255,7 @@ export default {
       const alert = {
         message: 'selected directly',
         severity: 'information',
-        date: (new Date()).toISOString(),
+        date: new Date().toISOString(),
         // for drill-down:
         // it must identify object that has same name with layer (path)
         layer: this.layerOfAlertHostInput()
@@ -300,7 +316,8 @@ export default {
   table {
     border-collapse: collapse;
   }
-  th, td {
+  th,
+  td {
     padding-top: 0.5em;
     padding-bottom: 0.5em;
   }
@@ -326,7 +343,7 @@ export default {
     td {
       background-color: inherit;
     }
-    border: 2px solid #B71001;
+    border: 2px solid #b71001;
     font-weight: bold;
     text-decoration: underline;
   }

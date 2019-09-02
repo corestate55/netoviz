@@ -3,18 +3,10 @@
     <AppSelectLayer />
     <div v-bind:style="{ display: debug }">
       <ul>
-        <li>
-          Topology model: {{ modelFile }}
-        </li>
-        <li>
-          Whole layers: {{ wholeLayers }}
-        </li>
-        <li>
-          Selected layers: {{ selectedLayers }}
-        </li>
-        <li>
-          NOT selected layers: {{ notSelectedLayers }}
-        </li>
+        <li>Topology model: {{ modelFile }}</li>
+        <li>Whole layers: {{ wholeLayers }}</li>
+        <li>Selected layers: {{ selectedLayers }}</li>
+        <li>NOT selected layers: {{ notSelectedLayers }}</li>
       </ul>
     </div>
     <!-- entry point of d3 graph(s) -->
@@ -41,7 +33,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow', 'modelFile', 'selectedLayers', 'wholeLayers']),
+    ...mapGetters([
+      'currentAlertRow',
+      'modelFile',
+      'selectedLayers',
+      'wholeLayers'
+    ]),
     notSelectedLayers () {
       return this.wholeLayers.filter(
         // <0: index not found: not exist in selected layers
@@ -56,16 +53,22 @@ export default {
     this.drawJsonModel()
     this.unwatchAlert = this.$store.watch(
       state => state.currentAlertRow,
-      (newRow, oldRow) => { this.highlightByAlert(newRow) }
+      (newRow, oldRow) => {
+        this.highlightByAlert(newRow)
+      }
     )
     this.unwatchSelectedLayers = this.$store.watch(
       state => state.selectedLayers,
-      (newLayers) => { this.displaySelectedLayers() }
+      newLayers => {
+        this.displaySelectedLayers()
+      }
     )
     this.unwatchModelFile = this.$store.watch(
       state => state.modelFile,
       (newModelFile, oldModelFile) => {
-        console.log(`[topo] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        console.log(
+          `[topo] modelFile changed from ${oldModelFile} to ${newModelFile}`
+        )
         this.clearAllHighlight()
         this.drawJsonModel()
       }
@@ -118,5 +121,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

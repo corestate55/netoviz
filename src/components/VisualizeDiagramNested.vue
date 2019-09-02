@@ -2,51 +2,56 @@
   <div id="visualizer">
     <el-row v-bind:gutter="20">
       <el-col v-bind:span="5">
-        <el-switch
-          v-model="reverse"
-          active-text="Bottom View"
-          inactive-text="Top View"
-          inactive-color="#13ce66"
-          v-on:change="drawJsonModel()"
-        />
+        <div class="nested-view-control">
+          <el-switch
+            v-model="reverse"
+            active-text="Bottom View"
+            inactive-text="Top View"
+            inactive-color="#13ce66"
+            v-on:change="drawJsonModel()"
+          />
+        </div>
       </el-col>
       <el-col v-bind:span="5">
-        <el-switch
-          v-model="autoFitting"
-          active-text="Fit Auto"
-          inactive-text="Default Layout"
-          inactive-color="gray"
-          v-on:change="drawJsonModel()"
-        />
+        <div class="nested-view-control">
+          <el-switch
+            v-model="autoFitting"
+            active-text="Fit Auto"
+            inactive-text="Default Layout"
+            inactive-color="gray"
+            v-on:change="drawJsonModel()"
+          />
+        </div>
       </el-col>
       <el-col v-bind:span="5">
-        Base depth :
-        <el-input-number
-          v-model="depth"
-          size="small"
-          controls-position="right"
-          v-bind:min="1"
-          v-on:change="drawJsonModel()"
-        />
+        <div class="nested-view-control">
+          Base depth :
+          <el-input-number
+            v-model="depth"
+            size="small"
+            controls-position="right"
+            v-bind:min="1"
+            v-on:change="drawJsonModel()"
+          />
+        </div>
       </el-col>
       <el-col v-bind:span="5">
-        <el-button
-          round
-          size="small"
-          type="warning"
-          v-on:click="saveLayout()"
-        >
-          Save Layout
-        </el-button>
+        <div class="nested-view-control">
+          <el-button
+            round
+            size="small"
+            type="warning"
+            v-on:click="saveLayout()"
+          >
+            Save Layout
+          </el-button>
+        </div>
       </el-col>
     </el-row>
-    <div
-      v-bind:style="{ display: debug }"
-    >
-      Nested model: {{ modelFile }},
-      Alert Row: {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }},
-      Reverse? : {{ reverse }}
-      Auto Fitting? : {{ autoFitting }}
+    <div v-bind:style="{ display: debug }">
+      Nested model: {{ modelFile }}, Alert Row:
+      {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}, Reverse? :
+      {{ reverse }} Auto Fitting? : {{ autoFitting }}
     </div>
     <!-- entry point of d3 graph(s) -->
   </div>
@@ -91,7 +96,9 @@ export default {
     this.unwatchModelFile = this.$store.watch(
       state => state.modelFile,
       (newModelFile, oldModelFile) => {
-        console.log(`[nested] modelFile changed from ${oldModelFile} to ${newModelFile}`)
+        console.log(
+          `[nested] modelFile changed from ${oldModelFile} to ${newModelFile}`
+        )
         this.clearAllHighlight()
         this.drawJsonModel()
       }
@@ -142,4 +149,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.nested-view-control {
+  background-color: transparent; // change some color to check layout
+}
 </style>

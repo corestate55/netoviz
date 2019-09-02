@@ -30,8 +30,7 @@
       </el-submenu>
     </el-menu>
     <div v-bind:style="{ display: debug }">
-      modelFile: {{ modelFile }},
-      visualizer: {{ visualizer }}
+      modelFile: {{ modelFile }}, visualizer: {{ visualizer }}
     </div>
   </div>
 </template>
@@ -73,23 +72,26 @@ export default {
           label: 'target3 diff data'
         }
       ],
-      visualizers: [
-        'Topology',
-        'Dependency',
-        'Dependency2',
-        'Nested'
-      ],
+      visualizers: ['Topology', 'Dependency', 'Dependency2', 'Nested'],
       debug: 'none' // 'none' or 'block' to appear debug container
     }
   },
   computed: {
     visualizer: {
-      get () { return this.$store.getters.visualizer },
-      set (value) { this.$store.commit('setVisualizer', value) }
+      get () {
+        return this.$store.getters.visualizer
+      },
+      set (value) {
+        this.$store.commit('setVisualizer', value)
+      }
     },
     modelFile: {
-      get () { return this.$store.getters.modelFile },
-      set (value) { this.$store.dispatch('updateModelFile', value) }
+      get () {
+        return this.$store.getters.modelFile
+      },
+      set (value) {
+        this.$store.dispatch('updateModelFile', value)
+      }
     }
   },
   mounted () {
@@ -109,5 +111,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

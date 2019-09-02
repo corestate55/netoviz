@@ -21,12 +21,15 @@ export default {
   computed: {
     ...mapGetters(['wholeLayers', 'visualizer']),
     selectedLayers: {
-      get () { return this.$store.getters.selectedLayers },
-      set (value) { this.$store.commit('setSelectedLayers', value) }
+      get () {
+        return this.$store.getters.selectedLayers
+      },
+      set (value) {
+        this.$store.commit('setSelectedLayers', value)
+      }
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
