@@ -1,4 +1,4 @@
-import { line as d3Line, curveLinear } from 'd3-shape'
+// import { line as d3Line, curveLinear } from 'd3-shape'
 import SingleVisualizerBase from '../common/single-visualizer-base'
 import InterTpLinkCreator from './link-creator'
 
@@ -126,17 +126,18 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   makeTpTpLines (tpTpLinks) {
-    const line = d3Line()
-      .x(d => d[0])
-      .y(d => d[1])
-      .curve(curveLinear)
+    // const line = d3Line()
+    //   .x(d => d[0])
+    //   .y(d => d[1])
+    //   .curve(curveLinear)
     const updatedLines = this.svgGrp.selectAll('path.tp-tp').data(tpTpLinks)
     const enteredLines = updatedLines.enter().append('path')
     const targetLines = enteredLines.merge(updatedLines)
     targetLines
       .attr('class', d => this.objClassDef(d, `nest ${d.type}`))
       .attr('id', d => d.path)
-      .attr('d', d => line(d.represent4Points()))
+      // .attr('d', d => line(d.represent4Points()))
+      .attr('d', d => d.circledCornerPolyline())
       .attr('stroke-width', 4)
   }
 

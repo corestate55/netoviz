@@ -238,6 +238,7 @@ class InterTpLink {
     ]
   }
 
+  // for line generator (d3-shape package)
   represent4Points () {
     return [
       [this.x1, this.y1],
@@ -245,6 +246,83 @@ class InterTpLink {
       [this.x2, this.yMid],
       [this.x2, this.y2]
     ]
+  }
+
+  _wideCircledCornerPolyline (r) {
+    if (this.skewType() === 'slash') {
+      return [
+        `M${this.xMax()},${this.yMin()}`,
+        `L${this.xMax()},${this.yMid - r}`,
+        `A${r},${r} 0 0,1 ${this.xMax() - r},${this.yMid}`,
+        `L${this.xMin() + r},${this.yMid}`,
+        `A${r},${r} 0 0,0 ${this.xMin()},${this.yMid + r}`,
+        `L${this.xMin()},${this.yMax()}`
+      ].join(' ')
+    } else if (this.skewType() === 'backslash') {
+      return [
+        `M${this.xMin()},${this.yMin()}`,
+        `L${this.xMin()},${this.yMid - r}`,
+        `A${r},${r} 0 0,0 ${this.xMin() + r},${this.yMid}`,
+        `L${this.xMax() - r},${this.yMid}`,
+        `A${r},${r} 0 0,1 ${this.xMax()},${this.yMid + r}`,
+        `L${this.xMax()},${this.yMax()}`
+      ].join(' ')
+    }
+    // horizontal
+    return [
+      `M${this.xMin()},${this.yMin()}`,
+      `L${this.xMin()},${this.yMid + r}`,
+      `A${r},${r} 0 0,1 ${this.xMin() + r},${this.yMid}`,
+      `L${this.xMax() - r}, ${this.yMid}`,
+      `A${r},${r} 0 0,1 ${this.xMax()},${this.yMid + r}`,
+      `L${this.xMax()},${this.yMax()}`
+    ].join(' ')
+  }
+
+  _narrowCircledCornerPolyline (r) {
+    if (this.skewType() === 'slash') {
+      return [
+        `M${this.xMax()},${this.yMin()}`,
+        `L${this.xMax()},${this.yMid - r}`,
+        `L${this.xMin()},${this.yMid + r}`,
+        `L${this.xMin()},${this.yMax()}`
+      ].join(' ')
+    } else if (this.skewType() === 'backslash') {
+      return [
+        `M${this.xMin()},${this.yMin()}`,
+        `L${this.xMin()},${this.yMid - r}`,
+        `L${this.xMax()},${this.yMid + r}`,
+        `L${this.xMax()},${this.yMax()}`
+      ].join(' ')
+    }
+    // horizontal
+    return [
+      `M${this.xMin()},${this.yMin()}`,
+      `L${this.xMin()},${this.yMid}`,
+      `L${this.xMax()},${this.yMid}`,
+      `L${this.xMax()},${this.yMax()}`
+    ].join(' ')
+  }
+
+  circledCornerPolyline () {
+    // corner radius (MUST be smaller than term-point circle radius)
+    const r = 10
+    // exception
+    if (this.skewType() === 'vertical') {
+      return [
+        `M${this.xMin()},${this.yMin()}`,
+        `L${this.xMax()},${this.yMax()}`
+      ].join(' ')
+    }
+    // When narrow width polyline,
+    // it approximate using straight line instead of curved section.
+    // Narrow height case is ignored,
+    // because term-point circle will hide corner-circle.
+    // (if tp circle radius >= corner circle radius)
+    if (this.width() >= r * 2) {
+      return this._wideCircledCornerPolyline(r)
+    }
+    return this._narrowCircledCornerPolyline(r)
   }
 }
 
