@@ -1627,6 +1627,10 @@
             ],
             "supporting-node": [
               {
+                "network-ref": "target-L1",
+                "node-ref": "R1"
+              },
+              {
                 "network-ref": "target-L1.5",
                 "node-ref": "R1"
               }
@@ -1759,6 +1763,10 @@
               }
             ],
             "supporting-node": [
+              {
+                "network-ref": "target-L1",
+                "node-ref": "R2"
+              },
               {
                 "network-ref": "target-L1.5",
                 "node-ref": "R2"
