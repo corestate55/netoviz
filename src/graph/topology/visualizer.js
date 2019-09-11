@@ -10,7 +10,7 @@ import BaseContainer from '../../../srv/graph/common/base'
 export default class GraphVisualizer extends BaseContainer {
   constructor () {
     super()
-    this.posCache = new PositionCache()
+    this.positionCache = new PositionCache()
     this.graphVisualizers = []
   }
 
@@ -26,7 +26,7 @@ export default class GraphVisualizer extends BaseContainer {
         // set auto save fixed node position function
         this.storageKey = `netoviz-${jsonName}`
         interval(() => {
-          this.posCache.saveGraphs(this.storageKey, this.graphs)
+          this.positionCache.saveGraphs(this.storageKey, this.graphs)
         }, 5000)
         // draw
         this.drawGraphs()
@@ -57,46 +57,54 @@ export default class GraphVisualizer extends BaseContainer {
     for (const graph of this.graphs) {
       // single-diff-view
       const graphVisualizer = new OperationalVisualizer(graph, callback)
-      this.posCache.loadToGraph(this.storageKey, graph, graphVisualizer)
+      this.positionCache.loadToGraph(this.storageKey, graph, graphVisualizer)
       graphVisualizer.restartSimulation()
       this.graphVisualizers.push(graphVisualizer)
     }
   }
 
+  _forEachVisualizer (callback) {
+    this.graphVisualizers.forEach(callback)
+  }
+
+  // alias (need to call from UI)
   clearAllHighlight () {
+    this.clearAllGraphsHighlight()
+  }
+
+  clearAllGraphsHighlight () {
     // clear all highlight
-    this.graphVisualizers.forEach(vis => vis.clearHighlight())
+    this._forEachVisualizer(vis => vis.clearHighlight())
+  }
+
+  clearAllGraphsWarningMessage () {
+    this._forEachVisualizer(vis => vis.clearWarningMessage())
   }
 
   findGraphVisualizerByName (name) {
     return this.graphVisualizers.find(d => d.graph.name === name)
   }
 
-  findNodeByNameInLayer (name, layer) {
-    return layer.nodes.find(d => d.name === name)
-  }
-
   highlightByAlert (alert) {
     if (!alert || !this.graphs) {
       return
     }
-    this.clearAllHighlight()
+    this.clearAllGraphsHighlight()
     // find and select (highlight) a node
     //   layer(graph) order is assumed as high -> low
     //   search the node to highlight from low layer
-    let foundTargetNode = false
+    let targetNode = null
     for (const layer of this.graphs.reverse()) {
-      const result = this.findNodeByNameInLayer(alert.host, layer)
-      if (result) {
-        const el = document.getElementById(result.path)
-        this.findGraphVisualizerByName(layer.name).highlightNode(el)
-        foundTargetNode = true
+      const visualizer = this.findGraphVisualizerByName(layer.name)
+      targetNode = visualizer.nodeTypeNodes().find(d => d.name === alert.host)
+      if (targetNode) {
+        visualizer.highlightNode(targetNode)
         break
       }
     }
-    this.graphVisualizers.forEach(vis => vis.clearWarningMessage())
-    if (!foundTargetNode) {
-      this.graphVisualizers.forEach(vis => {
+    this.clearAllGraphsWarningMessage()
+    if (!targetNode) {
+      this._forEachVisualizer(vis => {
         const message = `Alerted host: [${alert.host}] is not found.`
         vis.makeWarningMessage(message)
       })

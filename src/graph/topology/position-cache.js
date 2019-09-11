@@ -31,8 +31,7 @@ export default class PositionCache {
       if (node) {
         node.fx = cachedNode.fx
         node.fy = cachedNode.fy
-        const element = document.getElementById(cachedNode.path)
-        graphVisualizer.classifyNodeAsFixed(element)
+        graphVisualizer.markTarget(node, ['fixed', true])
       }
     }
   }

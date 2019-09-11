@@ -71,6 +71,10 @@ export default class SingleGraphVisualizer extends SingleVisualizerBase {
     this.tpInfoTable = tableContainer
       .append('table')
       .attr('class', 'tp-info-table')
+    this.tpInfoTable
+      .append('tr')
+      .append('th')
+      .html('Term Point')
   }
 
   makeVisContainer () {

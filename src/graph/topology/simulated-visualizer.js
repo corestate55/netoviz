@@ -1,6 +1,12 @@
 'use strict'
 
-import * as d3 from 'd3-force'
+import {
+  forceSimulation,
+  forceLink,
+  forceCollide,
+  forceManyBody,
+  forceCenter
+} from 'd3-force'
 import { event } from 'd3-selection'
 import { timeout } from 'd3-timer'
 import SingleGraphVisualizer from './single-visualizer'
@@ -23,25 +29,22 @@ export default class ForceSimulatedVisualizer extends SingleGraphVisualizer {
   }
 
   makeSimulation () {
-    return d3
-      .forceSimulation()
+    return forceSimulation()
       .force(
         'link',
-        d3
-          .forceLink()
+        forceLink()
           .id(d => d.id)
           .distance(d => this.linkDistance(d))
           .iterations(8)
       )
       .force(
         'collide',
-        d3
-          .forceCollide()
+        forceCollide()
           .strength(1.0) // collision not allowed
           .iterations(8)
       )
-      .force('charge', d3.forceManyBody().strength(-50))
-      .force('center', d3.forceCenter(this.width / 2, this.height / 2))
+      .force('charge', forceManyBody().strength(-50))
+      .force('center', forceCenter(this.width / 2, this.height / 2))
   }
 
   setupSimulation () {
