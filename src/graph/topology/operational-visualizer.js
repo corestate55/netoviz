@@ -27,6 +27,12 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
     }
   }
 
+  clearSelectReady () {
+    selectAll('div#visualizer')
+      .selectAll('.select-ready')
+      .classed('select-ready', false)
+  }
+
   setSVGZoom () {
     this.svg.call(
       zoom()
@@ -112,14 +118,16 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
 
   _mouseOver (d) {
     // console.log(`mouse-over: ${d.path}`)
-    this.appendTpInfoTable(d)
+    if (d.type === 'node') {
+      this.appendTpInfoTable(d)
+    }
     this.markFamily(d, ['select-ready', true])
     this.tooltip.enableTooltip(d)
   }
 
   _mouseOut (d) {
     // console.log(`mouse-out: ${d.path}`)
-    this.markFamily(d, ['select-ready', false])
+    this.clearSelectReady()
     this.tooltip.disableTooltip()
   }
 
@@ -180,6 +188,7 @@ export default class OperationalVisualizer extends ForceSimulatedVisualizer {
       .append('td')
       .attr('id', d => `${d.path}-tpinfo`)
       .on('click', d => this._click(d))
+      .on('dblclick', d => this._doubleClick(d))
       .on('mouseover', d => this._mouseOver(d))
       .on('mouseout', d => this._mouseOut(d))
       .html(d => d.name)
