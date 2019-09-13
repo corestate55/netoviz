@@ -38,40 +38,7 @@
 export default {
   data () {
     return {
-      models: [
-        {
-          file: 'bf_trial.json',
-          label: 'batfish trial'
-        },
-        {
-          file: 'target3b.json',
-          label: '[3b] L2 Aggr, L3.5 and L2 separate'
-        },
-        {
-          file: 'target3a.json',
-          label: '[3a] L2 Aggr and L3.5'
-        },
-        {
-          file: 'target3.json',
-          label: '[3] L2 Aggregated Model'
-        },
-        {
-          file: 'target2.json',
-          label: '[2] L2 Compact Model'
-        },
-        {
-          file: 'target.json',
-          label: '[1] L2 Verbose Model'
-        },
-        {
-          file: 'diff_test.json',
-          label: 'diff viewer test data'
-        },
-        {
-          file: 'target3.diff.json',
-          label: 'target3 diff data'
-        }
-      ],
+      models: [],
       visualizers: ['Topology', 'Dependency', 'Dependency2', 'Nested'],
       debug: 'none' // 'none' or 'block' to appear debug container
     }
@@ -95,10 +62,18 @@ export default {
     }
   },
   mounted () {
-    // default
-    this.modelFile = this.models[0].file
+    this.getModels()
   },
   methods: {
+    async getModels () {
+      try {
+        const response = await fetch('/models')
+        this.models = await response.json()
+        this.modelFile = this.models[0].file // default
+      } catch (error) {
+        console.log('[NavMenu] Cannot get models data: ', error)
+      }
+    },
     handleSelect (key, keyPath) {
       if (keyPath[0] === 'model-select') {
         this.modelFile = keyPath[1]

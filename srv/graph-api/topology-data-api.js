@@ -19,6 +19,16 @@ export default class TopoogyDataAPI {
     )
   }
 
+  async getModels () {
+    const modelsFile = `${this.modelDir}/_index.json`
+    try {
+      return JSON.parse(await readFile(modelsFile, 'utf-8'))
+    } catch (error) {
+      console.log(error)
+      return []
+    }
+  }
+
   async readLayoutJSON (jsonName) {
     try {
       const baseName = jsonName.split('.').shift()

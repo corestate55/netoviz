@@ -13,6 +13,9 @@ export default class OperationalDep2GraphVisualizer extends SingleDep2GraphVisua
   }
 
   clearDependencyLines (lineClass) {
+    if (!this.svgGrp) {
+      return // return if not ready svg (initial)
+    }
     const selector = lineClass ? `.${lineClass}` : ''
     this.depLineSVGGrp.selectAll(`path${selector}`).remove()
     this.svgGrp.selectAll(`circle${selector}`).classed(lineClass, false)

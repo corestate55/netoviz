@@ -31,6 +31,7 @@ export default app => {
     })
     res.send('Log message received.')
   })
+
   app.get('/alert/:number', async (req, res) => {
     console.log(`requested ${req.params.number} logs`)
     const instances = await db.alert.findAll({
@@ -39,6 +40,7 @@ export default app => {
     })
     res.send(instances)
   })
+
   app.get('/alert/all', async (req, res) => {
     console.log('all logs requested')
     const instances = await db.alert.findAll({
@@ -47,10 +49,17 @@ export default app => {
     res.send(instances)
   })
 
+  app.get('/models', async (req, res) => {
+    console.log('model list requested')
+    res.type('json')
+    res.send(await topoDataAPI.getModels())
+  })
+
   app.post('/graph/:graphName/:jsonName', (req, res) => {
     topoDataAPI.postGraphData(req)
     res.send(JSON.stringify({ message: 'layout data received.' }))
   })
+
   app.get('/graph/:graphName/:jsonName', async (req, res) => {
     res.type('json')
     res.send(await topoDataAPI.getGraphData(req))
