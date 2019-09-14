@@ -75,15 +75,21 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
   }
 
   runParentsAndChildren (selfObj, actionForDepLine, actionForNodes) {
-    const parentPairs = this.getParentsTree(selfObj)
+    const parentPairs = this.getFamilyTree(selfObj, 'parents')
     const parentPaths = this.pathsFromPairs(selfObj, parentPairs)
-    const childPairs = this.getChildrenTree(selfObj)
+    const childPairs = this.getFamilyTree(selfObj, 'children')
     const childPaths = this.pathsFromPairs(selfObj, childPairs)
 
     // action for each pairs(line: src/dst)
     actionForDepLine(parentPairs.concat(childPairs))
     // action for each parent/child
     actionForNodes(this.flatten([selfObj.path, parentPaths, childPaths]))
+  }
+
+  markTargetByPaths (paths, markClass) {
+    paths.forEach(path => {
+      this.svgGrp.select(`[id='${path}']`).classed(...markClass)
+    })
   }
 
   clickEventHandler (d) {
@@ -94,21 +100,13 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     }
     const setHighlightByPath = paths => {
       this.clearHighlight()
-      for (const path of paths) {
-        const elm = document.getElementById(path)
-        elm.classList.add('selected')
-      }
+      this.markTargetByPaths(paths, ['selected', true])
     }
     this.runParentsAndChildren(d, makeSelectDepLines, setHighlightByPath)
   }
 
   selectReadyByPath (path, turnOn) {
-    const elm = document.getElementById(path)
-    if (turnOn) {
-      elm.classList.add('select-ready')
-    } else {
-      elm.classList.remove('select-ready')
-    }
+    this.markTargetByPaths([path], ['select-ready', turnOn])
   }
 
   mouseOverHandler (d) {
@@ -162,11 +160,10 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
       .selectAll('g.layer-objects')
       .selectAll('.dep')
 
-    const self = this
     this.allTargetObj
-      .on('click', d => self.clickEventHandler(d))
-      .on('mouseover', d => self.mouseOverHandler(d))
-      .on('mouseout', d => self.mouseOutHandler(d))
+      .on('click', d => this.clickEventHandler(d))
+      .on('mouseover', d => this.mouseOverHandler(d))
+      .on('mouseout', d => this.mouseOutHandler(d))
 
     this.setGraphControlButtons(() => {
       this.clearHighlight()
@@ -193,36 +190,17 @@ export default class OperationalDepGraphVisualizer extends SingleDepGraphVisuali
     return foundObj
   }
 
-  getParentsTree (objData) {
+  getFamilyTree (objData, relation) {
     const pathList = []
-    for (const parentPath of objData.parents) {
-      const parentObj = this.findGraphObjByPath(parentPath)
-      if (parentObj) {
-        pathList.push({
-          // push myself and parent
-          src: objData,
-          dst: parentObj
-        })
-        // push parent and parents of parent
-        pathList.push(this.getParentsTree(parentObj))
+    for (const familyPath of objData[relation]) {
+      const familyObj = this.findGraphObjByPath(familyPath)
+      if (!familyObj) {
+        continue
       }
-    }
-    return this.flatten(pathList)
-  }
-
-  getChildrenTree (objData) {
-    const pathList = []
-    for (const childPath of objData.children) {
-      const childObj = this.findGraphObjByPath(childPath)
-      if (childObj) {
-        pathList.push({
-          // push myself and child
-          dst: objData,
-          src: childObj
-        })
-        // push child and children of child
-        pathList.push(this.getChildrenTree(childObj))
-      }
+      // push myself and family
+      pathList.push({ src: objData, dst: familyObj })
+      // push families of family
+      pathList.push(this.getFamilyTree(familyObj, relation))
     }
     return this.flatten(pathList)
   }
