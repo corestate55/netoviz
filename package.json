@@ -5,10 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "format": "prettier-standard 'sr[cv]/**/*.js'",
     "lint": "vue-cli-service lint",
     "express": "vue-cli-service express:watch",
-    "express:run": "vue-cli-service express:run"
+    "express:run": "vue-cli-service express:run",
+    "format": "prettier-standard 'sr[cv]/**/*.js'"
   },
   "dependencies": {
     "d3-drag": "^1.2.4",
@@ -19,13 +19,12 @@
     "d3-timer": "^1.0.9",
     "d3-zoom": "^1.8.3",
     "debounce": "^1.2.0",
-    "element-ui": "^2.12.0",
     "express": "^4.17.1",
     "localStorage": "^1.0.4",
     "sequelize": "^5.18.4",
-    "sequelize-cli": "^5.5.1",
     "sqlite3": "^4.1.0",
     "vue": "^2.6.10",
+    "vuetify": "^2.0.0",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
@@ -40,10 +39,13 @@
     "eslint-plugin-vue": "^5.2.3",
     "node-sass": "^4.12.0",
     "prettier-standard": "^14.0.5",
-    "sass-loader": "^8.0.0",
+    "sass": "^1.17.4",
+    "sass-loader": "^7.1.0",
+    "sequelize-cli": "^5.5.1",
     "stats-webpack-plugin": "^0.7.0",
-    "vue-cli-plugin-element": "^1.0.1",
     "vue-cli-plugin-express": "1.0.2",
-    "vue-template-compiler": "^2.6.10"
+    "vue-cli-plugin-vuetify": "^0.6.3",
+    "vue-template-compiler": "^2.6.10",
+    "vuetify-loader": "^1.2.2"
   }
 }

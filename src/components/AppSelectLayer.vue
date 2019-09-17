@@ -1,17 +1,10 @@
 <template>
-  <el-checkbox-group
+  <v-select
     v-model="selectedLayers"
-    size="small"
-  >
-    <el-checkbox-button
-      v-for="layer in wholeLayers"
-      v-bind:key="layer"
-      border
-      v-bind:label="layer"
-    >
-      {{ layer }}
-    </el-checkbox-button>
-  </el-checkbox-group>
+    v-bind:items="wholeLayers"
+    chips
+    multiple
+  />
 </template>
 
 <script>
@@ -28,6 +21,9 @@ export default {
         this.$store.commit('setSelectedLayers', value)
       }
     }
+  },
+  mounted () {
+    this.selectedLayers = this.wholeLayers
   }
 }
 </script>

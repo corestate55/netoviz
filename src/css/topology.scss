@@ -113,7 +113,8 @@ text {
 }
 
 // info tables
-table {
+table.node-info-table,
+table.tp-info-table {
   display: inline-block;
   margin: 0.25em;
 

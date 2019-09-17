@@ -11,7 +11,7 @@ export default new Vuex.Store({
     modelFile: '', // not selected
     wholeLayers: [],
     selectedLayers: [],
-    currentAlertRow: null,
+    currentAlertRow: { id: -1 },
     alertHost: ''
   },
   mutations: {

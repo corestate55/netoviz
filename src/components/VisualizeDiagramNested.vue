@@ -1,59 +1,54 @@
 <template>
-  <div id="visualizer">
-    <el-row v-bind:gutter="20">
-      <el-col v-bind:span="5">
-        <div class="nested-view-control">
-          <el-switch
-            v-model="reverse"
-            active-text="Bottom View"
-            inactive-text="Top View"
-            inactive-color="#13ce66"
-            v-on:change="drawJsonModel()"
-          />
+  <div>
+    <v-row v-if="debug">
+      <v-col>
+        <div>
+          Nested model: {{ modelFile }}, Alert Row:
+          {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}, Reverse?
+          : {{ reverse }} Auto Fitting? : {{ autoFitting }}
         </div>
-      </el-col>
-      <el-col v-bind:span="5">
-        <div class="nested-view-control">
-          <el-switch
-            v-model="autoFitting"
-            active-text="Fit Auto"
-            inactive-text="Default Layout"
-            inactive-color="gray"
-            v-on:change="drawJsonModel()"
-          />
-        </div>
-      </el-col>
-      <el-col v-bind:span="5">
-        <div class="nested-view-control">
-          Base depth :
-          <el-input-number
-            v-model="depth"
-            size="small"
-            controls-position="right"
-            v-bind:min="1"
-            v-on:change="drawJsonModel()"
-          />
-        </div>
-      </el-col>
-      <el-col v-bind:span="5">
-        <div class="nested-view-control">
-          <el-button
-            round
-            size="small"
-            type="warning"
-            v-on:click="saveLayout()"
-          >
-            Save Layout
-          </el-button>
-        </div>
-      </el-col>
-    </el-row>
-    <div v-bind:style="{ display: debug }">
-      Nested model: {{ modelFile }}, Alert Row:
-      {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}, Reverse? :
-      {{ reverse }} Auto Fitting? : {{ autoFitting }}
-    </div>
-    <!-- entry point of d3 graph(s) -->
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <v-switch
+          v-model="reverse"
+          inset
+          label="Bottom View"
+        />
+      </v-col>
+      <v-col>
+        <v-switch
+          v-model="autoFitting"
+          inset
+          label="Fit Auto"
+        />
+      </v-col>
+      <v-col>
+        <v-text-field
+          v-model="depth"
+          label="Base depth"
+          type="number"
+          min="1"
+          v-on:input="drawJsonModel()"
+        />
+      </v-col>
+      <v-col>
+        <v-btn
+          rounded
+          color="info"
+          v-on:click="saveLayout()"
+        >
+          Save Layout
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <!-- entry point of d3 graph(s) -->
+        <div id="visualizer" />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -71,11 +66,19 @@ export default {
       depth: 1,
       unwatchCurrentAlertRow: null,
       unwatchModelFile: null,
-      debug: 'none' // 'none' or 'block' to appear debug container
+      debug: false
     }
   },
   computed: {
     ...mapGetters(['currentAlertRow', 'modelFile'])
+  },
+  watch: {
+    reverse () {
+      this.drawJsonModel()
+    },
+    autoFitting () {
+      this.drawJsonModel()
+    }
   },
   mounted () {
     console.log('[nested] mounted')

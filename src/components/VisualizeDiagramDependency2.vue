@@ -1,10 +1,19 @@
 <template>
-  <div id="visualizer">
-    <div v-bind:style="{ display: debug }">
-      Dependency2 Graph :: Dependency model: {{ modelFile }} Alert Row:
-      {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
-    </div>
-    <!-- entry point of d3 graph(s) -->
+  <div>
+    <v-row v-if="debug">
+      <v-col>
+        <div>
+          Dependency2 Graph :: Dependency model: {{ modelFile }} Alert Row:
+          {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <!-- entry point of d3 graph(s) -->
+        <div id="visualizer" />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -20,7 +29,7 @@ export default {
       visualizer: null,
       unwatchCurrentAlertRow: null,
       unwatchModelFile: null,
-      debug: 'none' // 'none' or 'block' to appear debug container
+      debug: false
     }
   },
   computed: {

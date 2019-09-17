@@ -1,15 +1,28 @@
 <template>
-  <div id="visualizer">
-    <AppSelectLayer />
-    <div v-bind:style="{ display: debug }">
-      <ul>
-        <li>Topology model: {{ modelFile }}</li>
-        <li>Whole layers: {{ wholeLayers }}</li>
-        <li>Selected layers: {{ selectedLayers }}</li>
-        <li>NOT selected layers: {{ notSelectedLayers }}</li>
-      </ul>
-    </div>
-    <!-- entry point of d3 graph(s) -->
+  <div>
+    <v-row v-if="debug">
+      <v-col>
+        <div>
+          <ul>
+            <li>Topology model: {{ modelFile }}</li>
+            <li>Whole layers: {{ wholeLayers }}</li>
+            <li>Selected layers: {{ selectedLayers }}</li>
+            <li>NOT selected layers: {{ notSelectedLayers }}</li>
+          </ul>
+        </div>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <AppSelectLayer />
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <!-- entry point of d3 graph(s) -->
+        <div id="visualizer" />
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -29,7 +42,7 @@ export default {
       unwatchAlert: null,
       unwatchSelectedLayers: null,
       unwatchModelFile: null,
-      debug: 'none' // 'none' or 'block' to appear debug container
+      debug: false
     }
   },
   computed: {
