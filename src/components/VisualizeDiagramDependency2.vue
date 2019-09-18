@@ -3,8 +3,14 @@
     <v-row v-if="debug">
       <v-col>
         <div>
-          Dependency2 Graph :: Dependency model: {{ modelFile }} Alert Row:
-          {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+          visualize diagram dependency2
+          <ul>
+            <li>model: {{ modelFile }}</li>
+            <li>
+              Alert Row:
+              {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+            </li>
+          </ul>
         </div>
       </v-col>
     </v-row>
@@ -23,7 +29,13 @@ import Dep2GraphVisualizer from '../graph/dependency2/visualizer'
 import '../css/dependency.scss'
 
 export default {
-  name: 'VisualizeDiagramDependency2',
+  props: {
+    modelFile: {
+      type: String,
+      default: '',
+      require: true
+    }
+  },
   data () {
     return {
       visualizer: null,
@@ -33,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow', 'modelFile'])
+    ...mapGetters(['currentAlertRow'])
   },
   mounted () {
     console.log('[dep2] mounted')

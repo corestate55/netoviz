@@ -1,17 +1,21 @@
 <template>
-  <v-tooltip bottom>
-    <template v-slot:activator="{ on }">
-      <v-btn
-        icon
-        href="https://github.com/corestate55/netoviz"
-        target="_blank"
-        v-on="on"
-      >
-        <v-icon>mdi-code-tags</v-icon>
-      </v-btn>
-    </template>
-    <span>Source</span>
-  </v-tooltip>
+  <div>
+    <v-btn
+      icon
+      to="/"
+    >
+      <v-icon>mdi-home</v-icon>
+    </v-btn>
+    <v-btn
+      icon
+      to="/about"
+    >
+      <v-icon>mdi-information</v-icon>
+    </v-btn>
+    <v-btn icon>
+      <v-icon>mdi-help</v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script></script>

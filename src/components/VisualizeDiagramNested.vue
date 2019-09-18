@@ -3,9 +3,15 @@
     <v-row v-if="debug">
       <v-col>
         <div>
-          Nested model: {{ modelFile }}, Alert Row:
-          {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}, Reverse?
-          : {{ reverse }} Auto Fitting? : {{ autoFitting }}
+          visualize diagram nested
+          <ul>
+            <li>Nested model: {{ modelFile }}</li>
+            <li>
+              Alert Row:
+              {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+            </li>
+            <li>Reverse? : {{ reverse }} Auto Fitting? : {{ autoFitting }}</li>
+          </ul>
         </div>
       </v-col>
     </v-row>
@@ -58,6 +64,13 @@ import NestedGraphVisualizer from '../graph/nested/visualizer'
 import '../css/nested.scss'
 
 export default {
+  props: {
+    modelFile: {
+      type: String,
+      default: '',
+      require: true
+    }
+  },
   data () {
     return {
       visualizer: null,
@@ -70,7 +83,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow', 'modelFile'])
+    ...mapGetters(['currentAlertRow'])
   },
   watch: {
     reverse () {

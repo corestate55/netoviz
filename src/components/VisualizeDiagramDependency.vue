@@ -3,8 +3,14 @@
     <v-row v-if="debug">
       <v-col>
         <div>
-          Dependency model: {{ modelFile }} Alert Row:
-          {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+          visualize diagram dependency
+          <ul>
+            <li>Dependency model: {{ modelFile }}</li>
+            <li>
+              Alert Row:
+              {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
+            </li>
+          </ul>
         </div>
       </v-col>
     </v-row>
@@ -23,6 +29,13 @@ import DepGraphVisualizer from '../graph/dependency/visualizer'
 import '../css/dependency.scss'
 
 export default {
+  props: {
+    modelFile: {
+      type: String,
+      default: '',
+      require: true
+    }
+  },
   data () {
     return {
       visualizer: null,
@@ -32,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow', 'modelFile'])
+    ...mapGetters(['currentAlertRow'])
   },
   mounted () {
     console.log('[dep] mounted')

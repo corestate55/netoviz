@@ -190,7 +190,7 @@ export default class SingleVisualizerBase extends BaseContainer {
       }
       paramStrings.push(`${key}=${encodeURIComponent(value)}`)
     }
-    const baseUri = `graph/${graphName}/${jsonName}`
+    const baseUri = `/graph/${graphName}/${jsonName}`
     const uri = [baseUri, paramStrings.join('&')].join('?')
     console.log('Query URI :', uri)
     return uri

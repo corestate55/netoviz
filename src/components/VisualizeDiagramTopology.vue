@@ -3,6 +3,7 @@
     <v-row v-if="debug">
       <v-col>
         <div>
+          visualize diagram topology
           <ul>
             <li>Topology model: {{ modelFile }}</li>
             <li>Whole layers: {{ wholeLayers }}</li>
@@ -14,7 +15,13 @@
     </v-row>
     <v-row>
       <v-col>
-        <AppSelectLayer />
+        <v-select
+          v-model="selectedLayers"
+          v-bind:items="wholeLayers"
+          chips
+          multiple
+          v-on:change="displaySelectedLayers"
+        />
       </v-col>
     </v-row>
     <v-row>
@@ -27,14 +34,18 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-import AppSelectLayer from './AppSelectLayer'
+import { mapGetters } from 'vuex'
+import { select } from 'd3-selection'
 import TopoGraphVisualizer from '../graph/topology/visualizer'
 import '../css/topology.scss'
 
 export default {
-  components: {
-    AppSelectLayer
+  props: {
+    modelFile: {
+      type: String,
+      default: '',
+      require: true
+    }
   },
   data () {
     return {
@@ -42,16 +53,13 @@ export default {
       unwatchAlert: null,
       unwatchSelectedLayers: null,
       unwatchModelFile: null,
+      wholeLayers: [],
+      selectedLayers: [],
       debug: false
     }
   },
   computed: {
-    ...mapGetters([
-      'currentAlertRow',
-      'modelFile',
-      'selectedLayers',
-      'wholeLayers'
-    ]),
+    ...mapGetters(['currentAlertRow']),
     notSelectedLayers () {
       return this.wholeLayers.filter(
         // <0: index not found: not exist in selected layers
@@ -62,6 +70,7 @@ export default {
   mounted () {
     console.log('[topo] mounted')
     this.visualizer = new TopoGraphVisualizer()
+    this.selectedLayers = this.wholeLayers
 
     this.drawJsonModel()
     this.unwatchAlert = this.$store.watch(
@@ -95,24 +104,27 @@ export default {
     this.unwatchModelFile()
   },
   methods: {
-    ...mapActions(['selectAllLayers']),
     setLayerDisplayStyle (layers, display) {
       for (const layer of layers) {
-        const elm = document.getElementById(`${layer}-container`)
-        if (elm) {
-          elm.style.display = display
-        }
+        select(`[id='${layer}-container']`).style('display', display)
       }
     },
     drawJsonModel () {
-      this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
-      // When the visualizer draws topology graph,
-      // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
-      // so, these setLayerDisplayStyle() could not found target layer container
-      // WORKAROUND :
-      //   FORCE to select all layers
-      //   to avoid mismatch between UI (layer selector) and Graph.
-      this.selectAllLayers()
+      const getLayerNames = graphs => {
+        // When the visualizer draws topology graph,
+        // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
+        // so, these setLayerDisplayStyle() could not found target layer container
+        // WORKAROUND :
+        //   FORCE to select all layers
+        //   to avoid mismatch between UI (layer selector) and Graph.
+        this.wholeLayers = graphs.map(layer => layer.name)
+        this.selectedLayers = this.wholeLayers
+      }
+      this.visualizer.drawJsonModel(
+        this.modelFile,
+        this.currentAlertRow,
+        getLayerNames
+      )
       this.displaySelectedLayers()
     },
     displaySelectedLayers () {
