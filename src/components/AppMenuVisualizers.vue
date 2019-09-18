@@ -15,20 +15,20 @@
       <v-list-item
         v-for="(visualizer, index) in visualizers"
         v-bind:key="index"
-        v-bind:to="`/visualizer/${visualizer}`"
+        v-bind:to="`/visualizer/${visualizer.value}`"
       >
-        {{ visualizer }}
+        {{ visualizer.text }}
       </v-list-item>
     </v-list>
   </v-menu>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  data () {
-    return {
-      visualizers: ['topology', 'dependency', 'dependency2', 'nested']
-    }
+  computed: {
+    ...mapGetters(['visualizers'])
   }
 }
 </script>

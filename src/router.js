@@ -4,7 +4,9 @@ import About from './views/About'
 import TableDiagrams from './views/TableDiagrams'
 import TableVisualizers from './views/TableVisualizers'
 import TableModels from './views/TableModels'
-import VisualizeDiagram from './views/VisualizeDiagram'
+const VisualizeDiagram = () => ({
+  component: import(/* webpackChunkName: "viz" */ './views/VisualizeDiagram')
+})
 
 Vue.use(Router)
 
