@@ -30,8 +30,13 @@ export default {
       items: [
         {
           icon: 'mdi-code-tags',
-          text: 'Github repository',
+          text: 'Github repository.',
           link: 'https://github.com/corestate55/netoviz'
+        },
+        {
+          icon: 'mdi-play-circle',
+          text: 'Heroku online demo.',
+          link: 'http://netoviz.herokuapp.com/'
         }
       ]
     }

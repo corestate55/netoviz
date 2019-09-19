@@ -13,26 +13,22 @@
         </div>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
-        <VisualizeDiagramTopology
-          v-if="visualizer === 'topology'"
-          v-bind:model-file="modelFile"
-        />
-        <VisualizeDiagramDependency
-          v-else-if="visualizer === 'dependency'"
-          v-bind:model-file="modelFile"
-        />
-        <VisualizeDiagramDependency2
-          v-else-if="visualizer === 'dependency2'"
-          v-bind:model-file="modelFile"
-        />
-        <VisualizeDiagramNested
-          v-else-if="visualizer === 'nested'"
-          v-bind:model-file="modelFile"
-        />
-      </v-col>
-    </v-row>
+    <VisualizeDiagramTopology
+      v-if="visualizer === 'topology'"
+      v-bind:model-file="modelFile"
+    />
+    <VisualizeDiagramDependency
+      v-else-if="visualizer === 'dependency'"
+      v-bind:model-file="modelFile"
+    />
+    <VisualizeDiagramDependency2
+      v-else-if="visualizer === 'dependency2'"
+      v-bind:model-file="modelFile"
+    />
+    <VisualizeDiagramNested
+      v-else-if="visualizer === 'nested'"
+      v-bind:model-file="modelFile"
+    />
   </div>
 </template>
 

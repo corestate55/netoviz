@@ -12,9 +12,6 @@
     >
       <v-icon>mdi-information</v-icon>
     </v-btn>
-    <v-btn icon>
-      <v-icon>mdi-help</v-icon>
-    </v-btn>
   </div>
 </template>
 
