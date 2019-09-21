@@ -39,7 +39,7 @@
                 v-model="alertHostInput"
                 clearable
                 label="Highlight Host"
-                placeholder="Host Name"
+                placeholder="node OR layer__node"
                 v-on:input="inputAlertHost"
               />
             </v-col>

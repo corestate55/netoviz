@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "express": "vue-cli-service express:watch",
     "express:run": "vue-cli-service express:run",
-    "format": "prettier-standard 'sr[cv]/**/*.js'"
+    "format": "prettier-standard 'sr[cv]/**/*.js'",
+    "format:vue": "prettier-standard 'src/**/*.vue'"
   },
   "dependencies": {
     "d3-drag": "^1.2.4",
