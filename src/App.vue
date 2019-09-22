@@ -14,9 +14,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-svg {
-  border: solid 1px;
-  margin: 10px;
-}
-</style>
+<style></style>

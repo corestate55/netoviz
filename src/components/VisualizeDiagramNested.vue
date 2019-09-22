@@ -119,8 +119,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.nested-view-control {
-  background-color: transparent; // change some color to check layout
-}
-</style>
+<style lang="scss" scoped></style>

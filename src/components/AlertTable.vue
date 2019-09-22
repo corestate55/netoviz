@@ -222,30 +222,25 @@ export default {
         this.updateAlerts()
       }, this.alertPollingInterval * 1000) // sec
     },
-    updateAlerts () {
-      // update alerts and select head data
-      // console.log('updateAlerts: ', new Date())
-      this.requestAlertData().then(() => {
-        // console.log('[AlertTable] updateAlerts')
-        this.alertUpdatedTime = new Date()
-        this.setAlertTableCurrentRow(this.alerts[0])
-      })
-    },
-    async requestAlertData () {
+    async updateAlerts () {
       try {
-        // console.log('[AlertTable] request alert data')
+        // update alerts and select head data
+        // console.log('updateAlerts: ', new Date())
         const response = await fetch(`/alert/${this.alertLimit}`)
         const newAlerts = await response.json()
-        // check alerts (alert table rows) update:
-        // changed table rows OR comes new data(id)
+        this.alertUpdatedTime = new Date()
+        if (!newAlerts || newAlerts.length < 1) {
+          return
+        }
         if (
           this.alerts.length !== newAlerts.length ||
           newAlerts[0].id !== this.alerts[0].id
         ) {
           this.alerts = newAlerts
         }
+        this.setAlertTableCurrentRow(this.alerts[0])
       } catch (error) {
-        console.error('fetch alert failed: ', error)
+        console.error('[AlertTable] fetch alert failed: ', error)
       }
     },
     clickClearSelectionButton () {
