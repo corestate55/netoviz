@@ -33,10 +33,10 @@
 </template>
 
 <script>
-import VisualizeDiagramTopology from '@/components/VisualizeDiagramTopology'
-import VisualizeDiagramDependency from '@/components/VisualizeDiagramDependency'
-import VisualizeDiagramDependency2 from '@/components/VisualizeDiagramDependency2'
-import VisualizeDiagramNested from '@/components/VisualizeDiagramNested'
+import VisualizeDiagramTopology from '../components/VisualizeDiagramTopology'
+import VisualizeDiagramDependency from '../components/VisualizeDiagramDependency'
+import VisualizeDiagramDependency2 from '../components/VisualizeDiagramDependency2'
+import VisualizeDiagramNested from '../components/VisualizeDiagramNested'
 import '../css/tooltip.scss'
 
 export default {

@@ -1,9 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import About from './views/About'
-import TableDiagrams from './views/TableDiagrams'
-import TableVisualizers from './views/TableVisualizers'
-import TableModels from './views/TableModels'
+const About = () => ({
+  component: import(/* webpackChunkName: "page" */ './views/About')
+})
+const TableDiagrams = () => ({
+  component: import(/* webpackChunkName: "page" */ './views/TableDiagrams')
+})
+const TableVisualizers = () => ({
+  component: import(/* webpackChunkName: "page" */ './views/TableVisualizers')
+})
+const TableModels = () => ({
+  component: import(/* webpackChunkName: "page" */ './views/TableModels')
+})
 const VisualizeDiagram = () => ({
   component: import(/* webpackChunkName: "viz" */ './views/VisualizeDiagram')
 })
