@@ -15,7 +15,7 @@
       <v-list-item
         v-for="(modelFile, index) in modelFiles"
         v-bind:key="index"
-        v-bind:to="`/target/${modelFile.file}`"
+        v-bind:to="selectRoute(modelFile.file)"
       >
         {{ modelFile.label }}
       </v-list-item>
@@ -34,7 +34,17 @@ export default {
     this.updateModelFiles()
   },
   methods: {
-    ...mapActions(['updateModelFiles'])
+    ...mapActions(['updateModelFiles']),
+    selectRoute (modelFile) {
+      if (this.$route.path.match(new RegExp('/target/.*/.*'))) {
+        const visualizer = this.$route.params.visualizer
+        return `/target/${modelFile}/${visualizer}`
+      } else if (this.$route.path.match(new RegExp('/visualizer/.*'))) {
+        const visualizer = this.$route.params.visualizer
+        return `/visualizer/${visualizer}/${modelFile}`
+      }
+      return `/target/${modelFile}`
+    }
   }
 }
 </script>

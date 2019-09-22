@@ -25,6 +25,20 @@ export default {
   computed: {
     ...mapGetters(['currentAlertRow'])
   },
+  watch: {
+    $route (newRoute, oldRoute) {
+      // watch `params.modelFile` change:
+      // because if `modelFile` changed, graph-diagram component will reused
+      // (will not be called lifecycle hook).
+      // if `params.visualizer` changed, then views/VisualizeDiagram component
+      // switches corresponding component and run its lifecycle hook.
+      const oldModelFile = oldRoute.params.modelFile
+      const newModelFile = newRoute.params.modelFile
+      if (oldModelFile !== newModelFile) {
+        this.watchModelFile(newModelFile, oldModelFile)
+      }
+    }
+  },
   mounted () {
     // Lifecycle for graph visualizer:
     // merged at including component X.

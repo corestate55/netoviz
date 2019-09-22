@@ -15,7 +15,7 @@
       <v-list-item
         v-for="(visualizer, index) in visualizers"
         v-bind:key="index"
-        v-bind:to="`/visualizer/${visualizer.value}`"
+        v-bind:to="selectRoute(visualizer.value)"
       >
         {{ visualizer.text }}
       </v-list-item>
@@ -29,6 +29,18 @@ import { mapGetters } from 'vuex'
 export default {
   computed: {
     ...mapGetters(['visualizers'])
+  },
+  methods: {
+    selectRoute (visualizer) {
+      if (this.$route.path.match(new RegExp('/target/.*'))) {
+        const modelFile = this.$route.params.modelFile
+        return `/target/${modelFile}/${visualizer}`
+      } else if (this.$route.path.match(new RegExp('/visualizer/.*/.*'))) {
+        const modelFile = this.$route.params.modelFile
+        return `/visualizer/${visualizer}/${modelFile}`
+      }
+      return `/visualizer/${visualizer}`
+    }
   }
 }
 </script>

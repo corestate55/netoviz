@@ -4,9 +4,30 @@
       <v-data-table
         caption="Select model/visualizer"
         dense
+        hide-default-header
         v-bind:headers="headers"
         v-bind:items="diagrams"
       >
+        <template v-slot:header="{ props }">
+          <thead class="v-data-table-header">
+            <tr>
+              <th
+                v-for="(header, index) in props.headers"
+                v-bind:key="index"
+              >
+                <router-link
+                  v-if="header.link"
+                  v-bind:to="header.link"
+                >
+                  {{ header.text }}
+                </router-link>
+                <span v-else>
+                  {{ header.text }}
+                </span>
+              </th>
+            </tr>
+          </thead>
+        </template>
         <template v-slot:item="props">
           <tr>
             <td
@@ -32,7 +53,14 @@ export default {
   computed: {
     ...mapGetters(['modelFiles', 'visualizers']),
     headers () {
-      const head = [{ text: 'Model', value: 'model', link: '' }]
+      const head = [
+        {
+          text: 'Model',
+          value: 'model',
+          sortable: false,
+          link: null
+        }
+      ]
       return head.concat(
         this.visualizers.map(v => ({
           text: v.text,
