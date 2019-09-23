@@ -4,7 +4,10 @@
     offset-y
   >
     <template v-slot:activator="{ on }">
-      <v-btn v-on="on">
+      <v-btn
+        elevation="0"
+        v-on="on"
+      >
         Models
         <v-icon right>
           mdi-menu-down

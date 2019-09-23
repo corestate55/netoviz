@@ -13,26 +13,44 @@
         </div>
       </v-col>
     </v-row>
-    <VisualizeDiagramTopology
-      v-if="visualizer === 'topology'"
-      v-bind:model-file="modelFile"
-    />
-    <VisualizeDiagramDependency
-      v-else-if="visualizer === 'dependency'"
-      v-bind:model-file="modelFile"
-    />
-    <VisualizeDiagramDependency2
-      v-else-if="visualizer === 'dependency2'"
-      v-bind:model-file="modelFile"
-    />
-    <VisualizeDiagramNested
-      v-else-if="visualizer === 'nested'"
-      v-bind:model-file="modelFile"
-    />
+    <div v-if="validVisualizer && validModelFile">
+      <VisualizeDiagramTopology
+        v-if="visualizer === 'topology'"
+        v-bind:model-file="modelFile"
+      />
+      <VisualizeDiagramDependency
+        v-else-if="visualizer === 'dependency'"
+        v-bind:model-file="modelFile"
+      />
+      <VisualizeDiagramDependency2
+        v-else-if="visualizer === 'dependency2'"
+        v-bind:model-file="modelFile"
+      />
+      <VisualizeDiagramNested
+        v-else-if="visualizer === 'nested'"
+        v-bind:model-file="modelFile"
+      />
+    </div>
+    <v-row v-else>
+      <v-col>
+        <NotFound>
+          <ul>
+            <li v-show="!validVisualizer">
+              Unknown visualizer: {{ visualizer }}
+            </li>
+            <li v-show="!validModelFile">
+              Unknown model file: {{ modelFile }}
+            </li>
+          </ul>
+        </NotFound>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import NotFound from '../components/NotFound'
 import VisualizeDiagramTopology from '../components/VisualizeDiagramTopology'
 import VisualizeDiagramDependency from '../components/VisualizeDiagramDependency'
 import VisualizeDiagramDependency2 from '../components/VisualizeDiagramDependency2'
@@ -41,6 +59,7 @@ import '../css/tooltip.scss'
 
 export default {
   components: {
+    NotFound,
     VisualizeDiagramTopology,
     VisualizeDiagramDependency,
     VisualizeDiagramDependency2,
@@ -58,9 +77,14 @@ export default {
       require: true
     }
   },
-  data () {
-    return {
-      debug: false
+  data: () => ({ debug: false }),
+  computed: {
+    ...mapGetters(['modelFiles', 'visualizers']),
+    validVisualizer () {
+      return this.visualizers.find(v => v.value === this.visualizer)
+    },
+    validModelFile () {
+      return this.modelFiles.find(m => m.file === this.modelFile)
     }
   }
 }

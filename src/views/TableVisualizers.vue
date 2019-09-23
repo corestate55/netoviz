@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col>
+    <v-col v-if="validModelFile">
       <v-list>
         <v-subheader>
           Visualizers
@@ -19,14 +19,21 @@
         </v-list-item-group>
       </v-list>
     </v-col>
+    <v-col v-else>
+      <NotFound> Unknown model file: {{ modelFile }} </NotFound>
+    </v-col>
   </v-row>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import NotFound from '../components/NotFound'
 
 export default {
   name: 'TableVisualizers',
+  components: {
+    NotFound
+  },
   props: {
     modelFile: {
       type: String,
@@ -35,7 +42,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['visualizers']),
+    ...mapGetters(['visualizers', 'modelFiles']),
+    validModelFile () {
+      if (!this.modelFile) {
+        return true
+      }
+      return this.modelFiles.find(m => m.file === this.modelFile)
+    },
     visualizerData () {
       return this.visualizers.map(v => ({
         text: v.text,

@@ -3,6 +3,9 @@ import Router from 'vue-router'
 const About = () => ({
   component: import(/* webpackChunkName: "page" */ './views/About')
 })
+const NotFound = () => ({
+  component: import(/* webpackChunkName: "page" */ './components/NotFound')
+})
 const TableDiagrams = () => ({
   component: import(/* webpackChunkName: "page" */ './views/TableDiagrams')
 })
@@ -57,6 +60,10 @@ export default new Router({
       path: '/target/:modelFile/:visualizer',
       component: VisualizeDiagram,
       props: true
+    },
+    {
+      path: '*',
+      component: NotFound
     }
   ]
 })
