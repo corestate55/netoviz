@@ -4,7 +4,7 @@
       accordion
       focusable
       multiple
-      v-bind:value="[0, 1]"
+      v-bind:value="[0]"
     >
       <!-- 'value' prop: open all panels at default -->
       <v-expansion-panel>
@@ -80,29 +80,26 @@
                 v-bind:items="alerts"
                 v-bind:items-per-page="5"
               >
-                <template v-slot:item="props">
+                <template v-slot:item="{ item }">
                   <tr
                     v-bind:class="{
                       'info font-weight-bold white--text':
-                        props.item.id === currentAlertRow.id
+                        item.id === currentAlertRow.id
                     }"
-                    v-on:click="handleAlertTableCurrentChange(props.item)"
+                    v-on:click="handleAlertTableCurrentChange(item)"
                   >
-                    <td>{{ props.item.id }}</td>
+                    <td>{{ item.id }}</td>
                     <td>
                       <v-chip
-                        v-bind:color="
-                          severityColor('fill', props.item.severity)
-                        "
-                        v-bind:text-color="
-                          severityColor('text', props.item.severity)
-                        "
+                        v-bind:color="severityColor('fill', item.severity)"
+                        v-bind:text-color="severityColor('text', item.severity)"
                       >
-                        {{ props.item.severity }}
+                        {{ item.severity }}
                       </v-chip>
                     </td>
-                    <td>{{ props.item.host }}</td>
-                    <td>{{ props.item.date }}</td>
+                    <td>{{ item.host }}</td>
+                    <td>{{ item.message }}</td>
+                    <td>{{ item.date }}</td>
                   </tr>
                 </template>
               </v-data-table>
@@ -143,6 +140,7 @@ export default {
         { text: 'ID', sortable: true, value: 'id' },
         { text: 'Severity', sortable: true, value: 'severity' },
         { text: 'Host', sortable: true, value: 'host' },
+        { text: 'Message', sortable: true, value: 'message' },
         { text: 'Date', sortable: true, value: 'date' }
       ],
       unwatchAlertHost: null,
