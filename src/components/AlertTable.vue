@@ -9,14 +9,16 @@
       <!-- 'value' prop: open all panels at default -->
       <v-expansion-panel>
         <v-expansion-panel-header v-slot="{ open }">
-          Alert Control
+          Alert Table
           <span class="text--secondary text-right pr-4">
-            Timer
+            Log updated:
             <span class="setting">{{
-              enableTimer ? 'Enabled' : 'Disabled'
+              alertUpdatedTime && alertUpdatedTime.toLocaleString()
             }}</span>
-            (Interval
-            <span class="setting">{{ alertPollingInterval }}</span> [sec])
+            Timer:
+            <span class="setting">{{ enableTimer ? 'ON' : 'OFF' }}</span>
+            Interval:
+            <span class="setting">{{ alertPollingInterval }}</span> sec
           </span>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -70,17 +72,6 @@
               />
             </v-col>
           </v-row>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-      <v-expansion-panel>
-        <v-expansion-panel-header v-slot="{ open }">
-          Alert Table
-          <span class="text--secondary text-right pr-4">
-            Log updated:
-            <span class="setting">{{ alertUpdatedTime }}</span>
-          </span>
-        </v-expansion-panel-header>
-        <v-expansion-panel-content>
           <v-row>
             <v-col>
               <v-data-table
@@ -143,7 +134,7 @@ export default {
   data () {
     return {
       alerts: [],
-      alertLimit: 15,
+      alertLimit: 15, // default: fetch 15 rows (per polling)
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
       alertUpdatedTime: null,
@@ -247,29 +238,34 @@ export default {
       this.alertHostInput = ''
       this.setAlertTableCurrentRow({ id: -1 })
     },
-    layerOfAlertHostInput () {
-      if (
+    alertHostInputIsLayerHostFormat () {
+      return (
         this.alertHostInput &&
         this.alertHostInput.match(new RegExp('(.+)__(.+)'))
-      ) {
-        return this.alertHostInput.split('__').shift()
-      }
-      return null
+      )
+    },
+    layerOfAlertHostInput () {
+      return this.alertHostInputIsLayerHostFormat()
+        ? this.alertHostInput.split('__').shift()
+        : null
+    },
+    hostOfAlertHostInput () {
+      return this.alertHostInputIsLayerHostFormat()
+        ? this.alertHostInput.split('__').pop()
+        : this.alertHostInput
     },
     alertFromAlertHostInput () {
-      const alert = {
+      return {
         id: -1, // clear alert table selection
         message: 'selected directly',
         severity: 'information',
         date: new Date().toISOString(),
-        // for drill-down:
-        // it must identify object that has same name with layer (path)
-        layer: this.layerOfAlertHostInput()
+        // for click drill-down (nested diagram):
+        // there are objects that have same name in another layer.
+        // it must identify the object using layer info (by path).
+        layer: this.layerOfAlertHostInput(),
+        host: this.hostOfAlertHostInput()
       }
-      alert.host = alert.layer
-        ? this.alertHostInput.split('__').pop() // when 'layer__node' format
-        : this.alertHostInput
-      return alert
     },
     inputAlertHost: debounce(function () {
       // NOTICE: do not use arrow-function for debounce.
@@ -280,7 +276,9 @@ export default {
     }, 500), // 0.5sec
     setAlertTableCurrentRow (row) {
       // console.log('[AlertTable] set alert table current row: ', row)
-      this.alertHostInput = row.host || ''
+      if (!this.fromAlertHostInput) {
+        this.alertHostInput = row.host || ''
+      }
       this.currentAlertRow = row
     },
     handleAlertTableCurrentChange (row) {
