@@ -7,6 +7,16 @@ module.exports = {
       serverDir: './srv'
     }
   },
+  css: {
+    loaderOptions: {
+      postcss: {
+        sourceMap: false,
+        plugins: [
+          require('cssnano')({ preset: 'advanced' })
+        ]
+      }
+    }
+  },
   configureWebpack: {
     plugins: [new StatsPlugin('stats.json')],
     optimization: {
