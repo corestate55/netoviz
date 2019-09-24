@@ -1,12 +1,12 @@
 <template>
   <div>
+    <!-- 'value' prop: open all panels at default -->
     <v-expansion-panels
       accordion
       focusable
       multiple
       v-bind:value="[0]"
     >
-      <!-- 'value' prop: open all panels at default -->
       <v-expansion-panel>
         <v-expansion-panel-header v-slot="{ open }">
           Alert Table
@@ -27,7 +27,7 @@
               <v-btn
                 rounded
                 color="warning"
-                v-bind:disabled="disableClearAlertTableButton"
+                v-bind:disabled="disableClearSelectionButton"
                 v-on:click="clickClearSelectionButton"
               >
                 <v-icon left>
@@ -80,26 +80,29 @@
                 v-bind:items="alerts"
                 v-bind:items-per-page="5"
               >
-                <template v-slot:item="{ item }">
+                <template v-slot:item="{ item, headers }">
                   <tr
                     v-bind:class="{
                       'info font-weight-bold white--text':
                         item.id === currentAlertRow.id
                     }"
-                    v-on:click="handleAlertTableCurrentChange(item)"
+                    v-on:click="setAlertTableCurrentRow(item)"
                   >
-                    <td>{{ item.id }}</td>
-                    <td>
+                    <td
+                      v-for="(header, index) in headers"
+                      v-bind:key="index"
+                    >
                       <v-chip
+                        v-if="header.value === 'severity'"
                         v-bind:color="severityColor('fill', item.severity)"
                         v-bind:text-color="severityColor('text', item.severity)"
                       >
                         {{ item.severity }}
                       </v-chip>
+                      <span v-else>
+                        {{ item[header.value] }}
+                      </span>
                     </td>
-                    <td>{{ item.host }}</td>
-                    <td>{{ item.message }}</td>
-                    <td>{{ item.date }}</td>
                   </tr>
                 </template>
               </v-data-table>
@@ -145,7 +148,7 @@ export default {
       ],
       unwatchAlertHost: null,
       fromAlertHostInput: false,
-      enableTimer: true,
+      enableTimer: false,
       debug: false
     }
   },
@@ -158,15 +161,10 @@ export default {
         this.$store.commit('setCurrentAlertRow', value)
       }
     },
-    alertHost: {
-      get () {
-        return this.$store.getters.alertHost
-      },
-      set (value) {
-        this.$store.commit('setAlertHost', value)
-      }
+    alertHost () {
+      return this.$store.getters.alertHost
     },
-    disableClearAlertTableButton () {
+    disableClearSelectionButton () {
       return (
         this.currentAlertRow && Object.keys(this.currentAlertRow).length < 1
       )
@@ -179,7 +177,7 @@ export default {
   },
   mounted () {
     this.updateAlerts() // initial data
-    this.startAlertCheckTimer()
+    this.setAlertCheckTimer()
     this.unwatchAlertHost = this.$store.watch(
       state => state.alertHost,
       (newHost, oldHost) => {
@@ -275,23 +273,9 @@ export default {
     setAlertTableCurrentRow (row) {
       // console.log('[AlertTable] set alert table current row: ', row)
       if (!this.fromAlertHostInput) {
-        this.alertHostInput = row.host || ''
+        this.alertHostInput = row && row.host ? row.host : ''
       }
       this.currentAlertRow = row
-    },
-    handleAlertTableCurrentChange (row) {
-      // console.log('[AlertTable] handle current change: ', row)
-
-      // from 'update alert-table' or 'click alert-table'
-      if (!this.fromAlertHostInput) {
-        this.alertHostInput = row && row.host ? row.host : ''
-        this.currentAlertRow = row
-      }
-      // from alert-host input:
-      // when row is empty, it clear before redraw diagram (NOP).
-      if (row && Object.keys(row).length > 0) {
-        this.currentAlertRow = row
-      }
     },
     severityColor (prop, severity) {
       const colorTable = [
