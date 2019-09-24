@@ -12,7 +12,7 @@ module.exports = {
       postcss: {
         sourceMap: false,
         plugins: [
-          require('cssnano')({ preset: 'advanced' })
+          require('cssnano')({ preset: 'default' })
         ]
       }
     }

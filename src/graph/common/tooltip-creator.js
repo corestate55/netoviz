@@ -42,7 +42,7 @@ export default class TooltipCreator {
     }
     // tooltip position
     this.tooltip
-      .style('top', `${event.pageY - 20}px`)
+      .style('top', `${event.pageY - 50}px`)
       .style('left', `${event.pageX + 30}px`)
     this.tooltip
       .classed('pop-up', true)
