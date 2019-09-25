@@ -65,9 +65,7 @@ export default class SingleNestedVisualizer extends SingleVisualizerBase {
   }
 
   gridObjectsFrom (gridData) {
-    return gridData.map((d, i) => {
-      return { position: d, index: i }
-    })
+    return gridData.map((d, i) => ({ position: d, index: i }))
   }
 
   makeGrids (xy) {

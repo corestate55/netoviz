@@ -4,7 +4,9 @@
       <v-list>
         <v-subheader>
           Visualizers
-          <span v-show="modelFile">&nbsp;for {{ modelFile }}</span>
+          <template v-if="modelFile">
+            for {{ modelFile }}
+          </template>
         </v-subheader>
         <v-list-item-group>
           <v-list-item
@@ -20,7 +22,7 @@
       </v-list>
     </v-col>
     <v-col v-else>
-      <NotFound> Unknown model file: {{ modelFile }} </NotFound>
+      <NotFound>Unknown model file: {{ modelFile }}</NotFound>
     </v-col>
   </v-row>
 </template>

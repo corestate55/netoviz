@@ -13,7 +13,7 @@
         </div>
       </v-col>
     </v-row>
-    <div v-if="validVisualizer && validModelFile">
+    <template v-if="validVisualizer && validModelFile">
       <VisualizeDiagramTopology
         v-if="visualizer === 'topology'"
         v-bind:model-file="modelFile"
@@ -30,15 +30,15 @@
         v-else-if="visualizer === 'nested'"
         v-bind:model-file="modelFile"
       />
-    </div>
+    </template>
     <v-row v-else>
       <v-col>
         <NotFound>
           <ul>
-            <li v-show="!validVisualizer">
+            <li v-if="!validVisualizer">
               Unknown visualizer: {{ visualizer }}
             </li>
-            <li v-show="!validModelFile">
+            <li v-if="!validModelFile">
               Unknown model file: {{ modelFile }}
             </li>
           </ul>

@@ -4,9 +4,9 @@
       <v-list>
         <v-subheader>
           Models
-          <span
-            v-show="visualizer"
-          >&nbsp;with {{ visualizer }} visualizer</span>
+          <template v-if="visualizer">
+            with {{ visualizer }} visualizer
+          </template>
         </v-subheader>
         <v-list-item-group>
           <v-list-item
@@ -20,7 +20,7 @@
       </v-list>
     </v-col>
     <v-col v-else>
-      <NotFound> Unknown visualizer: {{ visualizer }} </NotFound>
+      <NotFound>Unknown visualizer: {{ visualizer }}</NotFound>
     </v-col>
   </v-row>
 </template>

@@ -21,9 +21,9 @@
                 >
                   {{ header.text }}
                 </router-link>
-                <span v-else>
+                <template v-else>
                   {{ header.text }}
-                </span>
+                </template>
               </th>
             </tr>
           </thead>

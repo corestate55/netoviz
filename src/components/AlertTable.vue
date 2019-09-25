@@ -99,9 +99,9 @@
                       >
                         {{ item.severity }}
                       </v-chip>
-                      <span v-else>
+                      <template v-else>
                         {{ item[header.value] }}
-                      </span>
+                      </template>
                     </td>
                   </tr>
                 </template>
