@@ -40,10 +40,7 @@ export default {
       this.visualizer.clearHighlight()
     },
     drawJsonModel () {
-      // console.log('[dep2] drawJsonModel: ', this.modelFile, this.currentAlertRow)
-      if (this.modelFile) {
-        this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
-      }
+      this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
     }
   }
 }

@@ -94,9 +94,6 @@ export default {
       this.visualizer.setUISideNodeClickHook(this.nodeClickCallback)
     },
     drawJsonModel () {
-      if (!this.modelFile) {
-        return
-      }
       this.visualizer.drawJsonModel(
         this.modelFile,
         this.currentAlertRow,
