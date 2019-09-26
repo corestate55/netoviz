@@ -114,11 +114,9 @@ export default class TopoogyDataAPI {
 
   async postGraphData (req) {
     const layoutData = req.body
-    const graphName = req.params.graphName
+    const graphName = req.params.graphName // TODO: 404 if graphName != nested
     const jsonName = req.params.jsonName
-    // TODO: 404 if graphName != nested
     const reverse = this.boolString2Bool(req.query.reverse)
-    const deep = this.boolString2Bool(req.query.deep)
 
     const layoutJsonName = `${jsonName.split('.').shift()}-layout.json`
     const layoutJsonPath = `${this.modelDir}/${layoutJsonName}`
@@ -126,13 +124,12 @@ export default class TopoogyDataAPI {
     const cacheLayoutJsonPath = layoutJsonPath // overwrite
 
     console.log(
-      `receive ${graphName}/${jsonName}?reverse=${reverse}&deep=${deep}): `,
+      `receive ${graphName}/${jsonName}?reverse=${reverse}): `,
       layoutData
     )
     const baseLayoutData = JSON.parse(await readFile(layoutJsonPath, 'utf8'))
-    const layoutKey = deep ? 'deep' : 'shallow'
     const reverseKey = reverse ? 'reverse' : 'standard'
-    baseLayoutData[layoutKey][reverseKey].grid = layoutData
+    baseLayoutData[reverseKey].grid = layoutData
     const layoutDataString = JSON.stringify(baseLayoutData, null, 2) // pretty print
     fs.writeFile(cacheLayoutJsonPath, layoutDataString, 'utf8', error => {
       if (error) {

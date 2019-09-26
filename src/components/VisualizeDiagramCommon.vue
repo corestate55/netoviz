@@ -6,7 +6,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { select } from 'd3-selection'
 
 export default {
   props: {
@@ -29,7 +28,7 @@ export default {
       return !!['lg', 'xl'].find(d => d === this.$vuetify.breakpoint.name)
     },
     svgWidth () {
-      const factor = (this.isLarge ? (8 / 12) : 1.0) * 0.95
+      const factor = (this.isLarge ? 8 / 12 : 1.0) * 0.95
       return this.$vuetify.breakpoint.width * factor
     },
     svgHeight () {
@@ -130,10 +129,8 @@ export default {
       }
     },
     resizeSVG () {
-      select('#visualizer')
-        .select('svg')
-        .attr('width', this.svgWidth)
-        .attr('height', this.svgHeight)
+      this.visualizer &&
+        this.visualizer.resizeSVG(this.svgWidth, this.svgHeight)
     }
   }
 }

@@ -27,7 +27,6 @@ export default class Dep2GraphVisualizer extends OperationalDep2GraphVisualizer 
 
   highlightByAlert (alert) {
     if (!alert || !this.svg) {
-      console.log('[dep2] Alert or svg not ready.')
       return
     }
     const result = this._findNodeObjByName(alert.host)

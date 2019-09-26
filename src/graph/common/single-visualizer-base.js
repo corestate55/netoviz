@@ -27,6 +27,12 @@ export default class SingleVisualizerBase extends BaseContainer {
     this.svgGrp = this.svg.append('g').attr('id', svgGroupId)
   }
 
+  resizeSVG (width, height) {
+    this.width = width
+    this.height = height
+    this.svg.attr('width', width).attr('height', height)
+  }
+
   objClassDef (obj, classString) {
     let objState = null
     if ('diffState' in obj) {
