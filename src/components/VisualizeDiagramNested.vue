@@ -49,7 +49,7 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row v-resize="resizeSVG">
       <v-col>
         <!-- entry point of d3 graph(s) -->
         <div id="visualizer" />

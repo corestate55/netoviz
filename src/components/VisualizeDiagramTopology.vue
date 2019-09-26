@@ -24,6 +24,7 @@
         />
       </v-col>
     </v-row>
+    <!-- DO NOT use resizeSVG() for topology visualizer. -->
     <v-row>
       <v-col>
         <!-- entry point of d3 graph(s) -->

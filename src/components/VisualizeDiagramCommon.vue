@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { select } from 'd3-selection'
 
 export default {
   props: {
@@ -23,7 +24,18 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['currentAlertRow'])
+    ...mapGetters(['currentAlertRow']),
+    isLarge () {
+      return !!['lg', 'xl'].find(d => d === this.$vuetify.breakpoint.name)
+    },
+    svgWidth () {
+      const factor = (this.isLarge ? (8 / 12) : 1.0) * 0.95
+      return this.$vuetify.breakpoint.width * factor
+    },
+    svgHeight () {
+      const factor = this.isLarge ? 0.9 : 0.8
+      return this.$vuetify.breakpoint.height * factor
+    }
   },
   watch: {
     $route (newRoute, oldRoute) {
@@ -53,10 +65,7 @@ export default {
       this.watchModelFile
     )
     this.beforeMakeVisualizer() // hook (to ready make visualizer)
-    this.visualizer = this.makeVisualizer(
-      window.innerWidth * 0.95,
-      window.innerHeight * 0.8
-    )
+    this.visualizer = this.makeVisualizer(this.svgWidth, this.svgHeight)
     this.afterMakeVisualizer() // hook (to initialize visualizer)
     this.drawJsonModel() // generate initial graph
   },
@@ -119,6 +128,12 @@ export default {
       } else {
         this.clearAllHighlight()
       }
+    },
+    resizeSVG () {
+      select('#visualizer')
+        .select('svg')
+        .attr('width', this.svgWidth)
+        .attr('height', this.svgHeight)
     }
   }
 }

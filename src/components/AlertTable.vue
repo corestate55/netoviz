@@ -23,7 +23,11 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-row>
-            <v-col md="3">
+            <v-col
+              cols="6"
+              md="2"
+              lg="6"
+            >
               <v-btn
                 rounded
                 color="warning"
@@ -36,7 +40,11 @@
                 Clear Selection
               </v-btn>
             </v-col>
-            <v-col md="3">
+            <v-col
+              cols="6"
+              md="3"
+              lg="6"
+            >
               <v-text-field
                 v-model="alertHostInput"
                 clearable
@@ -45,16 +53,22 @@
                 v-on:input="inputAlertHost"
               />
             </v-col>
-          </v-row>
-          <v-row>
-            <v-col md="3">
+            <v-col
+              cols="4"
+              md="2"
+              lg="4"
+            >
               <v-switch
                 v-model="enableTimer"
                 inset
                 label="Alert Polling"
               />
             </v-col>
-            <v-col md="3">
+            <v-col
+              cols="4"
+              md="2"
+              lg="4"
+            >
               <v-text-field
                 v-model="alertPollingInterval"
                 label="Polling Interval (sec)"
@@ -63,7 +77,11 @@
                 v-on:change="resetAlertCheckTimer"
               />
             </v-col>
-            <v-col md="3">
+            <v-col
+              cols="4"
+              md="2"
+              lg="4"
+            >
               <v-text-field
                 v-model="alertLimit"
                 label="Polling Logs"

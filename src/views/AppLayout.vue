@@ -16,8 +16,20 @@
 
     <v-content>
       <v-container fluid>
-        <AlertTable />
-        <router-view />
+        <v-row>
+          <v-col
+            cols="12"
+            lg="4"
+          >
+            <AlertTable />
+          </v-col>
+          <v-col
+            cols="12"
+            lg="8"
+          >
+            <router-view />
+          </v-col>
+        </v-row>
       </v-container>
     </v-content>
   </v-app>
