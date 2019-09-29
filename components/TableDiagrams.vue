@@ -12,12 +12,9 @@
           <thead class="v-data-table-header">
             <tr>
               <th v-for="(header, index) in props.headers" v-bind:key="index">
-                <router-link v-if="header.link" v-bind:to="header.link">
+                <router-link v-bind:to="header.link">
                   {{ header.text }}
                 </router-link>
-                <template v-else>
-                  {{ header.text }}
-                </template>
               </th>
             </tr>
           </thead>
@@ -52,7 +49,7 @@ export default {
           text: 'Model',
           value: 'model',
           sortable: false,
-          link: null
+          link: '/target'
         }
       ]
       return head.concat(
