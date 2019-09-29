@@ -2,12 +2,12 @@
 
 CWD=$(pwd)
 SEQUELIZE="node_modules/.bin/sequelize"
-SRV_DIR="srv"
+SRV_DIR="server"
 CONFIG="$SRV_DIR/config/config.json"
 
 MODE="development"
-if test ! -z "$NODE_ENV"; then
-  MODE="$NODE_ENV"
+if test ! -z ${NODE_ENV}; then
+  MODE=${NODE_ENV}
 fi
 
 # delete SRV_DIR (server directory) from config when migration

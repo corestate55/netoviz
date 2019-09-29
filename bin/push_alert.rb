@@ -46,9 +46,9 @@ class RandomArg
   end
 end
 
-file = ARGV[0] || './public/model/target3b.json'
+file = ARGV[0] || './static/model/target3b.json'
 rand_arg = RandomArg.new(file)
-url = 'http://localhost:3000/alert'
+url = 'http://localhost:3000/api/alert'
 headers = [
   'Content-type: application/json',
   'Accept: application/json'

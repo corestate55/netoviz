@@ -21,6 +21,8 @@ Blog
 * [Batfish を使ってネットワーク構成を可視化してみよう \(1\) \- Qiita](https://qiita.com/corestate55/items/8a39af553785fd77c20a)
 * [Batfish を使ってネットワーク構成を可視化してみよう \(2\) \- Qiita](https://qiita.com/corestate55/items/9d8023eb19637f9bbd1e)
 * [Batfish を使ってネットワーク構成を可視化してみよう \(3\) \- Qiita](https://qiita.com/corestate55/items/10673ef74c33a24a0389)
+* [モデルベースのNW図で差分を可視化する - Qiita](https://qiita.com/corestate55/items/8c50b4f6cbee4caa0cbc)
+* [ネットワーク構成図のレイアウト処理を考えてみる - Qiita](https://qiita.com/corestate55/items/9a1194cdb2c54d80c08e)
 
 Slide
 * [「ネットワーク図」のモデル化とモデルを起点にした自動化の可能性 / onic2018 \- Speaker Deck](https://speakerdeck.com/corestate55/onic2018)
@@ -28,21 +30,20 @@ Slide
 
 ## Directory
 
-* `src`: Source code files of visualizer.
-* `public`: Distributed files.
-  * `public/model`: Topology data files (json)
-* `srv`: Server (API)
+* `lib/graph`: Visualizer library
+* `static/model`: Topology data files (json)
+* `server`: API Server
 
 ## Installation
 ### Environment setup
 This application depends on:
-* [Node.js](https://nodejs.org/ja/) (v8.10 or later)
-* [NPM](https://www.npmjs.com/) (v6.6 or later)
+* [Node.js](https://nodejs.org/ja/) (v10.x or later)
+* [NPM](https://www.npmjs.com/) (v6.x or later)
 
 ### Project setup
 This application depends on:
 * [D3.js v4](https://d3js.org/)
-* [Vue-CLI v3](https://cli.vuejs.org/)
+* [Nuxt.js](https://nuxtjs.org/)
 
 ```
 npm install
@@ -67,21 +68,16 @@ NODE_ENV=production ./bin/dbmigrate.sh
 To send a dummy log message (after running web server),
 use test script like below.
 It selects a name of hosts from specified model file and send random message to API server.
-(NOTE: `push_alert.rb` calls `curl` utility.)
+(NOTE: `push_alert.rb` calls `curl` command.)
 
 ```bash
-./bin/push_alert.rb ./public/model/target.json
+./bin/push_alert.rb ./static/model/target.json
 ```
 
-## Run web server
+## Run the application
 ### for development
-Run API server for development (using [vue-cli-plugin-express](https://www.npmjs.com/package/vue-cli-plugin-express))
 ```
-npm run express
-```
-and application (Compiles and hot-reloads for development).
-```
-npm run serve
+npm run dev
 ```
 
 ### for production
@@ -89,17 +85,18 @@ Build (compile and minify) script for production,
 ```
 npm run build
 ```
-and run API/application server.
+and run the application.
 ```
-npm run express:run
+npm run start
 ```
 
 ## Lints and fixes files
 ```
 npm run lint
+npm run lint:fix
 ```
 
-## Structure
+## Basic Structure
 
 ```
  augmented topology data model        topology data structure       graph object structure        visualizer
@@ -131,6 +128,3 @@ npm run lint
 ```
 
 See more detail, [class diagram in fig directory](./fig/).
-
-## Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
