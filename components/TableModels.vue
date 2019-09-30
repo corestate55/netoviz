@@ -54,7 +54,7 @@ export default {
         text: m.label,
         link: this.visualizer
           ? `/visualizer/${this.visualizer}/${m.file}`
-          : `/target/${m.file}`
+          : `/model/${m.file}`
       }))
     }
   }

@@ -49,7 +49,7 @@ export default {
           text: 'Model',
           value: 'model',
           sortable: false,
-          link: '/target'
+          link: '/model'
         }
       ]
       return head.concat(
@@ -68,14 +68,14 @@ export default {
           model: {
             text: modelFile.label,
             value: modelFile.file,
-            link: `/target/${modelFile.file}`
+            link: `/model/${modelFile.file}`
           }
         }
         for (const visualizer of this.visualizers) {
           row[visualizer.value] = {
             text: visualizer.text,
             value: visualizer.value,
-            link: `/target/${modelFile.file}/${visualizer.value}`
+            link: `/model/${modelFile.file}/${visualizer.value}`
           }
         }
         rows.push(row)

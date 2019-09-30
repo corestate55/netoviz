@@ -33,14 +33,14 @@ export default {
   methods: {
     ...mapActions(['updateModelFiles']),
     selectRoute(modelFile) {
-      if (this.$route.path.match(new RegExp('/target/.*/.*'))) {
+      if (this.$route.path.match(new RegExp('/model/.*/.*'))) {
         const visualizer = this.$route.params.visualizer
-        return `/target/${modelFile}/${visualizer}`
+        return `/model/${modelFile}/${visualizer}`
       } else if (this.$route.path.match(new RegExp('/visualizer/.*'))) {
         const visualizer = this.$route.params.visualizer
         return `/visualizer/${visualizer}/${modelFile}`
       }
-      return `/target/${modelFile}`
+      return `/model/${modelFile}`
     }
   }
 }

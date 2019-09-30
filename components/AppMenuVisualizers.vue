@@ -29,9 +29,9 @@ export default {
   },
   methods: {
     selectRoute(visualizer) {
-      if (this.$route.path.match(new RegExp('/target/.*'))) {
+      if (this.$route.path.match(new RegExp('/model/.*'))) {
         const modelFile = this.$route.params.modelFile
-        return `/target/${modelFile}/${visualizer}`
+        return `/model/${modelFile}/${visualizer}`
       } else if (this.$route.path.match(new RegExp('/visualizer/.*/.*'))) {
         const modelFile = this.$route.params.modelFile
         return `/visualizer/${visualizer}/${modelFile}`

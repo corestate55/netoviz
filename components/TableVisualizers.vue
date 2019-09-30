@@ -55,7 +55,7 @@ export default {
       return this.visualizers.map(v => ({
         text: v.text,
         link: this.modelFile
-          ? `/target/${this.modelFile}/${v.value}`
+          ? `/model/${this.modelFile}/${v.value}`
           : `/visualizer/${v.value}`
       }))
     }
