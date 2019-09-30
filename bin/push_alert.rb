@@ -6,6 +6,7 @@ class RandomArg
   def initialize(file)
     @json_file = file
     @hosts = make_hosts
+    @severities = make_severities
   end
 
   def make_hosts
@@ -23,7 +24,7 @@ class RandomArg
 
   def make_severities
     base = %w[disaster high average warning information not_classified]
-    [base, base.map{ |s| cs = s.dup; cs[0].capitalize!; cs }].flatten
+    [base, base.map{ |s| cs = s.dup; cs.capitalize!; cs }].flatten
   end
 
   def make_message(host)
@@ -38,7 +39,7 @@ class RandomArg
     host = @hosts.sample
     arg_data = {
       host: host,
-      severity: make_severities.sample,
+      severity: @severities.sample,
       date: current_date_string,
       message: make_message(host)
     }

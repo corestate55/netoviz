@@ -27,7 +27,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import NotFound from './/NotFound'
+import NotFound from './NotFound'
 
 export default {
   name: 'TableModels',

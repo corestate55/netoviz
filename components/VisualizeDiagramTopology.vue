@@ -54,7 +54,6 @@ export default {
   computed: {
     notSelectedLayers() {
       return this.wholeLayers.filter(
-        // <0: index not found: not exist in selected layers
         layer => !this.selectedLayers.includes(layer)
       )
     }

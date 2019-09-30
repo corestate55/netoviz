@@ -297,7 +297,9 @@ export default {
         fill: colors.grey.darken1, // grey
         text: colors.grey.lighten5
       }
-      const colorInfo = colorTable.find(d => d.severity === severity)
+      const colorInfo = colorTable.find(
+        d => d.severity === severity.toLowerCase()
+      )
       return colorInfo ? colorInfo[prop] : defaultColorInfo[prop]
     }
   }
