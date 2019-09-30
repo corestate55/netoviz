@@ -8,21 +8,13 @@
             <li>Topology model: {{ modelFile }}</li>
             <li>Whole layers: {{ wholeLayers }}</li>
             <li>current Alert Row: {{ currentAlertRow }}</li>
-            <li>Selected layers: {{ selectedLayers }}</li>
-            <li>NOT selected layers: {{ notSelectedLayers }}</li>
           </ul>
         </div>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <v-select
-          v-model="selectedLayers"
-          v-bind:items="wholeLayers"
-          chips
-          multiple
-          v-on:change="displaySelectedLayers"
-        />
+        <VisualizeDiagramSelectLayer v-bind:whole-layers="wholeLayers" />
       </v-col>
     </v-row>
     <!-- DO NOT use resizeSVG() for topology visualizer. -->
@@ -36,36 +28,20 @@
 </template>
 
 <script>
-import { select } from 'd3-selection'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
+import VisualizeDiagramSelectLayer from './VisualizeDiagramSelectLayer'
 import TopoGraphVisualizer from '~/lib/graph/topology/visualizer'
 import '~/lib/style/topology.scss'
 
 export default {
+  components: {
+    VisualizeDiagramSelectLayer
+  },
   mixins: [VisualizeDiagramCommon],
-  data() {
-    return {
-      unwatchSelectedLayers: null,
-      wholeLayers: [],
-      selectedLayers: [],
-      debug: false
-    }
-  },
-  computed: {
-    notSelectedLayers() {
-      return this.wholeLayers.filter(
-        layer => !this.selectedLayers.includes(layer)
-      )
-    }
-  },
-  mounted() {
-    console.log('[topo] mounted')
-    // exec after VisualizeDiagramCommon.mounted() [merged].
-    // `this.wholeLayers` is initialized in drawJsonModel().
-    // set selectedLayer initial value after initial drawJsonModel() exec.
-    // (at once)
-    this.selectedLayers = this.wholeLayers
-  },
+  data: () => ({
+    wholeLayers: [],
+    debug: false
+  }),
   methods: {
     makeVisualizer(width, height) {
       return new TopoGraphVisualizer()
@@ -78,17 +54,6 @@ export default {
     clearAllHighlight() {
       this.visualizer.clearAllHighlight()
     },
-    beforeMakeVisualizer() {
-      this.unwatchSelectedLayers = this.$store.watch(
-        state => state.selectedLayers,
-        newLayers => {
-          this.displaySelectedLayers()
-        }
-      )
-    },
-    afterDeleteVisualizer() {
-      this.unwatchSelectedLayers()
-    },
     drawJsonModel() {
       const getLayerNames = graphs => {
         // When the visualizer draws topology graph,
@@ -98,24 +63,12 @@ export default {
         //   FORCE to select all layers
         //   to avoid mismatch between UI (layer selector) and Graph.
         this.wholeLayers = graphs.map(layer => layer.name)
-        this.selectedLayers = this.wholeLayers
       }
       this.visualizer.drawJsonModel(
         this.modelFile,
         this.currentAlertRow,
         getLayerNames
       )
-      this.displaySelectedLayers()
-    },
-    setLayerDisplayStyle(layers, display) {
-      for (const layer of layers) {
-        select(`[id='${layer}-container']`).style('display', display)
-      }
-    },
-    displaySelectedLayers() {
-      // set display style of selecte(or not) layers
-      this.setLayerDisplayStyle(this.selectedLayers, 'block')
-      this.setLayerDisplayStyle(this.notSelectedLayers, 'none')
     }
   }
 }

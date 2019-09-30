@@ -18,8 +18,7 @@ export default {
   data() {
     return {
       visualizer: null,
-      unwatchCurrentAlertRow: null,
-      unwatchModelFile: null
+      unwatchCurrentAlertRow: null
     }
   },
   computed: {
@@ -59,10 +58,6 @@ export default {
       state => state.alert.currentAlertRow,
       this.watchCurrentAlertRow
     )
-    this.unwatchModelFile = this.$store.watch(
-      state => state.modelFile,
-      this.watchModelFile
-    )
     this.beforeMakeVisualizer() // hook (to ready make visualizer)
     this.visualizer = this.makeVisualizer(this.svgWidth, this.svgHeight)
     this.afterMakeVisualizer() // hook (to initialize visualizer)
@@ -77,7 +72,6 @@ export default {
     delete this.visualizer
     this.afterDeleteVisualizer() // hook
     this.unwatchCurrentAlertRow()
-    this.unwatchModelFile()
   },
   methods: {
     // Common methods (template):
