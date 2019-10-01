@@ -4,7 +4,11 @@ import db from './models'
 const express = require('express')
 const apiRouter = express.Router()
 
-const topoDataAPI = new TopologyDataAPI(process.env.NODE_ENV)
+const topoDataAPI = new TopologyDataAPI(
+  process.env.NODE_ENV,
+  'static',
+  'static'
+)
 apiRouter.use(express.json())
 
 apiRouter.post('/alert', (req, res) => {
