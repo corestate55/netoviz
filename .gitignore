@@ -1,6 +1,7 @@
 # for Netoviz
 *.sqlite3
-*.cache
+static/*.cache
+static/model/*.xml
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template

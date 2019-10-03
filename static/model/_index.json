@@ -4,31 +4,27 @@
     "label": "batfish trial"
   },
   {
-    "file": "target3b.json",
-    "label": "[3b] L2 Aggr, L3.5 and L2 separate"
-  },
-  {
-    "file": "target3a.json",
-    "label": "[3a] L2 Aggr and L3.5"
-  },
-  {
-    "file": "target3.json",
-    "label": "[3] L2 Aggregated Model"
-  },
-  {
-    "file": "target2.json",
-    "label": "[2] L2 Compact Model"
+    "file": "diff_test.json",
+    "label": "diff viewer test data"
   },
   {
     "file": "target.json",
     "label": "[1] L2 Verbose Model"
   },
   {
-    "file": "diff_test.json",
-    "label": "diff viewer test data"
+    "file": "target2.json",
+    "label": "[2] L2 Compact Model"
   },
   {
-    "file": "target3.diff.json",
-    "label": "target3 diff data"
+    "file": "target3.json",
+    "label": "[3] L2 Aggregated Model"
+  },
+  {
+    "file": "target3a.json",
+    "label": "[3a] L2 Aggr and L3.5"
+  },
+  {
+    "file": "target3b.json",
+    "label": "[3b] L2 Aggr, L3.5 and L2 separate"
   }
 ]
