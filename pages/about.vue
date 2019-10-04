@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  head: () => ({ title: 'About' }),
   data() {
     return {
       links: [

@@ -9,6 +9,12 @@ export default {
   components: {
     TableVisualizers
   },
+  head() {
+    const suffix = this.modelFile ? ` for ${this.modelFile}` : ''
+    return {
+      title: `Visualizer List${suffix}`
+    }
+  },
   computed: {
     modelFile() {
       return this.$nuxt.$route.params.modelFile

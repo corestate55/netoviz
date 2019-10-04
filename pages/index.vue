@@ -8,7 +8,8 @@ import TableDiagrams from '~/components/TableDiagrams'
 export default {
   components: {
     TableDiagrams
-  }
+  },
+  head: () => ({ title: 'Index: Model/Visualizer Table' })
 }
 </script>
 

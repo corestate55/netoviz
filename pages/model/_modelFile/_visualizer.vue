@@ -12,6 +12,11 @@ export default {
   components: {
     VisualizeDiagram
   },
+  head() {
+    return {
+      title: `${this.visualizer} Diagram for ${this.modelFile}`
+    }
+  },
   computed: {
     visualizer() {
       return this.$nuxt.$route.params.visualizer

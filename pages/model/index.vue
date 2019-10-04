@@ -8,7 +8,8 @@ import TableModels from '~/components/TableModels'
 export default {
   components: {
     TableModels
-  }
+  },
+  head: () => ({ title: 'Model List' })
 }
 </script>
 
