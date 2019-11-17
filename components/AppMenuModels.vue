@@ -1,7 +1,7 @@
 <template>
   <v-menu open-on-hover offset-y>
     <template v-slot:activator="{ on }">
-      <v-btn elevation="0" v-on="on">
+      <v-btn v-on="on" elevation="0">
         Models
         <v-icon right>
           mdi-menu-down

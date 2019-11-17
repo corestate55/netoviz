@@ -4,9 +4,7 @@
       <v-list>
         <v-subheader>
           Visualizers
-          <template v-if="modelFile">
-            for {{ modelFile }}
-          </template>
+          <template v-if="modelFile"> for {{ modelFile }} </template>
         </v-subheader>
         <v-list-item-group>
           <v-list-item

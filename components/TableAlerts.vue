@@ -1,9 +1,9 @@
 <template>
   <div>
     <!-- 'value' prop: open all panels at default -->
-    <v-expansion-panels accordion focusable multiple v-bind:value="[0]">
+    <v-expansion-panels v-bind:value="[0]" accordion focusable multiple>
       <v-expansion-panel>
-        <v-expansion-panel-header v-slot="{ open }">
+        <v-expansion-panel-header>
           Alert Table
           <span class="text--secondary text-right pr-4">
             Log updated:
@@ -20,10 +20,10 @@
           <v-row>
             <v-col cols="6" md="2" lg="6">
               <v-btn
-                rounded
-                color="warning"
                 v-bind:disabled="disableClearSelectionButton"
                 v-on:click="clickClearSelectionButton"
+                rounded
+                color="warning"
               >
                 <v-icon left>
                   mdi-notification-clear-all
@@ -34,10 +34,10 @@
             <v-col cols="6" md="3" lg="6">
               <v-text-field
                 v-model="alertHostInput"
+                v-on:input="inputAlertHost"
                 clearable
                 label="Highlight Host"
                 placeholder="node OR layer__node"
-                v-on:input="inputAlertHost"
               />
             </v-col>
             <v-col cols="4" md="2" lg="4">
@@ -46,10 +46,10 @@
             <v-col cols="4" md="2" lg="4">
               <v-text-field
                 v-model="alertPollingInterval"
+                v-on:change="resetAlertCheckTimer"
                 label="Polling Interval (sec)"
                 type="number"
                 min="1"
-                v-on:change="resetAlertCheckTimer"
               />
             </v-col>
             <v-col cols="4" md="2" lg="4">
@@ -64,10 +64,10 @@
           <v-row>
             <v-col>
               <v-data-table
-                dense
                 v-bind:headers="alertTableHeader"
                 v-bind:items="alerts"
                 v-bind:items-per-page="5"
+                dense
               >
                 <template v-slot:item="{ item, headers }">
                   <tr

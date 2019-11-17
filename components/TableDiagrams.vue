@@ -2,11 +2,11 @@
   <v-row>
     <v-col>
       <v-data-table
+        v-bind:headers="headers"
+        v-bind:items="diagrams"
         caption="Select model/visualizer"
         dense
         hide-default-header
-        v-bind:headers="headers"
-        v-bind:items="diagrams"
       >
         <template v-slot:header="{ props }">
           <thead class="v-data-table-header">
