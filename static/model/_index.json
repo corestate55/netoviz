@@ -1,7 +1,19 @@
 [
   {
-    "file": "bf_trial.json",
-    "label": "batfish trial"
+    "file": "bf_l2s3.json",
+    "label": "[batfish-L2] sample3"
+  },
+  {
+    "file": "bf_l2s4.json",
+    "label": "[batfish-L2] sample4"
+  },
+  {
+    "file": "bf_l2s5.json",
+    "label": "[batfish-L2] sample5"
+  },
+  {
+    "file": "bf_l3trial.json",
+    "label": "batfish trial (L3)"
   },
   {
     "file": "diff_test.json",

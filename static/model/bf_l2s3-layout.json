@@ -1,0 +1,38 @@
+{
+  "standard": {
+    "grid": {
+      "x": [50, 265, 480, 695, 910, 1125, 1340, 1555],
+      "y": [50, 350, 650]
+    },
+    "layout": {
+      "layer3__Seg.0": { "i": 0, "j": 1 },
+      "layer3__Seg.1": { "i": 4, "j": 1 },
+      "layer3__host11": { "i": 0, "j": 2 },
+      "layer3__host12": { "i": 1, "j": 2 },
+      "layer3__host13": { "i": 4, "j": 2 },
+      "layer3__host14": { "i": 5, "j": 2 },
+      "layer3__host21": { "i": 2, "j": 2 },
+      "layer3__host22": { "i": 3, "j": 2 },
+      "layer3__host23": { "i": 6, "j": 2 },
+      "layer3__host24": { "i": 7, "j": 2 }
+    }
+  },
+  "reverse": {
+    "grid": {
+      "x": [50, 265, 480, 695, 910, 1125, 1340, 1555],
+      "y": [50, 150, 450]
+    },
+    "layout": {
+      "layer1__switch1": { "i": 0, "j": 1 },
+      "layer1__switch2": { "i": 4, "j": 1 },
+      "layer1__host11": { "i": 0, "j": 2 },
+      "layer1__host12": { "i": 1, "j": 2 },
+      "layer1__host13": { "i": 4, "j": 2 },
+      "layer1__host14": { "i": 5, "j": 2 },
+      "layer1__host21": { "i": 2, "j": 2 },
+      "layer1__host22": { "i": 3, "j": 2 },
+      "layer1__host23": { "i": 6, "j": 2 },
+      "layer1__host24": { "i": 7, "j": 2 }
+    }
+  }
+}
