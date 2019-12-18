@@ -6,7 +6,7 @@ import CacheTopoGraphConverter from './cache-topo-graph-converter'
 
 const readFile = promisify(fs.readFile)
 
-export default class TopoogyDataAPI {
+export default class TopologyDataAPI {
   constructor(mode, prodDistDir, devDistDir) {
     const distDir = mode === 'production' ? prodDistDir : devDistDir
     this.modelDir = `${distDir}/model`

@@ -26,6 +26,7 @@ div.tooltip {
   position: absolute;
   visibility: hidden;
   width: auto;
+  pointer-events: none;
 
   &:after {
     border: 12px solid transparent;
