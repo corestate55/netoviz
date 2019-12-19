@@ -20,6 +20,10 @@
     "label": "diff viewer test data"
   },
   {
+    "file": "nlink_check.json",
+    "label": "Link check for nested"
+  },
+  {
     "file": "target.json",
     "label": "[1] L2 Verbose Model"
   },

@@ -1,0 +1,26 @@
+{
+  "standard": {
+    "grid": {
+      "x": [50, 600],
+      "y": [50, 200]
+    },
+    "layout": {
+      "layer1__node11": {"i": 0, "j": 0},
+      "layer1__node12": {"i": 1, "j": 0},
+      "layer1__node21": {"i": 0, "j": 1},
+      "layer1__node22": {"i": 1, "j": 1}
+    }
+  },
+  "reverse": {
+    "grid": {
+      "x": [50, 600],
+      "y": [50, 200]
+    },
+    "layout": {
+      "layer1__node11": {"i": 0, "j": 0},
+      "layer1__node12": {"i": 1, "j": 0},
+      "layer1__node21": {"i": 0, "j": 1},
+      "layer1__node22": {"i": 1, "j": 1}
+    }
+  }
+}

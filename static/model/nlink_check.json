@@ -1,0 +1,875 @@
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "layer1",
+        "network-types": {
+        },
+        "node": [
+          {
+            "node-id": "node11",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1"
+              },
+              {
+                "tp-id": "p2"
+              },
+              {
+                "tp-id": "p3"
+              },
+              {
+                "tp-id": "p4"
+              },
+              {
+                "tp-id": "p5"
+              },
+              {
+                "tp-id": "p6"
+              },
+              {
+                "tp-id": "p7"
+              },
+              {
+                "tp-id": "p8"
+              },
+              {
+                "tp-id": "p9"
+              },
+              {
+                "tp-id": "p10"
+              },
+              {
+                "tp-id": "p11"
+              },
+              {
+                "tp-id": "p12"
+              },
+              {
+                "tp-id": "p13"
+              },
+              {
+                "tp-id": "p14"
+              },
+              {
+                "tp-id": "p15"
+              }
+            ]
+          },
+          {
+            "node-id": "node12",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1"
+              },
+              {
+                "tp-id": "p2"
+              },
+              {
+                "tp-id": "p3"
+              },
+              {
+                "tp-id": "p4"
+              },
+              {
+                "tp-id": "p5"
+              },
+              {
+                "tp-id": "p6"
+              },
+              {
+                "tp-id": "p7"
+              },
+              {
+                "tp-id": "p8"
+              },
+              {
+                "tp-id": "p9"
+              },
+              {
+                "tp-id": "p10"
+              },
+              {
+                "tp-id": "p11"
+              },
+              {
+                "tp-id": "p12"
+              },
+              {
+                "tp-id": "p13"
+              },
+              {
+                "tp-id": "p14"
+              },
+              {
+                "tp-id": "p15"
+              }
+            ]
+          },
+          {
+            "node-id": "node21",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1"
+              },
+              {
+                "tp-id": "p2"
+              },
+              {
+                "tp-id": "p3"
+              },
+              {
+                "tp-id": "p4"
+              },
+              {
+                "tp-id": "p5"
+              },
+              {
+                "tp-id": "p6"
+              },
+              {
+                "tp-id": "p7"
+              },
+              {
+                "tp-id": "p8"
+              },
+              {
+                "tp-id": "p9"
+              },
+              {
+                "tp-id": "p10"
+              },
+              {
+                "tp-id": "p11"
+              },
+              {
+                "tp-id": "p12"
+              },
+              {
+                "tp-id": "p13"
+              },
+              {
+                "tp-id": "p14"
+              },
+              {
+                "tp-id": "p15"
+              }
+            ]
+          },
+          {
+            "node-id": "node22",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "p1"
+              },
+              {
+                "tp-id": "p2"
+              },
+              {
+                "tp-id": "p3"
+              },
+              {
+                "tp-id": "p4"
+              },
+              {
+                "tp-id": "p5"
+              },
+              {
+                "tp-id": "p6"
+              },
+              {
+                "tp-id": "p7"
+              },
+              {
+                "tp-id": "p8"
+              },
+              {
+                "tp-id": "p9"
+              },
+              {
+                "tp-id": "p10"
+              },
+              {
+                "tp-id": "p11"
+              },
+              {
+                "tp-id": "p12"
+              },
+              {
+                "tp-id": "p13"
+              },
+              {
+                "tp-id": "p14"
+              },
+              {
+                "tp-id": "p15"
+              }
+            ]
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "node11,p1,node12,p1",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p1"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p1"
+            }
+          },
+          {
+            "link-id": "node12,p1,node11,p1",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p1"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p1"
+            }
+          },
+          {
+            "link-id": "node21,p1,node22,p1",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p1"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p1"
+            }
+          },
+          {
+            "link-id": "node22,p1,node21,p1",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p1"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p1"
+            }
+          },
+          {
+            "link-id": "node11,p2,node12,p2",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p2"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p2"
+            }
+          },
+          {
+            "link-id": "node12,p2,node11,p2",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p2"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p2"
+            }
+          },
+          {
+            "link-id": "node21,p2,node22,p2",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p2"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p2"
+            }
+          },
+          {
+            "link-id": "node22,p2,node21,p2",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p2"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p2"
+            }
+          },
+          {
+            "link-id": "node11,p3,node12,p3",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p3"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p3"
+            }
+          },
+          {
+            "link-id": "node12,p3,node11,p3",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p3"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p3"
+            }
+          },
+          {
+            "link-id": "node21,p3,node22,p3",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p3"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p3"
+            }
+          },
+          {
+            "link-id": "node22,p3,node21,p3",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p3"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p3"
+            }
+          },
+          {
+            "link-id": "node11,p4,node12,p4",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p4"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p4"
+            }
+          },
+          {
+            "link-id": "node12,p4,node11,p4",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p4"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p4"
+            }
+          },
+          {
+            "link-id": "node21,p4,node22,p4",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p4"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p4"
+            }
+          },
+          {
+            "link-id": "node22,p4,node21,p4",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p4"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p4"
+            }
+          },
+          {
+            "link-id": "node11,p5,node12,p5",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p5"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p5"
+            }
+          },
+          {
+            "link-id": "node12,p5,node11,p5",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p5"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p5"
+            }
+          },
+          {
+            "link-id": "node21,p5,node22,p5",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p5"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p5"
+            }
+          },
+          {
+            "link-id": "node22,p5,node21,p5",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p5"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p5"
+            }
+          },
+          {
+            "link-id": "node11,p6,node21,p6",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p6"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p6"
+            }
+          },
+          {
+            "link-id": "node21,p6,node11,p6",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p6"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p6"
+            }
+          },
+          {
+            "link-id": "node12,p6,node22,p6",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p6"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p6"
+            }
+          },
+          {
+            "link-id": "node22,p6,node12,p6",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p6"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p6"
+            }
+          },
+          {
+            "link-id": "node11,p7,node21,p7",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p7"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p7"
+            }
+          },
+          {
+            "link-id": "node21,p7,node11,p7",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p7"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p7"
+            }
+          },
+          {
+            "link-id": "node12,p7,node22,p7",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p7"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p7"
+            }
+          },
+          {
+            "link-id": "node22,p7,node12,p7",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p7"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p7"
+            }
+          },
+          {
+            "link-id": "node11,p8,node21,p8",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p8"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p8"
+            }
+          },
+          {
+            "link-id": "node21,p8,node11,p8",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p8"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p8"
+            }
+          },
+          {
+            "link-id": "node12,p8,node22,p8",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p8"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p8"
+            }
+          },
+          {
+            "link-id": "node22,p8,node12,p8",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p8"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p8"
+            }
+          },
+          {
+            "link-id": "node11,p9,node21,p9",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p9"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p9"
+            }
+          },
+          {
+            "link-id": "node21,p9,node11,p9",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p9"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p9"
+            }
+          },
+          {
+            "link-id": "node12,p9,node22,p9",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p9"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p9"
+            }
+          },
+          {
+            "link-id": "node22,p9,node12,p9",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p9"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p9"
+            }
+          },
+          {
+            "link-id": "node11,p10,node21,p10",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p10"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p10"
+            }
+          },
+          {
+            "link-id": "node21,p10,node11,p10",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p10"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p10"
+            }
+          },
+          {
+            "link-id": "node12,p10,node22,p10",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p10"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p10"
+            }
+          },
+          {
+            "link-id": "node22,p10,node12,p10",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p10"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p10"
+            }
+          },
+          {
+            "link-id": "node11,p11,node22,p11",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p11"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p11"
+            }
+          },
+          {
+            "link-id": "node22,p11,node11,p11",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p11"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p11"
+            }
+          },
+          {
+            "link-id": "node12,p11,node21,p11",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p11"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p11"
+            }
+          },
+          {
+            "link-id": "node21,p11,node12,p11",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p11"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p11"
+            }
+          },
+          {
+            "link-id": "node11,p12,node22,p12",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p12"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p12"
+            }
+          },
+          {
+            "link-id": "node22,p12,node11,p12",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p12"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p12"
+            }
+          },
+          {
+            "link-id": "node12,p12,node21,p12",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p12"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p12"
+            }
+          },
+          {
+            "link-id": "node21,p12,node12,p12",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p12"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p12"
+            }
+          },
+          {
+            "link-id": "node11,p13,node22,p13",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p13"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p13"
+            }
+          },
+          {
+            "link-id": "node22,p13,node11,p13",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p13"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p13"
+            }
+          },
+          {
+            "link-id": "node12,p13,node21,p13",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p13"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p13"
+            }
+          },
+          {
+            "link-id": "node21,p13,node12,p13",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p13"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p13"
+            }
+          },
+          {
+            "link-id": "node11,p14,node22,p14",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p14"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p14"
+            }
+          },
+          {
+            "link-id": "node22,p14,node11,p14",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p14"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p14"
+            }
+          },
+          {
+            "link-id": "node12,p14,node21,p14",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p14"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p14"
+            }
+          },
+          {
+            "link-id": "node21,p14,node12,p14",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p14"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p14"
+            }
+          },
+          {
+            "link-id": "node11,p15,node22,p15",
+            "source": {
+              "source-node": "node11",
+              "source-tp": "p15"
+            },
+            "destination": {
+              "dest-node": "node22",
+              "dest-tp": "p15"
+            }
+          },
+          {
+            "link-id": "node22,p15,node11,p15",
+            "source": {
+              "source-node": "node22",
+              "source-tp": "p15"
+            },
+            "destination": {
+              "dest-node": "node11",
+              "dest-tp": "p15"
+            }
+          },
+          {
+            "link-id": "node12,p15,node21,p15",
+            "source": {
+              "source-node": "node12",
+              "source-tp": "p15"
+            },
+            "destination": {
+              "dest-node": "node21",
+              "dest-tp": "p15"
+            }
+          },
+          {
+            "link-id": "node21,p15,node12,p15",
+            "source": {
+              "source-node": "node21",
+              "source-tp": "p15"
+            },
+            "destination": {
+              "dest-node": "node12",
+              "dest-tp": "p15"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
