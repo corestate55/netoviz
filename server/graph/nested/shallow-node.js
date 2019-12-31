@@ -32,6 +32,12 @@ export default class ShallowNestedGraphNode {
     }
   }
 
+  layerPath() {
+    const paths = this.path.split('__')
+    paths.pop()
+    return paths.join('__')
+  }
+
   isNode() {
     return this.type === 'node'
   }

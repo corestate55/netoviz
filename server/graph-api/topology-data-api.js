@@ -90,7 +90,8 @@ export default class TopologyDataAPI {
       ['reverse', 'bool'],
       ['depth', 'number'],
       ['target', 'string'],
-      ['layer', 'string']
+      ['layer', 'string'],
+      ['aggregate', 'bool']
     ])
     graphQuery.graphData = await this.convertTopoGraphData(jsonName)
     graphQuery.layoutData = await this.readLayoutJSON(jsonName)

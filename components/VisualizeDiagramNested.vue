@@ -23,6 +23,9 @@
         <v-switch v-model="autoFitting" inset label="Fit Auto" />
       </v-col>
       <v-col>
+        <v-switch v-model="aggregation" inset label="Aggregate" />
+      </v-col>
+      <v-col>
         <v-text-field
           v-model="depth"
           v-on:input="drawJsonModel()"
@@ -58,6 +61,7 @@ export default {
     return {
       reverse: true,
       autoFitting: false,
+      aggregation: false,
       depth: 1,
       debug: false
     }
@@ -67,6 +71,9 @@ export default {
       this.drawJsonModel()
     },
     autoFitting() {
+      this.drawJsonModel()
+    },
+    aggregation() {
       this.drawJsonModel()
     }
   },
@@ -88,7 +95,8 @@ export default {
         this.reverse,
         this.depth,
         this.currentAlertRow && this.currentAlertRow.layer, // from AlertHost Input (layer__node)
-        this.autoFitting
+        this.autoFitting,
+        this.aggregation
       )
     },
     saveLayout() {

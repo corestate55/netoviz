@@ -10,7 +10,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.layoutData = layoutData
     this.reverse = reverse
     // to debug recursive operation
-    this.debugCalc = false
+    this.debugCalc = true
   }
 
   initialize() {
