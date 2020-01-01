@@ -1,20 +1,11 @@
 // defaults
 $default_font_size: 10pt;
 
-div.tooltip {
-  /*
-  background: #000;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 8px;
-  color: #fff;
-  display: inline-block;
-  font-size: $default_font_size;
-  padding: 10px;
-  vertical-align: top;
-  */
+$default_bg_color: rgba(0, 0, 0, 0.7);
+$aggregated_bg_color: rgba(0, 0, 102, 0.7);
 
-  background: #000;
-  background: rgba(0, 0, 0, 0.7);
+div.tooltip {
+  background: $default_bg_color;
   border-radius: 8px;
   color: #fff;
   font-size: $default_font_size;
@@ -31,14 +22,20 @@ div.tooltip {
   &:after {
     border: 12px solid transparent;
     border-left-width: 0;
-    border-right-color: #000;
-    border-right-color: rgba(0, 0, 0, 0.7);
+    border-right-color: $default_bg_color;
     content: "";
     display: block;
     left: -12px;
     position: absolute;
     top: 10px;
     width: 0;
+  }
+
+  &.aggregated {
+    background: $aggregated_bg_color;
+    &:after {
+      border-right-color: $aggregated_bg_color;
+    }
   }
 
   &.pop-down {

@@ -1,5 +1,9 @@
 [
   {
+    "file": "aggregate_check.json",
+    "label": "Node Aggregation Check"
+  },
+  {
     "file": "bf_l2s3.json",
     "label": "[batfish-L2] sample3"
   },
