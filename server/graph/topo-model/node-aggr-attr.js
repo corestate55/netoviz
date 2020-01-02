@@ -10,7 +10,13 @@ export default class AggregateNodeAttribute extends TopoBaseContainer {
   }
 
   _aggregatesNodeStr() {
-    return this.aggregates.map(d => `<li>${d.path}</li>`).join('')
+    return this.aggregates
+      .map(d => {
+        const nameAttr = `data-name="${d.name}"`
+        const pathAttr = `data-path="${d.path}"`
+        return `<li><a ${nameAttr} ${pathAttr}>${d.name}</a></li>`
+      })
+      .join('')
   }
 
   toHtml() {

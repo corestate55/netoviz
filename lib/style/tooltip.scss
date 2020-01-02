@@ -2,7 +2,7 @@
 $default_font_size: 10pt;
 
 $default_bg_color: rgba(0, 0, 0, 0.7);
-$aggregated_bg_color: rgba(0, 0, 102, 0.7);
+$aggregated_bg_color: rgba(77, 19, 0, 0.85);
 
 div.tooltip {
   background: $default_bg_color;
@@ -12,7 +12,7 @@ div.tooltip {
   white-space: nowrap;
   height: auto;
   line-height: 1.1;
-  min-height: 25px; // text font size * 1.5
+  min-height: 45px;
   padding: 10px;
   position: absolute;
   visibility: hidden;
@@ -33,6 +33,7 @@ div.tooltip {
 
   &.aggregated {
     background: $aggregated_bg_color;
+    pointer-events: all;
     &:after {
       border-right-color: $aggregated_bg_color;
     }
@@ -47,6 +48,14 @@ div.tooltip {
     opacity: 1;
     transition: all .2s ease-in-out;
     visibility: visible;
+  }
+}
+
+div.tooltip a {
+  color: lightskyblue;
+  &:hover {
+    font-weight: bold;
+    text-decoration: underline;
   }
 }
 
