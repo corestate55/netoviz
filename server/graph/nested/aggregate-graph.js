@@ -53,19 +53,48 @@ export default class AggregatedGraph extends DeepNestedGraph {
     return childNodes.filter(classifier.callback)
   }
 
+  _makeFamilyDetectors() {
+    return [
+      { param: 'family', family: true, detector: d => d.family },
+      { param: 'family', family: false, detector: d => !d.family }
+    ]
+  }
+
+  _makeLayerDetectors(layerPaths) {
+    return layerPaths.map(layerPath => ({
+      param: 'layerPath',
+      layerPath,
+      detector: d => d.layerPath() === layerPath
+    }))
+  }
+
+  _makeDetectorProduction(detector1, detector2) {
+    // make product set:
+    // ex) detector1 = [d11, d12], detector2 = [d21, d22]
+    // => return [[d11, d21], [d11, d22], [d12, d21], [d12, d22]]
+    return detector1
+      .map(d1 => detector2.map(d2 => [d1, d2])) // make product set
+      .reduce((acc, classifier) => [...acc, ...classifier], []) // flatten
+  }
+
   _makeClassifiers(childrenLayerPaths) {
-    const familyDetections = [d => d.family, d => !d.family]
-    const classifiers = []
-    for (const layerPath of childrenLayerPaths) {
-      for (const familyDetection of familyDetections) {
-        classifiers.push({
-          layerPath,
-          family: familyDetection({ family: true }),
-          callback: d => familyDetection(d) && d.layerPath() === layerPath
-        })
-      }
-    }
-    return classifiers
+    const detectorCombinations = this._makeDetectorProduction(
+      this._makeFamilyDetectors(),
+      this._makeLayerDetectors(childrenLayerPaths)
+    )
+
+    return detectorCombinations.map(detectors => {
+      // detectors = pair of detector : [familyDetector, layerDetector]
+      const classifier = {}
+      detectors.forEach(detector => {
+        classifier[detector.param] = detector[detector.param]
+      })
+      classifier.callback = detectors.reduce(
+        (acc, detector) => d => detector.detector(d) && acc(d),
+        () => true
+      )
+      return classifier
+    })
   }
 
   _aggregateChildNodes(parentNode, childNodePaths) {
@@ -93,7 +122,6 @@ export default class AggregatedGraph extends DeepNestedGraph {
       )
       aggregatedNodes.push(aggregatedNode)
     }
-    // console.log('[_aggrChildNodes] aggregateNodes:', aggregatedNodes)
     // Append aggregated nodes to nodes (node list)
     this.nodes = this.nodes.concat(aggregatedNodes)
     return passNodes.map(d => d.path).concat(aggregatedNodes.map(d => d.path))
