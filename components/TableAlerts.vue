@@ -21,9 +21,9 @@
             <v-col cols="6" md="2" lg="6">
               <v-btn
                 v-bind:disabled="disableClearSelectionButton"
-                v-on:click="clickClearSelectionButton"
                 rounded
                 color="warning"
+                v-on:click="clickClearSelectionButton"
               >
                 <v-icon left>
                   mdi-notification-clear-all
@@ -34,10 +34,10 @@
             <v-col cols="6" md="3" lg="6">
               <v-text-field
                 v-model="alertHostInput"
-                v-on:input="inputAlertHost"
                 clearable
                 label="Highlight Host"
                 placeholder="node OR layer__node"
+                v-on:input="inputAlertHost"
               />
             </v-col>
             <v-col cols="4" md="2" lg="4">
@@ -46,10 +46,10 @@
             <v-col cols="4" md="2" lg="4">
               <v-text-field
                 v-model="alertPollingInterval"
-                v-on:change="resetAlertCheckTimer"
                 label="Polling Interval (sec)"
                 type="number"
                 min="1"
+                v-on:change="resetAlertCheckTimer"
               />
             </v-col>
             <v-col cols="4" md="2" lg="4">

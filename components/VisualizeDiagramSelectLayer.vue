@@ -2,10 +2,10 @@
   <v-select
     v-model="selectedLayers"
     v-bind:items="wholeLayers"
-    v-on:change="displaySelectedLayers"
     chips
     deletable-chips
     multiple
+    v-on:change="displaySelectedLayers"
   />
 </template>
 

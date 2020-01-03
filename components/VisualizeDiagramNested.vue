@@ -28,14 +28,14 @@
       <v-col>
         <v-text-field
           v-model="depth"
-          v-on:input="drawJsonModel()"
           label="Base depth"
           type="number"
           min="1"
+          v-on:input="drawJsonModel()"
         />
       </v-col>
       <v-col>
-        <v-btn v-on:click="saveLayout()" rounded color="info">
+        <v-btn rounded color="info" v-on:click="saveLayout()">
           Save Layout
         </v-btn>
       </v-col>

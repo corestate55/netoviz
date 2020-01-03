@@ -9,15 +9,15 @@ export default {
   components: {
     TableModels
   },
+  computed: {
+    visualizer() {
+      return this.$nuxt.$route.params.visualizer
+    }
+  },
   head() {
     const suffix = this.visualizer ? ` for ${this.visualizer} diagram` : ''
     return {
       title: `Model List${suffix}`
-    }
-  },
-  computed: {
-    visualizer() {
-      return this.$nuxt.$route.params.visualizer
     }
   }
 }
