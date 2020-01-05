@@ -61,7 +61,7 @@ export default {
     return {
       reverse: true,
       autoFitting: false,
-      aggregation: false,
+      aggregation: true,
       depth: 1,
       debug: false
     }

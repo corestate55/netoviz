@@ -8,6 +8,12 @@ rect.nest {
   fill: $fill_normal1;
   stroke: $stroke_normal;
 
+  &.aggregated {
+    stroke-width: 4px;
+    stroke-linecap: round;
+    stroke-dasharray: 0, 8px;
+  }
+
   &.select-ready {
     @extend %select-ready;
   }
