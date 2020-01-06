@@ -22,6 +22,7 @@ export default class AggregatedGraph extends DeepNestedGraph {
     const nodeData = {
       type: 'node',
       name,
+      family: classifier.family,
       path: [classifier.layerPath, name].join(`__`), // MUST be unique
       id: 0, // dummy, not used in nested graph
       parents: this.reverse ? [] : [parentNode.path],
