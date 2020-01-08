@@ -13,16 +13,23 @@ export default class AggregatedGraph extends DeepNestedGraph {
   }
 
   _aggregatedNodeName(parentNode, classifier) {
-    const family = classifier.family ? 'T' : 'F'
-    return `Agr:${parentNode.name}:${family}`
+    // head of [parents, children, target] or F(false/fail)
+    const familyHead = classifier.family
+      ? classifier.family[0].toUpperCase()
+      : 'F'
+    return `Agr:${parentNode.name}:${familyHead}`
   }
 
   _makeAggregateNode(parentNode, targetNodes, classifier) {
     const name = this._aggregatedNodeName(parentNode, classifier)
+    const makeFamily = family => {
+      // pseudo FamilyRelation instance (omit .degree)
+      return family ? { relation: family } : null
+    }
     const nodeData = {
       type: 'node',
       name,
-      family: classifier.family,
+      family: makeFamily(classifier.family),
       path: [classifier.layerPath, name].join(`__`), // MUST be unique
       id: 0, // dummy, not used in nested graph
       parents: this.reverse ? [] : [parentNode.path],
@@ -55,10 +62,20 @@ export default class AggregatedGraph extends DeepNestedGraph {
   }
 
   _makeFamilyDetectors() {
-    return [
-      { param: 'family', family: true, detector: d => d.family },
-      { param: 'family', family: false, detector: d => !d.family }
-    ]
+    return ['parents', 'children', 'target', null].map(family => {
+      return family
+        ? {
+            param: 'family',
+            family,
+            detector: d =>
+              d.family && d.family.relation && d.family.relation === family
+          }
+        : {
+            param: 'family',
+            family: null,
+            detector: d => !d.family || !d.family.relation
+          }
+    })
   }
 
   _makeLayerDetectors(layerPaths) {
@@ -78,7 +95,8 @@ export default class AggregatedGraph extends DeepNestedGraph {
       .reduce((acc, classifier) => [...acc, ...classifier], []) // flatten
   }
 
-  _makeClassifiers(childrenLayerPaths) {
+  _makeClassifiers(childNodes) {
+    const childrenLayerPaths = this._uniqLayerPaths(childNodes)
     const detectorCombinations = this._makeDetectorProduction(
       this._makeFamilyDetectors(),
       this._makeLayerDetectors(childrenLayerPaths)
@@ -104,11 +122,10 @@ export default class AggregatedGraph extends DeepNestedGraph {
     }
 
     const childNodes = this.mapPathsToNodes(childNodePaths)
-    const childrenLayerPaths = this._uniqLayerPaths(childNodes)
     const aggregatedNodes = []
     let passNodes = []
 
-    for (const classifier of this._makeClassifiers(childrenLayerPaths)) {
+    for (const classifier of this._makeClassifiers(childNodes)) {
       const targetNodes = this._classifyAggregateTarget(childNodes, classifier)
       // don't aggregate if length=0(empty), length=1(single node)
       if (targetNodes.length < 2) {
@@ -125,7 +142,8 @@ export default class AggregatedGraph extends DeepNestedGraph {
     }
     // Append aggregated nodes to nodes (node list)
     this.nodes = this.nodes.concat(aggregatedNodes)
-    return passNodes.map(d => d.path).concat(aggregatedNodes.map(d => d.path))
+    const path = d => d.path
+    return passNodes.map(path).concat(aggregatedNodes.map(path))
   }
 
   childNodePathsToCalcPosition(node, layerOrder) {

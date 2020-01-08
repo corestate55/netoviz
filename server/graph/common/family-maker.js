@@ -100,11 +100,11 @@ class FamilyMaker {
     this.findAndMarkAsFamily(targetNode.path, 'parents', 1)
     this._consoleDebug(0, 'markTarget', `find and mark as children`)
     this.findAndMarkAsFamily(targetNode.path, 'children', 1)
-    targetNode.family = 'target'
+    targetNode.family = new FamilyRelation('target', 0)
     this._consoleDebug(
       0,
       'markTarget',
-      `target: ${targetNode.path} mark as ${targetNode.family}`
+      `target: ${targetNode.path} mark as ${targetNode.family.relation}`
     )
     return true
   }
