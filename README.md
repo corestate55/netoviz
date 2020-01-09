@@ -22,7 +22,8 @@ Blog
 * [Batfish を使ってネットワーク構成を可視化してみよう \(2\) \- Qiita](https://qiita.com/corestate55/items/9d8023eb19637f9bbd1e)
 * [Batfish を使ってネットワーク構成を可視化してみよう \(3\) \- Qiita](https://qiita.com/corestate55/items/10673ef74c33a24a0389)
 * [モデルベースのNW図で差分を可視化する - Qiita](https://qiita.com/corestate55/items/8c50b4f6cbee4caa0cbc)
-* [ネットワーク構成図のレイアウト処理を考えてみる - Qiita](https://qiita.com/corestate55/items/9a1194cdb2c54d80c08e)
+* [ネットワーク構成図のレイアウト処理を考えてみる \(1\) \- Qiita](https://qiita.com/corestate55/items/9a1194cdb2c54d80c08e)
+* [ネットワーク構成図のレイアウト処理を考えてみる \(2\) \- Qiita](https://qiita.com/corestate55/items/849b8a204e24a2e7a8fb)
 
 Slide
 * [「ネットワーク図」のモデル化とモデルを起点にした自動化の可能性 / onic2018 \- Speaker Deck](https://speakerdeck.com/corestate55/onic2018)
