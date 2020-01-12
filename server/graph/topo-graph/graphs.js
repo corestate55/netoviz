@@ -54,4 +54,14 @@ export default class Graphs extends BaseContainer {
       }
     }
   }
+
+  /**
+   * Convert graphs as graph data.
+   * @returns {TopologyGraphData} Graph data for topology view.
+   * @public
+   */
+  toData() {
+    /** @typedef {Object} TopologyGraphData */
+    return this.graphs
+  }
 }

@@ -1,3 +1,7 @@
+/**
+ * @file HTTP Server of netoviz.
+ */
+
 const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
@@ -8,6 +12,9 @@ const apiRouter = require('./api')
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'
 
+/**
+ * Run HTTP server.
+ */
 async function start() {
   // set api route
   app.use('/api', apiRouter)

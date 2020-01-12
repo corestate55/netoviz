@@ -33,6 +33,11 @@ export default {
           icon: 'mdi-play-circle',
           text: 'Heroku online demo.',
           href: 'http://netoviz.herokuapp.com/'
+        },
+        {
+          icon: 'mdi-file-document-box-multiple',
+          text: 'Documents (JSDoc)',
+          href: '/docs'
         }
       ]
     }

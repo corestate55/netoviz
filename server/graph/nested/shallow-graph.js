@@ -1,18 +1,41 @@
+/**
+ * @file Definition of shallow nested graph.
+ */
+
 import NestedGraphConstants from './constants'
 import GridOperator from './grid-operator'
 import ShallowNestedGraphNode from './shallow-node'
 import NestedGraphLink from './link'
 
-export default class ShallowNestedGraph extends NestedGraphConstants {
+/**
+ * Shallow nested graph.
+ * @extends {NestedGraphConstants}
+ */
+class ShallowNestedGraph extends NestedGraphConstants {
+  /**
+   * @param {TopologyGraphData} graphData - Graph data for topology view.
+   * @param {LayoutData} layoutData - Layout data.
+   * @param {boolean} reverse - Flag for top/bottom view selection.
+   */
   constructor(graphData, layoutData, reverse) {
     super()
+    /** @type {TopologyGraphData} */
     this.graphData = graphData
+    /** @type {LayoutData} */
     this.layoutData = layoutData
+    /** @type {boolean} */
     this.reverse = reverse
-    // to debug recursive operation
+    /**
+     * Flag: enable debugging in recursive operation.
+     * @type {boolean}
+     */
     this.debugCalc = false
   }
 
+  /**
+   * Initialize graph.
+   * @public
+   */
   initialize() {
     this.setGrid()
     this.setNodes()
@@ -22,36 +45,67 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     this.calcRootNodePosition()
   }
 
+  /**
+   * Hook before calculate root node position.
+   * @interface
+   * @protected
+   */
   beforeCalcRootNodePosition() {
     // To be overridden
   }
 
+  /**
+   * Set grids from layout data.
+   * @protected
+   */
   setGrid() {
+    /** @type {GridOperator} */
     this.grid = new GridOperator(this.reverse, this.layoutData)
   }
 
+  /**
+   * Set nodes from graph data.
+   * @protected
+   */
   setNodes() {
     this.setNodesAs(this.graphData, node => {
+      /** @type {ShallowNestedGraphNode} */
       return new ShallowNestedGraphNode(node, this.reverse)
     })
   }
 
+  /**
+   * Set nodes using callback.
+   * @param {Object} graphData - Graph data.
+   * @param {function} generateGraphNodeCallback - Callback to generate a node.
+   * @protected
+   */
   setNodesAs(graphData, generateGraphNodeCallback) {
-    this.nodes = []
-    for (const layer of graphData) {
-      for (const node of layer.nodes) {
-        this.nodes.push(generateGraphNodeCallback(node))
-      }
-    }
+    this.nodes = graphData
+      .map(layer => layer.nodes) // pick nodes in each layers.
+      .reduce((acc, nodes) => [...acc, ...nodes], []) // flatten
+      .map(node => generateGraphNodeCallback(node))
   }
 
+  /**
+   * Find a link between two term-points.
+   * @param {string} sourcePath - Source term-point path. (link-path format)
+   * @param {string} targetPath - Target term-point path. (link-path format)
+   * @returns {NestedGraphLink} Found link.
+   * @protected
+   */
   findLinkBetween(sourcePath, targetPath) {
     return this.links.find(d => {
       return d.sourcePath === sourcePath && d.targetPath === targetPath
     })
   }
 
+  /**
+   * Set links from graph data.
+   * @protected
+   */
   setLinks() {
+    /** @type {Array<NestedGraphLink>} */
     this.links = []
     for (const layer of this.graphData) {
       for (const link of layer.links) {
@@ -67,47 +121,92 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     }
   }
 
+  /**
+   * Set root nodes.
+   * @protected
+   */
   setRootNodes() {
     this.rootNodes = this.nodes.filter(d => d.isRootNode())
   }
 
+  /**
+   * Find a node by path.
+   * @param path
+   * @returns {ShallowNestedGraphNode} Found node.
+   */
   findNodeByPath(path) {
     return this.nodes.find(d => d.path === path)
   }
 
+  /**
+   * Map node paths to node objects.
+   * @param {Array<string>} paths - Paths.
+   * @returns {Array<ShallowNestedGraphNode>} Node objects.
+   */
   mapPathsToNodes(paths) {
     return paths.map(path => this.findNodeByPath(path))
   }
 
+  /**
+   * Calculate position of root nodes.
+   * @protected
+   */
   calcRootNodePosition() {
     for (const rootNode of this.rootNodes) {
       const ordinalPosition = this.grid.ordinalPositionByNodePath(rootNode.path)
       // only root node has grid information
       rootNode.setGridPosition(ordinalPosition)
       const basePosition = this.grid.positionByOrdinal(ordinalPosition)
-      this.calcNodePosition(rootNode, basePosition, 0)
+      this._calcNodePosition(rootNode, basePosition, 0)
     }
   }
 
-  singleParentChildNodePaths(node) {
+  /**
+   * Get paths of child nodes which has only one parent.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @returns {Array<string>} Paths (of single-parent child nodes).
+   * @private
+   */
+  _singleParentChildNodePaths(node) {
     return node.childNodePaths().filter(path => {
       const childNode = this.findNodeByPath(path)
       return childNode.numberOfParentNodes() === 1
     })
   }
 
+  /**
+   * Check node is leaf. (It does not have any children.)
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @returns {boolean} True if node is leaf.
+   * @protected
+   */
   isLeaf(node) {
     // For shallow graph:
     // Only counted as child node when it has single parent.
     // Because if it has multiple parents, it breaks tree structure.
-    return this.singleParentChildNodePaths(node).length < 1
+    return this._singleParentChildNodePaths(node).length < 1
   }
 
+  /**
+   * Node can be assumed as leaf.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {number} layerOrder - Order of layer. (for inherited-class)
+   * @returns {boolean} True the node can be assumed as leaf.
+   * @protected
+   */
   assumeAsLeaf(node, layerOrder) {
     return this.isLeaf(node)
   }
 
-  _consoleDebug(order, pos, message, value) {
+  /**
+   * Debug print. (for recursive method)
+   * @param {number} order - Order of layer
+   * @param {string} pos - Position of code.
+   * @param {string} message - Debug message.
+   * @param {Object} [value] - Value to print.
+   * @protected
+   */
+  consoleDebug(order, pos, message, value) {
     if (!this.debugCalc) {
       return
     }
@@ -118,9 +217,17 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     console.log(`[${order}]${indent} * [${pos}] ${message}`, value)
   }
 
+  /**
+   * Calculate Node Width/Height as leaf node.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {NodeWH} Node Width/Height
+   * @private
+   */
   _calcNodeWHAsLeaf(node, basePosition, layerOrder) {
-    const wh = this.calcLeafNodeWH(node, basePosition, layerOrder)
-    this._consoleDebug(
+    const wh = this._calcLeafNodeWH(node, basePosition, layerOrder)
+    this.consoleDebug(
       layerOrder,
       'nodePos',
       `node=${node.path}, lo=${layerOrder} is assumed leaf, return: `,
@@ -129,13 +236,18 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return wh
   }
 
+  /**
+   * Calculate width/height of children.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {Array<NodeWH>} - Width/Height list of target node children.
+   * @private
+   */
   _calcChildrenWHList(node, basePosition, layerOrder) {
-    const childrenWHList = this.calcChildNodePosition(
-      node,
-      basePosition,
-      layerOrder + 2
-    )
-    this._consoleDebug(
+    const arg = [node, basePosition, layerOrder + 2]
+    const childrenWHList = this._calcChildNodePosition(...arg)
+    this.consoleDebug(
       layerOrder,
       'nodePos',
       `node=${node.path}, children WH list:`,
@@ -144,14 +256,23 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return childrenWHList
   }
 
+  /**
+   * Calculate width/height of sub-root (not root and not leaf) node.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @param {Array<NodeWH>} childrenWHList - Width/Height list.
+   * @returns {NodeWH} Width/Height of target node.
+   * @private
+   */
   _calcNodeWHAsSubRoot(node, basePosition, layerOrder, childrenWHList) {
-    const nodeWH = this.calcSubRootNodeWH(
+    const nodeWH = this._calcSubRootNodeWH(
       node,
       basePosition,
       childrenWHList,
       layerOrder
     )
-    this._consoleDebug(
+    this.consoleDebug(
       layerOrder,
       'nodePos',
       `node=${node.path}, return node wh:`,
@@ -160,8 +281,16 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return nodeWH
   }
 
-  calcNodePosition(node, basePosition, layerOrder) {
-    this._consoleDebug(
+  /**
+   * Calculate node position.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {NodeWH} Width/Height of target node.
+   * @private
+   */
+  _calcNodePosition(node, basePosition, layerOrder) {
+    this.consoleDebug(
       layerOrder,
       'nodePos',
       `node=${node.path}, family?=${node.family}`
@@ -169,7 +298,7 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
 
     // node rectangle : layerOrder     (0, 2, 4, ...)
     // node tp circle : layerOrder + 1 (1, 3, 5, ...)
-    this.calcTpPosition(node, basePosition, layerOrder + 1)
+    this._calcTpPosition(node, basePosition, layerOrder + 1)
     // calc node Width/Height when the node is leaf.
     if (this.assumeAsLeaf(node, layerOrder)) {
       return this._calcNodeWHAsLeaf(node, basePosition, layerOrder)
@@ -192,20 +321,42 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     )
   }
 
+  /**
+   * Get child node paths to calculate position.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {Array<string>} Paths of children.
+   * @protected
+   */
   childNodePathsToCalcPosition(node, layerOrder) {
-    return this.singleParentChildNodePaths(node)
+    return this._singleParentChildNodePaths(node)
   }
 
+  /**
+   * Find a child node from target node
+   * @param {ShallowNestedGraphNode} parentNode - Target node.
+   * @param {string} childNodePath - Path of child node.
+   * @returns {ShallowNestedGraphNode} - Found child node.
+   * @protected
+   */
   childNodeFrom(parentNode, childNodePath) {
     return this.findNodeByPath(childNodePath)
   }
 
-  calcChildNodePosition(node, basePosition, layerOrder) {
+  /**
+   * Calculate position of child nodes.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {Array<NodeWH>} Width/Height list of children.
+   * @private
+   */
+  _calcChildNodePosition(node, basePosition, layerOrder) {
     const childrenWHList = [] // [{ width: w, height: h }]
     let nx11 = basePosition.x + this.nodeXPad
     const ny1x = basePosition.y + (this.nodeYPad + this.r) * 2
 
-    this._consoleDebug(
+    this.consoleDebug(
       layerOrder,
       'childNodePos',
       `node=${node.path}, lo=${layerOrder}`
@@ -213,32 +364,50 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     const childNodePaths = this.childNodePathsToCalcPosition(node, layerOrder)
     for (const childNodePath of childNodePaths) {
       const childNode = this.childNodeFrom(node, childNodePath)
-      this._consoleDebug(
+      this.consoleDebug(
         layerOrder,
         'childNodePos',
         `childrenNodePath=${childNodePath}, family?=${childNode.family}`
       )
-      // recursive search
       const basePosition = { x: nx11, y: ny1x }
-      const wh = this.calcNodePosition(childNode, basePosition, layerOrder)
+      // recursive search
+      const wh = this._calcNodePosition(childNode, basePosition, layerOrder)
       childrenWHList.push(wh)
       nx11 += wh.width + this.nodeXPad
     }
     return childrenWHList
   }
 
-  widthByTp(node) {
+  /**
+   * Get width of term-points.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @returns {number} Width of term-points.
+   * @private
+   */
+  _widthByTp(node) {
     const tpNum = node.numberOfTps()
     return (
       this.nodeXPad * 2 + 2 * this.r * tpNum + this.tpInterval * (tpNum - 1)
     )
   }
 
-  heightByTp() {
+  /**
+   * Get height of term-points.
+   * @returns {number} Height of term-points.
+   * @private
+   */
+  _heightByTp() {
     return (this.nodeYPad + this.r) * 2
   }
 
-  widthByChildNodes(node, childrenWHList) {
+  /**
+   * Get width of child nodes.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {Array<NodeWH>} childrenWHList - Width/Height of children.
+   * @returns {number} Width of children.
+   * @private
+   */
+  _widthByChildNodes(node, childrenWHList) {
     // childrenWHList is { width:, height: } object list mapped of node.children.
     // childrenWHList.length is same as a number of children of the node.
     return (
@@ -250,33 +419,68 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     )
   }
 
-  heightByChildNodes(childrenWHList) {
+  /**
+   * Get height of child nodes.
+   * @param {Array<NodeWH>} childrenWHList - Width/Height of children.
+   * @returns {number} Height of children.
+   * @private
+   */
+  _heightByChildNodes(childrenWHList) {
     const maxChildHeight = Math.max(...childrenWHList.map(d => d.height))
-    return this.heightByTp() + maxChildHeight + this.nodeYPad
+    return this._heightByTp() + maxChildHeight + this.nodeYPad
   }
 
-  calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder) {
+  /**
+   * Calculate width/height of sub-root node.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {Array<NodeWH>} childrenWHList - Width/Height lists of children.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {NodeWH} Width/Height of target node.
+   * @private
+   */
+  _calcSubRootNodeWH(node, basePosition, childrenWHList, layerOrder) {
     // width
-    const widthByChildNodes = this.widthByChildNodes(node, childrenWHList)
-    const widthByTp = this.widthByTp(node)
+    const widthByChildNodes = this._widthByChildNodes(node, childrenWHList)
+    const widthByTp = this._widthByTp(node)
     const width = widthByChildNodes < widthByTp ? widthByTp : widthByChildNodes
     // height
-    const height = this.heightByChildNodes(childrenWHList)
+    const height = this._heightByChildNodes(childrenWHList)
 
     node.setRect(basePosition.x, basePosition.y, width, height, layerOrder)
     return { width, height }
   }
 
-  calcLeafNodeWH(node, basePosition, layerOrder) {
+  /**
+   * Calculate width/height of leaf node.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @returns {NodeWH}
+   * @private
+   */
+  _calcLeafNodeWH(node, basePosition, layerOrder) {
     // console.log(`  return: ${node.path} does not have child node`)
-    const width = this.widthByTp(node)
-    const height = this.heightByTp()
+    const width = this._widthByTp(node)
+    const height = this._heightByTp()
 
     node.setRect(basePosition.x, basePosition.y, width, height, layerOrder)
+    /**
+     * @typedef {Object} NodeWH
+     * @prop {number} width - Width of a node.
+     * @prop {number} height - Height of a node.
+     */
     return { width, height }
   }
 
-  calcTpPosition(node, basePosition, layerOrder) {
+  /**
+   * Calculate position of term-points.
+   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {CoordinatePosition} basePosition - Origin of shape.
+   * @param {number} layerOrder - Order of layer.
+   * @private
+   */
+  _calcTpPosition(node, basePosition, layerOrder) {
     let cx11 = basePosition.x + this.nodeXPad + this.r
     const cy1x = basePosition.y + this.nodeYPad + this.r
     for (const tp of this.mapPathsToNodes(node.parentTpPaths())) {
@@ -285,28 +489,53 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     }
   }
 
-  operativeNodes() {
+  /**
+   * Get operative nodes.
+   * @returns {Array<ShallowNestedGraphNode>} Operative nodes.
+   * @private
+   */
+  _operativeNodes() {
     return this.nodes.filter(node => node.operative)
   }
 
-  inoperativeNodes() {
+  /**
+   * Get inoperative nodes.
+   * @returns {Array<ShallowNestedGraphNode>} Inoperative nodes.
+   * @private
+   */
+  _inoperativeNodes() {
     return this.nodes.filter(node => !node.operative)
   }
 
-  operativeLinksIn(operativeNodes) {
+  /**
+   * Get links between operative nodes.
+   * @param {Array<ShallowNestedGraphNode>} operativeNodes - Operative nodes.
+   * @returns {Array<NestedGraphLink>} Operative links.
+   * @private
+   */
+  _operativeLinksIn(operativeNodes) {
     return this.links.filter(link => link.availableIn(operativeNodes))
   }
 
-  makeSupportTpLinks(operativeNodes) {
+  /**
+   * Make operative support link.
+   * @param {Array<ShallowNestedGraphNode>} operativeNodes - Operative nodes.
+   * @returns {Array<SupportTpLink>}
+   * @private
+   */
+  _makeSupportTpLinks(operativeNodes) {
     const supportTpLinks = []
     for (const tp of operativeNodes.filter(d => d.isTp())) {
-      // check tp path is available in operativeNodes?
+      // check tp path is available in _operativeNodes?
       for (const childTpPath of tp.childTpPaths()) {
         const childTp = operativeNodes.find(d => d.path === childTpPath)
         if (!childTp) {
           continue
         }
         const name = `${tp.linkPath()},${childTp.linkPath()}`
+        /**
+         * @typedef {Object} SupportTpLink
+         */
         supportTpLinks.push({
           name,
           path: `${tp.layer()},${childTp.layer()}__${name}`,
@@ -320,19 +549,29 @@ export default class ShallowNestedGraph extends NestedGraphConstants {
     return supportTpLinks
   }
 
+  /**
+   * Convert graph to graph data object.
+   * @returns {NestedGraphData} Graph data of shallow graph.
+   * @public
+   */
   toData() {
-    const operativeNodes = this.operativeNodes()
-    const supportTpLinks = this.makeSupportTpLinks(operativeNodes)
+    const operativeNodes = this._operativeNodes()
+    const supportTpLinks = this._makeSupportTpLinks(operativeNodes)
     const ascendingLayerOrder = (a, b) => {
       return a.layerOrder > b.layerOrder ? 1 : -1
     }
+    /**
+     * @typedef {Object} NestedGraphData
+     */
     return {
       nodes: operativeNodes.sort(ascendingLayerOrder),
       // inoperative nodes are used to find parents
       // when hosts must be highlight by alert are not found in operative nodes.
-      inoperativeNodes: this.inoperativeNodes(),
-      links: this.operativeLinksIn(operativeNodes).concat(supportTpLinks),
+      inoperativeNodes: this._inoperativeNodes(),
+      links: this._operativeLinksIn(operativeNodes).concat(supportTpLinks),
       grid: this.grid.toData()
     }
   }
 }
+
+export default ShallowNestedGraph

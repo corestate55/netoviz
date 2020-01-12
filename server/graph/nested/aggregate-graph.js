@@ -1,27 +1,59 @@
+/**
+ * @file Definition of deep nested graph with node aggregation.
+ */
+
 import DeepNestedGraph from './deep-graph'
 import AggregateGraphNode from './aggregate-node'
 
-export default class AggregatedGraph extends DeepNestedGraph {
-  _replaceChildrenByAggregatedNode(parentNode, targetNodes, aggregatedNode) {
-    // remove targetNodes from parentNode.children
-    const targetNodePaths = targetNodes.map(d => d.path)
-    parentNode.children = parentNode.children.filter(
+/**
+ * Deep nested graph with node aggregation.
+ * @extends {DeepNestedGraph}
+ */
+class AggregatedGraph extends DeepNestedGraph {
+  /**
+   * Replace aggregated children paths to aggregated node path.
+   * @param {DeepNestedGraphNode} targetNode - Target node.
+   * @param {Array<DeepNestedGraphNode>} childNodes - To be replaced nodes.
+   *     (children of target)
+   * @param {AggregateGraphNode} aggregatedNode - Replacement. (aggregated node)
+   * @private
+   */
+  _replaceChildrenByAggregatedNode(targetNode, childNodes, aggregatedNode) {
+    // remove targetNodes from targetNode.children
+    const targetNodePaths = childNodes.map(d => d.path)
+    targetNode.children = targetNode.children.filter(
       path => !targetNodePaths.includes(path)
     )
     // add aggregatedNode instead of targetNodes
-    parentNode.children.push(aggregatedNode.path)
+    targetNode.children.push(aggregatedNode.path)
   }
 
-  _aggregatedNodeName(parentNode, classifier) {
+  /**
+   * Make node name of aggregated node.
+   * @param {DeepNestedGraphNode} targetNode - Target node.
+   * @param {CombinedClassifier} combinedClassifier - Classifier for children.
+   * @prop {string} classifier.family - Family relation to classify.
+   * @returns {string} Name of aggregated node.
+   * @private
+   */
+  _aggregatedNodeName(targetNode, combinedClassifier) {
     // head of [parents, children, target] or F(false/fail)
-    const familyHead = classifier.family
-      ? classifier.family[0].toUpperCase()
+    const familyHead = combinedClassifier.family
+      ? combinedClassifier.family[0].toUpperCase()
       : 'F'
-    return `Agr:${parentNode.name}:${familyHead}`
+    return `Agr:${targetNode.name}:${familyHead}`
   }
 
-  _makeAggregateNode(parentNode, targetNodes, classifier) {
-    const name = this._aggregatedNodeName(parentNode, classifier)
+  /**
+   * Aggregate (children) nodes.
+   * @param {DeepNestedGraphNode} targetNode - Target node.
+   * @param {Array<DeepNestedGraphNode>} childNodes - Children to be aggregated.
+   * @param {CombinedClassifier} combinedClassifier - Classifier
+   * @returns {AggregateGraphNode} Aggregated Node
+   * @private
+   */
+  _makeAggregateNode(targetNode, childNodes, combinedClassifier) {
+    const name = this._aggregatedNodeName(targetNode, combinedClassifier)
     const makeFamily = family => {
       // pseudo FamilyRelation instance (omit .degree)
       return family ? { relation: family } : null
@@ -29,11 +61,11 @@ export default class AggregatedGraph extends DeepNestedGraph {
     const nodeData = {
       type: 'node',
       name,
-      family: makeFamily(classifier.family),
-      path: [classifier.layerPath, name].join(`__`), // MUST be unique
+      family: makeFamily(combinedClassifier.family),
+      path: [combinedClassifier.layerPath, name].join(`__`), // MUST be unique
       id: 0, // dummy, not used in nested graph
-      parents: this.reverse ? [] : [parentNode.path],
-      children: this.reverse ? [parentNode.path] : [],
+      parents: this.reverse ? [] : [targetNode.path],
+      children: this.reverse ? [targetNode.path] : [],
       diffState: {
         forward: 'kept',
         backward: 'kept',
@@ -43,28 +75,60 @@ export default class AggregatedGraph extends DeepNestedGraph {
     const aggregatedNode = new AggregateGraphNode(
       nodeData,
       this.reverse,
-      targetNodes
+      childNodes
     )
     this._replaceChildrenByAggregatedNode(
-      parentNode,
-      targetNodes,
+      targetNode,
+      childNodes,
       aggregatedNode
     )
     return aggregatedNode
   }
 
+  /**
+   * Make unique layer-path list of nodes.
+   * @param {Array<DeepNestedGraphNode>} nodes - Nodes.
+   * @returns {Array<string>} layer-paths of nodes.
+   * @private
+   */
   _uniqLayerPaths(nodes) {
     return Array.from(new Set(nodes.map(d => d.layerPath())))
   }
 
-  _classifyAggregateTarget(childNodes, classifierInfo) {
-    return childNodes.filter(classifierInfo.callback)
+  /**
+   * Classify (filter) nodes with classifier function.
+   * @param {Array<DeepNestedGraphNode>} nodes - Set of nodes.
+   * @param {Object} combinedClassifier - Classifier
+   * @prop {function} classifierInfo.callback - Function to classify a node.
+   * @returns {Array<DeepNestedGraphNode>} - Filtered nodes.
+   * @private
+   */
+  _classifyAggregateTarget(nodes, combinedClassifier) {
+    return nodes.filter(combinedClassifier.callback)
   }
 
+  /**
+   * Make a classifier with `family` attribute.
+   * @param {string} family - Value of family.
+   * @param {function} callback - Classifier function.
+   * @returns {FamilyClassifier} A family classifier.
+   * @private
+   */
   _familyClassifier(family, callback) {
+    /**
+     * @typedef {Object} FamilyClassifier
+     * @prop {string} param - Name of classifier parameter.
+     * @prop {string} family - Family value to classify. (condition)
+     * @prop {function} callback - Function to classify a node.
+     */
     return { param: 'family', family, callback }
   }
 
+  /**
+   * Make classifiers for all `family` patterns.
+   * @returns {Array<Object>} Family classifiers.
+   * @private
+   */
   _makeFamilyClassifiers() {
     const familyClassifierCB1 = family => d =>
       d.family && d.family.relation && d.family.relation === family
@@ -78,10 +142,29 @@ export default class AggregatedGraph extends DeepNestedGraph {
     })
   }
 
+  /**
+   * Make a classifier with layer of node.
+   * @param {string} layerPath - Layer path of (children) node.
+   * @param {function} callback - Classifier function.
+   * @returns {LayerClassifier} A layer classifier.
+   * @private
+   */
   _layerClassifier(layerPath, callback) {
+    /**
+     * @typedef {Object} LayerClassifier
+     * @prop {string} param - Name of classifier parameter.
+     * @prop {string} layerPath - Name of layer path (in children).
+     * @prop {function} callback - Function to classify a node.
+     */
     return { param: 'layerPath', layerPath, callback }
   }
 
+  /**
+   * Make classifiers for all 'layer path' pattern.
+   * @param {Array<string>} layerPaths - Layers of (children) nodes.
+   * @returns {Array<Object>} Layer classifiers.
+   * @private
+   */
   _makeLayerClassifiers(layerPaths) {
     const layerClassifierCB = layerPath => d => d.layerPath() === layerPath
     // partial application for each layerPath to get layer-classifier-callback
@@ -90,6 +173,14 @@ export default class AggregatedGraph extends DeepNestedGraph {
     )
   }
 
+  /**
+   * Make production set of classifier sets.
+   * @param {Array<Object>} classifiers1 - Classifier set 1.
+   * @param {Array<Object>} classifiers2 - Classifier set 2.
+   * @returns {Array<Array<Object>>} Production set
+   *     of classifier sets.
+   * @private
+   */
   _makeClassifierProduction(classifiers1, classifiers2) {
     // make product set:
     // ex) classifiers1 = [c11, c12], classifiers2 = [c21, c22]
@@ -99,48 +190,86 @@ export default class AggregatedGraph extends DeepNestedGraph {
       .reduce((acc, classifier) => [...acc, ...classifier], []) // flatten
   }
 
-  _makeClassifierInfos(childNodes) {
+  /**
+   * Make a combined classifier.
+   * @param {Array<Object>} classifiers - a pair of classifier,
+   *     [familyClassifier, layerClassifier]
+   * @returns {CombinedClassifier}
+   * @private
+   */
+  _combinedClassifier(classifiers) {
+    /**
+     * @typedef {Object} CombinedClassifier
+     * @prop {string} family - Family condition.
+     * @prop {string} layerPath - Layer (in children) condition.
+     * @prop {function} callback - Combined function to classify a node.
+     */
+    // merge param
+    const combinedClassifier = {}
+    classifiers.forEach(classifier => {
+      combinedClassifier[classifier.param] = classifier[classifier.param]
+    })
+    // combine classifier functions
+    combinedClassifier.callback = classifiers.reduce(
+      (acc, classifier) => d => classifier.callback(d) && acc(d),
+      () => true
+    )
+    return combinedClassifier
+  }
+
+  /**
+   * Make classifier which combines two (family and layer) classifier.
+   * It has all properties specified `params` of a classifier,
+   * and combined callback functions to classify a node.
+   * @param {Array<DeepNestedGraphNode>} childNodes - Nodes to be classified.
+   * @returns {Array<CombinedClassifier>} Array of classifier info.
+   * @private
+   */
+  _makeCombinedClassifiers(childNodes) {
     const childrenLayerPaths = this._uniqLayerPaths(childNodes)
     const classifierCombinations = this._makeClassifierProduction(
       this._makeFamilyClassifiers(),
       this._makeLayerClassifiers(childrenLayerPaths)
     )
-
-    return classifierCombinations.map(classifiers => {
-      // classifiers = pair of classifier : [familyClassifier, layerClassifier]
-      const classifierInfo = {}
-      classifiers.forEach(classifier => {
-        classifierInfo[classifier.param] = classifier[classifier.param]
-      })
-      classifierInfo.callback = classifiers.reduce(
-        (acc, classifier) => d => classifier.callback(d) && acc(d),
-        () => true
-      )
-      return classifierInfo
-    })
+    return classifierCombinations.map(classifiers =>
+      this._combinedClassifier(classifiers)
+    )
   }
 
-  _aggregateChildNodes(parentNode, childNodePaths) {
-    if (childNodePaths.length <= 3) {
+  /**
+   * Aggregate child nodes
+   * @param {DeepNestedGraphNode} targetNode - Target node.
+   * @param {Array<string>} childNodePaths - Paths of children.
+   * @returns {Array<string>} Paths of children after node aggregation.
+   * @private
+   */
+  _aggregateChildNodes(targetNode, childNodePaths) {
+    if (childNodePaths.length <= 2) {
       return childNodePaths
     }
 
-    const childNodes = this.mapPathsToNodes(childNodePaths)
+    const childNodes = /** @type {Array<DeepNestedGraphNode>} */ this.mapPathsToNodes(
+      childNodePaths
+    )
+    const combinedClassifiers = this._makeCombinedClassifiers(childNodes)
     const aggregatedNodes = []
     let passNodes = []
 
-    for (const cInfo of this._makeClassifierInfos(childNodes)) {
-      const targetNodes = this._classifyAggregateTarget(childNodes, cInfo)
+    for (const combinedClassifier of combinedClassifiers) {
+      const classifiedChildNodes = this._classifyAggregateTarget(
+        childNodes,
+        combinedClassifier
+      )
       // don't aggregate if length=0(empty), length=1(single node)
-      if (targetNodes.length < 2) {
-        passNodes = passNodes.concat(targetNodes)
+      if (classifiedChildNodes.length < 2) {
+        passNodes = passNodes.concat(classifiedChildNodes)
         continue
       }
       // Aggregate: N (targetNodes) -> 1 (aggregatedNode)
       const aggregatedNode = this._makeAggregateNode(
-        parentNode,
-        targetNodes,
-        cInfo
+        targetNode,
+        classifiedChildNodes,
+        combinedClassifier
       )
       aggregatedNodes.push(aggregatedNode)
     }
@@ -150,8 +279,13 @@ export default class AggregatedGraph extends DeepNestedGraph {
     return passNodes.map(path).concat(aggregatedNodes.map(path))
   }
 
+  /**
+   *  @override
+   */
   childNodePathsToCalcPosition(node, layerOrder) {
     const childNodePaths = super.childNodePathsToCalcPosition(node, layerOrder)
     return this._aggregateChildNodes(node, childNodePaths)
   }
 }
+
+export default AggregatedGraph

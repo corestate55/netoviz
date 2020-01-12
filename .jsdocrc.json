@@ -1,0 +1,26 @@
+{
+  "opts": {
+    "encoding": "utf8",
+    "destination": "static/docs",
+    "private": true,
+    "recurse": true,
+    "template": "node_modules/braintree-jsdoc-template"
+  },
+  "plugins": [],
+  "recurseDepth": 10,
+  "source": {
+    "include": ["components", "layouts", "lib", "pages", "server", "store"],
+    "exclude": [".nuxt", "bin", "fig", "node_modules", "static"],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc", "closure"]
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}
