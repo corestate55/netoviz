@@ -143,10 +143,13 @@ class GridOperator {
 
   /**
    * Convert grid operator to grid data object.
-   * @returns {{x: Array<number>, y: Array<number>}} Grid positions.
+   * @returns {GridPositions} Grid positions.
    * @public
    */
   toData() {
+    /**
+     * @typedef {{x: Array<number>, y: Array<number>}} GridPositions
+     */
     return { x: this.xGrids, y: this.yGrids }
   }
 }

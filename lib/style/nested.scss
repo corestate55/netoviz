@@ -38,5 +38,12 @@ line.nest {
   &.grid-y {
     stroke: $grid_y_color;
   }
+  &.support-tp {
+    stroke-width: 4;
+    stroke-dasharray: 4;
+  }
 }
 
+path.nest.tp-tp {
+  stroke-width: 4;
+}

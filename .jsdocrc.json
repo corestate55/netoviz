@@ -2,7 +2,7 @@
   "opts": {
     "encoding": "utf8",
     "destination": "static/docs",
-    "private": true,
+    "private": false,
     "recurse": true,
     "template": "node_modules/braintree-jsdoc-template"
   },

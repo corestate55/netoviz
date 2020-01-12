@@ -105,20 +105,24 @@ class ShallowNestedGraph extends NestedGraphConstants {
    * @protected
    */
   setLinks() {
-    /** @type {Array<NestedGraphLink>} */
-    this.links = []
-    for (const layer of this.graphData) {
-      for (const link of layer.links) {
-        const reverseLink = this.findLinkBetween(
-          link.targetPath,
-          link.sourcePath
-        )
-        // filter (discard) reverse link of bi-directional link for visualizer
-        if (!reverseLink) {
-          this.links.push(new NestedGraphLink(link))
-        }
+    const markReverseLink = link => {
+      if (link.reverse) {
+        return
+      }
+      const reverseLink = this.findLinkBetween(link.targetPath, link.sourcePath)
+      if (reverseLink) {
+        // `rev`: reverse, temporary flag to filter.
+        reverseLink.reverse = true
       }
     }
+
+    /** @type {Array<NestedGraphLink>} */
+    this.links = this.graphData
+      .map(layer => layer.links) // pick links in each layers.
+      .reduce((acc, links) => [...acc, ...links], []) // flatten
+      .map(link => new NestedGraphLink(link))
+    this.links.forEach(markReverseLink)
+    this.links = this.links.filter(link => !link.reverse)
   }
 
   /**
@@ -561,7 +565,15 @@ class ShallowNestedGraph extends NestedGraphConstants {
       return a.layerOrder > b.layerOrder ? 1 : -1
     }
     /**
+     * Data object of node.
+     * @typedef {DeepNestedGraphNode|AggregateGraphNode} NestedGraphNode
+     */
+    /**
      * @typedef {Object} NestedGraphData
+     * @prop {Array<NestedGraphNode>} nodes - Nodes. (operative)
+     * @prop {Array<NestedGraphNode>} inoperativeNodes - Nodes. (inoperative)
+     * @prop {Array<NestedGraphLink>} links - Links. (connecting between operative nodes)
+     * @prop {GridPositions} grid - Grid positions.
      */
     return {
       nodes: operativeNodes.sort(ascendingLayerOrder),
