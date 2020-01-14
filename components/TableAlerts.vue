@@ -18,19 +18,6 @@
         </v-expansion-panel-header>
         <v-expansion-panel-content>
           <v-row>
-            <v-col cols="6" md="2" lg="6">
-              <v-btn
-                v-bind:disabled="disableClearSelectionButton"
-                rounded
-                color="warning"
-                v-on:click="clickClearSelectionButton"
-              >
-                <v-icon left>
-                  mdi-notification-clear-all
-                </v-icon>
-                Clear Selection
-              </v-btn>
-            </v-col>
             <v-col cols="6" md="3" lg="6">
               <v-text-field
                 v-model="alertHostInput"
@@ -40,10 +27,10 @@
                 v-on:input="inputAlertHost"
               />
             </v-col>
-            <v-col cols="4" md="2" lg="4">
+            <v-col cols="6" md="3" lg="6">
               <v-switch v-model="enableTimer" inset label="Alert Polling" />
             </v-col>
-            <v-col cols="4" md="2" lg="4">
+            <v-col cols="6" md="3" lg="6">
               <v-text-field
                 v-model="alertPollingInterval"
                 label="Polling Interval (sec)"
@@ -52,7 +39,7 @@
                 v-on:change="resetAlertCheckTimer"
               />
             </v-col>
-            <v-col cols="4" md="2" lg="4">
+            <v-col cols="6" md="3" lg="6">
               <v-text-field
                 v-model="alertLimit"
                 label="Polling Logs"
@@ -217,27 +204,33 @@ export default {
         console.error('[AlertTable] fetch alert failed: ', error)
       }
     },
-    clickClearSelectionButton() {
-      this.alertHostInput = ''
-      this.setAlertTableCurrentRow({ id: -1 })
-    },
     alertHostInputIsLayerHostFormat() {
       return (
         this.alertHostInput &&
         this.alertHostInput.match(new RegExp('(.+)__(.+)'))
       )
     },
-    layerOfAlertHostInput() {
-      return this.alertHostInputIsLayerHostFormat()
-        ? this.alertHostInput.split('__').shift()
-        : null
+    alertHostInputIsLayerHostTpFormat() {
+      return (
+        this.alertHostInput &&
+        this.alertHostInput.match(new RegExp('(.+)__(.+)__(.+)'))
+      )
     },
-    hostOfAlertHostInput() {
-      return this.alertHostInputIsLayerHostFormat()
-        ? this.alertHostInput.split('__').pop()
-        : this.alertHostInput
+    splitAlertHostInput() {
+      if (this.alertHostInputIsLayerHostTpFormat()) {
+        // [layer, host, tp] for term-point highlighting.
+        //   if alertHostInput was 'hostA__tpX', it assumes as
+        //   {layer: hostA, host: tpX}. 'A__B' format input is used for
+        //   node click drill-down in nested graph.
+        return this.alertHostInput.split('__')
+      } else if (this.alertHostInputIsLayerHostFormat()) {
+        // [layer, host, ''] for node click drill-down
+        return this.alertHostInput.split('__').concat([''])
+      }
+      return ['', this.alertHostInput, ''] // assume alertHostInput as host.
     },
     alertFromAlertHostInput() {
+      const pathElements = this.splitAlertHostInput()
       return {
         id: -1, // clear alert table selection
         message: 'selected directly',
@@ -246,8 +239,9 @@ export default {
         // for click drill-down (nested diagram):
         // there are objects that have same name in another layer.
         // it must identify the object using layer info (by path).
-        layer: this.layerOfAlertHostInput(),
-        host: this.hostOfAlertHostInput()
+        layer: pathElements[0], // additional prop
+        host: pathElements[1],
+        tp: pathElements[2] // additional prop
       }
     },
     inputAlertHost: debounce(function() {
@@ -258,9 +252,11 @@ export default {
       this.fromAlertHostInput = false
     }, 500), // 0.5sec
     setAlertTableCurrentRow(row) {
-      // console.log('[AlertTable] set alert table current row: ', row)
       if (!this.fromAlertHostInput) {
-        this.alertHostInput = row && row.host ? row.host : ''
+        // Add props for node highlighting when table row is clicked:
+        row.layer = ''
+        row.tp = ''
+        this.alertHostInput = row.host || ''
       }
       this.currentAlertRow = row
     },
