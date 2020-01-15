@@ -10,9 +10,9 @@ import DeepNestedGraphNode from './deep-node'
  * @extends {DeepNestedGraphNode}
  * @see {@link AggregatedGraph}
  */
-class AggregateGraphNode extends DeepNestedGraphNode {
+class AggregatedNestedGraphNode extends DeepNestedGraphNode {
   /**
-   * @param {Object} nodeData - Node data.
+   * @param {TopologyGraphNodeData} nodeData - Node data.
    * @param {boolean} reverse - Flag for top/bottom view selection.
    * @param {Array<DeepNestedGraphNode>} aggregateNodes - Nodes to be aggregated.
    */
@@ -37,4 +37,4 @@ class AggregateGraphNode extends DeepNestedGraphNode {
   }
 }
 
-export default AggregateGraphNode
+export default AggregatedNestedGraphNode

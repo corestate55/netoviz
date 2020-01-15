@@ -1,16 +1,51 @@
 'use strict'
+/**
+ * @file Definition of link class for topology diagram.
+ */
 
-export default class GraphLink {
-  constructor(data) {
-    this.name = data.name
-    this.path = data.path
-    this.type = data.type
-    this.sourcePath = data.sourcePath
-    this.targetPath = data.targetPath
+/**
+ * Link for topology diagram.
+ */
+class TopologyGraphLink {
+  /**
+   * @typedef {Object} LinkData
+   * @prop {string} name
+   * @prop {string} path
+   * @prop {string} type
+   * @prop {string} sourcePath
+   * @prop {string} targetPath
+   * @prop {number} sourceId
+   * @prop {number} targetId
+   * @prop {Object} attribute
+   * @prop {DiffState} diffState
+   */
+  /**
+   * @typedef {LinkData|TopologyGraphLink} TopologyGraphLinkData
+   */
+  /**
+   * @param {LinkData} linkData
+   */
+  constructor(linkData) {
+    /** @type {string} */
+    this.name = linkData.name
+    /** @type {string} */
+    this.path = linkData.path
+    /** @type {string} */
+    this.type = linkData.type
+    /** @type {string} */
+    this.sourcePath = linkData.sourcePath
+    /** @type {string} */
+    this.targetPath = linkData.targetPath
     // Link termination point ID (0 means error...)
-    this.sourceId = data.sourceId || 0
-    this.targetId = data.targetId || 0
-    this.attribute = data.attribute || {}
-    this.diffState = data.diffState || {}
+    /** @type {number} */
+    this.sourceId = linkData.sourceId || 0
+    /** @type {number} */
+    this.targetId = linkData.targetId || 0
+    /** @type {Object} */
+    this.attribute = linkData.attribute || {}
+    /** @type {DiffState} */
+    this.diffState = linkData.diffState || {}
   }
 }
+
+export default TopologyGraphLink

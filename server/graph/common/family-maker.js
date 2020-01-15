@@ -138,7 +138,7 @@ class FamilyMaker {
   /**
    * Find node with its layer and name.
    * @param {string} targetNodeName - Name of target node.
-   * @param {string} targetNodeLayer - Layer of target node.
+   * @param {string} [targetNodeLayer] - Layer of target node.
    * @returns {Object} Found node.
    * @private
    */
@@ -158,7 +158,7 @@ class FamilyMaker {
   /**
    * Mark family relation of target node.
    * @param {string} targetNodeName - Name of target node.
-   * @param {string} targetNodeLayer - Layer of target node.
+   * @param {string} [targetNodeLayer] - Layer of target node.
    * @returns {boolean} True if found target and marked other nodes.
    */
   markFamilyWithTarget(targetNodeName, targetNodeLayer) {
@@ -201,7 +201,7 @@ class FamilyMaker {
  * Function to mark family relations.
  * @param {Array<Object>} nodes - Nodes.
  * @param {string} targetNodeName - Name of target node.
- * @param {string} targetNodeLayer - Layer of target node.
+ * @param {string} [targetNodeLayer] - Layer of target node.
  * @returns {boolean} True if found target and marked other nodes.
  */
 const markFamilyWithTarget = (nodes, targetNodeName, targetNodeLayer) => {

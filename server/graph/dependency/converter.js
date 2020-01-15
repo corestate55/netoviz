@@ -1,8 +1,17 @@
-import DepGraph from './graph'
+/**
+ * @file Data converter for dependency graph.
+ */
 
-const convertDependencyGraphData = graphQuery => {
-  const depGraph = new DepGraph(graphQuery)
+import DependencyGraph from './graph'
+
+/**
+ * Convert topology graph data to nested graph data.
+ * @param {DependencyGraphQuery} graphQuery - Dictionary of get request properties.
+ * @returns {DependencyGraphData}
+ */
+const toDependencyGraphData = graphQuery => {
+  const depGraph = new DependencyGraph(graphQuery)
   return depGraph.toData()
 }
 
-export default convertDependencyGraphData
+export default toDependencyGraphData

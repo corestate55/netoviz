@@ -1,12 +1,19 @@
 /**
  * @file API implementation of netoviz HTTP server.
  */
+/**
+ * Express (web framework) HTTP Request.
+ * @typedef {Object} Request
+ * @prop {Object} query - Dictionary of HTTP GET parameters (key-value).
+ * @prop {Object} params - Dictionary of named route parameters (key-value).
+ *     {@see server/api.js}
+ */
 
 import fs from 'fs'
 import { promisify } from 'util'
-import convertDependencyGraphData from '../graph/dependency/converter'
-import convertNestedGraphData from '../graph/nested/converter'
-import CacheTopoGraphConverter from './cache-topo-graph-converter'
+import toDependencyGraphData from '../graph/dependency/converter'
+import toNestedGraphData from '../graph/nested/converter'
+import CacheRfcTopologyDataConverter from './cache-topo-graph-converter'
 
 const readFile = promisify(fs.readFile)
 
@@ -23,16 +30,13 @@ class TopologyDataAPI {
      * @type{string}
      * @private
      */
-    this._modelDir = `${distDir}/model`
+    this.modelDir = `${distDir}/model`
     /**
      * Topology data converter with data cache function.
-     * @type {CacheTopologyGraphConverter}
+     * @type {CacheRfcTopologyDataConverter}
      * @private
      */
-    this._topoGraphConverter = new CacheTopoGraphConverter(
-      this._modelDir,
-      distDir
-    )
+    this.converter = new CacheRfcTopologyDataConverter(this.modelDir, distDir)
   }
 
   /**
@@ -42,9 +46,10 @@ class TopologyDataAPI {
    * @public
    */
   async getModels() {
-    const modelsFile = `${this._modelDir}/_index.json`
+    const modelsFile = `${this.modelDir}/_index.json`
     try {
-      return JSON.parse(await readFile(modelsFile, 'utf-8'))
+      const buffer = await readFile(modelsFile, 'utf-8')
+      return JSON.parse(buffer.toString())
     } catch (error) {
       console.log(error)
       return null
@@ -60,13 +65,9 @@ class TopologyDataAPI {
   async _readLayoutJSON(jsonName) {
     try {
       const baseName = jsonName.split('.').shift()
-      const layoutJsonName = `${this._modelDir}/${baseName}-layout.json`
-      /**
-       * @typedef {Object} LayoutData
-       * @prop {Object} standard - Top (standard) view layout data.
-       * @prop {Object} reverse - Bottom view layout data.
-       */
-      return JSON.parse(await readFile(layoutJsonName, 'utf-8'))
+      const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
+      const buffer = await readFile(layoutJsonName, 'utf-8')
+      return JSON.parse(buffer.toString())
     } catch (error) {
       console.log(`Layout file correspond with ${jsonName} was not found.`)
       // layout file is optional.
@@ -78,11 +79,11 @@ class TopologyDataAPI {
   /**
    * Convert topology data to graph data for topology graph.
    * @param {string} jsonName - File name of topology data.
-   * @returns {Promise<Object>} Graph data object for topology graph.
+   * @returns {Promise<TopologyGraphsData>} Graph data object for topology graph.
    * @private
    */
-  _convertTopoGraphData(jsonName) {
-    return this._topoGraphConverter.toData(jsonName)
+  _toTopologyGraphsData(jsonName) {
+    return this.converter.toTopologyGraphsData(jsonName)
   }
 
   /**
@@ -113,13 +114,18 @@ class TopologyDataAPI {
 
   /**
    * Construct graph query string (GET parameter of URI).
+   *
    * @param {string} graphType - Type of graph (topology, dependency, nested)
-   * @param {Request.query} query - HTTP get parameter (key-value)
-   * @param {Array} keys - Array of [key, type] for query.
-   * @returns {Object} Dictionary of get parameters.
+   * @param {Object} query - HTTP get parameter (key-value)
+   * @param {Array<Array<string>>} keys - Array of [key, type] for query.
+   * @returns {GraphQuery} Dictionary of get parameters.
    * @private
    */
   _makeGraphQuery(graphType, query, keys) {
+    /**
+     * @typedef {NestedGraphQuery|DependencyGraphQuery} GraphQuery
+     * Key-value dictionary.
+     */
     const graphQuery = {}
     for (const [key, keyType] of keys) {
       if (keyType === 'number') {
@@ -142,15 +148,23 @@ class TopologyDataAPI {
    * Convert topology data to graph data for dependency graph.
    * @param {string} jsonName - File name of topology data.
    * @param {Request} req - HTTP request.
-   * @returns {Promise<Object>} Graph data object for dependency graph.
+   * @returns {Promise<DependencyGraphData>} Graph data object for dependency graph.
    * @private
    */
-  async _getDependencyGraphData(jsonName, req) {
-    const graphQuery = this._makeGraphQuery('dependency', req.query, [
-      ['target', 'string']
-    ])
-    graphQuery.graphData = await this._convertTopoGraphData(jsonName)
-    return convertDependencyGraphData(graphQuery)
+  async _toDependencyGraphData(jsonName, req) {
+    /**
+     * @typedef {Object} DependencyGraphQuery
+     * @prop {string} target
+     * @prop {TopologyGraphsData} graphData
+     */
+    const queryKeyTypeList = [['target', 'string']]
+    const graphQuery = /** @type {DependencyGraphQuery} */ this._makeGraphQuery(
+      'dependency',
+      req.query,
+      queryKeyTypeList
+    )
+    graphQuery.graphData = await this._toTopologyGraphsData(jsonName)
+    return toDependencyGraphData(graphQuery)
   }
 
   /**
@@ -160,27 +174,32 @@ class TopologyDataAPI {
    * @returns {Promise<NestedGraphData>} Graph data object for nested graph.
    * @private
    */
-  async _getNestedGraphData(jsonName, req) {
+  async _toNestedGraphData(jsonName, req) {
     /**
      * @typedef {Object} NestedGraphQuery
-     * @prop {boolean} reverse - Enable reverse graph (bottom view).
-     * @prop {number} depth - Maximum layer depth to display.
-     * @prop {string} target - Selected node name to highlight.
-     * @prop {string} layer - Layer name of selected node to highlight.
-     * @prop {boolean} aggregate - Enable node aggregation.
-     * @prop {TopologyGraphData} graphData - (topology) Graph data.
-     * @prop {LayoutData} layoutData - Layout data.
+     * @prop {boolean} reverse
+     * @prop {number} depth
+     * @prop {string} target
+     * @prop {string} layer
+     * @prop {boolean} aggregate
+     * @prop {TopologyGraphsData} graphData
+     * @prop {LayoutData} layoutData
      */
-    const graphQuery = this._makeGraphQuery('nested', req.query, [
+    const queryKeyTypeList = [
       ['reverse', 'bool'],
       ['depth', 'number'],
       ['target', 'string'],
       ['layer', 'string'],
       ['aggregate', 'bool']
-    ])
-    graphQuery.graphData = await this._convertTopoGraphData(jsonName)
+    ]
+    const graphQuery = /** @type {NestedGraphQuery} */ this._makeGraphQuery(
+      'nested',
+      req.query,
+      queryKeyTypeList
+    )
+    graphQuery.graphData = await this._toTopologyGraphsData(jsonName)
     graphQuery.layoutData = await this._readLayoutJSON(jsonName)
-    return convertNestedGraphData(graphQuery)
+    return toNestedGraphData(graphQuery)
   }
 
   /**
@@ -195,11 +214,11 @@ class TopologyDataAPI {
     const jsonName = req.params.jsonName
 
     if (graphName === 'topology') {
-      return JSON.stringify(await this._convertTopoGraphData(jsonName))
+      return JSON.stringify(await this._toTopologyGraphsData(jsonName))
     } else if (graphName === 'dependency') {
-      return JSON.stringify(await this._getDependencyGraphData(jsonName, req))
+      return JSON.stringify(await this._toDependencyGraphData(jsonName, req))
     } else if (graphName === 'nested') {
-      return JSON.stringify(await this._getNestedGraphData(jsonName, req))
+      return JSON.stringify(await this._toNestedGraphData(jsonName, req))
     }
   }
 
@@ -216,14 +235,15 @@ class TopologyDataAPI {
     const reverse = this._boolString2Bool(req.query.reverse)
 
     const layoutJsonName = `${jsonName.split('.').shift()}-layout.json`
-    const layoutJsonPath = `${this._modelDir}/${layoutJsonName}`
+    const layoutJsonPath = `${this.modelDir}/${layoutJsonName}`
     const cacheLayoutJsonPath = layoutJsonPath // overwrite
 
     console.log(
       `receive ${graphName}/${jsonName}?reverse=${reverse}): `,
       layoutData
     )
-    const baseLayoutData = JSON.parse(await readFile(layoutJsonPath, 'utf8'))
+    const buffer = await readFile(layoutJsonPath, 'utf8')
+    const baseLayoutData = JSON.parse(buffer.toString())
     const reverseKey = reverse ? 'reverse' : 'standard'
     baseLayoutData[reverseKey].grid = layoutData
     const layoutDataString = JSON.stringify(baseLayoutData, null, 2) // pretty print

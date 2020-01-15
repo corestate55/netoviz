@@ -7,7 +7,7 @@
  */
 class NestedGraphLink {
   /**
-   * @param {Object} linkData - Link data.
+   * @param {TopologyGraphLinkData} linkData - Link data.
    */
   constructor(linkData) {
     /** @type {string} */

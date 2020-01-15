@@ -11,7 +11,7 @@ import ShallowNestedGraphNode from './shallow-node'
  */
 class DeepNestedGraphNode extends ShallowNestedGraphNode {
   /**
-   * @param {Object} nodeData - Node data.
+   * @param {TopologyGraphNodeData|DeepNestedGraphNode} nodeData - Node data.
    * @param {boolean} reverse - Flag for top/bottom view selection.
    */
   constructor(nodeData, reverse) {

@@ -1,51 +1,112 @@
 'use strict'
+/**
+ * @file Definition of network and supporting-network class of topology model.
+ */
 
 import TopoBaseContainer from './topo-base'
 import Node from './node'
 import Link from './link'
 
+/**
+ * Supporting network of topology model.
+ * @extends {TopoBaseContainer}
+ */
 class SupportingNetwork extends TopoBaseContainer {
+  /**
+   * @typedef {Object} RfcSupportingNetworkData
+   * @prop {string} network-ref Network name.
+   */
+  /**
+   * @param {RfcSupportingNetworkData} data - Data of supporting network.
+   */
   constructor(data) {
     super(data)
+    /** @type {string} */
     this.networkRef = data['network-ref']
+    /** @type {string} */
     this.refPath = this.networkRef
   }
 }
 
+/**
+ * Network-types of topology model.
+ * @extends {TopoBaseContainer}
+ */
 class NetworkTypes extends TopoBaseContainer {
+  /**
+   * @typedef {Object} RfcNetworkTypes
+   */
+  /**
+   * @param {RfcNetworkTypes} data
+   */
   constructor(data) {
     super(data)
+    /** @type{RfcNetworkTypes} */
     this.data = data
-    this.types = this.makeTypes(this.data)
+    /** @type {Array<string>} */
+    this.types = this._makeTypes(this.data)
   }
 
-  makeTypes(data) {
+  /**
+   * Make network types (keys).
+   * @param {RfcNetworkTypes} data - Data of network types.
+   * @returns {Array<string>} Network types.
+   * @private
+   */
+  _makeTypes(data) {
     let types = []
-    for (const type in data) {
+    for (const type of Object.keys(data)) {
       types.push(type)
-      types = types.concat(this.makeTypes(data[type]))
+      types = types.concat(this._makeTypes(data[type]))
     }
     return types
   }
 
+  /**
+   * Check if network has specified network-type.
+   * @param {string} type - Network-type.
+   * @returns {Boolean} True if network-types includes specified type.
+   * @public
+   */
   hasType(type) {
-    return this.types && this.types.find(d => d === type)
+    return Boolean(this.types && this.types.find(d => d === type))
   }
 }
 
-export default class Network extends TopoBaseContainer {
+/**
+ * Network of topology model.
+ * @extends {TopoBaseContainer}
+ */
+class Network extends TopoBaseContainer {
+  /**
+   * @typedef {Object} RfcNetworkData
+   * @prop {RfcNetworkTypes} network-types - Network-types.
+   * @prop {string} network-id - Name of network.
+   * @prop {Array<RfcNodeData>} node - Nodes.
+   * @prop {Array<RfcLinkData>} link - Links.
+   * @prop {Array<RfcSupportingNetworkData>} supporting-network Supporting-networks.
+   */
+  /**
+   * @param {RfcNetworkData} data - Network data.
+   * @param {number} nwNum - ID of network.
+   */
   constructor(data, nwNum) {
     super(data)
+    /** @type {NetworkTypes} */
     this.networkTypes = new NetworkTypes(data['network-types'])
+    /** @type {string} */
     this.name = data['network-id'] // name string
+    /** @type {number} */
     this.id = nwNum * 10000 // integer
+    /** @type {string} */
     this.path = this.name
-    this.constructSupportingNetworks(data)
-    this.constructNodes(data)
-    this.constructLinks(data)
+    this._constructSupportingNetworks(data)
+    this._constructNodes(data)
+    this._constructLinks(data)
   }
 
-  constructSupportingNetworks(data) {
+  _constructSupportingNetworks(data) {
+    /** @type {Array<SupportingNetwork>} */
     this.supportingNetworks = []
     if (data['supporting-network']) {
       this.supportingNetworks = data['supporting-network'].map(
@@ -54,23 +115,44 @@ export default class Network extends TopoBaseContainer {
     }
   }
 
-  makeGraphNodesAsNode() {
+  /**
+   * Convert all `Node`s to `TopologyGraphNode`s.
+   * @returns {Array<TopologyGraphNode>} Node-type nodes.
+   * @private
+   */
+  _makeGraphNodesAsNode() {
     return this.nodes.map(node => node.graphNode())
   }
 
-  makeGraphNodesAsTp() {
+  /**
+   * Convert all `TermPoint`s to `TopologyGraphNode`s (tp-type node).
+   * @returns {Array<TopologyGraphNode>} Tp-type nodes.
+   * @private
+   */
+  _makeGraphNodesAsTp() {
     const tps = this.nodes.map(node => {
       return node.termPoints.map(tp => tp.graphNode())
     })
     return this.flatten(tps)
   }
 
+  /**
+   * Make `TopologyGraphNode`s in this network.
+   * @returns {Array<TopologyGraphNode>} All node/tp-type nodes.
+   * @public
+   */
   makeGraphNodes() {
-    const nodes = [this.makeGraphNodesAsNode(), this.makeGraphNodesAsTp()]
+    const nodes = [this._makeGraphNodesAsNode(), this._makeGraphNodesAsTp()]
     return this.flatten(nodes)
   }
 
-  constructNodes(data) {
+  /**
+   * Construct nodes.
+   * @param {RfcNetworkData} data - Network data.
+   * @private
+   */
+  _constructNodes(data) {
+    /** @type {Array<Node>} */
     this.nodes = []
     if (data.node) {
       this.nodes = data.node.map((d, i) => {
@@ -79,11 +161,24 @@ export default class Network extends TopoBaseContainer {
     }
   }
 
-  newNode(data, index) {
-    return new Node(data, this.path, this.id, index)
+  /**
+   * Create (new) node.
+   * @param {RfcNodeData} data - Node data.
+   * @param {number} nodeNum - ID of node.
+   * @returns {Node} Node.
+   * @protected
+   */
+  newNode(data, nodeNum) {
+    return new Node(data, this.path, this.id, nodeNum)
   }
 
-  constructLinks(data) {
+  /**
+   * Construct links.
+   * @param {RfcNetworkData} data - Network data.
+   * @private
+   */
+  _constructLinks(data) {
+    /** @type {Array<Link>} */
     this.links = []
     const linkKey = 'ietf-network-topology:link' // alias
     if (data[linkKey]) {
@@ -93,10 +188,21 @@ export default class Network extends TopoBaseContainer {
     }
   }
 
+  /**
+   * Create (new) link.
+   * @param {RfcLinkData} data - Link data.
+   * @returns {Link} Link.
+   * @protected
+   */
   newLink(data) {
     return new Link(data, this.path)
   }
 
+  /**
+   * Make `TopologyGraphLink`s in this network.
+   * @returns {Array<TopologyGraphLink>} All links.
+   * @public
+   */
   makeGraphLinks() {
     const links = this.links.map(link => link.graphLink())
     const linksNodeTp = this.nodes.map(node => {
@@ -105,15 +211,25 @@ export default class Network extends TopoBaseContainer {
     return this.flatten([links, this.flatten(linksNodeTp)])
   }
 
+  /**
+   * Check network type is L3.
+   * @returns {Boolean} True if L3.
+   * @public
+   */
   isTypeLayer3() {
-    // network type check
     const nwL3TypeKey = 'ietf-l3-unicast-topology:l3-unicast-topology' // alias
     return this.networkTypes.hasType(nwL3TypeKey)
   }
 
+  /**
+   * Check network type is L2.
+   * @returns {Boolean} True if L2.
+   * @public
+   */
   isTypeLayer2() {
-    // network type check
     const nwL2TypeKey = 'ietf-l2-topology:l2-network' // alias
     return this.networkTypes.hasType(nwL2TypeKey)
   }
 }
+
+export default Network

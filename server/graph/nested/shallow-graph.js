@@ -1,6 +1,18 @@
 /**
  * @file Definition of shallow nested graph.
  */
+/**
+ * Abstract type as only nested graph node.
+ * @typedef {
+ *   ShallowNestedGraphNode|DeepNestedGraphNode|AggregatedNestedGraphNode
+ * } NestedGraphNode
+ */
+/**
+ * @typedef {NestedGraphNode} NestedGraphNodeData
+ */
+/**
+ * @typedef {NestedGraphLink} NestedGraphLinkData
+ */
 
 import NestedGraphConstants from './constants'
 import GridOperator from './grid-operator'
@@ -13,13 +25,13 @@ import NestedGraphLink from './link'
  */
 class ShallowNestedGraph extends NestedGraphConstants {
   /**
-   * @param {TopologyGraphData} graphData - Graph data for topology view.
+   * @param {TopologyGraphsData} graphData - Graph data for topology view.
    * @param {LayoutData} layoutData - Layout data.
    * @param {boolean} reverse - Flag for top/bottom view selection.
    */
   constructor(graphData, layoutData, reverse) {
     super()
-    /** @type {TopologyGraphData} */
+    /** @type {TopologyGraphsData} */
     this.graphData = graphData
     /** @type {LayoutData} */
     this.layoutData = layoutData
@@ -76,7 +88,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Set nodes using callback.
-   * @param {Object} graphData - Graph data.
+   * @param {TopologyGraphsData} graphData - Graph data.
    * @param {function} generateGraphNodeCallback - Callback to generate a node.
    * @protected
    */
@@ -136,7 +148,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
   /**
    * Find a node by path.
    * @param path
-   * @returns {ShallowNestedGraphNode} Found node.
+   * @returns {NestedGraphNode} Found node.
    */
   findNodeByPath(path) {
     return this.nodes.find(d => d.path === path)
@@ -145,7 +157,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
   /**
    * Map node paths to node objects.
    * @param {Array<string>} paths - Paths.
-   * @returns {Array<ShallowNestedGraphNode>} Node objects.
+   * @returns {Array<NestedGraphNode>} Node objects.
    */
   mapPathsToNodes(paths) {
     return paths.map(path => this.findNodeByPath(path))
@@ -167,7 +179,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get paths of child nodes which has only one parent.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @returns {Array<string>} Paths (of single-parent child nodes).
    * @private
    */
@@ -180,7 +192,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Check node is leaf. (It does not have any children.)
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @returns {boolean} True if node is leaf.
    * @protected
    */
@@ -193,7 +205,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Node can be assumed as leaf.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {number} layerOrder - Order of layer. (for inherited-class)
    * @returns {boolean} True the node can be assumed as leaf.
    * @protected
@@ -223,7 +235,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate Node Width/Height as leaf node.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @returns {NodeWH} Node Width/Height
@@ -242,7 +254,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate width/height of children.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @returns {Array<NodeWH>} - Width/Height list of target node children.
@@ -262,7 +274,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate width/height of sub-root (not root and not leaf) node.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @param {Array<NodeWH>} childrenWHList - Width/Height list.
@@ -287,7 +299,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate node position.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @returns {NodeWH} Width/Height of target node.
@@ -327,7 +339,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get child node paths to calculate position.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {number} layerOrder - Order of layer.
    * @returns {Array<string>} Paths of children.
    * @protected
@@ -338,9 +350,9 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Find a child node from target node
-   * @param {ShallowNestedGraphNode} parentNode - Target node.
+   * @param {NestedGraphNode} parentNode - Target node.
    * @param {string} childNodePath - Path of child node.
-   * @returns {ShallowNestedGraphNode} - Found child node.
+   * @returns {NestedGraphNode} - Found child node.
    * @protected
    */
   childNodeFrom(parentNode, childNodePath) {
@@ -349,7 +361,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate position of child nodes.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @returns {Array<NodeWH>} Width/Height list of children.
@@ -384,7 +396,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get width of term-points.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @returns {number} Width of term-points.
    * @private
    */
@@ -406,7 +418,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get width of child nodes.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {Array<NodeWH>} childrenWHList - Width/Height of children.
    * @returns {number} Width of children.
    * @private
@@ -436,7 +448,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate width/height of sub-root node.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {Array<NodeWH>} childrenWHList - Width/Height lists of children.
    * @param {number} layerOrder - Order of layer.
@@ -457,7 +469,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate width/height of leaf node.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @returns {NodeWH}
@@ -479,7 +491,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Calculate position of term-points.
-   * @param {ShallowNestedGraphNode} node - Target node.
+   * @param {NestedGraphNode} node - Target node.
    * @param {CoordinatePosition} basePosition - Origin of shape.
    * @param {number} layerOrder - Order of layer.
    * @private
@@ -495,7 +507,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get operative nodes.
-   * @returns {Array<ShallowNestedGraphNode>} Operative nodes.
+   * @returns {Array<NestedGraphNode>} Operative nodes.
    * @private
    */
   _operativeNodes() {
@@ -504,7 +516,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get inoperative nodes.
-   * @returns {Array<ShallowNestedGraphNode>} Inoperative nodes.
+   * @returns {Array<NestedGraphNode>} Inoperative nodes.
    * @private
    */
   _inoperativeNodes() {
@@ -513,7 +525,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Get links between operative nodes.
-   * @param {Array<ShallowNestedGraphNode>} operativeNodes - Operative nodes.
+   * @param {Array<NestedGraphNode>} operativeNodes - Operative nodes.
    * @returns {Array<NestedGraphLink>} Operative links.
    * @private
    */
@@ -523,8 +535,8 @@ class ShallowNestedGraph extends NestedGraphConstants {
 
   /**
    * Make operative support link.
-   * @param {Array<ShallowNestedGraphNode>} operativeNodes - Operative nodes.
-   * @returns {Array<SupportTpLink>}
+   * @param {Array<NestedGraphNode>} operativeNodes - Operative nodes.
+   * @returns {Array<NestedGraphLinkData>}
    * @private
    */
   _makeSupportTpLinks(operativeNodes) {
@@ -537,9 +549,6 @@ class ShallowNestedGraph extends NestedGraphConstants {
           continue
         }
         const name = `${tp.linkPath()},${childTp.linkPath()}`
-        /**
-         * @typedef {Object} SupportTpLink
-         */
         supportTpLinks.push({
           name,
           path: `${tp.layer()},${childTp.layer()}__${name}`,
@@ -554,7 +563,7 @@ class ShallowNestedGraph extends NestedGraphConstants {
   }
 
   /**
-   * Convert graph to graph data object.
+   * Convert to nested graph data.
    * @returns {NestedGraphData} Graph data of shallow graph.
    * @public
    */
@@ -565,14 +574,10 @@ class ShallowNestedGraph extends NestedGraphConstants {
       return a.layerOrder > b.layerOrder ? 1 : -1
     }
     /**
-     * Data object of node.
-     * @typedef {DeepNestedGraphNode|AggregateGraphNode} NestedGraphNode
-     */
-    /**
      * @typedef {Object} NestedGraphData
-     * @prop {Array<NestedGraphNode>} nodes - Nodes. (operative)
-     * @prop {Array<NestedGraphNode>} inoperativeNodes - Nodes. (inoperative)
-     * @prop {Array<NestedGraphLink>} links - Links. (connecting between operative nodes)
+     * @prop {Array<NestedGraphNodeData>} nodes - Nodes. (operative)
+     * @prop {Array<NestedGraphNodeData>} inoperativeNodes - Nodes. (inoperative)
+     * @prop {Array<NestedGraphLinkData>} links - Links. (connecting between operative nodes)
      * @prop {GridPositions} grid - Grid positions.
      */
     return {

@@ -4,14 +4,14 @@
 
 import fs from 'fs'
 import { promisify } from 'util'
-import convertTopologyGraphData from '../graph/topo-graph/converter'
+import toTopologyGraphsData from '../graph/topo-graph/converter'
 
 const readFile = promisify(fs.readFile)
 
 /**
  * RFC8345 Graph data (topology data) converter with data-cache.
  */
-class CacheTopologyGraphConverter {
+class CacheRfcTopologyDataConverter {
   /**
    * @param {string} modelDir - Directory path of model files.
    * @param {string} cacheDir - Directory path to save cache.
@@ -50,23 +50,23 @@ class CacheTopologyGraphConverter {
 
   /**
    * Read converted topology data from cache file.
-   * @returns {Promise<Object>} Converted topology data object from cache.
+   * @returns {Promise<TopologyGraphsData>} Converted topology data object from cache.
    * @private
    */
-  async _readTopologyDataFromCacheJSON() {
+  async _readTopologyGraphDataFromCacheJSON() {
     console.log('use cache: ', this._cacheJsonPath)
-    const jsonString = await readFile(this._cacheJsonPath, 'utf8')
-    return JSON.parse(jsonString)
+    const buffer = await readFile(this._cacheJsonPath, 'utf8')
+    return JSON.parse(buffer.toString())
   }
 
   /**
    * Read topology data from file.
-   * @returns {Promise<Object>} Topology data object from file.
+   * @returns {Promise<RfcTopologyData>} Topology data object from file.
    * @private
    */
-  async _readTopologyDataFromJSON() {
-    const jsonString = await readFile(this._jsonPath, 'utf8')
-    return JSON.parse(jsonString)
+  async _readRfcTopologyDataFromJSON() {
+    const buffer = await readFile(this._jsonPath, 'utf8')
+    return JSON.parse(buffer.toString())
   }
 
   /**
@@ -89,7 +89,7 @@ class CacheTopologyGraphConverter {
    * @param {string} jsonName - File name of topology data.
    * @private
    */
-  _updateStatsOfTopoJSON(jsonName) {
+  _updateStatsOfTopologyJSON(jsonName) {
     /**
      * Target topology data file
      * @type {string}
@@ -136,24 +136,24 @@ class CacheTopologyGraphConverter {
   /**
    * Convert to data object
    * @param {string} jsonName - File name of topology data.
-   * @returns {Promise<Object>} Converted topology data object.
+   * @returns {Promise<TopologyGraphsData>} Converted topology data object.
    * @public
    */
-  async toData(jsonName) {
-    this._updateStatsOfTopoJSON(jsonName)
+  async toTopologyGraphsData(jsonName) {
+    this._updateStatsOfTopologyJSON(jsonName)
     console.log('Requested: ', this._jsonPath)
 
     if (this._foundOperativeCache()) {
-      return this._readTopologyDataFromCacheJSON()
+      return this._readTopologyGraphDataFromCacheJSON()
     } else {
       // the json file was changed.
       this._updateCacheTimeStamp()
-      const graphDataFromJSON = await this._readTopologyDataFromJSON()
-      const graphData = await convertTopologyGraphData(graphDataFromJSON)
-      this._writeCache(JSON.stringify(graphData))
-      return graphData
+      const rfcTopologyData = await this._readRfcTopologyDataFromJSON()
+      const topologyGraphsData = await toTopologyGraphsData(rfcTopologyData)
+      this._writeCache(JSON.stringify(topologyGraphsData))
+      return topologyGraphsData
     }
   }
 }
 
-export default CacheTopologyGraphConverter
+export default CacheRfcTopologyDataConverter

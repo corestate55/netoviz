@@ -106,7 +106,11 @@ class GridOperator {
    */
   _ordinal2coordinate(i, j) {
     // TODO: range error check
-    /** @typedef {{x: number, y: number}} CoordinatePosition */
+    /**
+     * @typedef {Object} CoordinatePosition
+     * @prop {number} x - X-position.
+     * @prop {number} y - Y-posotion.
+     */
     return { x: this.xGrids[i], y: this.yGrids[j] }
   }
 
@@ -123,7 +127,11 @@ class GridOperator {
     if (this.currentX === 0) {
       this.currentY = (j + 1) % this.yGrids.length
     }
-    /** @typedef {{i: number, j: number}} OrdinalPosition */
+    /**
+     * @typedef {Object} OrdinalPosition
+     * @prop {number} i - Ordinal number for x-grid.
+     * @prop {number} j - Ordinal number for y-grid.
+     */
     return { i, j } // current
   }
 
@@ -148,7 +156,9 @@ class GridOperator {
    */
   toData() {
     /**
-     * @typedef {{x: Array<number>, y: Array<number>}} GridPositions
+     * @typedef {Object} GridPositions
+     * @prop {Array<number>} x - Positions of x-axises.
+     * @prop {Array<number>} y - Positions of y-axises.
      */
     return { x: this.xGrids, y: this.yGrids }
   }

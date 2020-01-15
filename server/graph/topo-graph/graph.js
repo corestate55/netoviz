@@ -1,10 +1,28 @@
 'use strict'
+/**
+ * @file Definition of graph class for topology diagram.
+ */
 
-export default class Graph {
-  constructor(nw) {
-    this.name = nw.name
-    this.nodes = nw.makeGraphNodes()
-    this.links = nw.makeGraphLinks()
-    this.diffState = nw.diffState
+/**
+ * Graph for topology diagram.
+ */
+class TopologyGraph {
+  /**
+   * @typedef {TopologyGraph} TopologyGraphData
+   */
+  /**
+   * @param {Network} network
+   */
+  constructor(network) {
+    /** @type {string} */
+    this.name = network.name
+    /** @type {Array<TopologyGraphNode>} */
+    this.nodes = network.makeGraphNodes()
+    /** @type {Array<TopologyGraphLink>} */
+    this.links = network.makeGraphLinks()
+    /** @type {DiffState} */
+    this.diffState = network.diffState
   }
 }
+
+export default TopologyGraph

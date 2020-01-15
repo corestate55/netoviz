@@ -3,7 +3,7 @@
  */
 
 import DeepNestedGraph from './deep-graph'
-import AggregateGraphNode from './aggregate-node'
+import AggregatedNestedGraphNode from './aggregate-node'
 
 /**
  * Deep nested graph with node aggregation.
@@ -15,7 +15,7 @@ class AggregatedGraph extends DeepNestedGraph {
    * @param {DeepNestedGraphNode} targetNode - Target node.
    * @param {Array<DeepNestedGraphNode>} childNodes - To be replaced nodes.
    *     (children of target)
-   * @param {AggregateGraphNode} aggregatedNode - Replacement. (aggregated node)
+   * @param {AggregatedNestedGraphNode} aggregatedNode - Replacement. (aggregated node)
    * @private
    */
   _replaceChildrenByAggregatedNode(targetNode, childNodes, aggregatedNode) {
@@ -49,7 +49,7 @@ class AggregatedGraph extends DeepNestedGraph {
    * @param {DeepNestedGraphNode} targetNode - Target node.
    * @param {Array<DeepNestedGraphNode>} childNodes - Children to be aggregated.
    * @param {CombinedClassifier} combinedClassifier - Classifier
-   * @returns {AggregateGraphNode} Aggregated Node
+   * @returns {AggregatedNestedGraphNode} Aggregated Node
    * @private
    */
   _makeAggregateNode(targetNode, childNodes, combinedClassifier) {
@@ -58,6 +58,7 @@ class AggregatedGraph extends DeepNestedGraph {
       // pseudo FamilyRelation instance (omit .degree)
       return family ? { relation: family } : null
     }
+    /** @type {TopologyGraphNodeData} */
     const nodeData = {
       type: 'node',
       name,
@@ -72,7 +73,7 @@ class AggregatedGraph extends DeepNestedGraph {
         pair: {}
       }
     }
-    const aggregatedNode = new AggregateGraphNode(
+    const aggregatedNode = new AggregatedNestedGraphNode(
       nodeData,
       this.reverse,
       childNodes
@@ -248,9 +249,7 @@ class AggregatedGraph extends DeepNestedGraph {
       return childNodePaths
     }
 
-    const childNodes = /** @type {Array<DeepNestedGraphNode>} */ this.mapPathsToNodes(
-      childNodePaths
-    )
+    const childNodes = this.mapPathsToNodes(childNodePaths)
     const combinedClassifiers = this._makeCombinedClassifiers(childNodes)
     const aggregatedNodes = []
     let passNodes = []

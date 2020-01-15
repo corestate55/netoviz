@@ -7,6 +7,17 @@
  */
 class NestLayout {
   /**
+   * @typedef {Object} ViewLayoutData
+   * @prop {GridPositions|{}} grid - Grid positions.
+   * @prop {Object|{}} layout - Root-node-path and {@link OrdinalPosition} dictionary.
+   * @see {@link GridOperator}
+   */
+  /**
+   * @typedef {Object} LayoutData
+   * @prop {ViewLayoutData} standard - Top (standard) view layout data.
+   * @prop {ViewLayoutData} reverse - Bottom view layout data.
+   */
+  /**
    * @param {boolean} reverse - Flag for top/bottom view selection.
    * @param {LayoutData} layoutData - Layout data.
    * @see {@link TopologyDataAPI}
@@ -24,10 +35,6 @@ class NestLayout {
    * @public
    */
   toData() {
-    /**
-     * @typedef {{layout: {Object}, grid: {Object}}} ViewLayoutData
-     * LayoutData = { reverse: ViewLayoutData, standard: ViewLayoutData}
-     */
     if (this.layoutData) {
       if (this.reverse && 'reverse' in this.layoutData) {
         return this.layoutData.reverse

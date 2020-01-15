@@ -10,7 +10,7 @@ import AggregatedGraph from './aggregate-graph'
  * @param {NestedGraphQuery} graphQuery - Dictionary of get request properties.
  * @returns {NestedGraphData} Graph data for nested view.
  */
-const convertNestedGraphData = graphQuery => {
+const toNestedGraphData = graphQuery => {
   const nestedGraph = graphQuery.aggregate
     ? new AggregatedGraph(graphQuery)
     : new DeepNestedGraph(graphQuery)
@@ -18,4 +18,4 @@ const convertNestedGraphData = graphQuery => {
   return nestedGraph.toData()
 }
 
-export default convertNestedGraphData
+export default toNestedGraphData

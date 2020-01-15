@@ -8,7 +8,7 @@
  */
 class ShallowNestedGraphNode {
   /**
-   * @param {Object} nodeData - Node data.
+   * @param {TopologyGraphNodeData} nodeData - Node data.
    * @param {boolean} reverse - Flag for top/bottom view selection.
    */
   constructor(nodeData, reverse) {
@@ -27,7 +27,7 @@ class ShallowNestedGraphNode {
 
     /** @type {Object} */
     this.attribute = nodeData.attribute
-    /** @type {Object} */
+    /** @type {DiffState} */
     this.diffState = nodeData.diffState
     /** @type {number} */
     this.layerOrder = -1
@@ -35,7 +35,7 @@ class ShallowNestedGraphNode {
 
   /**
    * Set family (parents/children) according to `reverse` flag.
-   * @param {Object} nodeData - Node data.
+   * @param {TopologyGraphNodeData} nodeData - Node data.
    * @param reverse - Flag for top/bottom view selection.
    * @private
    */
