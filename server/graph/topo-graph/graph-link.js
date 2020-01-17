@@ -23,7 +23,8 @@ class TopologyGraphLink {
    * @typedef {LinkData|TopologyGraphLink} TopologyGraphLinkData
    */
   /**
-   * @param {LinkData} linkData
+   * @param {TopologyGraphLinkData} linkData - Link data.
+   *     (in inherited class, it will be {@link LinkData} or {@link TopologyGraphLink}.
    */
   constructor(linkData) {
     /** @type {string} */

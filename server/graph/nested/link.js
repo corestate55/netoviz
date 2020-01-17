@@ -2,34 +2,13 @@
  * @file Definition of Link for nested graph.
  */
 
+import TopologyGraphLink from '../topo-graph/graph-link'
+
 /**
  * Link for nested graph.
+ * @extends {TopologyGraphLink}
  */
-class NestedGraphLink {
-  /**
-   * @param {TopologyGraphLinkData} linkData - Link data.
-   */
-  constructor(linkData) {
-    /** @type {string} */
-    this.name = linkData.name
-    /** @type {string} */
-    this.path = linkData.path
-    /** @type {string} */
-    this.type = linkData.type
-    /** @type {string} */
-    this.sourcePath = linkData.sourcePath
-    /** @type {string} */
-    this.targetPath = linkData.targetPath
-    /** @type {number} */
-    this.sourceId = linkData.sourceId
-    /** @type {number} */
-    this.targetId = linkData.targetId
-    /** @type {Object} */
-    this.attribute = linkData.attribute
-    /** @type {Object} */
-    this.diffState = linkData.diffState
-  }
-
+class NestedGraphLink extends TopologyGraphLink {
   /**
    * Check link is inter specified nodes.
    * @param {Array<ShallowNestedGraphNode>} nodes - Nodes.
