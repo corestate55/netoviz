@@ -1,15 +1,39 @@
 'use strict'
+/**
+ * @file Attribute class for layer3 node of topology model.
+ */
 
 import TopoBaseContainer from './topo-base'
 
+/**
+ * L3 prefix class.
+ * @extends {TopoBaseContainer}
+ */
 class L3Prefix extends TopoBaseContainer {
+  /**
+   * @typedef {Object} RfcL3NodePrefixData
+   * @prop {string} prefix
+   * @prop {number} metric
+   * @prop {Array<string>} flag
+   */
+  /**
+   * @param {RfcL3NodePrefixData|L3Prefix} data - Prefix data for L3 node.
+   */
   constructor(data) {
     super(data)
+    /** @type {string} */
     this.prefix = data.prefix || ''
+    /** @type {number} */
     this.metric = data.metric || 100
+    /** @type {Array<string>} */
     this.flag = data.flag || [] // array
   }
 
+  /**
+   * Convert attribute to html string.
+   * @returns {string} HTML string of attribute.
+   * @public
+   */
   toHtml() {
     return `
 <span class="attr">Prefix:</span> ${this.prefix},
@@ -19,20 +43,45 @@ class L3Prefix extends TopoBaseContainer {
   }
 }
 
-export default class L3NodeAttribute extends TopoBaseContainer {
+/**
+ * Attribute class for layer3 node.
+ * @extends {TopoBaseContainer}
+ */
+class L3NodeAttribute extends TopoBaseContainer {
+  /**
+   * @typedef {Object} RfcL3NodeAttributeData
+   * @prop {string} name
+   * @prop {Array<string>} flag
+   * @prop {Array<string>} router-id
+   * @prop {Array<L3Prefix>} prefix
+   */
+  /**
+   * @param {RfcL3NodeAttributeData|L3NodeAttribute} data - L3 node attribute data.
+   */
   constructor(data) {
     super(data)
+    /** @type {string} */
     this.class = 'L3NodeAttribute'
+    /** @type {string} */
     this.name = data.name || ''
-    this.flag = data.flag || ''
-    this.routerId = this.selectRouterId(data)
+    /** @type {Array<string>} */
+    this.flag = data.flag || []
+    /** @type {Array<string>} */
+    this.routerId = this._selectRouterId(data)
+    /** @type {Array<L3Prefix>} */
     this.prefix = [] // array
     if (data.prefix) {
       this.prefix = data.prefix.map(d => new L3Prefix(d))
     }
   }
 
-  selectRouterId(data) {
+  /**
+   * Get router-id of layer3 node attribute.
+   * @param {RfcL3NodeAttributeData|L3NodeAttribute} data - L3 node attribute data.
+   * @returns {Array<string>} List of router-id.
+   * @private
+   */
+  _selectRouterId(data) {
     if ('router-id' in data) {
       return data['router-id'] // RFC8345-json
     } else if ('routerId' in data) {
@@ -41,6 +90,11 @@ export default class L3NodeAttribute extends TopoBaseContainer {
     return [] // array
   }
 
+  /**
+   * Convert attribute to html string.
+   * @returns {string} HTML string of attribute.
+   * @public
+   */
   toHtml() {
     const prefixList = this.prefix.map(d => {
       return ['<li>', d.toHtml(), '</li>'].join('')
@@ -56,3 +110,5 @@ export default class L3NodeAttribute extends TopoBaseContainer {
 `
   }
 }
+
+export default L3NodeAttribute

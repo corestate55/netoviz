@@ -23,9 +23,13 @@ class SupportingTermPoint extends TopoBaseContainer {
    */
   constructor(data) {
     super(data)
+    /** @type {string} */
     this.networkRef = data['network-ref']
+    /** @type {string} */
     this.nodeRef = data['node-ref']
+    /** @type {string} */
     this.tpRef = data['tp-ref']
+    /** @type {string} */
     this.refPath = [this.networkRef, this.nodeRef, this.tpRef].join('__')
   }
 }

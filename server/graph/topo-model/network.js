@@ -152,7 +152,7 @@ class Network extends TopoBaseContainer {
    * @private
    */
   _constructNodes(data) {
-    /** @type {Array<Node>} */
+    /** @type {Array<Node|L2Node|L3Node>} */
     this.nodes = []
     if (data.node) {
       this.nodes = data.node.map((d, i) => {

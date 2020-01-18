@@ -61,7 +61,7 @@ class Node extends TopoBaseContainer {
     /** @type {Object} */
     this.attribute = {} // for extension
     this._constructSupportingNodes(data)
-    this._constructTermPts(data)
+    this._constructTermPoints(data)
   }
 
   /**
@@ -69,8 +69,8 @@ class Node extends TopoBaseContainer {
    * @param {RfcNodeData} data - Node data.
    * @private
    */
-  _constructTermPts(data) {
-    /** @type {Array<TermPoint>} */
+  _constructTermPoints(data) {
+    /** @type {Array<TermPoint|L2TermPoint|L3TermPoint>} */
     this.termPoints = []
     const tpKey = 'ietf-network-topology:termination-point' // alias
     if (data[tpKey]) {
@@ -110,6 +110,7 @@ class Node extends TopoBaseContainer {
    * Find term-point in this node by path.
    * @param {string} path - Path of term-point.
    * @returns {TermPoint}
+   * @public
    */
   findTpByPath(path) {
     return this.termPoints.find(d => d.path === path)
@@ -127,6 +128,7 @@ class Node extends TopoBaseContainer {
   /**
    * Convert Node to TopologyGraphNode (node-type node).
    * @returns {TopologyGraphNode}
+   * @public
    */
   graphNode() {
     return new TopologyGraphNode({

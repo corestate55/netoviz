@@ -7,6 +7,7 @@ import BaseContainer from '../common/base'
 
 /**
  * Base class of all topology model components.
+ * (Used for common operation to get `diff`.)
  * @extends {BaseContainer}
  */
 class TopoBaseContainer extends BaseContainer {

@@ -2,7 +2,7 @@
  * @file Definition of aggregated Node.
  */
 
-import AggregateNodeAttribute from '../topo-model/node-aggr-attr'
+import AggregatedNodeAttribute from '../topo-model/node-aggr-attr'
 import DeepNestedGraphNode from './deep-node'
 
 /**
@@ -27,8 +27,8 @@ class AggregatedNestedGraphNode extends DeepNestedGraphNode {
    * @private
    */
   _aggregateWith(aggregateNodes) {
-    /** @type {AggregateNodeAttribute} */
-    this.attribute = new AggregateNodeAttribute({
+    /** @type {AggregatedNodeAttribute} */
+    this.attribute = new AggregatedNodeAttribute({
       aggregates: aggregateNodes.map(node => ({
         name: node.name,
         path: node.path

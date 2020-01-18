@@ -7,15 +7,27 @@ import TopoBaseContainer from './topo-base'
 
 /**
  * Node attribute for aggregated node.
+ * @see {AggregatedNestedGraphNode}
  * @extends {TopoBaseContainer}
  */
-class AggregateNodeAttribute extends TopoBaseContainer {
+class AggregatedNodeAttribute extends TopoBaseContainer {
   /**
-   * @param {Object} data - Attribute data object.
+   * @typedef {Object} AggregatedNodePath
+   * @prop {string} name
+   * @prop {string} path
+   */
+  /**
+   * @typedef {Object} AggregatedNodeAttributeData
+   * @prop {Array<AggregatedNodePath>} aggregates
+   */
+  /**
+   * @param {AggregatedNodeAttributeData} data - Aggregated node attribute data.
    */
   constructor(data) {
     super(data)
-    this.class = 'AggregateNodeAttribute'
+    /** @type {string} */
+    this.class = 'AggregatedNodeAttribute'
+    /** @type {Array<AggregatedNodePath>} */
     this.aggregates = data.aggregates
   }
 
@@ -35,12 +47,13 @@ class AggregateNodeAttribute extends TopoBaseContainer {
   }
 
   /**
-   * Get HTML string of this attribute.
-   * @returns {string} HTML string.
+   * Convert attribute to html string.
+   * @returns {string} HTML string of attribute.
+   * @public
    */
   toHtml() {
     return `<ul> ${this._aggregatesNodeStr()}</ul>`
   }
 }
 
-export default AggregateNodeAttribute
+export default AggregatedNodeAttribute
