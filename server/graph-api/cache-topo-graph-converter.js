@@ -4,7 +4,7 @@
 
 import fs from 'fs'
 import { promisify } from 'util'
-import toTopologyGraphsData from '../graph/topo-graph/converter'
+import toForceSimulationTopologyData from '../graph/force-simulation/converter'
 
 const readFile = promisify(fs.readFile)
 
@@ -50,10 +50,10 @@ class CacheRfcTopologyDataConverter {
 
   /**
    * Read converted topology data from cache file.
-   * @returns {Promise<TopologyGraphsData>} Converted topology data object from cache.
+   * @returns {Promise<ForceSimulationTopologyData>} Converted topology data object from cache.
    * @private
    */
-  async _readTopologyGraphDataFromCacheJSON() {
+  async _readForceSimulationTopologyDataFromCacheJSON() {
     console.log('use cache: ', this._cacheJsonPath)
     const buffer = await readFile(this._cacheJsonPath, 'utf8')
     return JSON.parse(buffer.toString())
@@ -136,22 +136,22 @@ class CacheRfcTopologyDataConverter {
   /**
    * Convert to data object
    * @param {string} jsonName - File name of topology data.
-   * @returns {Promise<TopologyGraphsData>} Converted topology data object.
+   * @returns {Promise<ForceSimulationTopologyData>} Converted topology data object.
    * @public
    */
-  async toTopologyGraphsData(jsonName) {
+  async toForceSimulationTopologyData(jsonName) {
     this._updateStatsOfTopologyJSON(jsonName)
     console.log('Requested: ', this._jsonPath)
 
     if (this._foundOperativeCache()) {
-      return this._readTopologyGraphDataFromCacheJSON()
+      return this._readForceSimulationTopologyDataFromCacheJSON()
     } else {
       // the json file was changed.
       this._updateCacheTimeStamp()
       const rfcTopologyData = await this._readRfcTopologyDataFromJSON()
-      const topologyGraphsData = await toTopologyGraphsData(rfcTopologyData)
-      this._writeCache(JSON.stringify(topologyGraphsData))
-      return topologyGraphsData
+      const topologyData = await toForceSimulationTopologyData(rfcTopologyData)
+      this._writeCache(JSON.stringify(topologyData))
+      return topologyData
     }
   }
 }

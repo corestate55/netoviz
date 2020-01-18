@@ -2,16 +2,16 @@
  * @file Definition of Node for deep nested graph.
  */
 
-import ShallowNestedGraphNode from './shallow-node'
+import ShallowNestedNode from './shallow-node'
 
 /**
  * Node for deep nested graph. (enable node splitting)
- * @extends {ShallowNestedGraphNode}
- * @see {@link DeepNestedGraph}
+ * @extends {ShallowNestedNode}
+ * @see {@link DeepNestedTopology}
  */
-class DeepNestedGraphNode extends ShallowNestedGraphNode {
+class DeepNestedNode extends ShallowNestedNode {
   /**
-   * @param {TopologyGraphNodeData|DeepNestedGraphNode} nodeData - Node data.
+   * @param {ForceSimulationNodeData|DeepNestedNode} nodeData - Node data.
    * @param {boolean} reverse - Flag for top/bottom view selection.
    */
   constructor(nodeData, reverse) {
@@ -38,18 +38,18 @@ class DeepNestedGraphNode extends ShallowNestedGraphNode {
 
   /**
    * Duplicate myself. (node)
-   * @returns {DeepNestedGraphNode} - A Copy of myself (simple copy)
+   * @returns {DeepNestedNode} - A Copy of myself (simple copy)
    * @private
    */
   _duplicate() {
     this.split++
-    return new DeepNestedGraphNode(this, this.reverse)
+    return new DeepNestedNode(this, this.reverse)
   }
 
   /**
    * Split myself. (used for child node)
    * @param {string} parentPath - Path of parent.
-   * @returns {DeepNestedGraphNode} - A Copy of myself (duplicated node).
+   * @returns {DeepNestedNode} - A Copy of myself (duplicated node).
    * @public
    */
   splitNodeByParent(parentPath) {
@@ -65,4 +65,4 @@ class DeepNestedGraphNode extends ShallowNestedGraphNode {
   }
 }
 
-export default DeepNestedGraphNode
+export default DeepNestedNode

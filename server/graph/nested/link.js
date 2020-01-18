@@ -2,16 +2,16 @@
  * @file Definition of Link for nested graph.
  */
 
-import TopologyGraphLink from '../topo-graph/graph-link'
+import ForceSimulationLink from '../force-simulation/link'
 
 /**
  * Link for nested graph.
- * @extends {TopologyGraphLink}
+ * @extends {ForceSimulationLink}
  */
-class NestedGraphLink extends TopologyGraphLink {
+class NestedLink extends ForceSimulationLink {
   /**
    * Check link is inter specified nodes.
-   * @param {Array<ShallowNestedGraphNode>} nodes - Nodes.
+   * @param {Array<ShallowNestedNode>} nodes - Nodes.
    * @returns {boolean} True if this link connects specified nodes.
    */
   availableIn(nodes) {
@@ -24,4 +24,4 @@ class NestedGraphLink extends TopologyGraphLink {
   }
 }
 
-export default NestedGraphLink
+export default NestedLink

@@ -1,23 +1,28 @@
 /**
  * @file Definition of dependency graph node.
  */
-import DepGraphNodeBase from './base'
+
+import ForceSimulationNode from '../force-simulation/node'
+import DependencyConstants from './constants'
 
 /**
  * Dependency graph node. (node-type node)
- * @extends {DepGraphNodeBase}
+ * @extends {ForceSimulationNode}
  */
-class DepGraphNode extends DepGraphNodeBase {
+class DependencyNode extends ForceSimulationNode {
   /**
-   * @param {TopologyGraphNodeData} graphData - Node data.
-   * @param tpListCB
+   * @param {ForceSimulationNodeData} nodeData - Node data.
+   * @param {function} ownTermPointsCallback - Callback function
+   *     to get term-points that this node contains.
    */
-  constructor(graphData, tpListCB) {
-    super(graphData)
+  constructor(nodeData, ownTermPointsCallback) {
+    super(nodeData)
+    /** @type {DependencyConstants} */
+    this.c = new DependencyConstants()
     /** @type {number} */
-    this.number = Math.floor((graphData.id % 10000) / 100)
-    /** @type {Array} */
-    this.tpList = tpListCB(graphData) // path list of tps in this node
+    this.index = Math.floor((nodeData.id % 10000) / 100)
+    /** @type {Array<ForceSimulationNodeData>} */
+    this.ownTermPoints = ownTermPointsCallback(nodeData) // path list of ps in this node
   }
 
   /**
@@ -26,7 +31,7 @@ class DepGraphNode extends DepGraphNodeBase {
    * @param {number} ny - Y position of node.
    * @public
    */
-  setPos(nx, ny) {
+  setPosition(nx, ny) {
     /** @type {number} */
     this.x = nx
     /** @type {number} */
@@ -39,19 +44,16 @@ class DepGraphNode extends DepGraphNodeBase {
    * @public
    */
   nodeWidth() {
-    const numOfTp = this.tpList.length > 0 ? this.tpList.length : 1 // minimum size
-    return (
-      this.tpXPad1 * 2 + 2 * this.tpR * numOfTp + this.tpXPad2 * (numOfTp - 1)
-    )
+    return this.c.nodeWidth(this.ownTermPoints.length)
   }
 
   /**
-   * Convert to DependencyGraphNodeData.
-   * @returns {DependencyGraphNodeData}
+   * Convert to DependencyNodeData.
+   * @returns {DependencyNodeData}
    */
   toData() {
     /**
-     * @typedef {Object} DependencyGraphNodeData
+     * @typedef {Object} DependencyNodeData
      * @prop {number} number
      * @prop {number} x
      * @prop {number} y
@@ -67,11 +69,11 @@ class DepGraphNode extends DepGraphNodeBase {
      * @prop {DiffState} diffState
      */
     return {
-      number: this.number,
+      number: this.index,
       x: this.x,
       y: this.y,
       width: this.nodeWidth(),
-      height: this.nodeHeight(),
+      height: this.c.nodeHeight(),
       name: this.name,
       path: this.path,
       type: this.type,
@@ -84,4 +86,4 @@ class DepGraphNode extends DepGraphNodeBase {
   }
 }
 
-export default DepGraphNode
+export default DependencyNode

@@ -4,11 +4,11 @@
 
 /**
  * Node for shallow nested graph.
- * @see {@link ShallowNestedGraph}
+ * @see {@link ShallowNestedTopology}
  */
-class ShallowNestedGraphNode {
+class ShallowNestedNode {
   /**
-   * @param {TopologyGraphNodeData} nodeData - Node data.
+   * @param {ForceSimulationNodeData} nodeData - Node data.
    * @param {boolean} reverse - Flag for top/bottom view selection.
    */
   constructor(nodeData, reverse) {
@@ -35,7 +35,7 @@ class ShallowNestedGraphNode {
 
   /**
    * Set family (parents/children) according to `reverse` flag.
-   * @param {TopologyGraphNodeData} nodeData - Node data.
+   * @param {ForceSimulationNodeData} nodeData - Node data.
    * @param reverse - Flag for top/bottom view selection.
    * @private
    */
@@ -269,4 +269,4 @@ class ShallowNestedGraphNode {
   }
 }
 
-export default ShallowNestedGraphNode
+export default ShallowNestedNode

@@ -5,7 +5,7 @@
 /**
  * Constants of dependency graph.
  */
-class DepGraphConstants {
+class DependencyConstants {
   constructor() {
     // term-point
     /**
@@ -75,13 +75,26 @@ class DepGraphConstants {
   }
 
   /**
+   * Get (calculate) width of node
+   * @param {number} tpLength - Length of term-points in node.
+   * @returns {number} Width of node.
+   * @public
+   */
+  nodeWidth(tpLength) {
+    const length = tpLength > 0 ? tpLength : 1 // minimum size
+    return (
+      this.tpXPad1 * 2 + 2 * this.tpR * length + this.tpXPad2 * (length - 1)
+    )
+  }
+
+  /**
    * Get height of node.
    * @returns {number} Height of node.
-   * @protected
+   * @public
    */
   nodeHeight() {
     return this.tpYPad1 + 2 * this.tpR + this.tpYPad2 // fixed value
   }
 }
 
-export default DepGraphConstants
+export default DependencyConstants

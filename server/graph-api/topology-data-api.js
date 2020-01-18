@@ -11,8 +11,8 @@
 
 import fs from 'fs'
 import { promisify } from 'util'
-import toDependencyGraphData from '../graph/dependency/converter'
-import toNestedGraphData from '../graph/nested/converter'
+import toDependencyTopologyData from '../graph/dependency/converter'
+import toNestedTopologyData from '../graph/nested/converter'
 import CacheRfcTopologyDataConverter from './cache-topo-graph-converter'
 
 const readFile = promisify(fs.readFile)
@@ -79,11 +79,11 @@ class TopologyDataAPI {
   /**
    * Convert topology data to graph data for topology graph.
    * @param {string} jsonName - File name of topology data.
-   * @returns {Promise<TopologyGraphsData>} Graph data object for topology graph.
+   * @returns {Promise<ForceSimulationTopologyData>} Graph data object for topology graph.
    * @private
    */
-  _toTopologyGraphsData(jsonName) {
-    return this.converter.toTopologyGraphsData(jsonName)
+  _toForceSimulationTopologyData(jsonName) {
+    return this.converter.toForceSimulationTopologyData(jsonName)
   }
 
   /**
@@ -148,14 +148,14 @@ class TopologyDataAPI {
    * Convert topology data to graph data for dependency graph.
    * @param {string} jsonName - File name of topology data.
    * @param {Request} req - HTTP request.
-   * @returns {Promise<DependencyGraphData>} Graph data object for dependency graph.
+   * @returns {Promise<DependencyTopologyData>} Graph data object for dependency graph.
    * @private
    */
-  async _toDependencyGraphData(jsonName, req) {
+  async _toDependencyTopologyData(jsonName, req) {
     /**
      * @typedef {Object} DependencyGraphQuery
      * @prop {string} target
-     * @prop {TopologyGraphsData} graphData
+     * @prop {ForceSimulationTopologyData} topologyData
      */
     const queryKeyTypeList = [['target', 'string']]
     const graphQuery = /** @type {DependencyGraphQuery} */ this._makeGraphQuery(
@@ -163,18 +163,20 @@ class TopologyDataAPI {
       req.query,
       queryKeyTypeList
     )
-    graphQuery.graphData = await this._toTopologyGraphsData(jsonName)
-    return toDependencyGraphData(graphQuery)
+    graphQuery.topologyData = await this._toForceSimulationTopologyData(
+      jsonName
+    )
+    return toDependencyTopologyData(graphQuery)
   }
 
   /**
    * Convert topology data to graph data for nested graph.
    * @param {string} jsonName - file name of topology data.
    * @param {Request} req - HTTP request.
-   * @returns {Promise<NestedGraphData>} Graph data object for nested graph.
+   * @returns {Promise<NestedTopologyData>} Graph data object for nested graph.
    * @private
    */
-  async _toNestedGraphData(jsonName, req) {
+  async _toNestedTopologyData(jsonName, req) {
     /**
      * @typedef {Object} NestedGraphQuery
      * @prop {boolean} reverse
@@ -182,7 +184,7 @@ class TopologyDataAPI {
      * @prop {string} target
      * @prop {string} layer
      * @prop {boolean} aggregate
-     * @prop {TopologyGraphsData} graphData
+     * @prop {ForceSimulationTopologyData} topologyData
      * @prop {LayoutData} layoutData
      */
     const queryKeyTypeList = [
@@ -197,9 +199,11 @@ class TopologyDataAPI {
       req.query,
       queryKeyTypeList
     )
-    graphQuery.graphData = await this._toTopologyGraphsData(jsonName)
+    graphQuery.topologyData = await this._toForceSimulationTopologyData(
+      jsonName
+    )
     graphQuery.layoutData = await this._readLayoutJSON(jsonName)
-    return toNestedGraphData(graphQuery)
+    return toNestedTopologyData(graphQuery)
   }
 
   /**
@@ -214,11 +218,11 @@ class TopologyDataAPI {
     const jsonName = req.params.jsonName
 
     if (graphName === 'topology') {
-      return JSON.stringify(await this._toTopologyGraphsData(jsonName))
+      return JSON.stringify(await this._toForceSimulationTopologyData(jsonName))
     } else if (graphName === 'dependency') {
-      return JSON.stringify(await this._toDependencyGraphData(jsonName, req))
+      return JSON.stringify(await this._toDependencyTopologyData(jsonName, req))
     } else if (graphName === 'nested') {
-      return JSON.stringify(await this._toNestedGraphData(jsonName, req))
+      return JSON.stringify(await this._toNestedTopologyData(jsonName, req))
     }
   }
 
