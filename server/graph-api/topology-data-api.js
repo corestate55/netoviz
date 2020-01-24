@@ -77,9 +77,9 @@ class TopologyDataAPI {
   }
 
   /**
-   * Convert topology data to graph data for topology graph.
-   * @param {string} jsonName - File name of topology data.
-   * @returns {Promise<ForceSimulationTopologyData>} Graph data object for topology graph.
+   * Convert rfc-topology data to topology data to draw diagram.
+   * @param {string} jsonName - File name of rfc-topology data.
+   * @returns {Promise<ForceSimulationTopologyData>} topology data for force-simulation diagram.
    * @private
    */
   _toForceSimulationTopologyData(jsonName) {
@@ -145,8 +145,8 @@ class TopologyDataAPI {
   }
 
   /**
-   * Convert topology data to graph data for dependency graph.
-   * @param {string} jsonName - File name of topology data.
+   * Convert rfc-topology data to topology data for dependency diagram.
+   * @param {string} jsonName - File name of rfc-topology data.
    * @param {Request} req - HTTP request.
    * @returns {Promise<DependencyTopologyData>} Graph data object for dependency graph.
    * @private
@@ -170,8 +170,8 @@ class TopologyDataAPI {
   }
 
   /**
-   * Convert topology data to graph data for nested graph.
-   * @param {string} jsonName - file name of topology data.
+   * Convert rfc-topology data to topology data for nested diagram.
+   * @param {string} jsonName - file name of rfc-topology data.
    * @param {Request} req - HTTP request.
    * @returns {Promise<NestedTopologyData>} Graph data object for nested graph.
    * @private
@@ -217,7 +217,7 @@ class TopologyDataAPI {
     const graphName = req.params.graphName
     const jsonName = req.params.jsonName
 
-    if (graphName === 'topology') {
+    if (graphName === 'forceSimulation') {
       return JSON.stringify(await this._toForceSimulationTopologyData(jsonName))
     } else if (graphName === 'dependency') {
       return JSON.stringify(await this._toDependencyTopologyData(jsonName, req))

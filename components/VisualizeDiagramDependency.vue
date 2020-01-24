@@ -16,7 +16,7 @@
     </v-row>
     <v-row v-resize="resizeSVG">
       <v-col>
-        <!-- entry point of d3 graph(s) -->
+        <!-- entry point of d3 diagram(s) -->f
         <div id="visualizer" />
       </v-col>
     </v-row>
@@ -25,7 +25,7 @@
 
 <script>
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
-import DepGraphVisualizer from '~/lib/graph/dependency/visualizer'
+import DependencyDiagramVisualizer from '~/lib/diagram/dependency/visualizer'
 import '~/lib/style/dependency.scss'
 
 export default {
@@ -33,14 +33,14 @@ export default {
   data: () => ({ debug: false }),
   methods: {
     makeVisualizer(width, height) {
-      return new DepGraphVisualizer(width, height)
+      return new DependencyDiagramVisualizer(width, height)
     },
     clearAllHighlight() {
       this.visualizer.clearDependencyLines()
       this.visualizer.clearHighlight()
     },
-    drawJsonModel() {
-      this.visualizer.drawJsonModel(this.modelFile, this.currentAlertRow)
+    drawRfcTopologyData() {
+      this.visualizer.drawRfcTopologyData(this.modelFile, this.currentAlertRow)
     }
   }
 }

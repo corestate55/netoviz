@@ -31,7 +31,7 @@
           label="Base depth"
           type="number"
           min="1"
-          v-on:input="drawJsonModel()"
+          v-on:input="drawRfcTopologyData()"
         />
       </v-col>
       <v-col>
@@ -42,7 +42,7 @@
     </v-row>
     <v-row v-resize="resizeSVG">
       <v-col>
-        <!-- entry point of d3 graph(s) -->
+        <!-- entry point of d3 diagram(s) -->
         <div id="visualizer" />
       </v-col>
     </v-row>
@@ -52,7 +52,7 @@
 <script>
 import { mapMutations } from 'vuex'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
-import NestedGraphVisualizer from '~/lib/graph/nested/visualizer'
+import NestedDiagramVisualizer from '~/lib/diagram/nested/visualizer'
 import '~/lib/style/nested.scss'
 
 export default {
@@ -68,19 +68,19 @@ export default {
   },
   watch: {
     reverse() {
-      this.drawJsonModel()
+      this.drawRfcTopologyData()
     },
     autoFitting() {
-      this.drawJsonModel()
+      this.drawRfcTopologyData()
     },
     aggregation() {
-      this.drawJsonModel()
+      this.drawRfcTopologyData()
     }
   },
   methods: {
     ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer(width, height) {
-      return new NestedGraphVisualizer(width, height)
+      return new NestedDiagramVisualizer(width, height)
     },
     clearAllHighlight() {
       this.visualizer.clearAllAlertHighlight()
@@ -88,8 +88,8 @@ export default {
     afterMakeVisualizer() {
       this.visualizer.setUISideNodeClickHook(this.nodeClickCallback)
     },
-    drawJsonModel() {
-      this.visualizer.drawJsonModel(
+    drawRfcTopologyData() {
+      this.visualizer.drawRfcTopologyData(
         this.modelFile,
         this.currentAlertRow,
         this.reverse,

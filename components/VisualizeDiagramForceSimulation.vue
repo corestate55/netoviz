@@ -3,7 +3,7 @@
     <v-row v-if="debug">
       <v-col>
         <div>
-          visualize diagram topology
+          visualize force-simulation diagram.
           <ul>
             <li>Topology model: {{ modelFile }}</li>
             <li>Whole layers: {{ wholeLayers }}</li>
@@ -17,10 +17,10 @@
         <VisualizeDiagramSelectLayer v-bind:whole-layers="wholeLayers" />
       </v-col>
     </v-row>
-    <!-- DO NOT use resizeSVG() for topology visualizer. -->
+    <!-- DO NOT use resizeSVG() for force-simulation visualizer. -->
     <v-row>
       <v-col>
-        <!-- entry point of d3 graph(s) -->
+        <!-- entry point of d3 diagram(s) -->
         <div id="visualizer" />
       </v-col>
     </v-row>
@@ -30,8 +30,8 @@
 <script>
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import VisualizeDiagramSelectLayer from './VisualizeDiagramSelectLayer'
-import TopoGraphVisualizer from '~/lib/graph/topology/visualizer'
-import '~/lib/style/topology.scss'
+import ForceSimulationDiagramVisualizer from '~/lib/diagram/topology/visualizer'
+import '~/lib/style/force-simulation.scss'
 
 export default {
   components: {
@@ -44,19 +44,19 @@ export default {
   }),
   methods: {
     makeVisualizer(width, height) {
-      return new TopoGraphVisualizer()
+      return new ForceSimulationDiagramVisualizer()
     },
     watchCurrentAlertRow(newRow, oldRow) {
       // only change highlight.
-      // no need to redraw because topo graph draws all object at first.
+      // no need to redraw because force-simulation diagrams draws all elements at first.
       this.highlightByAlert(newRow)
     },
     clearAllHighlight() {
       this.visualizer.clearAllHighlight()
     },
-    drawJsonModel() {
+    drawRfcTopologyData() {
       const getLayerNames = graphs => {
-        // When the visualizer draws topology graph,
+        // When the visualizer draws force-simulation diagram,
         // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
         // so, these setLayerDisplayStyle() could not found target layer container
         // WORKAROUND :
@@ -64,7 +64,7 @@ export default {
         //   to avoid mismatch between UI (layer selector) and Graph.
         this.wholeLayers = graphs.map(layer => layer.name)
       }
-      this.visualizer.drawJsonModel(
+      this.visualizer.drawRfcTopologyData(
         this.modelFile,
         this.currentAlertRow,
         getLayerNames

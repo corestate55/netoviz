@@ -2,24 +2,24 @@ export const state = () => ({
   modelFiles: [],
   visualizers: [
     {
-      text: 'Topology',
-      value: 'topology',
-      label: 'Force-layout topology graph per layer.'
+      text: 'Force-simulation',
+      value: 'forceSimulation',
+      label: 'Force-simulation diagram per layer.'
     },
     {
       text: 'Dependency',
       value: 'dependency',
-      label: 'Dependency graph.'
+      label: 'Dependency diagram.'
     },
     {
       text: 'Dependency2',
       value: 'dependency2',
-      label: 'Dependency graph v2.'
+      label: 'Dependency(v2) diagram.'
     },
     {
       text: 'Nested',
       value: 'nested',
-      label: 'Nested graph.'
+      label: 'Nested diagram.'
     }
   ]
 })

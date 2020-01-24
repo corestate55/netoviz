@@ -5,7 +5,7 @@
         <v-subheader>
           Models
           <template v-if="visualizer">
-            with {{ visualizer }} visualizer
+            with {{ visualizerText }} visualizer
           </template>
         </v-subheader>
         <v-list-item-group>
@@ -47,7 +47,11 @@ export default {
       if (!this.visualizer) {
         return true
       }
-      return this.visualizers.find(v => v.value === this.visualizer)
+      return Boolean(this.findVisualizerByValue(this.visualizer))
+    },
+    visualizerText() {
+      const v = this.findVisualizerByValue(this.visualizer)
+      return v.text
     },
     modelData() {
       return this.modelFiles.map(m => ({
@@ -56,6 +60,11 @@ export default {
           ? `/visualizer/${this.visualizer}/${m.file}`
           : `/model/${m.file}`
       }))
+    }
+  },
+  methods: {
+    findVisualizerByValue() {
+      return this.visualizers.find(v => v.value === this.visualizer)
     }
   }
 }

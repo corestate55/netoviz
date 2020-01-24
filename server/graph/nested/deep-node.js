@@ -7,7 +7,7 @@ import ShallowNestedNode from './shallow-node'
 /**
  * Node for deep nested graph. (enable node splitting)
  * @extends {ShallowNestedNode}
- * @see {@link DeepNestedTopology}
+ * @see {DeepNestedTopology}
  */
 class DeepNestedNode extends ShallowNestedNode {
   /**

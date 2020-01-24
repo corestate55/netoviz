@@ -221,7 +221,7 @@ export default {
         // [layer, host, tp] for term-point highlighting.
         //   if alertHostInput was 'hostA__tpX', it assumes as
         //   {layer: hostA, host: tpX}. 'A__B' format input is used for
-        //   node click drill-down in nested graph.
+        //   node click drill-down in nested diagram.
         return this.alertHostInput.split('__')
       } else if (this.alertHostInputIsLayerHostFormat()) {
         // [layer, host, ''] for node click drill-down

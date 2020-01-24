@@ -4,7 +4,7 @@
 
 /**
  * Node for shallow nested graph.
- * @see {@link ShallowNestedTopology}
+ * @see {ShallowNestedTopology}
  */
 class ShallowNestedNode {
   /**

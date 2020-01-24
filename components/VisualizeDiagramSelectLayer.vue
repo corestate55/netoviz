@@ -29,7 +29,7 @@ export default {
   },
   watch: {
     wholeLayers() {
-      // watch it because it will be set after drawJsonModel()
+      // watch it because it will be set after drawRfcTopologyData()
       // in VisualizeDiagramTopology component (after mounted()).
       this.selectedLayers = this.wholeLayers
     },

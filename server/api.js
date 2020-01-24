@@ -6,11 +6,20 @@ import TopologyDataAPI from './graph-api/topology-data-api'
 import db from './models'
 
 const express = require('express')
+/**
+ * Routing API class of Express server.
+ * ({@link http://expressjs.com/en/guide/routing.html})
+ * @typedef {Object} Router
+ * @prop {function} use
+ * @prop {function} post
+ * @prop {function} get
+ */
+/** @type {Router} */
 const apiRouter = express.Router()
 
 /**
  * API class instance of topology graph.
- * It converts RFC8345 data (from json) for topology-graph data.
+ * It converts RFC8345 data (from json) for topology data.
  * Other graph read it and convert for each graph.
  * @type{TopologyDataAPI}
  */

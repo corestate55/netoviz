@@ -8,7 +8,7 @@ import DeepNestedNode from './deep-node'
 /**
  * Aggregated Node
  * @extends {DeepNestedNode}
- * @see {@link AggregatedTopology}
+ * @see {AggregatedTopology}
  */
 class AggregatedNestedNode extends DeepNestedNode {
   /**

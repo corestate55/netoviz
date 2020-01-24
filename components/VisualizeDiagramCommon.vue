@@ -37,11 +37,13 @@ export default {
   },
   watch: {
     $route(newRoute, oldRoute) {
-      // watch `params.modelFile` change:
-      // because if `modelFile` changed, graph-diagram component will reused
-      // (will not be called lifecycle hook).
-      // if `params.visualizer` changed, then views/VisualizeDiagram component
-      // switches corresponding component and run its lifecycle hook.
+      /*
+       watch `params.modelFile` change:
+       because if `modelFile` changed, diagram component will reused
+       (will not be called lifecycle hook).
+       if `params.visualizer` changed, then views/VisualizeDiagram component
+       switches corresponding component and run its lifecycle hook.
+      */
       const oldModelFile = oldRoute.params.modelFile
       const newModelFile = newRoute.params.modelFile
       if (oldModelFile !== newModelFile) {
@@ -50,7 +52,7 @@ export default {
     }
   },
   mounted() {
-    // Lifecycle for graph visualizer:
+    // Lifecycle for diagram visualizer:
     // merged at including component X.
     // called here before X.mounted()
     console.log('[viz] mounted')
@@ -61,10 +63,10 @@ export default {
     this.beforeMakeVisualizer() // hook (to ready make visualizer)
     this.visualizer = this.makeVisualizer(this.svgWidth, this.svgHeight)
     this.afterMakeVisualizer() // hook (to initialize visualizer)
-    this.drawJsonModel() // generate initial graph
+    this.drawRfcTopologyData() // generate initial diagram
   },
   beforeDestroy() {
-    // Lifecycle for graph visualizer:
+    // Lifecycle for diagram visualizer:
     // merged at including component X.
     // called here before X.beforeDestroy()
     console.log('[viz] before destroy')
@@ -77,14 +79,13 @@ export default {
     // Common methods (template):
     // Methods are overwritten at including (mix-in) component
     makeVisualizer(width, height) {
-      // return graph visualizer as `this.visualizer`
+      // return diagram visualizer as `this.visualizer`
       console.error('[viz] makeVisualizer must be overwritten.')
     },
     watchCurrentAlertRow(newRow, oldRow) {
       // callback function when currentAlertRow changed.
-      // redraw (drawJsonModel)
-      // if the graph changes graph objects according to alert-host.
-      this.drawJsonModel()
+      // redraw (drawRfcTopologyData)
+      this.drawRfcTopologyData()
       this.highlightByAlert(newRow)
     },
     watchModelFile(newModelFile, oldModelFile) {
@@ -93,10 +94,10 @@ export default {
         `[viz] modelFile changed from ${oldModelFile} to ${newModelFile}`
       )
       this.clearAllHighlight()
-      this.drawJsonModel()
+      this.drawRfcTopologyData()
     },
     clearAllHighlight() {
-      // function to clear all highlights in graph(s).
+      // function to clear all highlights in diagram(s).
       console.error('[viz] clearAllHighlight must be overwritten.')
     },
     beforeMakeVisualizer() {
@@ -111,9 +112,9 @@ export default {
     afterDeleteVisualizer() {
       // optional: hook in beforeDestroy()
     },
-    drawJsonModel() {
-      // function to generate graph using visualizer.
-      console.error('[viz] drawJsonModel must be overwrite.')
+    drawRfcTopologyData() {
+      // function to generate diagram using visualizer.
+      console.error('[viz] drawRfcTopologyData must be overwrite.')
     },
     highlightByAlert(alertRow) {
       if (alertRow) {

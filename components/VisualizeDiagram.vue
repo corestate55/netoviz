@@ -14,8 +14,8 @@
       </v-col>
     </v-row>
     <template v-if="validVisualizer && validModelFile">
-      <VisualizeDiagramTopology
-        v-if="visualizer === 'topology'"
+      <VisualizeDiagramForceSimulation
+        v-if="visualizer === 'forceSimulation'"
         v-bind:model-file="modelFile"
       />
       <VisualizeDiagramDependency
@@ -49,7 +49,7 @@
 <script>
 import { mapState } from 'vuex'
 import NotFound from './NotFound'
-import VisualizeDiagramTopology from './VisualizeDiagramTopology'
+import VisualizeDiagramForceSimulation from './VisualizeDiagramForceSimulation'
 import VisualizeDiagramDependency from './VisualizeDiagramDependency'
 import VisualizeDiagramDependency2 from './VisualizeDiagramDependency2'
 import VisualizeDiagramNested from './VisualizeDiagramNested'
@@ -58,7 +58,7 @@ import '~/lib/style/tooltip.scss'
 export default {
   components: {
     NotFound,
-    VisualizeDiagramTopology,
+    VisualizeDiagramForceSimulation,
     VisualizeDiagramDependency,
     VisualizeDiagramDependency2,
     VisualizeDiagramNested
