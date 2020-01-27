@@ -125,7 +125,7 @@ export default {
     },
     resizeSVG() {
       this.visualizer &&
-        this.visualizer.resizeSVG(this.svgWidth, this.svgHeight)
+        this.visualizer.resizeRootSVG(this.svgWidth, this.svgHeight)
     }
   }
 }

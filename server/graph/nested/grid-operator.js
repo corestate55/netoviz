@@ -1,5 +1,5 @@
 /**
- * Definition of Grid operator.
+ * @file Definition of Grid operator.
  */
 
 import NestLayout from './layout'

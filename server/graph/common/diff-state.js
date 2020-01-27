@@ -1,6 +1,6 @@
 'use strict'
 /**
- * Definition of diff-state.
+ * @file Definition of diff-state.
  */
 
 /**
@@ -12,7 +12,8 @@ class DiffState {
    * @prop {string} forward - Forward diff status.
    * @prop {string} backward - Backward diff status.
    * @prop {string} pair - Path of diff-counterpart.
-   *
+   */
+  /**
    * @param {DiffStateData|{}} data - Data of diff state.
    */
   constructor(data) {

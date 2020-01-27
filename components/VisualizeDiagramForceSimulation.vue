@@ -30,7 +30,7 @@
 <script>
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import VisualizeDiagramSelectLayer from './VisualizeDiagramSelectLayer'
-import ForceSimulationDiagramVisualizer from '~/lib/diagram/topology/visualizer'
+import ForceSimulationDiagramVisualizer from '~/lib/diagram/force-simulation/visualizer'
 import '~/lib/style/force-simulation.scss'
 
 export default {

@@ -86,6 +86,12 @@ npm run start
 ```
 
 ## Development
+### Document
+Generate documents with JSDoc.
+```
+npm run doc
+```
+
 ### Directory
 
 * libraries
@@ -122,8 +128,9 @@ Server (JSON API) (see [server/api.js](./server/api.js))
   * GET `/api/graph/:graphName/:jsonName`
     * return diagram data converted from RFC8345-based topology model.
 
-### Lints and fixes files
+### Format, Lints and fixes files
 ```
+npm run format
 npm run lint
 npm run lint:fix
 ```

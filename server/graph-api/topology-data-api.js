@@ -123,8 +123,8 @@ class TopologyDataAPI {
    */
   _makeGraphQuery(graphType, query, keys) {
     /**
+     * Key-value dictionary of server query.
      * @typedef {NestedGraphQuery|DependencyGraphQuery} GraphQuery
-     * Key-value dictionary.
      */
     const graphQuery = {}
     for (const [key, keyType] of keys) {

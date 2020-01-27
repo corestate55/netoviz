@@ -16,7 +16,7 @@
     </v-row>
     <v-row v-resize="resizeSVG">
       <v-col>
-        <!-- entry point of d3 diagram(s) -->f
+        <!-- entry point of d3 diagram(s) -->
         <div id="visualizer" />
       </v-col>
     </v-row>
