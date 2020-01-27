@@ -1,6 +1,10 @@
 /**
  * @file Definition of deep nested graph with node aggregation.
  */
+/**
+ * Abstract type for classifier.
+ * @typedef {FamilyClassifier|LayerClassifier} NodeClassifier
+ */
 
 import DeepNestedTopology from './deep-topology'
 import AggregatedNestedNode from './aggregated-node'
@@ -99,8 +103,7 @@ class AggregatedTopology extends DeepNestedTopology {
   /**
    * Classify (filter) nodes with classifier function.
    * @param {Array<DeepNestedNode>} nodes - Set of nodes.
-   * @param {Object} combinedClassifier - Classifier
-   * @prop {function} classifierInfo.callback - Function to classify a node.
+   * @param {CombinedClassifier} combinedClassifier - Classifier
    * @returns {Array<DeepNestedNode>} - Filtered nodes.
    * @private
    */
@@ -111,7 +114,7 @@ class AggregatedTopology extends DeepNestedTopology {
   /**
    * Make a classifier with `family` attribute.
    * @param {string} family - Value of family.
-   * @param {function} callback - Classifier function.
+   * @param {AggregatedTopology-classifierCallback} callback - Classifier function.
    * @returns {FamilyClassifier} A family classifier.
    * @private
    */
@@ -120,14 +123,14 @@ class AggregatedTopology extends DeepNestedTopology {
      * @typedef {Object} FamilyClassifier
      * @prop {string} param - Name of classifier parameter.
      * @prop {string} family - Family value to classify. (condition)
-     * @prop {function} callback - Function to classify a node.
+     * @prop {AggregatedTopology-classifierCallback} callback - Function to classify a node.
      */
     return { param: 'family', family, callback }
   }
 
   /**
    * Make classifiers for all `family` patterns.
-   * @returns {Array<Object>} Family classifiers.
+   * @returns {Array<FamilyClassifier>} Family classifiers.
    * @private
    */
   _makeFamilyClassifiers() {
@@ -146,7 +149,7 @@ class AggregatedTopology extends DeepNestedTopology {
   /**
    * Make a classifier with layer of node.
    * @param {string} layerPath - Layer path of (children) node.
-   * @param {function} callback - Classifier function.
+   * @param {AggregatedTopology-classifierCallback} callback - Classifier function.
    * @returns {LayerClassifier} A layer classifier.
    * @private
    */
@@ -155,7 +158,7 @@ class AggregatedTopology extends DeepNestedTopology {
      * @typedef {Object} LayerClassifier
      * @prop {string} param - Name of classifier parameter.
      * @prop {string} layerPath - Name of layer path (in children).
-     * @prop {function} callback - Function to classify a node.
+     * @prop {AggregatedTopology-classifierCallback} callback - Function to classify a node.
      */
     return { param: 'layerPath', layerPath, callback }
   }
@@ -163,7 +166,7 @@ class AggregatedTopology extends DeepNestedTopology {
   /**
    * Make classifiers for all 'layer path' pattern.
    * @param {Array<string>} layerPaths - Layers of (children) nodes.
-   * @returns {Array<Object>} Layer classifiers.
+   * @returns {Array<LayerClassifier>} Layer classifiers.
    * @private
    */
   _makeLayerClassifiers(layerPaths) {
@@ -176,9 +179,9 @@ class AggregatedTopology extends DeepNestedTopology {
 
   /**
    * Make production set of classifier sets.
-   * @param {Array<Object>} classifiers1 - Classifier set 1.
-   * @param {Array<Object>} classifiers2 - Classifier set 2.
-   * @returns {Array<Array<Object>>} Production set
+   * @param {Array<NodeClassifier>} classifiers1 - Classifier set 1.
+   * @param {Array<NodeClassifier>} classifiers2 - Classifier set 2.
+   * @returns {Array<Array<NodeClassifier>>} Production set
    *     of classifier sets.
    * @private
    */
@@ -193,7 +196,7 @@ class AggregatedTopology extends DeepNestedTopology {
 
   /**
    * Make a combined classifier.
-   * @param {Array<Object>} classifiers - a pair of classifier,
+   * @param {Array<NodeClassifier>} classifiers - a pair of classifier,
    *     [familyClassifier, layerClassifier]
    * @returns {CombinedClassifier}
    * @private
@@ -203,7 +206,13 @@ class AggregatedTopology extends DeepNestedTopology {
      * @typedef {Object} CombinedClassifier
      * @prop {string} family - Family condition.
      * @prop {string} layerPath - Layer (in children) condition.
-     * @prop {function} callback - Combined function to classify a node.
+     * @prop {AggregatedTopology-classifierCallback} callback - Combined function
+     *     to classify a node.
+     */
+    /**
+     * @callback AggregatedTopology-classifierCallback
+     * @param {NestedNodeData} nodeData - Node data to classify.
+     * @returns {boolean} True if the node matches classifier.
      */
     // merge param
     const combinedClassifier = {}

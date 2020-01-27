@@ -12,7 +12,7 @@ import DependencyConstants from './constants'
 class DependencyNode extends ForceSimulationNode {
   /**
    * @param {ForceSimulationNodeData} nodeData - Node data.
-   * @param {function} ownTermPointsCallback - Callback function
+   * @param {DependencyNode-ownTermPointCallback} ownTermPointsCallback - Callback
    *     to get term-points that this node contains.
    */
   constructor(nodeData, ownTermPointsCallback) {
@@ -21,6 +21,11 @@ class DependencyNode extends ForceSimulationNode {
     this.c = new DependencyConstants()
     /** @type {number} */
     this.index = Math.floor((nodeData.id % 10000) / 100)
+    /**
+     * @callback DependencyNode-ownTermPointCallback
+     * @param {ForceSimulationNodeData} nodeData - Node data.
+     * @returns {Array<ForceSimulationNodeData>} Term-points owned by target node.
+     */
     /** @type {Array<ForceSimulationNodeData>} */
     this.ownTermPoints = ownTermPointsCallback(nodeData) // path list of ps in this node
   }

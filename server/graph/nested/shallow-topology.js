@@ -105,10 +105,17 @@ class ShallowNestedTopology {
 
   /**
    * Set nodes using callback.
-   * @param {function} generateGraphNodeCallback - Callback to generate a node.
+   * @param {ShallowNestedTopology-generateGraphNodeCallback} generateGraphNodeCallback - Callback
+   *     to generate a node.
    * @protected
    */
   setNodesAs(generateGraphNodeCallback) {
+    /**
+     * @callback ShallowNestedTopology-generateGraphNodeCallback
+     * @param {ForceSimulationNodeData} nodeData - Node data for force-simulation diagram.
+     * @returns {NestedNodeData} Nested node data.
+     */
+    /** @type {Array<NestedNodeData>} */
     this.nodes = this.topologyData
       .map(network => network.nodes) // pick nodes in each network.
       .reduce((acc, nodes) => [...acc, ...nodes], []) // flatten
