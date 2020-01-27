@@ -8,69 +8,33 @@
 class DependencyConstants {
   constructor() {
     // term-point
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.tpR = 20
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.tpXPad1 = 12
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.tpXPad2 = 12
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.tpYPad1 = 12
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.tpYPad2 = 24
 
     // node
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.nodeXPad1 = 15
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.nodeXPad2 = 15
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.nodeYPad1 = 15
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.nodeYPad2 = 24
 
     // layer
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.layerXPad1 = 100
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.layerYPad1 = 50
-    /**
-     * @const
-     * @type {number}
-     */
+    /** @const {number} */
     this.layerYPad2 = 30
   }
 

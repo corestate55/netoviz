@@ -25,13 +25,13 @@ class CacheRfcTopologyDataConverter {
     this._timeStampOf = {}
     /**
      * Directory path of model files.
-     * @const
+     * @const {string}
      * @private
      */
     this._modelDir = modelDir
     /**
      * Directory path to save cache.
-     * @const
+     * @const {string}
      * @private
      */
     this._cacheDir = cacheDir

@@ -28,26 +28,22 @@ class ShallowNestedTopology {
   constructor(graphQuery) {
     /**
      * X-padding of node rectangle.
-     * @const
-     * @type {number}
+     * @const {number}
      */
     this.nodeXPad = 20
     /**
      * Y-padding of node rectangle.
-     * @const
-     * @type {number}
+     * @const {number}
      */
     this.nodeYPad = 20
     /**
      * Radius of term-point circle.
-     * @const
-     * @type {number}
+     * @const {number}
      */
     this.r = 10
     /**
      * Interval between term-points.
-     * @const
-     * @type {number}
+     * @const {number}
      */
     this.tpInterval = 10
 
