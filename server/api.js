@@ -23,7 +23,7 @@ const apiRouter = express.Router()
  * Other graph read it and convert for each graph.
  * @type{TopologyDataAPI}
  */
-const topoDataAPI = new TopologyDataAPI('static')
+const topologyDataAPI = new TopologyDataAPI('static')
 apiRouter.use(express.json())
 
 /**
@@ -69,14 +69,14 @@ apiRouter.get('/alert/all', async (req, res) => {
 apiRouter.get('/models', async (req, res) => {
   console.log('model list requested')
   res.type('json')
-  res.send(await topoDataAPI.getModels())
+  res.send(await topologyDataAPI.getModels())
 })
 
 /**
  * API to receive graph-layout data. (in nested graph)
  */
 apiRouter.post('/graph/:graphName/:jsonName', (req, res) => {
-  topoDataAPI.postGraphData(req)
+  topologyDataAPI.postGraphData(req)
   res.send(JSON.stringify({ message: 'layout data received.' }))
 })
 
@@ -85,7 +85,7 @@ apiRouter.post('/graph/:graphName/:jsonName', (req, res) => {
  */
 apiRouter.get('/graph/:graphName/:jsonName', async (req, res) => {
   res.type('json')
-  res.send(await topoDataAPI.getGraphData(req))
+  res.send(await topologyDataAPI.getGraphData(req))
 })
 
 module.exports = apiRouter
