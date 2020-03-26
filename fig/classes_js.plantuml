@@ -1,293 +1,765 @@
 @startuml
-
+class TopologyDataAPI {
+    +constructor()
+    +getModels()
+    +_readLayoutJSON()
+    +_toForceSimulationTopologyData()
+    +_boolString2Bool()
+    +_numberString2Number()
+    +_makeGraphQuery()
+    +_toDependencyTopologyData()
+    +_toNestedTopologyData()
+    +getGraphData()
+    +postGraphData()
+}
+TopologyDataAPI -- CacheRfcTopologyDataConverter
+class CacheRfcTopologyDataConverter {
+    +constructor()
+    +_checkCacheDir()
+    +_readForceSimulationTopologyDataFromCacheJSON()
+    +_readRfcTopologyDataFromJSON()
+    +_writeCache()
+    +_updateStatsOfTopologyJSON()
+    +_foundOperativeCache()
+    +_updateCacheTimeStamp()
+    +toForceSimulationTopologyData()
+}
 class BaseContainer {
+    +sortUniq()
+    +flatten()
 }
-
-class L2NetworkAttribute {
-      +name
-      +flag
+BaseContainer -- Set
+class FamilyMaker {
+    +constructor()
+    +_consoleDebug()
+    +_findNodeByPath()
+    +_findAndMarkAsFamily()
+    +_findTargetNodeByName()
+    +_findTargetNodeByPath()
+    +_findTargetNode()
+    +markFamilyWithTarget()
 }
-
-class L2Network {
-      +attribute
+FamilyMaker -- FamilyRelation
+FamilyMaker -- FamilyMaker
+class DiffState {
+    +constructor()
+    +detect()
 }
-L2Network --|> Network
-L2Network "1" -- "1" L2NetworkAttribute
-L2Network "1" o-- "0..*" L2Node
-L2Network "1" o-- "0..*" L2Link
-
-class L3NetworkAttribute {
-      +name
-      +flag
+class DependencyConstants {
+    +constructor()
+    +nodeWidth()
+    +nodeHeight()
 }
-
-class L3Network {
-      +attribute
+class DependencyNode {
+    +constructor()
+    +setPosition()
+    +nodeWidth()
+    +toData()
 }
-L3Network --|> Network
-L3Network "1" -- "1" L3NetworkAttribute
-L3Network "1" o-- "0..*" L3Node
-L3Network "1" o-- "0..*" L3Link
-
-class L2NodeAttribute {
-      +name
-      +description
-      +mgmtAddr
-      +sysMacAddr
-      +mgmtVid
-      +flag
+DependencyNode --|> ForceSimulationNode
+DependencyNode -- DependencyConstants
+class DependencyTopology {
+    +constructor()
+    +_markFamilyWithTarget()
+    +_setNetworks()
+    +toData()
 }
-
-class L2Node {
-      +attribute
-      +toHtml()
+DependencyTopology -- DependencyNetwork
+class DependencyNetwork {
+    +constructor()
+    +_setPosition()
+    +_calcX()
+    +_layerHeight()
+    +_calcY()
+    +_setNodes()
+    +_findNodeByPath()
+    +_setTermPoints()
+    +_isType()
+    +_findAllNodesFrom()
+    +_findAllTermPointsFrom()
+    +toData()
 }
-L2Node --|> Node
-L2Node "1" -- "1" L2NodeAttribute
-L2Node "1" o-- "0..*" L2TermPoint
-
-class L3Prefix {
-      +prefix
-      +metric
-      +flag
-      +toHtml()
+DependencyNetwork -- DependencyConstants
+DependencyNetwork -- DependencyNode
+DependencyNetwork -- DependencyTermPoint
+class DependencyTermPoint {
+    +constructor()
+    +_setCenterPosition()
+    +setCenterPosition()
+    +_calcX()
+    +_calcY()
+    +parentPath()
+    +toData()
 }
-
-class L3NodeAttribute {
-      +name
-      +description
-      +mgmtAddr
-      +sysMacAddr
-      +mgmtVid
-      +flag
-      +toHtml()
+DependencyTermPoint --|> ForceSimulationNode
+DependencyTermPoint -- DependencyConstants
+class NestLayout {
+    +constructor()
+    +toData()
 }
-L3NodeAttribute "1" -- "0..*" L3Prefix
-
-class L3Node {
-      +attribute
-      +constructor()
+class AggregatedNestedNode {
+    +constructor()
+    +_aggregateWith()
 }
-L3Node --|> Node
-L3Node "1" -- "1" L3NodeAttribute
-L3Node "1" o-- "0..*" L3TermPoint
-
-class VlanIdName {
-      +vlanId
-      +vlanName
-      +toHtml()
+AggregatedNestedNode --|> DeepNestedNode
+AggregatedNestedNode -- AggregatedNodeAttribute
+class ShallowNestedTopology {
+    +constructor()
+    +initialize()
+    +beforeCalcRootNodePosition()
+    +setGrid()
+    +setNodes()
+    +setNodesAs()
+    +findLinkBetween()
+    +setLinks()
+    +setRootNodes()
+    +findNodeByPath()
+    +mapPathsToNodes()
+    +calcRootNodePosition()
+    +_singleParentChildNodePaths()
+    +isLeaf()
+    +assumeAsLeaf()
+    +consoleDebug()
+    +_calcNodeWHAsLeaf()
+    +_calcChildrenWHList()
+    +_calcNodeWHAsSubRoot()
+    +_calcNodePosition()
+    +childNodePathsToCalcPosition()
+    +childNodeFrom()
+    +_calcChildNodePosition()
+    +_widthByTp()
+    +_heightByTp()
+    +_widthByChildNodes()
+    +_heightByChildNodes()
+    +_calcSubRootNodeWH()
+    +_calcLeafNodeWH()
+    +_calcTpPosition()
+    +_operativeNodes()
+    +_inoperativeNodes()
+    +_operativeLinksIn()
+    +_makeSupportTpLinks()
+    +toData()
 }
-
-class L2TPAttribute {
-      +description
-      +maxFrameSize
-      +macAddr
-      +ethEncap
-      +portVlanId
-      +vlanIdName
-      +tpState
-      +toHtml()
+ShallowNestedTopology -- GridOperator
+ShallowNestedTopology -- ShallowNestedNode
+ShallowNestedTopology -- NestedLink
+class DeepNestedNode {
+    +constructor()
+    +renameChildPath()
+    +_duplicate()
+    +splitNodeByParent()
 }
-L2TPAttribute "1" -- "0..*" VlanIdName
-
-class L2TermPoint {
-      +attribute
-      +constructor()
+DeepNestedNode --|> ShallowNestedNode
+DeepNestedNode -- DeepNestedNode
+class DeepNestedTopology {
+    +constructor()
+    +beforeCalcRootNodePosition()
+    +setNodes()
+    +splitNode()
+    +isLeaf()
+    +_overDepth()
+    +_inTargetDepth()
+    +assumeAsLeaf()
+    +childNodePathsToCalcPosition()
+    +childNodeFrom()
 }
-L2TermPoint --|> TermPoint
-L2TermPoint "1" -- "1" L2TPAttribute
-
-class L3TPAttribute {
-      +ipAddress
-      +constructor()
-      +toHtml()
+DeepNestedTopology --|> ShallowNestedTopology
+DeepNestedTopology -- DeepNestedNode
+class GridOperator {
+    +constructor()
+    +_setLayoutData()
+    +_setXYGrid()
+    +_initDefault()
+    +_setXGridByInterval()
+    +_setYGridByInterval()
+    +positionByOrdinal()
+    +_ordinal2coordinate()
+    +_nextOrdinalPosition()
+    +ordinalPositionByNodePath()
+    +toData()
 }
-
-class L3TermPoint {
-      +constructor()
-      +attribute
+GridOperator -- NestLayout
+class AggregatedTopology {
+    +_replaceChildrenByAggregatedNode()
+    +_aggregatedNodeName()
+    +_makeAggregateNode()
+    +_uniqLayerPaths()
+    +_classifyAggregateTarget()
+    +_familyClassifier()
+    +_makeFamilyClassifiers()
+    +_layerClassifier()
+    +_makeLayerClassifiers()
+    +_makeClassifierProduction()
+    +_combinedClassifier()
+    +_makeCombinedClassifiers()
+    +_aggregateChildNodes()
+    +childNodePathsToCalcPosition()
 }
-L3TermPoint --|> TermPoint
-L3TermPoint "1" -- "1" L3TPAttribute
-
-class L2LinkAttribute {
-      +name
-      +flag
-      +rate
-      +delay
-      +srlg
+AggregatedTopology --|> DeepNestedTopology
+AggregatedTopology -- AggregatedNestedNode
+AggregatedTopology -- Set
+class ShallowNestedNode {
+    +constructor()
+    +_setFamilyRelation()
+    +layerPath()
+    +layer()
+    +isNode()
+    +isRootNode()
+    +isTp()
+    +matchTpPath()
+    +matchNodePath()
+    +parentNodePaths()
+    +parentTpPaths()
+    +childNodePaths()
+    +childTpPaths()
+    +numberOfTps()
+    +numberOfParentNodes()
+    +numberOfChildNodes()
+    +filterTpPath()
+    +filterNodePath()
+    +linkPath()
+    +setCircle()
+    +setRect()
+    +setGridPosition()
 }
-
-class L2Link {
-      +constructor()
-      +attribute
+class NestedLink {
+    +availableIn()
 }
-L2Link --|> Link
-L2Link "1" -- "1" L2LinkAttribute
-
-class L3LinkAttribute {
-      +name
-      +flag
-      +metric1
-      +metric2
+NestedLink --|> ForceSimulationLink
+class RfcNode {
+    +constructor()
+    +_constructTermPoints()
+    +newTP()
+    +_constructSupportingNodes()
+    +findTpByPath()
+    +_makeChildren()
+    +graphNode()
 }
-
-class L3Link {
-      +constructor()
-      +attribute
+RfcNode --|> RfcModelBase
+RfcNode -- RfcTermPoint
+RfcNode -- RfcSupportingNode
+RfcNode -- ForceSimulationNode
+class RfcL3Network {
+    +constructor()
+    +newNode()
+    +newLink()
 }
-L3Link --|> Link
-L3Link "1" -- "1" L3LinkAttribute
-
-class Networks {
-      +networks
+RfcL3Network --|> RfcNetwork
+RfcL3Network -- RfcL3NetworkAttribute
+RfcL3Network -- RfcL3Node
+RfcL3Network -- RfcL3Link
+class RfcL2NodeAttribute {
+    +constructor()
+    +toHtml()
 }
-Networks "1" o-- "0..*" Network
-
-class SupportingNetwork {
-      +networkRef
-      +refPath
+RfcL2NodeAttribute --|> RfcModelBase
+class RfcModelBase {
+    +constructor()
+    +_constructDiffState()
 }
-
-class NetworkTypes {
-      +data
-      +types
-      +hasType()
+RfcModelBase --|> BaseContainer
+RfcModelBase -- DiffState
+class RfcTopology {
+    +constructor()
+    +newNetwork()
 }
-
-class Network {
-      +networkTypes
-      +name
-      +id
-      +path
-      +isTypeLayer3()
-      +isTypeLayer2()
+RfcTopology --|> RfcModelBase
+RfcTopology -- RfcNetwork
+RfcTopology -- RfcL3Network
+RfcTopology -- RfcL2Network
+class RfcL2Network {
+    +constructor()
+    +newNode()
+    +newLink()
 }
-Network --|> BaseContainer
-Network "1" -- "0..*" NetworkTypes
-Network "1" -- "0..*" SupportingNetwork
-Network "1" o-- "0..*" Link
-Network "1" o-- "0..*" Node
-
-class SupportingNode {
-      +networkRef
-      +nodeRef
-      +refPath
+RfcL2Network --|> RfcNetwork
+RfcL2Network -- RfcL2NetworkAttribute
+RfcL2Network -- RfcL2Node
+RfcL2Network -- RfcL2Link
+class RfcL3NetworkAttribute {
+    +constructor()
 }
-
-class Node {
-      +name
-      +id
-      +parentPath
-      +path
-      +findTpByPath()      
+RfcL3NetworkAttribute --|> RfcModelBase
+class RfcL2TermPointAttribute {
+    +constructor()
+    +toHtml()
 }
-Node "1" -- "0..*" SupportingNode
-Node <.. GraphNode
-
-class SupportingTermPoint {
-      +networkRef
-      +nodeRef
-      +tpRef
-      +refPath
+RfcL2TermPointAttribute --|> RfcModelBase
+RfcL2TermPointAttribute -- RfcL2VlanIdName
+class AggregatedNodeAttribute {
+    +constructor()
+    +_aggregatesNodeStr()
+    +toHtml()
 }
-
-class TermPoint {
-      +name
-      +id
-      +parentPath
-      +path
-      +graphNode()
-      +graphLink()
+AggregatedNodeAttribute --|> RfcModelBase
+class RfcL3TermPointAttribute {
+    +constructor()
+    +toHtml()
 }
-TermPoint "1" -- "0..*" SupportingTermPoint
-TermPoint <.. GraphNode
-TermPoint <.. GraphLink
-
-class TpRef {
-      +nodeRef
-      +tpRef
-      +refPath
+RfcL3TermPointAttribute --|> RfcModelBase
+class RfcNetwork {
+    +constructor()
+    +_constructSupportingNetworks()
+    +_makeGraphNodesAsNode()
+    +_makeGraphNodesAsTp()
+    +makeGraphNodes()
+    +_constructNodes()
+    +newNode()
+    +_constructLinks()
+    +newLink()
+    +makeGraphLinks()
+    +isTypeLayer3()
+    +isTypeLayer2()
 }
-
-class SupportingLink {
-      +networkRef
-      +linkRef
+RfcNetwork --|> RfcModelBase
+RfcNetwork -- RfcNetworkTypes
+RfcNetwork -- RfcSupportingNetwork
+RfcNetwork -- RfcNode
+RfcNetwork -- RfcLink
+class RfcL2Link {
+    +constructor()
 }
-
-class Link {
-      +name
-      +path
-      +source
-      +destination
+RfcL2Link --|> RfcLink
+RfcL2Link -- RfcL2LinkAttribute
+class RfcL3Node {
+    +constructor()
+    +newTP()
 }
-Link "1" -- "2" TpRef
-Link "1" -- "0..*" SupportingLink
-Link <.. GraphLink
-
-class Graphs {
-      +topoModel
-      +graphs
-      +allGraphNodes
-      +findGraphNodeByPath()
+RfcL3Node --|> RfcNode
+RfcL3Node -- RfcL3NodeAttribute
+RfcL3Node -- RfcL3TermPoint
+class RfcL2Node {
+    +constructor()
+    +newTP()
 }
-Graphs --|> BaseContainer
-Graphs "1" *-- "1" Networks
-Graphs "1" *-- "1" Graph
-
-class Graph {
-      +name
-      +nodes
-      +links
-      +tpTypeNodes()
-      +nodeTypeNodes()
+RfcL2Node --|> RfcNode
+RfcL2Node -- RfcL2NodeAttribute
+RfcL2Node -- RfcL2TermPoint
+class RfcL2NetworkAttribute {
+    +constructor()
 }
-Graph "1" o-- "0..*" GraphNode
-Graph "1" o-- "0..*" GraphLink
-
-class GraphNode {
-      +type
-      +name
-      +id
-      +path
-      +children
-      +parents
-      +attribute
-      +addParent()
+RfcL2NetworkAttribute --|> RfcModelBase
+class RfcL3NodeAttribute {
+    +constructor()
+    +_selectRouterId()
+    +toHtml()
 }
-
-class GraphLink {
-      +name
-      +path
-      +type
-      +sourcePath
-      +targetPath
-      +sourceId
-      +targetId
-      +attribute
+RfcL3NodeAttribute --|> RfcModelBase
+RfcL3NodeAttribute -- RfcL3Prefix
+class RfcL3Link {
+    +constructor()
 }
-
-class GraphVisualizer {
-      +drawGraphs()
+RfcL3Link --|> RfcLink
+RfcL3Link -- RfcL3LinkAttribute
+class RfcL3TermPoint {
+    +constructor()
 }
-GraphVisualizer --|> Graphs
-GraphVisualizer "1" o-- "1" OperationalVisualizer
-
-class OperationalVisualizer {
-      +setEventCallBack()
-      +setClearButtonEventCallBack()
+RfcL3TermPoint --|> RfcTermPoint
+RfcL3TermPoint -- RfcL3TermPointAttribute
+class RfcTermPoint {
+    +constructor()
+    +_constructSupportingTermPoints()
+    +_makeChildren()
+    +graphNode()
+    +graphLink()
 }
-OperationalVisualizer --|> ForceSimulatedVisualizer
-
-class ForceSimulatedVisualizer {
-      +startSimulation()
-      +stopSimulation()
+RfcTermPoint --|> RfcModelBase
+RfcTermPoint -- RfcSupportingTermPoint
+RfcTermPoint -- ForceSimulationNode
+RfcTermPoint -- ForceSimulationLink
+class RfcL2LinkAttribute {
+    +constructor()
 }
-ForceSimulatedVisualizer --|> SingleGraphVisualizer
-
-class SingleGraphVisualizer {
-      +graph
-      +findGraphNodeByPath()
+RfcL2LinkAttribute --|> RfcModelBase
+class RfcL3LinkAttribute {
+    +constructor()
 }
-
+RfcL3LinkAttribute --|> RfcModelBase
+class RfcL2TermPoint {
+    +constructor()
+}
+RfcL2TermPoint --|> RfcTermPoint
+RfcL2TermPoint -- RfcL2TermPointAttribute
+class RfcLink {
+    +constructor()
+    +_constructSupportingLinks()
+    +graphLink()
+}
+RfcLink --|> RfcModelBase
+RfcLink -- RfcLinkTpRef
+RfcLink -- RfcSupportingLink
+RfcLink -- ForceSimulationLink
+class ForceSimulationNode {
+    +constructor()
+    +addParent()
+}
+class ForceSimulationTopology {
+    +constructor()
+    +_makeNodes()
+    +_findNodeByPath()
+    +_makeParentRef()
+    +_errorLinkEndNodeNotFound()
+    +_resolveLinkRef()
+    +toData()
+}
+ForceSimulationTopology --|> BaseContainer
+ForceSimulationTopology -- RfcTopology
+ForceSimulationTopology -- ForceSimulationNetwork
+class ForceSimulationNetwork {
+    +constructor()
+}
+class ForceSimulationLink {
+    +constructor()
+}
+class TooltipCreator {
+    +constructor()
+    +_makeTooltip()
+    +_isAggregated()
+    +_clearTimeout()
+    +_enableTooltipForAggregatedNode()
+    +function()
+    +enableTooltip()
+    +_disableTooltipBody()
+    +disableTooltip()
+}
+TooltipCreator -- AttrClass
+class DiagramBase {
+    +makeDiagramContainer()
+    +makeRootSVG()
+    +resizeRootSVG()
+    +isAggregated()
+    +isFamilyAggregated()
+    +isParentsAggregated()
+    +_classOfDiffState()
+    +_classOfInactive()
+    +_classOfAggregated()
+    +classStringFrom()
+    +clearDiagramContainer()
+    +_clearTooltip()
+    +_makeTooltipCreator()
+    +_makeClearHighlightButton()
+    +_makeToggleDiffButton()
+    +makeDiagramControlButtons()
+    +controlButtonMouseOverCallback()
+    +controlButtonMouseOutCallback()
+    +_setClearHighlightButtonHandler()
+    +_toggleActiveDiff()
+    +_setToggleDiffButtonHandler()
+    +setDiagramControlButtonsHandler()
+    +clearWarningMessage()
+    +makeWarningMessage()
+    +_childPathRegexp()
+    +matchChildPath()
+    +typeOfPath()
+    +networkPathOf()
+    +parentPathOf()
+    +targetNameFromAlert()
+    +apiURI()
+}
+DiagramBase --|> BaseContainer
+DiagramBase -- DiffState
+DiagramBase -- TooltipCreator
+DiagramBase -- RegExp
+class DependencyDiagramBuilder {
+    +constructor()
+    +_makeNetworkLabelsGroup()
+    +_makeNetworkLabels()
+    +_makeNetworkElementsGroup()
+    +_makeNodeRectsInNetwork()
+    +_makeTermPointCirclesInNetwork()
+    +_makeNodeLabelsInNetwork()
+    +_makeTermPointLabelsInNetwork()
+    +_makeDependencyLinesGroup()
+    +makeAllDiagramElements()
+}
+DependencyDiagramBuilder --|> DiagramBase
+class DependencyDiagramVisualizer {
+    +drawRfcTopologyData()
+    +highlightByAlert()
+}
+DependencyDiagramVisualizer --|> DependencyDiagramOperator
+class DependencyDiagramOperator {
+    +clearHighlight()
+    +clearDependencyLines()
+    +clearAllHighlight()
+    +_lineConverter()
+    +_makeDependencyLines()
+    +_pathsFromPairs()
+    +_runParentsAndChildren()
+    +_markTargetByPaths()
+    +clickHandler()
+    +_selectReadyByPath()
+    +_mouseOverHandler()
+    +_mouseOutHandler()
+    +_setRootSVGZoom()
+    +setAllDiagramElementsHandler()
+    +_findElementDataByPath()
+    +_getFamilyTree()
+}
+DependencyDiagramOperator --|> DependencyDiagramBuilder
+class InterTpLink {
+    +constructor()
+    +xMin()
+    +yMin()
+    +xMax()
+    +yMax()
+    +_height()
+    +_width()
+    +isSkewVertical()
+    +isSkewHorizontal()
+    +isSkewSlash()
+    +isSkewBackslash()
+    +_skewType()
+    +hasOverlapIndex()
+    +_inRange()
+    +_inRangeX()
+    +_inRangeYLow()
+    +_inRangeYHigh()
+    +_isNearYMid()
+    +isOverlapX()
+    +_isSameSkew()
+    +_isOverlapBackslashPatternA()
+    +_isOverlapBackslashPatternB()
+    +_isOverlapBackslash()
+    +_isOverlapSlashPatternA()
+    +_isOverlapSlashPatternB()
+    +_isOverlapSlash()
+    +isOverlap()
+    +_defaultYMiddlePoint()
+    +_xMiddlePoint()
+    +represent3Points()
+    +represent4Points()
+    +_regularSlashPolyline()
+    +_irregularSlashPolyline()
+    +_regularBackslashPolyline()
+    +_irregularBackslashPolyline()
+    +_regularHorizontalPolyline()
+    +_irregularHorizontalPolyline()
+    +_isIrregularYMid()
+    +_wideCircledCornerPolyline()
+    +_narrowCircledCornerPolyline()
+    +circledCornerPolyline()
+    +singleLine()
+}
+InterTpLink --|> ForceSimulationLink
+class InterTpLinkCreator {
+    +constructor()
+    +_forEachTpTpLink()
+    +_groupByOverlapLinks()
+    +_slashLinks()
+    +_backslashLinks()
+    +_displaceYMidOfLinksIn()
+    +_adjustLineOverlap()
+    +_linksWith()
+    +supportTpLinks()
+    +tpTpLinks()
+    +toData()
+}
+InterTpLinkCreator -- InterTpLink
+InterTpLinkCreator -- Set
+class NestedDiagramBuilder {
+    +constructor()
+    +selectXY()
+    +_makeGridHandles()
+    +_makeGridLines()
+    +_makeGridLabels()
+    +_gridObjectsFrom()
+    +_makeGrids()
+    +colorOfNode()
+    +_makeColorTable()
+    +_makeNodes()
+    +_makeSupportTpLines()
+    +_makeTpTpLines()
+    +remakeLinkLines()
+    +_makeTps()
+    +_makeNodeLabels()
+    +_makeTpLabels()
+    +_makeGridFittingButton()
+    +makeDiagramControlButtons()
+    +makeGraphObjects()
+}
+NestedDiagramBuilder --|> DiagramBase
+NestedDiagramBuilder -- Set
+NestedDiagramBuilder -- InterTpLinkCreator
+class NestedDiagramVisualizer {
+    +apiURI()
+    +_apiParamFrom()
+    +saveLayout()
+    +setUISideNodeClickHook()
+    +nodeClickHook()
+    +_FindOperativeParentAndHighlight()
+    +_highlightParentOfInoperativeNodes()
+    +_highlightOperativeNodes()
+    +highlightByAlert()
+}
+NestedDiagramVisualizer --|> NestedDiagramOperator
+class NestedDiagramOperator {
+    +_findTargetRootNodes()
+    +_selectNodeRectByPath()
+    +_selectNodeLabelByPath()
+    +_selectTpCircleByPath()
+    +_selectTpLabelByPath()
+    +_selectTpTpLineByPath()
+    +_selectSupportTpLineByPath()
+    +_selectGridLine()
+    +_selectGridHandle()
+    +_selectGridLabel()
+    +findOperativeNodeByPath()
+    +findInoperativeNodeByPath()
+    +operativeNodesByName()
+    +inoperativeNodesByName()
+    +_updateNodeRectPosition()
+    +_tpsInNode()
+    +_updateTpCirclePosition()
+    +_childNodesOfNode()
+    +_moveRootNode()
+    +_redrawLinkLines()
+    +_updateGridLine()
+    +_setGridHandler()
+    +_setTpClassByPath()
+    +_setLineClass()
+    +_setLinkMouseHandler()
+    +_setInitialZoom()
+    +_setSVGZoom()
+    +setSelectReady()
+    +highlight()
+    +_clearAllChecked()
+    +_clearAllSelectReady()
+    +clearAllAlertHighlight()
+    +_setTpMouseHandler()
+    +nodeClickHook()
+    +_setNodeMouseHandler()
+    +_maxWHOnGrid()
+    +_gridFittingXY()
+    +fitGrid()
+    +_setGridFittingButtonHandler()
+    +setAllDiagramElementsHandler()
+}
+NestedDiagramOperator --|> NestedDiagramBuilder
+class Dependency2DiagramBuilder {
+    +constructor()
+    +_makeNetworkTypeNodeData()
+    +_makeNodeDataListOfEachNetworks()
+    +_deletePropertiesOf()
+    +_rewriteNodeData()
+    +_indentOf()
+    +_calculateNodePosition()
+    +allNodeDataList()
+    +_allVisibleNodes()
+    +_makeNodeCircles()
+    +_makeNodeLabels()
+    +refreshDiagramElements()
+    +_makeDependencyLineGroup()
+    +makeAllDiagramElements()
+}
+Dependency2DiagramBuilder --|> DiagramBase
+class Dependency2DiagramVisualizer {
+    +drawRfcTopologyData()
+    +_findNodeObjByName()
+    +highlightByAlert()
+}
+Dependency2DiagramVisualizer --|> Dependency2DiagramOperator
+class Dependency2DiagramOperator {
+    +clearHighlight()
+    +clearDependencyLines()
+    +clearAllHighlight()
+    +_setDependencyLineEndpoint()
+    +_clearDependencyLineEndpointVisibility()
+    +_reCalculateVisibleNodePosition()
+    +_lineConverter()
+    +_makeDependencyLines()
+    +_highlightDependencyLineEndpoint()
+    +_refreshDependencyElements()
+    +_getFamilyTree()
+    +_findNodeDataByPath()
+    +_findNetworkDataOwns()
+    +clickHandler()
+    +_mouseOverHandler()
+    +_mouseOutHandler()
+    +_moveNetworkLayer()
+    +_setAllDiagramElementsHandler()
+    +_setRootSVGZoom()
+    +setAllDiagramElementsHandler()
+}
+Dependency2DiagramOperator --|> Dependency2DiagramBuilder
+class ForceSimulationDiagramBuilder {
+    +constructor()
+    +_makeAllDiagramElements()
+    +tpTypeNodes()
+    +nodeTypeNodes()
+    +_makeInfoTables()
+    +_makeNodeInfoTable()
+    +_makeTermPointInfoTable()
+    +makeDiagramContainer()
+    +_makeLinkLines()
+    +_makeTermPointCircles()
+    +_makeNodeInnerCircles()
+    +_makeNodeOuterCircles()
+    +_makeTermPointLabels()
+    +_makeNodeLabels()
+    +_setRootSVGSize()
+    +_setCurrentInactiveElementsToInactive()
+    +_renameLinkProperty()
+}
+ForceSimulationDiagramBuilder --|> DiagramBase
+class PositionCache {
+    +saveTopology()
+    +_loadToNodeData()
+    +_loadToNetwork()
+    +loadToTopologyData()
+}
+class ForceSimulationDiagramSimulator {
+    +constructor()
+    +_makeSimulation()
+    +_setupSimulation()
+    +_linkDistance()
+    +_tickedLink()
+    +_tickedTermPoint()
+    +_tickedNode()
+    +_ticked()
+    +startSimulation()
+    +stopSimulation()
+    +restartSimulation()
+}
+ForceSimulationDiagramSimulator --|> ForceSimulationDiagramBuilder
+class ForceSimulationDiagramVisualizer {
+    +constructor()
+    +drawRfcTopologyData()
+    +_findNodeDataByPath()
+    +_clearAllDiagrams()
+    +_drawNetworkDiagrams()
+    +_forEachDiagramOperator()
+    +clearAllHighlight()
+    +_clearAllDiagramsHighlight()
+    +_clearAllDiagramsWarningMessage()
+    +_findDiagramOperatorByName()
+    +highlightByAlert()
+}
+ForceSimulationDiagramVisualizer --|> BaseContainer
+ForceSimulationDiagramVisualizer -- PositionCache
+ForceSimulationDiagramVisualizer -- ForceSimulationDiagramOperator
+class ForceSimulationDiagramOperator {
+    +constructor()
+    +clearHighlight()
+    +_clearSelectReady()
+    +_setRootSVGZoom()
+    +_idListFromPath()
+    +markNodeWith()
+    +_markRelateFamilyNodesWith()
+    +_markFamilyNodeWith()
+    +highlightNode()
+    +_cancelClickEvent()
+    +_clickOperation()
+    +_clickHandler()
+    +_doubleClickOperation()
+    +_doubleClickHandler()
+    +_mouseOverHandler()
+    +_mouseOutHandler()
+    +_setDiagramElementsHandler()
+    +_setNodeInfoTableHandler()
+    +_refreshTermPointInfoTable()
+    +_appendTermPointInfoTable()
+    +_setAllDiagramElementsHandler()
+}
+ForceSimulationDiagramOperator --|> ForceSimulationDiagramSimulator
 @enduml

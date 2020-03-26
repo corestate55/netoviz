@@ -1,4 +1,6 @@
-#! /usr/bin/env ruby
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
 require 'json'
 
 # random argument generator for alert log
@@ -24,7 +26,7 @@ class RandomArg
 
   def make_severities
     base = %w[disaster high average warning information not_classified]
-    [base, base.map{ |s| cs = s.dup; cs.capitalize!; cs }].flatten
+    [base, base.map { |s| s.dup.capitalize! }].flatten
   end
 
   def make_message(host)
