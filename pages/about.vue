@@ -35,7 +35,7 @@ export default {
           href: 'http://netoviz.herokuapp.com/'
         },
         {
-          icon: 'mdi-file-document-box-multiple',
+          icon: 'mdi-text-box-multiple',
           text: 'Documents (JSDoc)',
           href: '/docs'
         }
