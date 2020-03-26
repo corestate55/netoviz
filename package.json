@@ -17,7 +17,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.vue --ignore-path .gitignore --fix .",
     "doc": "jsdoc -c .jsdocrc.json",
-    "fig": "./bin/gen_fig.rb > fig/classes_js.plantuml && plantuml fig/classes_js.plantuml"
+    "fig": "./bin/gen_fig.rb > fig/classes_js.plantuml && PLANTUML_LIMIT_SIZE=8192 plantuml fig/classes_js.plantuml"
   },
   "dependencies": {
     "@babel/node": "^7.8.7",

@@ -7,7 +7,7 @@ class JSMethod
 
   def initialize(name, visibility)
     @name = name
-    @visibility = visibility
+    @visibility = check_visibility(visibility)
   end
 
   def uml_string(padding = '')
@@ -15,6 +15,13 @@ class JSMethod
   end
 
   private
+
+  def check_visibility(visibility)
+    return visibility if %i[public protected private].include?(visibility)
+    return :private if @name =~ /_.+/
+
+    :public # default
+  end
 
   def visibility_mark
     case @visibility
@@ -40,7 +47,7 @@ class JSClass
     @relates = []
   end
 
-  def add_method(name, visibility = :public)
+  def add_method(name, visibility = nil)
     @methods.push(JSMethod.new(name, visibility))
   end
 
