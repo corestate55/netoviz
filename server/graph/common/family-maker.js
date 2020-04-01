@@ -26,7 +26,7 @@ class FamilyRelation {
 
   /**
    * Convert to string.
-   * @returns {string} String express this object.
+   * @returns {string} String expression of this object.
    */
   toString() {
     return `{ relation: ${this.relation}, degree: ${this.degree} }`
@@ -38,12 +38,12 @@ class FamilyRelation {
  */
 class FamilyMaker {
   /**
-   * @param {Array<Object>} nodes - nodes which have parents/children.
+   * @param {Array<FSNode>} nodes - nodes which have parents/children.
    */
   constructor(nodes) {
     /** @type {boolean} */
     this.debugCalc = false
-    /** @type {Array<Object>} */
+    /** @type {Array<FSNode>} */
     this.nodes = nodes
   }
 
@@ -69,7 +69,7 @@ class FamilyMaker {
   /**
    * Find node by path.
    * @param {string} path - Path of target node.
-   * @returns {Object} Found node.
+   * @returns {FSNode} Found node.
    * @private
    */
   _findNodeByPath(path) {
@@ -118,7 +118,7 @@ class FamilyMaker {
   /**
    * Find node with its name.
    * @param {string} name - Name of target node.
-   * @returns {Object} Found node.
+   * @returns {FSNode} Found node.
    * @private
    */
   _findTargetNodeByName(name) {
@@ -128,7 +128,7 @@ class FamilyMaker {
   /**
    * Find node with its path.
    * @param {string} path - path of target node.
-   * @returns {Object} Found node.
+   * @returns {FSNode} Found node.
    * @private
    */
   _findTargetNodeByPath(path) {
@@ -139,7 +139,7 @@ class FamilyMaker {
    * Find node with its layer and name.
    * @param {string} targetNodeName - Name of target node.
    * @param {string} [targetNodeLayer] - Layer of target node.
-   * @returns {Object} Found node.
+   * @returns {FSNode} Found node.
    * @private
    */
   _findTargetNode(targetNodeName, targetNodeLayer) {
@@ -198,8 +198,12 @@ class FamilyMaker {
 }
 
 /**
+ * @typedef {ForceSimulationNode|NestedNode} FSNode
+ * ForceSimulationNode or its child class.
+ */
+/**
  * Function to mark family relations.
- * @param {Array<Object>} nodes - Nodes.
+ * @param {Array<FSNode>} nodes - Nodes.
  * @param {string} targetNodeName - Name of target node.
  * @param {string} [targetNodeLayer] - Layer of target node.
  * @returns {boolean} True if found target and marked other nodes.
