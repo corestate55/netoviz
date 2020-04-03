@@ -13,9 +13,10 @@ import fs from 'fs'
 import { promisify } from 'util'
 import toDependencyTopologyData from '../graph/dependency/converter'
 import toNestedTopologyData from '../graph/nested/converter'
+import toDistanceTopologyData from '../graph/distance/converter'
 import CacheRfcTopologyDataConverter from './cache-topo-graph-converter'
 
-const readFile = promisify(fs.readFile)
+const asyncReadFile = promisify(fs.readFile)
 
 /**
  * Class of API for topology data converter.
@@ -48,7 +49,7 @@ class TopologyDataAPI {
   async getModels() {
     const modelsFile = `${this.modelDir}/_index.json`
     try {
-      const buffer = await readFile(modelsFile, 'utf-8')
+      const buffer = await asyncReadFile(modelsFile)
       return JSON.parse(buffer.toString())
     } catch (error) {
       console.log(error)
@@ -66,7 +67,7 @@ class TopologyDataAPI {
     try {
       const baseName = jsonName.split('.').shift()
       const layoutJsonName = `${this.modelDir}/${baseName}-layout.json`
-      const buffer = await readFile(layoutJsonName, 'utf-8')
+      const buffer = await asyncReadFile(layoutJsonName)
       return JSON.parse(buffer.toString())
     } catch (error) {
       console.log(`Layout file correspond with ${jsonName} was not found.`)
@@ -207,6 +208,35 @@ class TopologyDataAPI {
   }
 
   /**
+   * Convert rfc-topology data to topology data for distance diagram.
+   * @param {string} jsonName - file name of rfc-topology data.
+   * @param {Request} req - HTTP request.
+   * @returns {Promise<DistanceTopologyData>} Graph data object for distance graph.
+   * @private
+   */
+  async _toDistanceTopologyData(jsonName, req) {
+    /**
+     * @typedef {Object} DistanceGraphQuery
+     * @prop {string} target
+     * @prop {string} layer
+     * @prop {ForceSimulationTopologyData} topologyData
+     */
+    const queryKeyTypeList = [
+      ['target', 'string'],
+      ['layer', 'string']
+    ]
+    const graphQuery = /** @type {DistanceGraphQuery} */ this._makeGraphQuery(
+      'distance',
+      req.query,
+      queryKeyTypeList
+    )
+    graphQuery.topologyData = await this._toForceSimulationTopologyData(
+      jsonName
+    )
+    return toDistanceTopologyData(graphQuery)
+  }
+
+  /**
    * Get converted graph data for web-frontend visualization
    * according to `graphName` parameter in API URI.
    * @param {Request} req - HTTP request.
@@ -223,6 +253,8 @@ class TopologyDataAPI {
       return JSON.stringify(await this._toDependencyTopologyData(jsonName, req))
     } else if (graphName === 'nested') {
       return JSON.stringify(await this._toNestedTopologyData(jsonName, req))
+    } else if (graphName === 'distance') {
+      return JSON.stringify(await this._toDistanceTopologyData(jsonName, req))
     }
   }
 
@@ -246,7 +278,7 @@ class TopologyDataAPI {
       `receive ${graphName}/${jsonName}?reverse=${reverse}): `,
       layoutData
     )
-    const buffer = await readFile(layoutJsonPath, 'utf8')
+    const buffer = await asyncReadFile(layoutJsonPath)
     const baseLayoutData = JSON.parse(buffer.toString())
     const reverseKey = reverse ? 'reverse' : 'standard'
     baseLayoutData[reverseKey].grid = layoutData
