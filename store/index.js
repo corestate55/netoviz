@@ -20,6 +20,11 @@ export const state = () => ({
       text: 'Nested',
       value: 'nested',
       label: 'Nested diagram.'
+    },
+    {
+      text: 'Distance',
+      value: 'distance',
+      label: 'Distance diagram.'
     }
   ]
 })

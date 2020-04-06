@@ -30,6 +30,10 @@
         v-else-if="visualizer === 'nested'"
         v-bind:model-file="modelFile"
       />
+      <VisualizeDiagramDistance
+        v-else-if="visualizer === 'distance'"
+        v-bind:model-file="modelFile"
+      />
     </template>
     <v-row v-else>
       <v-col>
@@ -53,6 +57,7 @@ import VisualizeDiagramForceSimulation from './VisualizeDiagramForceSimulation'
 import VisualizeDiagramDependency from './VisualizeDiagramDependency'
 import VisualizeDiagramDependency2 from './VisualizeDiagramDependency2'
 import VisualizeDiagramNested from './VisualizeDiagramNested'
+import VisualizeDiagramDistance from './VisualizeDiagramDistance'
 import '~/lib/style/tooltip.scss'
 
 export default {
@@ -61,7 +66,8 @@ export default {
     VisualizeDiagramForceSimulation,
     VisualizeDiagramDependency,
     VisualizeDiagramDependency2,
-    VisualizeDiagramNested
+    VisualizeDiagramNested,
+    VisualizeDiagramDistance
   },
   props: {
     visualizer: {

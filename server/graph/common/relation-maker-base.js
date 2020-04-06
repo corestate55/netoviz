@@ -26,7 +26,7 @@ class RelationMakerBase {
   findTargetNode(targetNodeName, targetNodeLayer) {
     this.consoleDebug(
       1,
-      '_findTargetNode',
+      'findTargetNode',
       `Search ${targetNodeLayer}__${targetNodeName}`
     )
     if (targetNodeLayer) {
@@ -43,7 +43,12 @@ class RelationMakerBase {
    * @protected
    */
   findTargetNodeByName(name) {
-    return this.nodes.reverse().find(d => d.type === 'node' && d.name === name)
+    // sort to keep layer-order uniqueness.
+    // when nodes that has same name exists in several layers,
+    // it always find a node in lowest layer.
+    return this.nodes
+      .sort((a, b) => b.id - a.id)
+      .find(d => d.type === 'node' && d.name === name)
   }
 
   /**

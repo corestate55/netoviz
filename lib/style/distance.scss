@@ -1,0 +1,10 @@
+@import "common";
+@import "node";
+@import "text-label";
+
+circle.concentric {
+  fill: none;
+  stroke: #3e999f;
+  stroke-width: 4px;
+  stroke-opacity: .5;
+}

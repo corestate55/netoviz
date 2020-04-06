@@ -41,6 +41,8 @@ class NeighborMaker extends RelationMakerBase {
      * @type {Array<DistanceLink>}
      */
     this.links = links
+    // for debug
+    // this.debugCalc = true
   }
 
   /**
@@ -55,7 +57,7 @@ class NeighborMaker extends RelationMakerBase {
     if (!targetNode) {
       this.consoleDebug(
         0,
-        'markTarget',
+        'markNeighborWT',
         `target: ${targetNodeName} (in layer: ${targetNodeLayer}) not found`
       )
       return false
