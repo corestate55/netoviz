@@ -30,7 +30,7 @@ import '~/lib/style/distance.scss'
 
 export default {
   mixins: [VisualizeDiagramCommon],
-  data: () => ({ debug: true }),
+  data: () => ({ debug: false }),
   methods: {
     makeVisualizer(width, height) {
       return new DistanceDiagramVisualizer(width, height)
