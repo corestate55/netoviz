@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 import DistanceDiagramVisualizer from '../lib/diagram/distance/visualizer'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import '~/lib/style/distance.scss'
@@ -32,8 +33,15 @@ export default {
   mixins: [VisualizeDiagramCommon],
   data: () => ({ debug: false }),
   methods: {
+    ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer(width, height) {
       return new DistanceDiagramVisualizer(width, height)
+    },
+    clearAllHighlight() {
+      this.visualizer.clearHighlight()
+    },
+    afterMakeVisualizer() {
+      this.visualizer.setUISideNodeClickHook(this.nodeClickCallback)
     },
     drawRfcTopologyData() {
       this.visualizer.drawRfcTopologyData(
@@ -41,6 +49,12 @@ export default {
         this.currentAlertRow,
         this.currentAlertRow && this.currentAlertRow.layer // from AlertHost Input (layer__node)
       )
+    },
+    nodeClickCallback(nodeData) {
+      // re-construct path with layer-name and name attribute,
+      // because path has deep-copy identifier (::N).
+      const path = [nodeData.path.split('__').shift(), nodeData.name].join('__')
+      this.setAlertHost(path)
     }
   }
 }
