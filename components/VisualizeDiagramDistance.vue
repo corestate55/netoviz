@@ -36,7 +36,11 @@ export default {
       return new DistanceDiagramVisualizer(width, height)
     },
     drawRfcTopologyData() {
-      this.visualizer.drawRfcTopologyData(this.modelFile, this.currentAlertRow)
+      this.visualizer.drawRfcTopologyData(
+        this.modelFile,
+        this.currentAlertRow,
+        this.currentAlertRow && this.currentAlertRow.layer // from AlertHost Input (layer__node)
+      )
     }
   }
 }
