@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       underscored: true
     }
   )
-  alert.associate = function(models) {
+  alert.associate = function (models) {
     // associations can be defined here
   }
   return alert

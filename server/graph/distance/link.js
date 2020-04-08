@@ -67,10 +67,7 @@ class DistanceLink extends ForceSimulationLink {
    * @private
    */
   _endNodePath(linkEndPath) {
-    return linkEndPath
-      .split('__')
-      .slice(0, 2)
-      .join('__')
+    return linkEndPath.split('__').slice(0, 2).join('__')
   }
 
   /**

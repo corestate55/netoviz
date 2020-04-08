@@ -244,7 +244,7 @@ export default {
         tp: pathElements[2] // additional prop
       }
     },
-    inputAlertHost: debounce(function() {
+    inputAlertHost: debounce(function () {
       // NOTICE: do not use arrow-function for debounce.
       this.fromAlertHostInput = true
       // set dummy alert to redraw diagram.
