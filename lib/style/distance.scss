@@ -4,7 +4,7 @@
 @import "link";
 
 circle.concentric {
-  fill: #92D364;
+  fill: #D8E240;
   fill-opacity: .1;
   stroke: none;
 }
@@ -19,9 +19,13 @@ path.dist.inter-nodes {
 
 path.dist.support-node {
   fill: none;
-  stroke: #0095dd;
+  stroke: $stroke_normal2;
   stroke-linecap: round;
   stroke-opacity: .3;
   stroke-dasharray: 2, 6;
   stroke-width: 4px;
+
+  &.select-ready {
+    @extend %select-ready;
+  }
 }
