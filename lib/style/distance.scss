@@ -9,10 +9,19 @@ circle.concentric {
   stroke: none;
 }
 
-line.dist.support-node {
+path.dist.inter-nodes {
+  stroke-width: 2;
+  stroke-linejoin: round;
+  fill: none;
+  stroke: $stroke_normal2;
+  stroke-opacity: .3;
+}
+
+path.dist.support-node {
+  fill: none;
   stroke: #0095dd;
   stroke-linecap: round;
   stroke-opacity: .3;
   stroke-dasharray: 2, 6;
-  stroke-width: 5px;
+  stroke-width: 4px;
 }

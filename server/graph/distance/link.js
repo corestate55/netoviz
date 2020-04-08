@@ -72,6 +72,18 @@ class DistanceLink extends ForceSimulationLink {
       .slice(0, 2)
       .join('__')
   }
+
+  /**
+   * check if reverse link or not.
+   * @param {DistanceLink} link - Link.
+   * @returns {boolean|boolean} True if reverse link.
+   * @public
+   */
+  isReverseLink(link) {
+    return (
+      this.sourcePath === link.targetPath && this.targetPath === link.sourcePath
+    )
+  }
 }
 
 export default DistanceLink

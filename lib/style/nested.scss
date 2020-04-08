@@ -46,4 +46,8 @@ line.nest {
 
 path.nest.tp-tp {
   stroke-width: 4;
+  stroke-linejoin: round;
+  fill: none;
+  stroke: $stroke_normal2;
+  stroke-opacity: 0.6;
 }

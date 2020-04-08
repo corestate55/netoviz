@@ -1,12 +1,5 @@
 @import "color-schema";
 
-path.nest.tp-tp {
-  stroke-linejoin: round;
-  fill: none;
-  stroke: $stroke_normal2;
-  stroke-opacity: 0.6;
-}
-
 line {
   stroke: $stroke_normal2;
   stroke-opacity: 0.5;
@@ -15,7 +8,7 @@ line {
 line.topo.link,
 line.nest.support-tp,
 path.nest.tp-tp,
-line.dist.inter-nodes {
+path.dist.inter-nodes {
   &.select-ready {
     @extend %select-ready;
   }

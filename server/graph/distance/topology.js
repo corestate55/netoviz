@@ -183,7 +183,11 @@ class DistanceTopology {
         l => l.sourceNodePath === srcNode.path
       )
       for (const linkFromSrcNode of linksFromSrcNode) {
-        if (nodes.find(d => d.path === linkFromSrcNode.targetNodePath)) {
+        if (
+          nodes.find(d => d.path === linkFromSrcNode.targetNodePath) &&
+          // limit single side (one of bi-directional link)
+          !links.find(l => l.isReverseLink(linkFromSrcNode))
+        ) {
           links.push(linkFromSrcNode)
         }
       }
