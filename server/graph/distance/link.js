@@ -5,10 +5,23 @@
 import ForceSimulationLink from '../force-simulation/link'
 
 /**
+ * @typedef {DistanceLink} DistanceLinkData
+ */
+/**
  * Link of distance graph.
  * @extends {ForceSimulationLink}
  */
 class DistanceLink extends ForceSimulationLink {
+  constructor(linkData) {
+    super(linkData)
+
+    // end node info
+    /** @type {string} */
+    this.sourceNodePath = this._endNodePath(this.sourcePath)
+    /** @type {string} */
+    this.targetNodePath = this._endNodePath(this.targetPath)
+  }
+
   /**
    * Pick layer name from path.
    * @returns {string} - Layer name.
@@ -16,24 +29,6 @@ class DistanceLink extends ForceSimulationLink {
    */
   layerPath() {
     return this.path.split('__').shift()
-  }
-
-  /**
-   * Get node path of source term-point.
-   * @returns {string} Source node path.
-   * @public
-   */
-  sourceNodePath() {
-    return this._endNodePath(this.sourcePath)
-  }
-
-  /**
-   * Get node path of target (destination) term-point.
-   * @returns {string} Target node path.
-   * @public
-   */
-  targetNodePath() {
-    return this._endNodePath(this.targetPath)
   }
 
   /**
@@ -62,9 +57,7 @@ class DistanceLink extends ForceSimulationLink {
    * @public
    */
   isConnectingNode(nodePath) {
-    return (
-      this.sourceNodePath() === nodePath || this.targetNodePath() === nodePath
-    )
+    return this.sourceNodePath === nodePath || this.targetNodePath === nodePath
   }
 
   /**

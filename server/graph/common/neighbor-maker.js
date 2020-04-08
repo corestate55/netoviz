@@ -109,7 +109,7 @@ class NeighborMaker extends RelationMakerBase {
       `targetLinks: ${targetLinks.map(d => d.path)}`
     )
     for (const targetLink of targetLinks) {
-      const dstNode = this._findNodeByPath(targetLink.targetNodePath())
+      const dstNode = this._findNodeByPath(targetLink.targetNodePath)
       if (dstNode.neighbor && dstNode.neighbor.degree <= degree) {
         this.consoleDebug(
           degree,
@@ -173,7 +173,7 @@ class NeighborMaker extends RelationMakerBase {
    * @private
    */
   _findAllLinksWithOrigin(links, target) {
-    return links.filter(d => d.sourceNodePath() === target.path)
+    return links.filter(d => d.sourceNodePath === target.path)
   }
 }
 

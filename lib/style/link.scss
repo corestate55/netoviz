@@ -14,7 +14,8 @@ line {
 
 line.topo.link,
 line.nest.support-tp,
-path.nest.tp-tp {
+path.nest.tp-tp,
+line.dist.inter-nodes {
   &.select-ready {
     @extend %select-ready;
   }

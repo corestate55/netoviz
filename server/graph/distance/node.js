@@ -6,10 +6,10 @@ import ForceSimulationNode from '../force-simulation/node'
 
 /**
  * @typedef {DistanceNode} DistanceNodeData
- * @extends {ForceSimulationNode}
  */
 /**
  * Node of distance graph.
+ * @extends {ForceSimulationNode}
  */
 class DistanceNode extends ForceSimulationNode {
   /**

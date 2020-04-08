@@ -125,6 +125,73 @@ class DistanceTopology {
   }
 
   /**
+   * Pick nodes in each layout data.
+   * @param {Array<DistanceNodeLayoutData>} layouts - Layouts.
+   * @returns {Array<DistanceNode>} Nodes.
+   * @private
+   */
+  _nodesInLayouts(layouts) {
+    return layouts
+      .map(layout => layout.nodes)
+      .reduce((sum, n) => sum.concat(n), [])
+  }
+
+  /**
+   * Make links of supporting-nodes relation.
+   * @param {Array<DistanceNodeLayoutData>} layouts - Layouts.
+   * @returns {Array<DistanceLinkData>} Links.
+   * @private
+   */
+  _makeSupportLinks(layouts) {
+    const nodes = this._nodesInLayouts(layouts)
+    const links = []
+
+    for (const node of nodes) {
+      for (const supportPath of node.children) {
+        if (!nodes.find(d => d.path === supportPath)) {
+          continue
+        }
+        const supportName = supportPath.split('__').slice(1)
+        const supportLayer = supportPath.split('__').shift()
+        const name = `${node.name},${supportName}`
+        const linkData = {
+          name,
+          path: `${node.layerPath()},${supportLayer}__${name}`,
+          type: 'support-node',
+          sourceNodePath: node.path,
+          targetNodePath: supportPath
+        }
+        links.push(linkData)
+      }
+    }
+    return links
+  }
+
+  /**
+   * Make links inter nodes.
+   * @param {Array<DistanceNodeLayoutData>} layouts - Layouts.
+   * @returns {Array<DistanceLink>} - Links.
+   * @private
+   */
+  _makeLinks(layouts) {
+    const nodes = this._nodesInLayouts(layouts)
+    const baseLinks = this.links.filter(d => d.isTypeTpTp())
+    const links = []
+
+    for (const srcNode of nodes) {
+      const linksFromSrcNode = baseLinks.filter(
+        l => l.sourceNodePath === srcNode.path
+      )
+      for (const linkFromSrcNode of linksFromSrcNode) {
+        if (nodes.find(d => d.path === linkFromSrcNode.targetNodePath)) {
+          links.push(linkFromSrcNode)
+        }
+      }
+    }
+    return links
+  }
+
+  /**
    * Convert to dependency graph data.
    * @returns {DistanceTopologyData}
    * @public
@@ -132,12 +199,15 @@ class DistanceTopology {
   toData() {
     /**
      * @typedef {Object} DistanceTopologyData
-     * @prop {Array<DistanceNodeLayoutData>} layouts - Distance-Nodes table
-     * @prop {Array<DistanceLink>} links - Links (TODO: filtering by layer)
+     * @prop {Array<DistanceNodeLayoutData>} layouts - Distance-Nodes table.
+     * @prop {Array<DistanceLink>} links - Links.
+     * @prop {Array<DistanceLink>} supportLinks - Support-node links.
      */
+    const layouts = this._makeNodeLayout()
     return {
-      layouts: this._makeNodeLayout(),
-      links: this.links.filter(d => d.isTypeTpTp())
+      layouts,
+      supportLinks: this._makeSupportLinks(layouts),
+      links: this._makeLinks(layouts)
     }
   }
 }

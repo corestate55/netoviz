@@ -1,9 +1,18 @@
 @import "common";
 @import "node";
 @import "text-label";
+@import "link";
 
 circle.concentric {
   fill: #92D364;
   fill-opacity: .1;
   stroke: none;
+}
+
+line.dist.support-node {
+  stroke: #0095dd;
+  stroke-linecap: round;
+  stroke-opacity: .3;
+  stroke-dasharray: 2, 6;
+  stroke-width: 5px;
 }
