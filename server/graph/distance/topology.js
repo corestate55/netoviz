@@ -27,8 +27,7 @@ class DistanceTopology {
 
     /**
      * Radius of node circle.
-     * @const
-     * @type {number}
+     * @const {number}
      */
     this.nodeRadius = 20 // pt
 

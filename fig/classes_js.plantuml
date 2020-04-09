@@ -9,6 +9,7 @@ class TopologyDataAPI {
     -_makeGraphQuery()
     -_toDependencyTopologyData()
     -_toNestedTopologyData()
+    -_toDistanceTopologyData()
     +getGraphData()
     +postGraphData()
 }
@@ -24,85 +25,48 @@ class CacheRfcTopologyDataConverter {
     -_updateCacheTimeStamp()
     +toForceSimulationTopologyData()
 }
-class BaseContainer {
-    +sortUniq()
-    +flatten()
-}
-BaseContainer -- Set
-class FamilyMaker {
+class ShallowNestedNode {
     +constructor()
-    -_consoleDebug()
-    -_findNodeByPath()
-    -_findAndMarkAsFamily()
-    -_findTargetNodeByName()
-    -_findTargetNodeByPath()
-    -_findTargetNode()
-    +markFamilyWithTarget()
+    -_setFamilyRelation()
+    +layerPath()
+    +layer()
+    +isNode()
+    +isRootNode()
+    +isTp()
+    +matchTpPath()
+    +matchNodePath()
+    +parentNodePaths()
+    +parentTpPaths()
+    +childNodePaths()
+    +childTpPaths()
+    +numberOfTps()
+    +numberOfParentNodes()
+    +numberOfChildNodes()
+    +filterTpPath()
+    +filterNodePath()
+    +linkPath()
+    +setCircle()
+    +setRect()
+    +setGridPosition()
 }
-FamilyMaker -- FamilyRelation
-FamilyMaker -- FamilyMaker
-class DiffState {
+class DeepNestedTopology {
     +constructor()
-    +detect()
+    +beforeCalcRootNodePosition()
+    +setNodes()
+    +splitNode()
+    +isLeaf()
+    -_overDepth()
+    -_inTargetDepth()
+    +assumeAsLeaf()
+    +childNodePathsToCalcPosition()
+    +childNodeFrom()
 }
-class DependencyConstants {
-    +constructor()
-    +nodeWidth()
-    +nodeHeight()
-}
-class DependencyNode {
-    +constructor()
-    +setPosition()
-    +nodeWidth()
-    +toData()
-}
-DependencyNode --|> ForceSimulationNode
-DependencyNode -- DependencyConstants
-class DependencyTopology {
-    +constructor()
-    -_markFamilyWithTarget()
-    -_setNetworks()
-    +toData()
-}
-DependencyTopology -- DependencyNetwork
-class DependencyNetwork {
-    +constructor()
-    -_setPosition()
-    -_calcX()
-    -_layerHeight()
-    -_calcY()
-    -_setNodes()
-    -_findNodeByPath()
-    -_setTermPoints()
-    -_isType()
-    -_findAllNodesFrom()
-    -_findAllTermPointsFrom()
-    +toData()
-}
-DependencyNetwork -- DependencyConstants
-DependencyNetwork -- DependencyNode
-DependencyNetwork -- DependencyTermPoint
-class DependencyTermPoint {
-    +constructor()
-    -_setCenterPosition()
-    +setCenterPosition()
-    -_calcX()
-    -_calcY()
-    +parentPath()
-    +toData()
-}
-DependencyTermPoint --|> ForceSimulationNode
-DependencyTermPoint -- DependencyConstants
+DeepNestedTopology --|> ShallowNestedTopology
+DeepNestedTopology -- DeepNestedNode
 class NestLayout {
     +constructor()
     +toData()
 }
-class AggregatedNestedNode {
-    +constructor()
-    -_aggregateWith()
-}
-AggregatedNestedNode --|> DeepNestedNode
-AggregatedNestedNode -- AggregatedNodeAttribute
 class ShallowNestedTopology {
     +constructor()
     +initialize()
@@ -143,42 +107,16 @@ class ShallowNestedTopology {
 ShallowNestedTopology -- GridOperator
 ShallowNestedTopology -- ShallowNestedNode
 ShallowNestedTopology -- NestedLink
-class DeepNestedNode {
-    +constructor()
-    +renameChildPath()
-    -_duplicate()
-    +splitNodeByParent()
+class NestedLink {
+    +availableIn()
 }
-DeepNestedNode --|> ShallowNestedNode
-DeepNestedNode -- DeepNestedNode
-class DeepNestedTopology {
+NestedLink --|> ForceSimulationLink
+class AggregatedNestedNode {
     +constructor()
-    +beforeCalcRootNodePosition()
-    +setNodes()
-    +splitNode()
-    +isLeaf()
-    -_overDepth()
-    -_inTargetDepth()
-    +assumeAsLeaf()
-    +childNodePathsToCalcPosition()
-    +childNodeFrom()
+    -_aggregateWith()
 }
-DeepNestedTopology --|> ShallowNestedTopology
-DeepNestedTopology -- DeepNestedNode
-class GridOperator {
-    +constructor()
-    -_setLayoutData()
-    -_setXYGrid()
-    -_initDefault()
-    -_setXGridByInterval()
-    -_setYGridByInterval()
-    +positionByOrdinal()
-    -_ordinal2coordinate()
-    -_nextOrdinalPosition()
-    +ordinalPositionByNodePath()
-    +toData()
-}
-GridOperator -- NestLayout
+AggregatedNestedNode --|> DeepNestedNode
+AggregatedNestedNode -- AggregatedNodeAttribute
 class AggregatedTopology {
     -_replaceChildrenByAggregatedNode()
     -_aggregatedNodeName()
@@ -198,34 +136,78 @@ class AggregatedTopology {
 AggregatedTopology --|> DeepNestedTopology
 AggregatedTopology -- AggregatedNestedNode
 AggregatedTopology -- Set
-class ShallowNestedNode {
+class DeepNestedNode {
     +constructor()
-    -_setFamilyRelation()
-    +layerPath()
-    +layer()
-    +isNode()
-    +isRootNode()
-    +isTp()
-    +matchTpPath()
-    +matchNodePath()
-    +parentNodePaths()
-    +parentTpPaths()
-    +childNodePaths()
-    +childTpPaths()
-    +numberOfTps()
-    +numberOfParentNodes()
-    +numberOfChildNodes()
-    +filterTpPath()
-    +filterNodePath()
-    +linkPath()
-    +setCircle()
-    +setRect()
-    +setGridPosition()
+    +renameChildPath()
+    -_duplicate()
+    +splitNodeByParent()
 }
-class NestedLink {
-    +availableIn()
+DeepNestedNode --|> ShallowNestedNode
+DeepNestedNode -- DeepNestedNode
+class GridOperator {
+    +constructor()
+    -_setLayoutData()
+    -_setXYGrid()
+    -_initDefault()
+    -_setXGridByInterval()
+    -_setYGridByInterval()
+    +positionByOrdinal()
+    -_ordinal2coordinate()
+    -_nextOrdinalPosition()
+    +ordinalPositionByNodePath()
+    +toData()
 }
-NestedLink --|> ForceSimulationLink
+GridOperator -- NestLayout
+class RfcL2TermPoint {
+    +constructor()
+}
+RfcL2TermPoint --|> RfcTermPoint
+RfcL2TermPoint -- RfcL2TermPointAttribute
+class RfcL3NetworkAttribute {
+    +constructor()
+}
+RfcL3NetworkAttribute --|> RfcModelBase
+class RfcL3Network {
+    +constructor()
+    +newNode()
+    +newLink()
+}
+RfcL3Network --|> RfcNetwork
+RfcL3Network -- RfcL3NetworkAttribute
+RfcL3Network -- RfcL3Node
+RfcL3Network -- RfcL3Link
+class RfcTopology {
+    +constructor()
+    +newNetwork()
+}
+RfcTopology --|> RfcModelBase
+RfcTopology -- RfcNetwork
+RfcTopology -- RfcL3Network
+RfcTopology -- RfcL2Network
+class RfcL3Link {
+    +constructor()
+}
+RfcL3Link --|> RfcLink
+RfcL3Link -- RfcL3LinkAttribute
+class RfcL3TermPointAttribute {
+    +constructor()
+    +toHtml()
+}
+RfcL3TermPointAttribute --|> RfcModelBase
+class RfcL2NetworkAttribute {
+    +constructor()
+}
+RfcL2NetworkAttribute --|> RfcModelBase
+class RfcL3TermPoint {
+    +constructor()
+}
+RfcL3TermPoint --|> RfcTermPoint
+RfcL3TermPoint -- RfcL3TermPointAttribute
+class RfcL2Link {
+    +constructor()
+}
+RfcL2Link --|> RfcLink
+RfcL2Link -- RfcL2LinkAttribute
 class RfcNode {
     +constructor()
     -_constructTermPoints()
@@ -239,64 +221,24 @@ RfcNode --|> RfcModelBase
 RfcNode -- RfcTermPoint
 RfcNode -- RfcSupportingNode
 RfcNode -- ForceSimulationNode
-class RfcL3Network {
+class RfcL3LinkAttribute {
     +constructor()
-    +newNode()
-    +newLink()
 }
-RfcL3Network --|> RfcNetwork
-RfcL3Network -- RfcL3NetworkAttribute
-RfcL3Network -- RfcL3Node
-RfcL3Network -- RfcL3Link
-class RfcL2NodeAttribute {
+RfcL3LinkAttribute --|> RfcModelBase
+class RfcL3Node {
     +constructor()
+    +newTP()
+}
+RfcL3Node --|> RfcNode
+RfcL3Node -- RfcL3NodeAttribute
+RfcL3Node -- RfcL3TermPoint
+class RfcL3NodeAttribute {
+    +constructor()
+    -_selectRouterId()
     +toHtml()
 }
-RfcL2NodeAttribute --|> RfcModelBase
-class RfcModelBase {
-    +constructor()
-    -_constructDiffState()
-}
-RfcModelBase --|> BaseContainer
-RfcModelBase -- DiffState
-class RfcTopology {
-    +constructor()
-    +newNetwork()
-}
-RfcTopology --|> RfcModelBase
-RfcTopology -- RfcNetwork
-RfcTopology -- RfcL3Network
-RfcTopology -- RfcL2Network
-class RfcL2Network {
-    +constructor()
-    +newNode()
-    +newLink()
-}
-RfcL2Network --|> RfcNetwork
-RfcL2Network -- RfcL2NetworkAttribute
-RfcL2Network -- RfcL2Node
-RfcL2Network -- RfcL2Link
-class RfcL3NetworkAttribute {
-    +constructor()
-}
-RfcL3NetworkAttribute --|> RfcModelBase
-class RfcL2TermPointAttribute {
-    +constructor()
-    +toHtml()
-}
-RfcL2TermPointAttribute --|> RfcModelBase
-RfcL2TermPointAttribute -- RfcL2VlanIdName
-class AggregatedNodeAttribute {
-    +constructor()
-    -_aggregatesNodeStr()
-    +toHtml()
-}
-AggregatedNodeAttribute --|> RfcModelBase
-class RfcL3TermPointAttribute {
-    +constructor()
-    +toHtml()
-}
-RfcL3TermPointAttribute --|> RfcModelBase
+RfcL3NodeAttribute --|> RfcModelBase
+RfcL3NodeAttribute -- RfcL3Prefix
 class RfcNetwork {
     +constructor()
     -_constructSupportingNetworks()
@@ -316,18 +258,6 @@ RfcNetwork -- RfcNetworkTypes
 RfcNetwork -- RfcSupportingNetwork
 RfcNetwork -- RfcNode
 RfcNetwork -- RfcLink
-class RfcL2Link {
-    +constructor()
-}
-RfcL2Link --|> RfcLink
-RfcL2Link -- RfcL2LinkAttribute
-class RfcL3Node {
-    +constructor()
-    +newTP()
-}
-RfcL3Node --|> RfcNode
-RfcL3Node -- RfcL3NodeAttribute
-RfcL3Node -- RfcL3TermPoint
 class RfcL2Node {
     +constructor()
     +newTP()
@@ -335,27 +265,21 @@ class RfcL2Node {
 RfcL2Node --|> RfcNode
 RfcL2Node -- RfcL2NodeAttribute
 RfcL2Node -- RfcL2TermPoint
-class RfcL2NetworkAttribute {
+class RfcLink {
     +constructor()
+    -_constructSupportingLinks()
+    +graphLink()
 }
-RfcL2NetworkAttribute --|> RfcModelBase
-class RfcL3NodeAttribute {
+RfcLink --|> RfcModelBase
+RfcLink -- RfcLinkTpRef
+RfcLink -- RfcSupportingLink
+RfcLink -- ForceSimulationLink
+class RfcL2TermPointAttribute {
     +constructor()
-    -_selectRouterId()
     +toHtml()
 }
-RfcL3NodeAttribute --|> RfcModelBase
-RfcL3NodeAttribute -- RfcL3Prefix
-class RfcL3Link {
-    +constructor()
-}
-RfcL3Link --|> RfcLink
-RfcL3Link -- RfcL3LinkAttribute
-class RfcL3TermPoint {
-    +constructor()
-}
-RfcL3TermPoint --|> RfcTermPoint
-RfcL3TermPoint -- RfcL3TermPointAttribute
+RfcL2TermPointAttribute --|> RfcModelBase
+RfcL2TermPointAttribute -- RfcL2VlanIdName
 class RfcTermPoint {
     +constructor()
     -_constructSupportingTermPoints()
@@ -367,31 +291,152 @@ RfcTermPoint --|> RfcModelBase
 RfcTermPoint -- RfcSupportingTermPoint
 RfcTermPoint -- ForceSimulationNode
 RfcTermPoint -- ForceSimulationLink
+class AggregatedNodeAttribute {
+    +constructor()
+    -_aggregatesNodeStr()
+    +toHtml()
+}
+AggregatedNodeAttribute --|> RfcModelBase
+class RfcL2NodeAttribute {
+    +constructor()
+    +toHtml()
+}
+RfcL2NodeAttribute --|> RfcModelBase
 class RfcL2LinkAttribute {
     +constructor()
 }
 RfcL2LinkAttribute --|> RfcModelBase
-class RfcL3LinkAttribute {
+class RfcModelBase {
     +constructor()
+    -_constructDiffState()
 }
-RfcL3LinkAttribute --|> RfcModelBase
-class RfcL2TermPoint {
+RfcModelBase --|> BaseContainer
+RfcModelBase -- DiffState
+class RfcL2Network {
     +constructor()
+    +newNode()
+    +newLink()
 }
-RfcL2TermPoint --|> RfcTermPoint
-RfcL2TermPoint -- RfcL2TermPointAttribute
-class RfcLink {
+RfcL2Network --|> RfcNetwork
+RfcL2Network -- RfcL2NetworkAttribute
+RfcL2Network -- RfcL2Node
+RfcL2Network -- RfcL2Link
+class DistanceTopology {
     +constructor()
-    -_constructSupportingLinks()
-    +graphLink()
+    -_distanceCircleInterval()
+    -_correctArrays()
+    -_distanceCircleRadius()
+    -_makeNodeLayout()
+    -_nodesInLayouts()
+    -_makeSupportLinks()
+    -_makeLinks()
+    +toData()
 }
-RfcLink --|> RfcModelBase
-RfcLink -- RfcLinkTpRef
-RfcLink -- RfcSupportingLink
-RfcLink -- ForceSimulationLink
-class ForceSimulationNode {
+DistanceTopology -- DistanceNode
+DistanceTopology -- DistanceLink
+class DistanceNode {
     +constructor()
-    +addParent()
+    +layerPath()
+    +isTypeNode()
+    -_exists()
+    +hasTargetRelation()
+    +distance()
+}
+DistanceNode --|> ForceSimulationNode
+class DistanceLink {
+    +constructor()
+    +layerPath()
+    +isTypeTpTp()
+    +isInLayer()
+    +isConnectingNode()
+    -_endNodePath()
+    +isReverseLink()
+}
+DistanceLink --|> ForceSimulationLink
+class NeighborMaker {
+    +constructor()
+    +markNeighborWithTarget()
+    -_findAllTpTpLinksInLayerOf()
+    -_markNeighbor()
+    -_findNodeByPath()
+    -_findAllLinksWithoutOrigin()
+    -_findAllLinksWithOrigin()
+}
+NeighborMaker --|> RelationMakerBase
+NeighborMaker -- NeighborRelation
+NeighborMaker -- NeighborMaker
+class RelationMakerBase {
+    +constructor()
+    +findTargetNode()
+    +findTargetNodeByName()
+    +findTargetNodeByPath()
+    +consoleDebug()
+}
+class DiffState {
+    +constructor()
+    +detect()
+}
+class FamilyMaker {
+    -_findNodeByPath()
+    -_existsFamilyInNode()
+    -_findAndMarkAsFamily()
+    +markFamilyWithTarget()
+}
+FamilyMaker --|> RelationMakerBase
+FamilyMaker -- FamilyRelation
+FamilyMaker -- FamilyMaker
+class BaseContainer {
+    +sortUniq()
+    +flatten()
+}
+BaseContainer -- Set
+class DependencyTopology {
+    +constructor()
+    -_markFamilyWithTarget()
+    -_setNetworks()
+    +toData()
+}
+DependencyTopology -- DependencyNetwork
+class DependencyNode {
+    +constructor()
+    +setPosition()
+    +nodeWidth()
+    +toData()
+}
+DependencyNode --|> ForceSimulationNode
+DependencyNode -- DependencyConstants
+class DependencyNetwork {
+    +constructor()
+    -_setPosition()
+    -_calcX()
+    -_layerHeight()
+    -_calcY()
+    -_setNodes()
+    -_findNodeByPath()
+    -_setTermPoints()
+    -_isType()
+    -_findAllNodesFrom()
+    -_findAllTermPointsFrom()
+    +toData()
+}
+DependencyNetwork -- DependencyConstants
+DependencyNetwork -- DependencyNode
+DependencyNetwork -- DependencyTermPoint
+class DependencyTermPoint {
+    +constructor()
+    -_setCenterPosition()
+    +setCenterPosition()
+    -_calcX()
+    -_calcY()
+    +parentPath()
+    +toData()
+}
+DependencyTermPoint --|> ForceSimulationNode
+DependencyTermPoint -- DependencyConstants
+class DependencyConstants {
+    +constructor()
+    +nodeWidth()
+    +nodeHeight()
 }
 class ForceSimulationTopology {
     +constructor()
@@ -405,158 +450,16 @@ class ForceSimulationTopology {
 ForceSimulationTopology --|> BaseContainer
 ForceSimulationTopology -- RfcTopology
 ForceSimulationTopology -- ForceSimulationNetwork
+class ForceSimulationNode {
+    +constructor()
+    +addParent()
+}
 class ForceSimulationNetwork {
     +constructor()
 }
 class ForceSimulationLink {
     +constructor()
 }
-class TooltipCreator {
-    +constructor()
-    -_makeTooltip()
-    -_isAggregated()
-    -_clearTimeout()
-    -_enableTooltipForAggregatedNode()
-    +function()
-    +enableTooltip()
-    -_disableTooltipBody()
-    +disableTooltip()
-}
-TooltipCreator -- AttrClass
-class DiagramBase {
-    +makeDiagramContainer()
-    +makeRootSVG()
-    +resizeRootSVG()
-    +isAggregated()
-    +isFamilyAggregated()
-    +isParentsAggregated()
-    -_classOfDiffState()
-    -_classOfInactive()
-    -_classOfAggregated()
-    +classStringFrom()
-    +clearDiagramContainer()
-    -_clearTooltip()
-    -_makeTooltipCreator()
-    -_makeClearHighlightButton()
-    -_makeToggleDiffButton()
-    +makeDiagramControlButtons()
-    +controlButtonMouseOverCallback()
-    +controlButtonMouseOutCallback()
-    -_setClearHighlightButtonHandler()
-    -_toggleActiveDiff()
-    -_setToggleDiffButtonHandler()
-    +setDiagramControlButtonsHandler()
-    +clearWarningMessage()
-    +makeWarningMessage()
-    -_childPathRegexp()
-    +matchChildPath()
-    +typeOfPath()
-    +networkPathOf()
-    +parentPathOf()
-    +targetNameFromAlert()
-    +apiURI()
-}
-DiagramBase --|> BaseContainer
-DiagramBase -- DiffState
-DiagramBase -- TooltipCreator
-DiagramBase -- RegExp
-class DependencyDiagramBuilder {
-    +constructor()
-    -_makeNetworkLabelsGroup()
-    -_makeNetworkLabels()
-    -_makeNetworkElementsGroup()
-    -_makeNodeRectsInNetwork()
-    -_makeTermPointCirclesInNetwork()
-    -_makeNodeLabelsInNetwork()
-    -_makeTermPointLabelsInNetwork()
-    -_makeDependencyLinesGroup()
-    +makeAllDiagramElements()
-}
-DependencyDiagramBuilder --|> DiagramBase
-class DependencyDiagramVisualizer {
-    +drawRfcTopologyData()
-    +highlightByAlert()
-}
-DependencyDiagramVisualizer --|> DependencyDiagramOperator
-class DependencyDiagramOperator {
-    +clearHighlight()
-    +clearDependencyLines()
-    +clearAllHighlight()
-    -_lineConverter()
-    -_makeDependencyLines()
-    -_pathsFromPairs()
-    -_runParentsAndChildren()
-    -_markTargetByPaths()
-    +clickHandler()
-    -_selectReadyByPath()
-    -_mouseOverHandler()
-    -_mouseOutHandler()
-    -_setRootSVGZoom()
-    +setAllDiagramElementsHandler()
-    -_findElementDataByPath()
-    -_getFamilyTree()
-}
-DependencyDiagramOperator --|> DependencyDiagramBuilder
-class InterTpLink {
-    +constructor()
-    +xMin()
-    +yMin()
-    +xMax()
-    +yMax()
-    -_height()
-    -_width()
-    +isSkewVertical()
-    +isSkewHorizontal()
-    +isSkewSlash()
-    +isSkewBackslash()
-    -_skewType()
-    +hasOverlapIndex()
-    -_inRange()
-    -_inRangeX()
-    -_inRangeYLow()
-    -_inRangeYHigh()
-    -_isNearYMid()
-    +isOverlapX()
-    -_isSameSkew()
-    -_isOverlapBackslashPatternA()
-    -_isOverlapBackslashPatternB()
-    -_isOverlapBackslash()
-    -_isOverlapSlashPatternA()
-    -_isOverlapSlashPatternB()
-    -_isOverlapSlash()
-    +isOverlap()
-    -_defaultYMiddlePoint()
-    -_xMiddlePoint()
-    +represent3Points()
-    +represent4Points()
-    -_regularSlashPolyline()
-    -_irregularSlashPolyline()
-    -_regularBackslashPolyline()
-    -_irregularBackslashPolyline()
-    -_regularHorizontalPolyline()
-    -_irregularHorizontalPolyline()
-    -_isIrregularYMid()
-    -_wideCircledCornerPolyline()
-    -_narrowCircledCornerPolyline()
-    +circledCornerPolyline()
-    +singleLine()
-}
-InterTpLink --|> ForceSimulationLink
-class InterTpLinkCreator {
-    +constructor()
-    -_forEachTpTpLink()
-    -_groupByOverlapLinks()
-    -_slashLinks()
-    -_backslashLinks()
-    -_displaceYMidOfLinksIn()
-    -_adjustLineOverlap()
-    -_linksWith()
-    +supportTpLinks()
-    +tpTpLinks()
-    +toData()
-}
-InterTpLinkCreator -- InterTpLink
-InterTpLinkCreator -- Set
 class NestedDiagramBuilder {
     +constructor()
     +selectXY()
@@ -576,23 +479,13 @@ class NestedDiagramBuilder {
     -_makeTpLabels()
     -_makeGridFittingButton()
     +makeDiagramControlButtons()
-    +makeGraphObjects()
+    -_wholeNodes()
+    -_wholeTermPoints()
+    +makeAllDiagramElements()
 }
 NestedDiagramBuilder --|> DiagramBase
 NestedDiagramBuilder -- Set
 NestedDiagramBuilder -- InterTpLinkCreator
-class NestedDiagramVisualizer {
-    +apiURI()
-    -_apiParamFrom()
-    +saveLayout()
-    +setUISideNodeClickHook()
-    +nodeClickHook()
-    -_FindOperativeParentAndHighlight()
-    -_highlightParentOfInoperativeNodes()
-    -_highlightOperativeNodes()
-    +highlightByAlert()
-}
-NestedDiagramVisualizer --|> NestedDiagramOperator
 class NestedDiagramOperator {
     -_findTargetRootNodes()
     -_selectNodeRectByPath()
@@ -636,6 +529,209 @@ class NestedDiagramOperator {
     +setAllDiagramElementsHandler()
 }
 NestedDiagramOperator --|> NestedDiagramBuilder
+class NestedDiagramVisualizer {
+    +apiURI()
+    -_apiParamFrom()
+    +saveLayout()
+    +setUISideNodeClickHook()
+    +nodeClickHook()
+    -_FindOperativeParentAndHighlight()
+    -_highlightParentOfInoperativeNodes()
+    -_highlightOperativeNodes()
+    +highlightByAlert()
+}
+NestedDiagramVisualizer --|> NestedDiagramOperator
+class InterTpLinkCreator {
+    +constructor()
+    -_forEachTpTpLink()
+    -_groupByOverlapLinks()
+    -_slashLinks()
+    -_backslashLinks()
+    -_displaceYMidOfLinksIn()
+    -_adjustLineOverlap()
+    -_linksWith()
+    +supportTpLinks()
+    +tpTpLinks()
+    +toData()
+}
+InterTpLinkCreator -- InterTpLink
+InterTpLinkCreator -- Set
+class InterTpLink {
+    +constructor()
+    +xMin()
+    +yMin()
+    +xMax()
+    +yMax()
+    -_height()
+    -_width()
+    +isSkewVertical()
+    +isSkewHorizontal()
+    +isSkewSlash()
+    +isSkewBackslash()
+    -_skewType()
+    +hasOverlapIndex()
+    -_inRange()
+    -_inRangeX()
+    -_inRangeYLow()
+    -_inRangeYHigh()
+    -_isNearYMid()
+    +isOverlapX()
+    -_isSameSkew()
+    -_isOverlapBackslashPatternA()
+    -_isOverlapBackslashPatternB()
+    -_isOverlapBackslash()
+    -_isOverlapSlashPatternA()
+    -_isOverlapSlashPatternB()
+    -_isOverlapSlash()
+    +isOverlap()
+    -_defaultYMiddlePoint()
+    -_xMiddlePoint()
+    +represent3Points()
+    +represent4Points()
+    -_regularSlashPolyline()
+    -_irregularSlashPolyline()
+    -_regularBackslashPolyline()
+    -_irregularBackslashPolyline()
+    -_regularHorizontalPolyline()
+    -_irregularHorizontalPolyline()
+    -_isIrregularYMid()
+    -_wideCircledCornerPolyline()
+    -_narrowCircledCornerPolyline()
+    +circledCornerPolyline()
+    +singleLine()
+    +polyline()
+}
+InterTpLink --|> ForceSimulationLink
+class DistanceDiagramBuilder {
+    +constructor()
+    -_makeNodeCircles()
+    -_makeNodeLabels()
+    -_makeDistanceCircles()
+    -_makeLinkSVGGroup()
+    -_convertLinkToPoints()
+    -_makeLinkLine()
+    -_makeTpTpLinkLine()
+    -_makeSupportNodeLinks()
+    +isEmptyLayout()
+    +makeAllDiagramElements()
+}
+DistanceDiagramBuilder --|> DiagramBase
+class DistanceDiagramOperator {
+    -_setInitialZoom()
+    -_setSVGZoom()
+    +targetNodeData()
+    -_selectNodeCircleByPath()
+    -_selectLinkLineByPath()
+    -_selectReadyNodeCircle()
+    -_selectReadyLink()
+    +highlightNodeCircle()
+    +clearHighlight()
+    -_clearSelectReady()
+    +nodeClickHook()
+    +clickHandler()
+    -_mouseOverHandler()
+    -_mouseOutHandler()
+    -_setNodeMouseHandler()
+    -_findLinksConnectedWithNode()
+    -_selectReadyLinkByNode()
+    -_findNodesAtLinkEnd()
+    -_linkMouseOverHandler()
+    -_setLinkMouseHandler()
+    +setAllDiagramElementHandler()
+}
+DistanceDiagramOperator --|> DistanceDiagramBuilder
+class DistanceDiagramVisualizer {
+    +drawRfcTopologyData()
+    +setUISideNodeClickHook()
+    +nodeClickHook()
+    +highlightByAlert()
+}
+DistanceDiagramVisualizer --|> DistanceDiagramOperator
+class DiagramBase {
+    +makeDiagramContainer()
+    +makeRootSVG()
+    +resizeRootSVG()
+    +isAggregated()
+    +isFamilyAggregated()
+    +isParentsAggregated()
+    -_classOfDiffState()
+    -_classOfInactive()
+    -_classOfAggregated()
+    +classStringFrom()
+    +clearDiagramContainer()
+    -_clearTooltip()
+    -_makeTooltipCreator()
+    -_makeClearHighlightButton()
+    -_makeToggleDiffButton()
+    +makeDiagramControlButtons()
+    +controlButtonMouseOverCallback()
+    +controlButtonMouseOutCallback()
+    -_setClearHighlightButtonHandler()
+    -_toggleActiveDiff()
+    -_setToggleDiffButtonHandler()
+    +setDiagramControlButtonsHandler()
+    +clearWarningMessage()
+    +makeWarningMessage()
+    -_childPathRegexp()
+    +matchChildPath()
+    +typeOfPath()
+    +networkPathOf()
+    +parentPathOf()
+    +targetNameFromAlert()
+    +apiURI()
+}
+DiagramBase --|> BaseContainer
+DiagramBase -- DiffState
+DiagramBase -- TooltipCreator
+DiagramBase -- RegExp
+class TooltipCreator {
+    +constructor()
+    -_makeTooltip()
+    -_isAggregated()
+    -_clearTimeout()
+    -_enableTooltipForAggregatedNode()
+    +enableTooltip()
+    -_disableTooltipBody()
+    +disableTooltip()
+}
+TooltipCreator -- AttrClass
+class DependencyDiagramBuilder {
+    +constructor()
+    -_makeNetworkLabelsGroup()
+    -_makeNetworkLabels()
+    -_makeNetworkElementsGroup()
+    -_makeNodeRectsInNetwork()
+    -_makeTermPointCirclesInNetwork()
+    -_makeNodeLabelsInNetwork()
+    -_makeTermPointLabelsInNetwork()
+    -_makeDependencyLinesGroup()
+    +makeAllDiagramElements()
+}
+DependencyDiagramBuilder --|> DiagramBase
+class DependencyDiagramOperator {
+    +clearHighlight()
+    +clearDependencyLines()
+    +clearAllHighlight()
+    -_lineConverter()
+    -_makeDependencyLines()
+    -_pathsFromPairs()
+    -_runParentsAndChildren()
+    -_markTargetByPaths()
+    +clickHandler()
+    -_selectReadyByPath()
+    -_mouseOverHandler()
+    -_mouseOutHandler()
+    -_setRootSVGZoom()
+    +setAllDiagramElementsHandler()
+    -_findElementDataByPath()
+    -_getFamilyTree()
+}
+DependencyDiagramOperator --|> DependencyDiagramBuilder
+class DependencyDiagramVisualizer {
+    +drawRfcTopologyData()
+    +highlightByAlert()
+}
+DependencyDiagramVisualizer --|> DependencyDiagramOperator
 class Dependency2DiagramBuilder {
     +constructor()
     -_makeNetworkTypeNodeData()
@@ -653,12 +749,6 @@ class Dependency2DiagramBuilder {
     +makeAllDiagramElements()
 }
 Dependency2DiagramBuilder --|> DiagramBase
-class Dependency2DiagramVisualizer {
-    +drawRfcTopologyData()
-    -_findNodeObjByName()
-    +highlightByAlert()
-}
-Dependency2DiagramVisualizer --|> Dependency2DiagramOperator
 class Dependency2DiagramOperator {
     +clearHighlight()
     +clearDependencyLines()
@@ -682,6 +772,12 @@ class Dependency2DiagramOperator {
     +setAllDiagramElementsHandler()
 }
 Dependency2DiagramOperator --|> Dependency2DiagramBuilder
+class Dependency2DiagramVisualizer {
+    +drawRfcTopologyData()
+    -_findNodeObjByName()
+    +highlightByAlert()
+}
+Dependency2DiagramVisualizer --|> Dependency2DiagramOperator
 class ForceSimulationDiagramBuilder {
     +constructor()
     -_makeAllDiagramElements()
@@ -702,42 +798,6 @@ class ForceSimulationDiagramBuilder {
     -_renameLinkProperty()
 }
 ForceSimulationDiagramBuilder --|> DiagramBase
-class PositionCache {
-    +saveTopology()
-    -_loadToNodeData()
-    -_loadToNetwork()
-    +loadToTopologyData()
-}
-class ForceSimulationDiagramSimulator {
-    +constructor()
-    -_makeSimulation()
-    -_setupSimulation()
-    -_linkDistance()
-    -_tickedLink()
-    -_tickedTermPoint()
-    -_tickedNode()
-    -_ticked()
-    +startSimulation()
-    +stopSimulation()
-    +restartSimulation()
-}
-ForceSimulationDiagramSimulator --|> ForceSimulationDiagramBuilder
-class ForceSimulationDiagramVisualizer {
-    +constructor()
-    +drawRfcTopologyData()
-    -_findNodeDataByPath()
-    -_clearAllDiagrams()
-    -_drawNetworkDiagrams()
-    -_forEachDiagramOperator()
-    +clearAllHighlight()
-    -_clearAllDiagramsHighlight()
-    -_clearAllDiagramsWarningMessage()
-    -_findDiagramOperatorByName()
-    +highlightByAlert()
-}
-ForceSimulationDiagramVisualizer --|> BaseContainer
-ForceSimulationDiagramVisualizer -- PositionCache
-ForceSimulationDiagramVisualizer -- ForceSimulationDiagramOperator
 class ForceSimulationDiagramOperator {
     +constructor()
     +clearHighlight()
@@ -762,4 +822,40 @@ class ForceSimulationDiagramOperator {
     -_setAllDiagramElementsHandler()
 }
 ForceSimulationDiagramOperator --|> ForceSimulationDiagramSimulator
+class ForceSimulationDiagramVisualizer {
+    +constructor()
+    +drawRfcTopologyData()
+    -_findNodeDataByPath()
+    -_clearAllDiagrams()
+    -_drawNetworkDiagrams()
+    -_forEachDiagramOperator()
+    +clearAllHighlight()
+    -_clearAllDiagramsHighlight()
+    -_clearAllDiagramsWarningMessage()
+    -_findDiagramOperatorByName()
+    +highlightByAlert()
+}
+ForceSimulationDiagramVisualizer --|> BaseContainer
+ForceSimulationDiagramVisualizer -- PositionCache
+ForceSimulationDiagramVisualizer -- ForceSimulationDiagramOperator
+class PositionCache {
+    +saveTopology()
+    -_loadToNodeData()
+    -_loadToNetwork()
+    +loadToTopologyData()
+}
+class ForceSimulationDiagramSimulator {
+    +constructor()
+    -_makeSimulation()
+    -_setupSimulation()
+    -_linkDistance()
+    -_tickedLink()
+    -_tickedTermPoint()
+    -_tickedNode()
+    -_ticked()
+    +startSimulation()
+    +stopSimulation()
+    +restartSimulation()
+}
+ForceSimulationDiagramSimulator --|> ForceSimulationDiagramBuilder
 @enduml
