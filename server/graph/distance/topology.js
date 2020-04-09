@@ -115,8 +115,8 @@ class DistanceTopology {
        */
       layouts.push({ dIndex: di, nodes: diNodes, r: diR })
 
-      const startAngle =
-        Math.PI / 4 + ((di - 1) * Math.PI) / 2 / (maxDistance - 1)
+      const dStartAngle = Math.PI / 2 / maxDistance
+      const startAngle = Math.PI / 4 + di * dStartAngle
       diNodes.forEach((d, i) => {
         d.di = i
         d.r = round(this.nodeRadius)
