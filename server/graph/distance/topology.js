@@ -87,6 +87,21 @@ class DistanceTopology {
   }
 
   /**
+   * Rewrite distance circle radius.
+   * @param {Array<DistanceNodeLayoutData>} layouts - Layouts
+   * @private
+   */
+  _rewriteDistanceCircleRadius(layouts) {
+    layouts.forEach((layout, i) => {
+      if (i === layouts.length - 1) {
+        layout.r += layout.r - layouts[i - 1].r
+        return
+      }
+      layout.r += (layouts[i + 1].r - layout.r) / 2
+    })
+  }
+
+  /**
    * Make layout for distance diagram.
    * @returns {Array<DistanceNodeLayoutData>}
    * @private
@@ -126,6 +141,8 @@ class DistanceTopology {
         d.cy = round(diR * Math.sin(angle))
       })
     }
+
+    this._rewriteDistanceCircleRadius(layouts)
     return layouts
   }
 

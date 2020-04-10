@@ -4,9 +4,13 @@
 @import "link";
 
 circle.concentric {
-  fill: #D8E240;
-  fill-opacity: .1;
   stroke: none;
+  &.bg0 {
+    fill: hsl(60, 55%, 98%);
+  }
+  &.bg1 {
+    fill: hsl(60, 55%, 94%);
+  }
 }
 
 path.dist.inter-nodes {
