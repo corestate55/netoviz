@@ -134,9 +134,8 @@ class AggregatedTopology extends DeepNestedTopology {
    * @private
    */
   _makeFamilyClassifiers() {
-    const familyClassifierCB1 = family => d =>
-      d.family && d.family.relation && d.family.relation === family
-    const familyClassifierCB2 = d => !d.family || !d.family.relation
+    const familyClassifierCB1 = family => d => d?.family?.relation === family
+    const familyClassifierCB2 = d => !d?.family?.relation
 
     return ['parents', 'children', 'target', null].map(family => {
       // partial application for each family to get family-classifier-callback

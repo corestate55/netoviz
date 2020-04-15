@@ -47,7 +47,7 @@ export default {
       this.visualizer.drawRfcTopologyData(
         this.modelFile,
         this.currentAlertRow,
-        this.currentAlertRow && this.currentAlertRow.layer // from AlertHost Input (layer__node)
+        this.currentAlertRow?.layer // from AlertHost Input (layer__node)
       )
     },
     nodeClickCallback(nodeData) {

@@ -110,7 +110,7 @@ class NeighborMaker extends RelationMakerBase {
     )
     for (const targetLink of targetLinks) {
       const dstNode = this._findNodeByPath(targetLink.targetNodePath)
-      if (dstNode.neighbor && dstNode.neighbor.degree <= degree) {
+      if (dstNode?.neighbor?.degree <= degree) {
         this.consoleDebug(
           degree,
           '_markNeighbor',
@@ -118,6 +118,7 @@ class NeighborMaker extends RelationMakerBase {
         )
         continue
       }
+
       this.consoleDebug(
         degree,
         '_markNeighbor',

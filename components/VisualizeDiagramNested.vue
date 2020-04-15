@@ -94,7 +94,7 @@ export default {
         this.currentAlertRow,
         this.reverse,
         this.depth,
-        this.currentAlertRow && this.currentAlertRow.layer, // from AlertHost Input (layer__node)
+        this.currentAlertRow?.layer, // from AlertHost Input (layer__node)
         this.autoFitting,
         this.aggregation
       )

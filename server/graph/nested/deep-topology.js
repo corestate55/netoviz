@@ -118,13 +118,11 @@ class DeepNestedTopology extends ShallowNestedTopology {
     }
     return node.childNodePaths().filter(childNodePath => {
       const childNode = this.findNodeByPath(childNodePath)
+      // select family of target, from root (parent) until child of target:
+      // root(parent)-...-parent-target-child <-select ignore-> -child-...-child
       const result =
-        childNode && // ignore if childNodePath not found
-        childNode.family && // ignore childNode is not a family of target
-        // select family of target, from root (parent) until child of target:
-        // root(parent)-...-parent-target-child <-select ignore-> -child-...-child
-        (childNode.family.relation !== 'children' ||
-          childNode.family.degree < 3)
+        childNode?.family?.relation !== 'children' ||
+        childNode?.family?.degree < 3
       this.consoleDebug(
         layerOrder,
         'childNodePathsToCalcPosition',

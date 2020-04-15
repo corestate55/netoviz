@@ -36,9 +36,9 @@ class NestLayout {
    */
   toData() {
     if (this.layoutData) {
-      if (this.reverse && 'reverse' in this.layoutData) {
+      if (this.reverse && this.layoutData?.reverse) {
         return this.layoutData.reverse
-      } else if (!this.reverse && 'standard' in this.layoutData) {
+      } else if (!this.reverse && this.layoutData?.standard) {
         return this.layoutData.standard
       }
     }

@@ -113,13 +113,45 @@ export default {
       alertCheckTimer: null,
       alertUpdatedTime: null,
       alertHostInput: '',
-      alertTableHeader: [
+      alertTableHeader: Object.freeze([
         { text: 'ID', sortable: true, value: 'id' },
         { text: 'Severity', sortable: true, value: 'severity' },
         { text: 'Host', sortable: true, value: 'host' },
         { text: 'Message', sortable: true, value: 'message' },
         { text: 'Date', sortable: true, value: 'date' }
-      ],
+      ]),
+      colorTable: Object.freeze([
+        {
+          severity: 'disaster',
+          fill: colors.red.lighten1, // bright red
+          text: colors.grey.lighten5
+        },
+        {
+          severity: 'high',
+          fill: colors.red.darken4, // red
+          text: colors.grey.lighten5
+        },
+        {
+          severity: 'average',
+          fill: colors.orange.lighten1, // orange
+          text: colors.grey.darken4
+        },
+        {
+          severity: 'warning',
+          fill: colors.yellow.accent3, // bright yellow
+          text: colors.grey.darken4
+        },
+        {
+          severity: 'information',
+          fill: colors.lightGreen.darken1, // bright green
+          text: colors.grey.lighten5
+        }
+      ]),
+      defaultColorInfo: Object.freeze({
+        severity: 'default',
+        fill: colors.grey.darken1, // grey
+        text: colors.grey.lighten5
+      }),
       unwatchAlertHost: null,
       fromAlertHostInput: false,
       enableTimer: false,
@@ -205,16 +237,10 @@ export default {
       }
     },
     alertHostInputIsLayerHostFormat() {
-      return (
-        this.alertHostInput &&
-        this.alertHostInput.match(new RegExp('(.+)__(.+)'))
-      )
+      return this.alertHostInput?.match(new RegExp('(.+)__(.+)'))
     },
     alertHostInputIsLayerHostTpFormat() {
-      return (
-        this.alertHostInput &&
-        this.alertHostInput.match(new RegExp('(.+)__(.+)__(.+)'))
-      )
+      return this.alertHostInput?.match(new RegExp('(.+)__(.+)__(.+)'))
     },
     splitAlertHostInput() {
       if (this.alertHostInputIsLayerHostTpFormat()) {
@@ -261,42 +287,10 @@ export default {
       this.currentAlertRow = row
     },
     severityColor(prop, severity) {
-      const colorTable = [
-        {
-          severity: 'disaster',
-          fill: colors.red.lighten1, // bright red
-          text: colors.grey.lighten5
-        },
-        {
-          severity: 'high',
-          fill: colors.red.darken4, // red
-          text: colors.grey.lighten5
-        },
-        {
-          severity: 'average',
-          fill: colors.orange.lighten1, // orange
-          text: colors.grey.darken4
-        },
-        {
-          severity: 'warning',
-          fill: colors.yellow.accent3, // bright yellow
-          text: colors.grey.darken4
-        },
-        {
-          severity: 'information',
-          fill: colors.lightGreen.darken1, // bright green
-          text: colors.grey.lighten5
-        }
-      ]
-      const defaultColorInfo = {
-        severity: 'default',
-        fill: colors.grey.darken1, // grey
-        text: colors.grey.lighten5
-      }
-      const colorInfo = colorTable.find(
+      const colorInfo = this.colorTable.find(
         d => d.severity === severity.toLowerCase()
       )
-      return colorInfo ? colorInfo[prop] : defaultColorInfo[prop]
+      return colorInfo ? colorInfo[prop] : this.defaultColorInfo[prop]
     }
   }
 }

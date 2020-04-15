@@ -1,6 +1,6 @@
 export const state = () => ({
   modelFiles: [],
-  visualizers: [
+  visualizers: Object.freeze([
     {
       text: 'Force-simulation',
       value: 'forceSimulation',
@@ -26,7 +26,7 @@ export const state = () => ({
       value: 'distance',
       label: 'Distance diagram.'
     }
-  ]
+  ])
 })
 
 export const mutations = {
@@ -40,7 +40,7 @@ export const actions = {
     try {
       const response = await fetch('/api/models')
       const modelFiles = await response.json()
-      commit('setModelFiles', modelFiles)
+      commit('setModelFiles', Object.freeze(modelFiles))
     } catch (error) {
       console.log('[SelectModel] Cannot get models data: ', error)
     }
