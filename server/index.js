@@ -9,7 +9,7 @@ const grpc = require('grpc')
 
 const config = require('../nuxt.config.js')
 const restApiRouter = require('./api/rest')
-const getDiagramData = require('./api/grpc')
+const grpcImplement = require('./api/grpc')
 const services = require('./api/grpc/topology-data_grpc_pb')
 
 // Import and Set Nuxt.js options
@@ -48,9 +48,7 @@ async function startHTTPServer() {
 /** gRPC server */
 function startGRPCServer() {
   const server = new grpc.Server()
-  server.addService(services.TopologyDataService, {
-    getDiagramData
-  })
+  server.addService(services.TopologyDataService, grpcImplement)
   server.bind(`${host}:${grpcPort}`, grpc.ServerCredentials.createInsecure())
   server.start()
   consola.ready({

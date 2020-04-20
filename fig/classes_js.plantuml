@@ -1,4 +1,10 @@
 @startuml
+class AlertTable {
+    +addAlert()
+    +alerts()
+    +allAlerts()
+}
+AlertTable -- Alert
 class APIBase {
     +constructor()
     +getModels()

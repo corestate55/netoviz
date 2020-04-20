@@ -1,12 +1,13 @@
 /**
  * @file API implementation of netoviz HTTP server.
  */
+
 /**
  * Express (web framework) HTTP Request.
  * @typedef {Object} Request
  * @prop {Object} query - Dictionary of HTTP GET parameters (key-value).
  * @prop {Object} params - Dictionary of named route parameters (key-value).
- *     {@see server/api.js}
+ *     @see {@link server/api/rest/index.js}
  */
 
 import fs from 'fs'
@@ -51,7 +52,6 @@ class RESTIntegrator extends APIBase {
 
   /**
    * Construct graph query string (GET parameter of URI).
-   *
    * @param {string} graphType - Type of graph (topology, dependency, nested)
    * @param {Object} query - HTTP get parameter (key-value)
    * @param {Array<Array<string>>} keys - Array of [key, type] for query.

@@ -75,7 +75,7 @@ class ShallowNestedTopology {
 
   /**
    * Hook before calculate root node position.
-   * @interface
+   * @abstract
    * @protected
    */
   beforeCalcRootNodePosition() {
