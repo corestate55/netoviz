@@ -18,6 +18,7 @@ module.exports = {
   plugins: [
     'prettier'
   ],
+  ignorePatterns: ['server/api/grpc/*_pb.js'],
   // add your custom rules here
   rules: {
     'nuxt/no-cjs-in-config': 'off',

@@ -20,7 +20,7 @@ class NestLayout {
   /**
    * @param {boolean} reverse - Flag for top/bottom view selection.
    * @param {LayoutData} layoutData - Layout data.
-   * @see {TopologyDataAPI}
+   * @see {TopologyDataREST}
    */
   constructor(reverse, layoutData) {
     /** @type {boolean} */

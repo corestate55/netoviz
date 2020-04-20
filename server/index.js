@@ -1,28 +1,30 @@
 /**
- * @file HTTP Server of netoviz.
+ * @file netoviz server definition
  */
 
 const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
-const app = express()
+const grpc = require('grpc')
+
 const config = require('../nuxt.config.js')
-const apiRouter = require('./api')
+const restApiRouter = require('./api/rest')
+const getDiagramData = require('./api/grpc')
+const services = require('./api/grpc/topology-data_grpc_pb')
 
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'
 
-/**
- * Run HTTP server.
- */
-async function start() {
-  // set api route
-  app.use('/api', apiRouter)
+// Init Nuxt.js
+const nuxt = new Nuxt(config)
+const host = nuxt.options.server.host
+const httpPort = nuxt.options.server.port
+const grpcPort = 50051
 
-  // Init Nuxt.js
-  const nuxt = new Nuxt(config)
-
-  const { host, port } = nuxt.options.server
+/** HTTP server */
+async function startHTTPServer() {
+  const app = express()
+  app.use('/api', restApiRouter) // set route for REST API
 
   // Build only in dev mode
   if (config.dev) {
@@ -36,10 +38,27 @@ async function start() {
   app.use(nuxt.render)
 
   // Listen the server
-  app.listen(port, host)
+  app.listen(httpPort, host)
   consola.ready({
-    message: `Server listening on http://${host}:${port}`,
+    message: `HTTP Server listening on http://${host}:${httpPort}/`,
     badge: true
   })
 }
-start()
+
+/** gRPC server */
+function startGRPCServer() {
+  const server = new grpc.Server()
+  server.addService(services.TopologyDataService, {
+    getDiagramData
+  })
+  server.bind(`${host}:${grpcPort}`, grpc.ServerCredentials.createInsecure())
+  server.start()
+  consola.ready({
+    message: `gRPC Server listening on http://${host}:${grpcPort}/`,
+    badge: true
+  })
+}
+
+// Run server.
+startHTTPServer()
+startGRPCServer()

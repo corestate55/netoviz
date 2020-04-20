@@ -4,7 +4,7 @@
 
 import fs from 'fs'
 import { promisify } from 'util'
-import toForceSimulationTopologyData from '../graph/force-simulation/converter'
+import toForceSimulationTopologyData from '../../graph/force-simulation'
 
 const readFile = promisify(fs.readFile)
 
@@ -55,7 +55,7 @@ class CacheRfcTopologyDataConverter {
    */
   async _readForceSimulationTopologyDataFromCacheJSON() {
     console.log('use cache: ', this._cacheJsonPath)
-    const buffer = await readFile(this._cacheJsonPath, 'utf8')
+    const buffer = await readFile(this._cacheJsonPath)
     return JSON.parse(buffer.toString())
   }
 
@@ -65,7 +65,7 @@ class CacheRfcTopologyDataConverter {
    * @private
    */
   async _readRfcTopologyDataFromJSON() {
-    const buffer = await readFile(this._jsonPath, 'utf8')
+    const buffer = await readFile(this._jsonPath)
     return JSON.parse(buffer.toString())
   }
 

@@ -2,8 +2,8 @@
  * @file API definition of netoviz HTTP server.
  */
 
-import TopologyDataAPI from './graph-api/topology-data-api'
-import db from './models'
+import db from '../../models'
+import RESTIntegrator from './integrator'
 
 const express = require('express')
 /**
@@ -21,9 +21,9 @@ const apiRouter = express.Router()
  * API class instance of topology graph.
  * It converts RFC8345 data (from json) for topology data.
  * Other graph read it and convert for each graph.
- * @type{TopologyDataAPI}
+ * @type{RESTIntegrator}
  */
-const topologyDataAPI = new TopologyDataAPI('static')
+const restApi = new RESTIntegrator('static')
 apiRouter.use(express.json())
 
 /**
@@ -69,14 +69,14 @@ apiRouter.get('/alert/all', async (req, res) => {
 apiRouter.get('/models', async (req, res) => {
   console.log('model list requested')
   res.type('json')
-  res.send(await topologyDataAPI.getModels())
+  res.send(await restApi.getModels())
 })
 
 /**
  * API to receive graph-layout data. (in nested graph)
  */
 apiRouter.post('/graph/:graphName/:jsonName', (req, res) => {
-  topologyDataAPI.postGraphData(req)
+  restApi.postGraphData(req)
   res.send(JSON.stringify({ message: 'layout data received.' }))
 })
 
@@ -85,7 +85,7 @@ apiRouter.post('/graph/:graphName/:jsonName', (req, res) => {
  */
 apiRouter.get('/graph/:graphName/:jsonName', async (req, res) => {
   res.type('json')
-  res.send(await topologyDataAPI.getGraphData(req))
+  res.send(await restApi.getGraphData(req))
 })
 
 module.exports = apiRouter

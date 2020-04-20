@@ -1,19 +1,15 @@
 @startuml
-class TopologyDataAPI {
+class APIBase {
     +constructor()
     +getModels()
-    -_readLayoutJSON()
-    -_toForceSimulationTopologyData()
-    -_boolString2Bool()
-    -_numberString2Number()
-    -_makeGraphQuery()
-    -_toDependencyTopologyData()
-    -_toNestedTopologyData()
-    -_toDistanceTopologyData()
+    +readLayoutJSON()
+    +toForceSimulationTopologyData()
+    +toDependencyTopologyData()
+    +toNestedTopologyData()
+    +toDistanceTopologyData()
     +getGraphData()
-    +postGraphData()
 }
-TopologyDataAPI -- CacheRfcTopologyDataConverter
+APIBase -- CacheRfcTopologyDataConverter
 class CacheRfcTopologyDataConverter {
     +constructor()
     -_checkCacheDir()
@@ -25,6 +21,22 @@ class CacheRfcTopologyDataConverter {
     -_updateCacheTimeStamp()
     +toForceSimulationTopologyData()
 }
+class GRPCIntegrator {
+    +toDependencyTopologyData()
+    +toNestedTopologyData()
+    +toDistanceTopologyData()
+}
+GRPCIntegrator --|> APIBase
+class RESTIntegrator {
+    -_boolString2Bool()
+    -_numberString2Number()
+    -_makeGraphQuery()
+    +toDependencyTopologyData()
+    +toNestedTopologyData()
+    +toDistanceTopologyData()
+    +postGraphData()
+}
+RESTIntegrator --|> APIBase
 class ShallowNestedNode {
     +constructor()
     -_setFamilyRelation()
@@ -326,6 +338,7 @@ class DistanceTopology {
     -_distanceCircleInterval()
     -_correctArrays()
     -_distanceCircleRadius()
+    -_rewriteDistanceCircleRadius()
     -_makeNodeLayout()
     -_nodesInLayouts()
     -_makeSupportLinks()
@@ -621,9 +634,11 @@ class DistanceDiagramOperator {
     -_setSVGZoom()
     +targetNodeData()
     -_selectNodeCircleByPath()
-    -_selectLinkLineByPath()
+    -_selectLinkByPath()
+    -_selectNodeLabelByPath()
     -_selectReadyNodeCircle()
     -_selectReadyLink()
+    -_selectReadyNodeLabel()
     +highlightNodeCircle()
     +clearHighlight()
     -_clearSelectReady()

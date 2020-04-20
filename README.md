@@ -115,7 +115,7 @@ Application (see [pages](./pages))
   * `/model/:modelFile/:visualizer`
   * `/visualizer/:visualizer/:modelFile`
 
-Server (JSON API) (see [server/api.js](./server/api.js))
+Server (JSON API) (see [server/api.js](server/api/rest/index.js))
 
 * Alert handling
   * POST `/api/alert` (see [push_alert.rb](./bin/push_alert.rb))
