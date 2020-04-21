@@ -14,6 +14,7 @@ var global = Function('return this')();
 goog.exportSymbol('proto.netoviz.Alert', null, global);
 goog.exportSymbol('proto.netoviz.AlertReply', null, global);
 goog.exportSymbol('proto.netoviz.AlertRequest', null, global);
+goog.exportSymbol('proto.netoviz.GraphName', null, global);
 goog.exportSymbol('proto.netoviz.GraphReply', null, global);
 goog.exportSymbol('proto.netoviz.GraphRequest', null, global);
 
@@ -63,7 +64,7 @@ proto.netoviz.GraphRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.netoviz.GraphRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    graphType: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    graphName: jspb.Message.getFieldWithDefault(msg, 1, 0),
     jsonName: jspb.Message.getFieldWithDefault(msg, 2, ""),
     target: jspb.Message.getFieldWithDefault(msg, 3, ""),
     layer: jspb.Message.getFieldWithDefault(msg, 4, ""),
@@ -107,8 +108,8 @@ proto.netoviz.GraphRequest.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGraphType(value);
+      var value = /** @type {!proto.netoviz.GraphName} */ (reader.readEnum());
+      msg.setGraphName(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -163,9 +164,9 @@ proto.netoviz.GraphRequest.prototype.serializeBinary = function() {
  */
 proto.netoviz.GraphRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getGraphType();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getGraphName();
+  if (f !== 0.0) {
+    writer.writeEnum(
       1,
       f
     );
@@ -216,17 +217,17 @@ proto.netoviz.GraphRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string graph_type = 1;
- * @return {string}
+ * optional GraphName graph_name = 1;
+ * @return {!proto.netoviz.GraphName}
  */
-proto.netoviz.GraphRequest.prototype.getGraphType = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.netoviz.GraphRequest.prototype.getGraphName = function() {
+  return /** @type {!proto.netoviz.GraphName} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
-/** @param {string} value */
-proto.netoviz.GraphRequest.prototype.setGraphType = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+/** @param {!proto.netoviz.GraphName} value */
+proto.netoviz.GraphRequest.prototype.setGraphName = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -371,7 +372,7 @@ proto.netoviz.GraphReply.prototype.toObject = function(opt_includeInstance) {
  */
 proto.netoviz.GraphReply.toObject = function(includeInstance, msg) {
   var f, obj = {
-    graphType: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    graphName: jspb.Message.getFieldWithDefault(msg, 1, 0),
     jsonName: jspb.Message.getFieldWithDefault(msg, 2, ""),
     json: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
@@ -411,8 +412,8 @@ proto.netoviz.GraphReply.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setGraphType(value);
+      var value = /** @type {!proto.netoviz.GraphName} */ (reader.readEnum());
+      msg.setGraphName(value);
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
@@ -451,9 +452,9 @@ proto.netoviz.GraphReply.prototype.serializeBinary = function() {
  */
 proto.netoviz.GraphReply.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getGraphType();
-  if (f.length > 0) {
-    writer.writeString(
+  f = message.getGraphName();
+  if (f !== 0.0) {
+    writer.writeEnum(
       1,
       f
     );
@@ -476,17 +477,17 @@ proto.netoviz.GraphReply.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string graph_type = 1;
- * @return {string}
+ * optional GraphName graph_name = 1;
+ * @return {!proto.netoviz.GraphName}
  */
-proto.netoviz.GraphReply.prototype.getGraphType = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+proto.netoviz.GraphReply.prototype.getGraphName = function() {
+  return /** @type {!proto.netoviz.GraphName} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
 };
 
 
-/** @param {string} value */
-proto.netoviz.GraphReply.prototype.setGraphType = function(value) {
-  jspb.Message.setProto3StringField(this, 1, value);
+/** @param {!proto.netoviz.GraphName} value */
+proto.netoviz.GraphReply.prototype.setGraphName = function(value) {
+  jspb.Message.setProto3EnumField(this, 1, value);
 };
 
 
@@ -1133,5 +1134,16 @@ proto.netoviz.AlertReply.prototype.clearAlertsList = function() {
   this.setAlertsList([]);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.netoviz.GraphName = {
+  GRAPH_UNKNOWN: 0,
+  FORCE_SIMULATION: 1,
+  DEPENDENCY: 2,
+  NESTED: 3,
+  DISTANCE: 4
+};
 
 goog.object.extend(exports, proto.netoviz);

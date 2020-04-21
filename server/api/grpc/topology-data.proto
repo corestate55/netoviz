@@ -7,9 +7,17 @@ service TopologyData {
   rpc GetAlerts (AlertRequest) returns (AlertReply);
 }
 
+enum GraphName {
+  GRAPH_UNKNOWN = 0;
+  FORCE_SIMULATION = 1;
+  DEPENDENCY = 2;
+  NESTED = 3;
+  DISTANCE = 4;
+}
+
 // TODO: temporary message format
 message GraphRequest {
-  string graph_type = 1;
+  GraphName graph_name = 1;
   string json_name = 2;
   string target = 3;
   string layer = 4;
@@ -20,7 +28,7 @@ message GraphRequest {
 
 // TODO: temporary message format
 message GraphReply {
-  string graph_type = 1;
+  GraphName graph_name = 1;
   string json_name = 2;
   string json = 3; // json string of diagram data
 }

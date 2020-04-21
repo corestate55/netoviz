@@ -64,7 +64,8 @@ apiRouter.post('/graph/:graphName/:jsonName', (req, res) => {
 // API to send converted graph data. (for web frontend)
 apiRouter.get('/graph/:graphName/:jsonName', async (req, res) => {
   res.type('json')
-  res.send(await restApi.getGraphData(req))
+  const p = req.params // alias
+  res.send(await restApi.getGraphData(p.graphName, p.jsonName, req))
 })
 
 module.exports = apiRouter

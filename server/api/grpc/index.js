@@ -14,11 +14,19 @@ const getDiagramData = async (call, callback) => {
   const request = call.request
   /** @type {proto.netoviz.GraphReply} */
   const reply = new messages.GraphReply()
-  const grpcApi = new GRPCIntegrator('static')
 
-  reply.setGraphType(request.getGraphType())
-  reply.setJsonName(request.getJsonName())
-  reply.setJson(await grpcApi.getGraphData(request))
+  const grpcApi = new GRPCIntegrator('static')
+  const jsonName = request.getJsonName()
+  const snake2Camel = str =>
+    str.toLowerCase().replace(/_./g, s => s.charAt(1).toUpperCase())
+  const graphNameNumber2Key = num =>
+    Object.keys(messages.GraphName).find(k => messages.GraphName[k] === num)
+  const graphNameValue = request.getGraphName()
+  const graphName = snake2Camel(graphNameNumber2Key(graphNameValue))
+
+  reply.setGraphName(graphNameValue)
+  reply.setJsonName(jsonName)
+  reply.setJson(await grpcApi.getGraphData(graphName, jsonName, request))
   callback(null, reply)
 }
 

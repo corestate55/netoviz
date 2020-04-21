@@ -9,7 +9,7 @@ const client = new services.TopologyDataClient(
 )
 
 function printGraphDataTestUsage() {
-  console.warn('Usage: node grpc-client.js graph graphType jsonName')
+  console.warn('Usage: node grpc-client.js graph graphName jsonName')
 }
 
 function printAlertsTestUsage() {
@@ -23,12 +23,12 @@ function getGraphData() {
     printGraphDataTestUsage()
     process.exit(1)
   }
-  const graphType = args[0]
+  const graphName = args[0].toUpperCase()
   const jsonName = args[1]
-  console.log(`# type=${graphType}, json=${jsonName}`)
+  console.log(`# name=${graphName}, json=${jsonName}`)
 
   const request = new messages.GraphRequest()
-  request.setGraphType(graphType)
+  request.setGraphName(messages.GraphName[graphName])
   request.setJsonName(jsonName)
 
   console.log('# send request: ', request.toString())
@@ -38,7 +38,13 @@ function getGraphData() {
       process.exit(1)
     }
     console.log('# Receive response:')
-    console.log('## Graph type: ', response.getGraphType())
+    console.log(
+      '## Graph name: ',
+      response.getGraphName(),
+      Object.keys(messages.GraphName).find(
+        k => messages.GraphName[k] === response.getGraphName()
+      )
+    )
     console.log('## Json name: ', response.getJsonName())
     console.log('## Json data: ', response.getJson())
   })

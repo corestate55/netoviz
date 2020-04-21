@@ -3,10 +3,17 @@ const messages = require('../server/api/grpc/topology-data_pb')
 const services = require('../server/api/grpc/topology-data_grpc_pb')
 
 const getDiagramData = (call, callback) => {
-  console.log('# reply to: ', call.toString())
+  const request = call.request
+  console.log('# reply to: ', request.toObject())
+  const graphNameValue = request.getGraphName()
+  const graphNameKey = Object.keys(messages.GraphName).find(
+    k => messages.GraphName[k] === graphNameValue
+  )
+  console.log(`## graph: ${graphNameKey} : ${graphNameValue}`)
+
   const reply = new messages.GraphReply()
-  reply.setGraphType('forceSimulation')
-  reply.setJsonName(call.request.getJsonName())
+  reply.setGraphName(request.getGraphName())
+  reply.setJsonName(request.getJsonName())
   reply.setJson('{ "hoge": "test" }')
   callback(null, reply)
 }

@@ -129,14 +129,13 @@ class APIBase {
 
   /**
    * Get converted graph data for web-frontend visualization.
+   * @param {string} graphName - Graoh name (type).
+   * @param {string} jsonName - Topology data file name (json).
    * @param {Request|proto.netoviz.GraphRequest} req - HTTP/gRPC request.
    * @returns {Promise<string>} Graph data as JSON format string.
    * @public
    */
-  async getGraphData(req) {
-    const graphName = req?.params?.graphName || req.getGraphType()
-    const jsonName = req?.params?.jsonName || req.getJsonName()
-
+  async getGraphData(graphName, jsonName, req) {
     if (graphName === 'forceSimulation') {
       return JSON.stringify(await this.toForceSimulationTopologyData(jsonName))
     } else if (graphName === 'dependency') {
