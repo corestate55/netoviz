@@ -1,10 +1,11 @@
+require('dotenv').config()
 const grpc = require('grpc')
 
 const messages = require('../server/api/grpc/topology-data_pb')
 const services = require('../server/api/grpc/topology-data_grpc_pb')
 
 const client = new services.TopologyDataClient(
-  'localhost:50051',
+  `localhost:${process.env.NETOVIZ_GRPC_PORT}`,
   grpc.credentials.createInsecure()
 )
 

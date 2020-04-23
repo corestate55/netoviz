@@ -1,3 +1,4 @@
+require('dotenv').config()
 const grpc = require('grpc')
 const messages = require('../server/api/grpc/topology-data_pb')
 const services = require('../server/api/grpc/topology-data_grpc_pb')
@@ -38,7 +39,10 @@ function main() {
     getDiagramData,
     getAlerts
   })
-  server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure())
+  server.bind(
+    `${process.env.NETOVIZ_BIND_ADDR}:${process.env.NETOVIZ_GRPC_PORT}`,
+    grpc.ServerCredentials.createInsecure()
+  )
   server.start()
 }
 

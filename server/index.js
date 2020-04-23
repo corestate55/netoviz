@@ -2,6 +2,7 @@
  * @file netoviz server definition
  */
 
+require('dotenv').config()
 const express = require('express')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
@@ -19,7 +20,7 @@ config.dev = process.env.NODE_ENV !== 'production'
 const nuxt = new Nuxt(config)
 const host = nuxt.options.server.host
 const httpPort = nuxt.options.server.port
-const grpcPort = 50051
+const grpcPort = process.env.NETOVIZ_GRPC_PORT
 
 /** HTTP server */
 async function startHTTPServer() {
