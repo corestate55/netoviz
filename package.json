@@ -23,6 +23,7 @@
   "dependencies": {
     "@babel/node": "^7.8.7",
     "@nuxtjs/axios": "^5.9.7",
+    "@nuxtjs/dotenv": "^1.4.1",
     "cross-env": "^7.0.2",
     "d3-drag": "^1.2.5",
     "d3-fetch": "^1.1.2",
