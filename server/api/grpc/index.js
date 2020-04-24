@@ -23,6 +23,7 @@ const getDiagramData = async (call, callback) => {
     Object.keys(messages.GraphName).find(k => messages.GraphName[k] === num)
   const graphNameValue = request.getGraphName()
   const graphName = snake2Camel(graphNameNumber2Key(graphNameValue))
+  console.log(`gRPC request: ${jsonName}, ${graphName}(${graphNameValue})`)
 
   reply.setGraphName(graphNameValue)
   reply.setJsonName(jsonName)

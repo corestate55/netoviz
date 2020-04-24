@@ -46,15 +46,7 @@ export default {
     makeVisualizer(width, height) {
       return new ForceSimulationDiagramVisualizer()
     },
-    watchCurrentAlertRow(newRow, oldRow) {
-      // only change highlight.
-      // no need to redraw because force-simulation diagrams draws all elements at first.
-      this.highlightByAlert(newRow)
-    },
-    clearAllHighlight() {
-      this.visualizer.clearAllHighlight()
-    },
-    drawRfcTopologyData() {
+    afterMakeVisualizer() {
       const getLayerNames = graphs => {
         // When the visualizer draws force-simulation diagram,
         // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
@@ -64,11 +56,18 @@ export default {
         //   to avoid mismatch between UI (layer selector) and Graph.
         this.wholeLayers = graphs.map(layer => layer.name)
       }
-      this.visualizer.drawRfcTopologyData(
-        this.modelFile,
-        this.currentAlertRow,
-        getLayerNames
-      )
+      this.visualizer.setUISideDrawRfcTopologyHook(getLayerNames)
+    },
+    watchCurrentAlertRow(newRow, oldRow) {
+      // only change highlight.
+      // no need to redraw because force-simulation diagrams draws all elements at first.
+      this.highlightByAlert(newRow)
+    },
+    clearAllHighlight() {
+      this.visualizer.clearAllHighlight()
+    },
+    drawRfcTopologyData() {
+      this.visualizer.drawRfcTopologyData(this.modelFile, this.currentAlertRow)
     }
   }
 }
