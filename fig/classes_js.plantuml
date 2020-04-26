@@ -502,7 +502,7 @@ class NestedDiagramBuilder {
     -_wholeTermPoints()
     +makeAllDiagramElements()
 }
-NestedDiagramBuilder --|> DiagramBase
+NestedDiagramBuilder --|> MultilayerDiagramBase
 NestedDiagramBuilder -- Set
 NestedDiagramBuilder -- InterTpLinkCreator
 class NestedDiagramOperator {
@@ -549,8 +549,8 @@ class NestedDiagramOperator {
 }
 NestedDiagramOperator --|> NestedDiagramBuilder
 class NestedDiagramVisualizer {
-    +apiURI()
-    -_apiParamFrom()
+    +restURI()
+    +afterDrawRfcTopologyDataHook()
     +saveLayout()
     +setUISideNodeClickHook()
     +nodeClickHook()
@@ -634,7 +634,7 @@ class DistanceDiagramBuilder {
     +isEmptyLayout()
     +makeAllDiagramElements()
 }
-DistanceDiagramBuilder --|> DiagramBase
+DistanceDiagramBuilder --|> MultilayerDiagramBase
 class DistanceDiagramOperator {
     -_setInitialZoom()
     -_setSVGZoom()
@@ -658,16 +658,31 @@ class DistanceDiagramOperator {
     -_findNodesAtLinkEnd()
     -_linkMouseOverHandler()
     -_setLinkMouseHandler()
-    +setAllDiagramElementHandler()
+    +setAllDiagramElementsHandler()
 }
 DistanceDiagramOperator --|> DistanceDiagramBuilder
 class DistanceDiagramVisualizer {
-    +drawRfcTopologyData()
     +setUISideNodeClickHook()
     +nodeClickHook()
     +highlightByAlert()
 }
 DistanceDiagramVisualizer --|> DistanceDiagramOperator
+class MultilayerDiagramBase {
+    +constructor()
+    -_makeGRPCClient()
+    +afterDrawRfcTopologyDataHook()
+    +getDiagramDataViaGRPC()
+    +getDiagramDataViaREST()
+    +drawRfcTopologyData()
+    +makeAllDiagramElements()
+    +setAllDiagramElementsHandler()
+    +highlightByAlert()
+    +drawRfcTopologyDataAsDiagram()
+    +targetNameFromAlert()
+    +grpcURI()
+    +restURI()
+}
+MultilayerDiagramBase --|> DiagramBase
 class DiagramBase {
     +makeDiagramContainer()
     +makeRootSVG()
@@ -698,8 +713,6 @@ class DiagramBase {
     +typeOfPath()
     +networkPathOf()
     +parentPathOf()
-    +targetNameFromAlert()
-    +apiURI()
 }
 DiagramBase --|> BaseContainer
 DiagramBase -- DiffState
@@ -728,7 +741,7 @@ class DependencyDiagramBuilder {
     -_makeDependencyLinesGroup()
     +makeAllDiagramElements()
 }
-DependencyDiagramBuilder --|> DiagramBase
+DependencyDiagramBuilder --|> MultilayerDiagramBase
 class DependencyDiagramOperator {
     +clearHighlight()
     +clearDependencyLines()
@@ -749,7 +762,6 @@ class DependencyDiagramOperator {
 }
 DependencyDiagramOperator --|> DependencyDiagramBuilder
 class DependencyDiagramVisualizer {
-    +drawRfcTopologyData()
     +highlightByAlert()
 }
 DependencyDiagramVisualizer --|> DependencyDiagramOperator
@@ -769,7 +781,7 @@ class Dependency2DiagramBuilder {
     -_makeDependencyLineGroup()
     +makeAllDiagramElements()
 }
-Dependency2DiagramBuilder --|> DiagramBase
+Dependency2DiagramBuilder --|> MultilayerDiagramBase
 class Dependency2DiagramOperator {
     +clearHighlight()
     +clearDependencyLines()
@@ -794,7 +806,6 @@ class Dependency2DiagramOperator {
 }
 Dependency2DiagramOperator --|> Dependency2DiagramBuilder
 class Dependency2DiagramVisualizer {
-    +drawRfcTopologyData()
     -_findNodeObjByName()
     +highlightByAlert()
 }
@@ -845,6 +856,10 @@ class ForceSimulationDiagramOperator {
 ForceSimulationDiagramOperator --|> ForceSimulationDiagramSimulator
 class ForceSimulationDiagramVisualizer {
     +constructor()
+    +setUISideDrawRfcTopologyHook()
+    -_drawRfcTopologyData()
+    -_getDiagramDataViaGRPC()
+    -_getDiagramDataViaREST()
     +drawRfcTopologyData()
     -_findNodeDataByPath()
     -_clearAllDiagrams()

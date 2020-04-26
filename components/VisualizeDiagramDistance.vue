@@ -44,10 +44,13 @@ export default {
       this.visualizer.setUISideNodeClickHook(this.nodeClickCallback)
     },
     drawRfcTopologyData() {
+      const params = {
+        layer: this.currentAlertRow?.layer // from AlertHost Input (layer__node)
+      }
       this.visualizer.drawRfcTopologyData(
         this.modelFile,
         this.currentAlertRow,
-        this.currentAlertRow?.layer // from AlertHost Input (layer__node)
+        params
       )
     },
     nodeClickCallback(nodeData) {

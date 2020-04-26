@@ -89,14 +89,17 @@ export default {
       this.visualizer.setUISideNodeClickHook(this.nodeClickCallback)
     },
     drawRfcTopologyData() {
+      const params = {
+        reverse: this.reverse,
+        depth: this.depth,
+        layer: this.currentAlertRow?.layer, // from AlertHost Input (layer__node)
+        aggregate: this.aggregation,
+        fitGrid: this.autoFitting
+      }
       this.visualizer.drawRfcTopologyData(
         this.modelFile,
         this.currentAlertRow,
-        this.reverse,
-        this.depth,
-        this.currentAlertRow?.layer, // from AlertHost Input (layer__node)
-        this.autoFitting,
-        this.aggregation
+        params
       )
     },
     saveLayout() {

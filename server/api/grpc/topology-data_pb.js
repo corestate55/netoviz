@@ -70,7 +70,8 @@ proto.netoviz.GraphRequest.toObject = function(includeInstance, msg) {
     layer: jspb.Message.getFieldWithDefault(msg, 4, ""),
     depth: jspb.Message.getFieldWithDefault(msg, 5, 0),
     aggregate: jspb.Message.getFieldWithDefault(msg, 6, false),
-    reverse: jspb.Message.getFieldWithDefault(msg, 7, false)
+    reverse: jspb.Message.getFieldWithDefault(msg, 7, false),
+    fitGrid: jspb.Message.getFieldWithDefault(msg, 8, false)
   };
 
   if (includeInstance) {
@@ -134,6 +135,10 @@ proto.netoviz.GraphRequest.deserializeBinaryFromReader = function(msg, reader) {
     case 7:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setReverse(value);
+      break;
+    case 8:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setFitGrid(value);
       break;
     default:
       reader.skipField();
@@ -210,6 +215,13 @@ proto.netoviz.GraphRequest.serializeBinaryToWriter = function(message, writer) {
   if (f) {
     writer.writeBool(
       7,
+      f
+    );
+  }
+  f = message.getFitGrid();
+  if (f) {
+    writer.writeBool(
+      8,
       f
     );
   }
@@ -322,6 +334,23 @@ proto.netoviz.GraphRequest.prototype.getReverse = function() {
 /** @param {boolean} value */
 proto.netoviz.GraphRequest.prototype.setReverse = function(value) {
   jspb.Message.setProto3BooleanField(this, 7, value);
+};
+
+
+/**
+ * optional bool fit_grid = 8;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.netoviz.GraphRequest.prototype.getFitGrid = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+};
+
+
+/** @param {boolean} value */
+proto.netoviz.GraphRequest.prototype.setFitGrid = function(value) {
+  jspb.Message.setProto3BooleanField(this, 8, value);
 };
 
 

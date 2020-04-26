@@ -24,6 +24,7 @@ message GraphRequest {
   uint32 depth = 5;
   bool aggregate = 6;
   bool reverse = 7;
+  bool fit_grid = 8;
 }
 
 // TODO: temporary message format
