@@ -669,7 +669,6 @@ class DistanceDiagramVisualizer {
 DistanceDiagramVisualizer --|> DistanceDiagramOperator
 class MultilayerDiagramBase {
     +constructor()
-    -_makeGRPCClient()
     +afterDrawRfcTopologyDataHook()
     +getDiagramDataViaGRPC()
     +getDiagramDataViaREST()
@@ -894,4 +893,11 @@ class ForceSimulationDiagramSimulator {
     +restartSimulation()
 }
 ForceSimulationDiagramSimulator --|> ForceSimulationDiagramBuilder
+class GRPCClient {
+    +constructor()
+    +getAlerts()
+    +getGraphData()
+    +graphName()
+}
+GRPCClient -- GRPCClient
 @enduml

@@ -24,6 +24,7 @@ Blog
 * [モデルベースのNW図で差分を可視化する - Qiita](https://qiita.com/corestate55/items/8c50b4f6cbee4caa0cbc)
 * [ネットワーク構成図のレイアウト処理を考えてみる \(1\) \- Qiita](https://qiita.com/corestate55/items/9a1194cdb2c54d80c08e)
 * [ネットワーク構成図のレイアウト処理を考えてみる \(2\) \- Qiita](https://qiita.com/corestate55/items/849b8a204e24a2e7a8fb)
+* [Batfish を使ってネットワーク構成を可視化してみよう・改 \- Qiita](https://qiita.com/corestate55/items/fb18066d1105010758d9)
 
 Slide
 * [「ネットワーク図」のモデル化とモデルを起点にした自動化の可能性 / onic2018 \- Speaker Deck](https://speakerdeck.com/corestate55/onic2018)
@@ -55,7 +56,6 @@ For development mode (environment variable `NODE_ENV` is not `production`)
 ```
 
 For production mode
-
 ```bash
 NODE_ENV=production ./bin/dbmigrate.sh
 ```
@@ -70,16 +70,23 @@ It selects a name of hosts from specified model file and send random message to 
 ```
 
 ### Install docker/gRPC tools
+Currently, netoviz have gRPC and REST API.
+It uses gRPC in development mode and REST in production mode.
+(Production mode is used to deploy on heroku.)
+So it needs gRPC tools to develop (run under development mode) netoviz,
+and docker tools to manipulate docker image of envoy proxy.
+
 Install docker and docker-compose
 ```
-sudo apt install docker docker-compose
+sudo apt install docker-ce docker-compose
 ```
 
 Install grpc-tools (`grpc_tools_node_protoc`)
 ```
 sudo npm install -g --unsafe-perm grpc-tools
 ```
-Download protoc-gen-grpc-web binary from [grpc/grpc\-web](https://github.com/grpc/grpc-web/releases)
+
+Download `protoc-gen-grpc-web` binary from [grpc/grpc\-web](https://github.com/grpc/grpc-web/releases)
 and install it.
 ```
 sudo cp ~/Downloads/protoc-gen-grpc-web-1.0.7-linux-x86_64 /usr/local/bin/protoc-gen-grpc-web
@@ -93,9 +100,13 @@ Copy `dot.env` to `.env` and edit environment variables.
 you must change corresponding configurations in `docker-compose` and `envoy.yaml`,
 and rebuild envoy container. (These configuration files are independent of `.env` file settings.)
 
+Check parameters.
+```
+docker-compose config
+```
+
 Build envoy docker image for netoviz.
 ```
-docker-compose config  # to check parameter
 docker-compose build
 ```
 

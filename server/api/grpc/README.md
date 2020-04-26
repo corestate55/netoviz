@@ -16,33 +16,45 @@ hagiwara@dev01:~/nwmodel/netoviz$
 
 ## Tools
 
-Note to use `--unsafe-perm`.
+Note to use `--unsafe-perm` for grpc-tools (`grpc_tools_node_protoc`) installation.
 ```
 sudo npm install -g --unsafe-perm grpc-tools
+```
+
+For grpc-web, Download `protoc-gen-grpc-web` binary from
+[grpc/grpc\-web](https://github.com/grpc/grpc-web/releases),
+and put it under `PATH`.
+```
+sudo cp ~/Downloads/protoc-gen-grpc-web-1.0.7-linux-x86_64 /usr/local/bin/protoc-gen-grpc-web
+sudo chmod +x /usr/local/bin/protoc-gen-grpc-web
 ```
 
 ## Compile
 
 ```
-hagiwara@dev01:~/nwmodel/netoviz/server/graph-api/grpc$ grpc_tools_node_protoc --js_out=import_style=commonjs,binary:./ --grpc_out=./ topology-data.proto 
-hagiwara@dev01:~/nwmodel/netoviz/server/graph-api/grpc$
+hagiwara@dev01:~/nwmodel/netoviz/server/graph-api/grpc$ grpc_tools_node_protoc \
+  --js_out=import_style=commonjs,binary:. \
+  --grpc-web_out=import_style=commonjs,mode=grpcwebtext:. \
+  --grpc_out=. \
+  topology-data.proto 
 ```
+
+See: [package.json](/package.json), it can run with `npm run protoc`.
 
 ## Run test-server/client
 
-Server
+Server (returns dummy data)
 ```
 hagiwara@dev01:~/nwmodel/netoviz/$ node bin/grpc-server.js 
 ```
 
-Client
+Client (CLI-client)
 ```
-hagiwara@dev01:~/nwmodel/netoviz/$ node bin/grpc-client.js
-# start client
-# send request:  hoge.json
-# Receive response:
-## Graph type:  forceSimulation
-## Json name:  hoge.json
-## Json data:  { "hoge": "test" }
-hagiwara@dev01:~/nwmodel/netoviz/$ 
+# PWD: ~/nwmodel/netoviz/
+
+# Arguments: graph <graph_name> <json>
+node bin/grpc-client.js graph force_simulation nlink_check.json
+
+# Arguments: graph <number>
+node bin/grpc-client.js alerts 3
 ```
