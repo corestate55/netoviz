@@ -19,13 +19,7 @@
         <v-expansion-panel-content>
           <v-row>
             <v-col cols="6" md="3" lg="6">
-              <v-text-field
-                v-model="alertHostInput"
-                clearable
-                label="Highlight Host"
-                placeholder="node OR layer__node"
-                v-on:input="inputAlertHost"
-              />
+              <TableAlertsInputHost v-model="alertHostInput" />
             </v-col>
             <v-col cols="6" md="3" lg="6">
               <v-switch v-model="enableTimer" inset label="Alert Polling" />
@@ -101,10 +95,14 @@
 </template>
 
 <script>
-import { debounce } from 'debounce'
 import colors from 'vuetify/es5/util/colors'
+import TableAlertsInputHost from './TableAlertsInputHost'
+import getAlertsFromServer from '~/lib/alerts'
 
 export default {
+  components: {
+    TableAlertsInputHost
+  },
   data() {
     return {
       alerts: [],
@@ -152,7 +150,6 @@ export default {
         fill: colors.grey.darken1, // grey
         text: colors.grey.lighten5
       }),
-      unwatchAlertHost: null,
       fromAlertHostInput: false,
       enableTimer: false,
       debug: false
@@ -184,16 +181,8 @@ export default {
   mounted() {
     this.updateAlerts() // initial data
     this.setAlertCheckTimer()
-    this.unwatchAlertHost = this.$store.watch(
-      state => state.alert.alertHost,
-      (newHost, oldHost) => {
-        this.alertHostInput = newHost
-        this.inputAlertHost()
-      }
-    )
   },
   beforeDestroy() {
-    this.unwatchAlertHost()
     this.stopAlertCheckTimer()
   },
   methods: {
@@ -216,74 +205,30 @@ export default {
       }, this.alertPollingInterval * 1000) // sec
     },
     async updateAlerts() {
-      try {
-        // update alerts and select head data
-        // console.log('updateAlerts: ', new Date())
-        const response = await fetch(`/api/alert/${this.alertLimit}`)
-        const newAlerts = await response.json()
-        this.alertUpdatedTime = new Date()
-        if (!newAlerts || newAlerts.length < 1) {
-          return
-        }
-        if (
-          this.alerts.length !== newAlerts.length ||
-          newAlerts[0].id !== this.alerts[0].id
-        ) {
-          this.alerts = newAlerts
-        }
-        this.setAlertTableCurrentRow(this.alerts[0])
-      } catch (error) {
-        console.error('[AlertTable] fetch alert failed: ', error)
+      // update alerts and select head data
+      // console.log('updateAlerts: ', new Date())
+      const newAlerts = await getAlertsFromServer(this.alertLimit)
+      this.alertUpdatedTime = new Date()
+      if (!newAlerts || newAlerts.length < 1) {
+        return
       }
-    },
-    alertHostInputIsLayerHostFormat() {
-      return this.alertHostInput?.match(new RegExp('(.+)__(.+)'))
-    },
-    alertHostInputIsLayerHostTpFormat() {
-      return this.alertHostInput?.match(new RegExp('(.+)__(.+)__(.+)'))
-    },
-    splitAlertHostInput() {
-      if (this.alertHostInputIsLayerHostTpFormat()) {
-        // [layer, host, tp] for term-point highlighting.
-        //   if alertHostInput was 'hostA__tpX', it assumes as
-        //   {layer: hostA, host: tpX}. 'A__B' format input is used for
-        //   node click drill-down in nested diagram.
-        return this.alertHostInput.split('__')
-      } else if (this.alertHostInputIsLayerHostFormat()) {
-        // [layer, host, ''] for node click drill-down
-        return this.alertHostInput.split('__').concat([''])
+
+      // when change alertLimit OR logs updated
+      if (
+        this.alerts.length !== newAlerts.length ||
+        newAlerts[0].id !== this.alerts[0].id
+      ) {
+        this.alerts = newAlerts
       }
-      return ['', this.alertHostInput, ''] // assume alertHostInput as host.
+      this.setAlertTableCurrentRow(this.alerts[0])
     },
-    alertFromAlertHostInput() {
-      const pathElements = this.splitAlertHostInput()
-      return {
-        id: -1, // clear alert table selection
-        message: 'selected directly',
-        severity: 'information',
-        date: new Date().toISOString(),
-        // for click drill-down (nested diagram):
-        // there are objects that have same name in another layer.
-        // it must identify the object using layer info (by path).
-        layer: pathElements[0], // additional prop
-        host: pathElements[1],
-        tp: pathElements[2] // additional prop
-      }
-    },
-    inputAlertHost: debounce(function () {
-      // NOTICE: do not use arrow-function for debounce.
-      this.fromAlertHostInput = true
-      // set dummy alert to redraw diagram.
-      this.setAlertTableCurrentRow(this.alertFromAlertHostInput())
-      this.fromAlertHostInput = false
-    }, 500), // 0.5sec
     setAlertTableCurrentRow(row) {
-      if (!this.fromAlertHostInput) {
-        // Add props for node highlighting when table row is clicked:
-        row.layer = ''
-        row.tp = ''
-        this.alertHostInput = row.host || ''
-      }
+      // Add props for node highlighting when table row is clicked or updated.
+      row.layer = ''
+      row.tp = ''
+      // update aler host input
+      this.alertHostInput = row.host || ''
+      // update selected row in alert table
       this.currentAlertRow = row
     },
     severityColor(prop, severity) {
