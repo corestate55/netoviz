@@ -3,7 +3,7 @@ require('dotenv').config()
 module.exports = {
   server: {
     host: process.env.NETOVIZ_BIND_ADDR,
-    port: process.env.NETOVIZ_HTTP_PORT
+    port: process.env.PORT || process.env.NETOVIZ_HTTP_PORT
   },
   mode: 'universal',
   /*

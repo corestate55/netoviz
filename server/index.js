@@ -60,4 +60,6 @@ function startGRPCServer() {
 
 // Run server.
 startHTTPServer()
-startGRPCServer()
+if (process.env.NODE_ENV === 'development') {
+  startGRPCServer()
+}
