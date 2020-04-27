@@ -2,7 +2,7 @@
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "bgp",
+        "network-id": "bgp-as",
         "network-types": {
         },
         "node": [
@@ -28,11 +28,21 @@
                     "tp-ref": "10.13.22.1"
                   }
                 ]
+              },
+              {
+                "tp-id": "10.14.22.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "1.2.2.2",
+                    "tp-ref": "10.14.22.1"
+                  }
+                ]
               }
             ],
             "supporting-node": [
               {
-                "network-ref": "ospf",
+                "network-ref": "ospf-area",
                 "node-ref": "as1-area1"
               },
               {
@@ -95,7 +105,7 @@
             ],
             "supporting-node": [
               {
-                "network-ref": "ospf",
+                "network-ref": "ospf-area",
                 "node-ref": "as2-area1"
               },
               {
@@ -150,7 +160,7 @@
             ],
             "supporting-node": [
               {
-                "network-ref": "ospf",
+                "network-ref": "ospf-area",
                 "node-ref": "as3-area1"
               },
               {
@@ -164,6 +174,27 @@
               {
                 "network-ref": "bgp-proc",
                 "node-ref": "3.10.1.1"
+              }
+            ]
+          },
+          {
+            "node-id": "as4",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.14.22.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "bgp-proc",
+                    "node-ref": "as4_10.14.22.4",
+                    "tp-ref": "10.14.22.4"
+                  }
+                ]
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "bgp-proc",
+                "node-ref": "as4_10.14.22.4"
               }
             ]
           },
@@ -309,6 +340,28 @@
               "dest-node": "as65001",
               "dest-tp": "2.34.101.4"
             }
+          },
+          {
+            "link-id": "as1,10.14.22.1,as4,10.14.22.4",
+            "source": {
+              "source-node": "as1",
+              "source-tp": "10.14.22.1"
+            },
+            "destination": {
+              "dest-node": "as4",
+              "dest-tp": "10.14.22.4"
+            }
+          },
+          {
+            "link-id": "as4,10.14.22.4,as1,10.14.22.1",
+            "source": {
+              "source-node": "as4",
+              "source-tp": "10.14.22.4"
+            },
+            "destination": {
+              "dest-node": "as1",
+              "dest-tp": "10.14.22.1"
+            }
           }
         ]
       },
@@ -380,13 +433,6 @@
                   "metric": 50,
                   "flag": [
                     "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
                   ]
                 },
                 {
@@ -502,6 +548,21 @@
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
                     "10.13.22.1"
+                  ]
+                }
+              },
+              {
+                "tp-id": "10.14.22.1",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as1border2",
+                    "tp-ref": "Gi2/0"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.14.22.1"
                   ]
                 }
               }
@@ -1674,13 +1735,6 @@
                   ]
                 },
                 {
-                  "prefix": "2.128.0.0/16",
-                  "metric": 50,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
                   "prefix": "1.0.1.0/24",
                   "metric": 50,
                   "flag": [
@@ -1842,6 +1896,44 @@
                 }
               ]
             }
+          },
+          {
+            "node-id": "as4_10.14.22.4",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.14.22.4",
+                "supporting-termination-point": [
+                  {
+                    "network-ref": "layer3",
+                    "node-ref": "as4_10.14.22.4",
+                    "tp-ref": "10.14.22.4"
+                  }
+                ],
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.14.22.4"
+                  ]
+                }
+              }
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "layer3",
+                "node-ref": "as4_10.14.22.4"
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "as4_10.14.22.4",
+              "flag": [
+                "bgp-proc"
+              ],
+              "router-id": [
+                "as4_10.14.22.4"
+              ],
+              "prefix": [
+
+              ]
+            }
           }
         ],
         "ietf-network-topology:link": [
@@ -1879,17 +1971,6 @@
             }
           },
           {
-            "link-id": "3.1.1.1,10.23.21.3,2.1.1.2,10.23.21.2",
-            "source": {
-              "source-node": "3.1.1.1",
-              "source-tp": "10.23.21.3"
-            },
-            "destination": {
-              "dest-node": "2.1.1.2",
-              "dest-tp": "10.23.21.2"
-            }
-          },
-          {
             "link-id": "3.2.2.2,3.2.2.2,3.10.1.1,3.10.1.1",
             "source": {
               "source-node": "3.2.2.2",
@@ -1898,6 +1979,17 @@
             "destination": {
               "dest-node": "3.10.1.1",
               "dest-tp": "3.10.1.1"
+            }
+          },
+          {
+            "link-id": "3.1.1.1,10.23.21.3,2.1.1.2,10.23.21.2",
+            "source": {
+              "source-node": "3.1.1.1",
+              "source-tp": "10.23.21.3"
+            },
+            "destination": {
+              "dest-node": "2.1.1.2",
+              "dest-tp": "10.23.21.2"
             }
           },
           {
@@ -1912,17 +2004,6 @@
             }
           },
           {
-            "link-id": "2.1.2.2,2.1.2.2:1,2.1.3.1,2.1.3.1",
-            "source": {
-              "source-node": "2.1.2.2",
-              "source-tp": "2.1.2.2:1"
-            },
-            "destination": {
-              "dest-node": "2.1.3.1",
-              "dest-tp": "2.1.3.1"
-            }
-          },
-          {
             "link-id": "3.10.1.1,3.10.1.1,3.2.2.2,3.2.2.2",
             "source": {
               "source-node": "3.10.1.1",
@@ -1934,14 +2015,14 @@
             }
           },
           {
-            "link-id": "2.1.2.1,2.1.2.1,2.1.3.1,2.1.3.1:1",
+            "link-id": "2.1.2.2,2.1.2.2:1,2.1.3.1,2.1.3.1",
             "source": {
-              "source-node": "2.1.2.1",
-              "source-tp": "2.1.2.1"
+              "source-node": "2.1.2.2",
+              "source-tp": "2.1.2.2:1"
             },
             "destination": {
               "dest-node": "2.1.3.1",
-              "dest-tp": "2.1.3.1:1"
+              "dest-tp": "2.1.3.1"
             }
           },
           {
@@ -1953,6 +2034,17 @@
             "destination": {
               "dest-node": "2.1.3.1",
               "dest-tp": "2.34.101.3"
+            }
+          },
+          {
+            "link-id": "2.1.2.1,2.1.2.1,2.1.3.1,2.1.3.1:1",
+            "source": {
+              "source-node": "2.1.2.1",
+              "source-tp": "2.1.2.1"
+            },
+            "destination": {
+              "dest-node": "2.1.3.1",
+              "dest-tp": "2.1.3.1:1"
             }
           },
           {
@@ -2099,17 +2191,6 @@
             }
           },
           {
-            "link-id": "2.1.3.1,2.1.3.1,2.1.2.2,2.1.2.2:1",
-            "source": {
-              "source-node": "2.1.3.1",
-              "source-tp": "2.1.3.1"
-            },
-            "destination": {
-              "dest-node": "2.1.2.2",
-              "dest-tp": "2.1.2.2:1"
-            }
-          },
-          {
             "link-id": "3.1.1.1,3.1.1.1,3.10.1.1,3.10.1.1:1",
             "source": {
               "source-node": "3.1.1.1",
@@ -2118,6 +2199,17 @@
             "destination": {
               "dest-node": "3.10.1.1",
               "dest-tp": "3.10.1.1:1"
+            }
+          },
+          {
+            "link-id": "2.1.3.1,2.1.3.1,2.1.2.2,2.1.2.2:1",
+            "source": {
+              "source-node": "2.1.3.1",
+              "source-tp": "2.1.3.1"
+            },
+            "destination": {
+              "dest-node": "2.1.2.2",
+              "dest-tp": "2.1.2.2:1"
             }
           },
           {
@@ -2143,17 +2235,6 @@
             }
           },
           {
-            "link-id": "1.1.1.1,1.1.1.1,1.10.1.1,1.10.1.1:1",
-            "source": {
-              "source-node": "1.1.1.1",
-              "source-tp": "1.1.1.1"
-            },
-            "destination": {
-              "dest-node": "1.10.1.1",
-              "dest-tp": "1.10.1.1:1"
-            }
-          },
-          {
             "link-id": "2.1.3.1,2.1.3.1:1,2.1.2.1,2.1.2.1",
             "source": {
               "source-node": "2.1.3.1",
@@ -2173,6 +2254,17 @@
             "destination": {
               "dest-node": "1.2.2.2",
               "dest-tp": "10.13.22.1"
+            }
+          },
+          {
+            "link-id": "1.1.1.1,1.1.1.1,1.10.1.1,1.10.1.1:1",
+            "source": {
+              "source-node": "1.1.1.1",
+              "source-tp": "1.1.1.1"
+            },
+            "destination": {
+              "dest-node": "1.10.1.1",
+              "dest-tp": "1.10.1.1:1"
             }
           },
           {
@@ -2218,11 +2310,33 @@
               "dest-node": "1.2.2.2",
               "dest-tp": "1.2.2.2"
             }
+          },
+          {
+            "link-id": "1.2.2.2,10.14.22.1,as4_10.14.22.4,10.14.22.4",
+            "source": {
+              "source-node": "1.2.2.2",
+              "source-tp": "10.14.22.1"
+            },
+            "destination": {
+              "dest-node": "as4_10.14.22.4",
+              "dest-tp": "10.14.22.4"
+            }
+          },
+          {
+            "link-id": "as4_10.14.22.4,10.14.22.4,1.2.2.2,10.14.22.1",
+            "source": {
+              "source-node": "as4_10.14.22.4",
+              "source-tp": "10.14.22.4"
+            },
+            "destination": {
+              "dest-node": "1.2.2.2",
+              "dest-tp": "10.14.22.1"
+            }
           }
         ]
       },
       {
-        "network-id": "ospf",
+        "network-id": "ospf-area",
         "network-types": {
         },
         "node": [
@@ -4083,171 +4197,6 @@
         ],
         "ietf-network-topology:link": [
           {
-            "link-id": "as2dist2,Gi0/0,as2core2,Gi2/0",
-            "source": {
-              "source-node": "as2dist2",
-              "source-tp": "Gi0/0"
-            },
-            "destination": {
-              "dest-node": "as2core2",
-              "dest-tp": "Gi2/0"
-            }
-          },
-          {
-            "link-id": "as2core2,Gi2/0,as2dist2,Gi0/0",
-            "source": {
-              "source-node": "as2core2",
-              "source-tp": "Gi2/0"
-            },
-            "destination": {
-              "dest-node": "as2dist2",
-              "dest-tp": "Gi0/0"
-            }
-          },
-          {
-            "link-id": "as2dist1,Gi1/0,as2core2,Gi3/0",
-            "source": {
-              "source-node": "as2dist1",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as2core2",
-              "dest-tp": "Gi3/0"
-            }
-          },
-          {
-            "link-id": "as2core1,Gi1/0,as2border2,Gi2/0",
-            "source": {
-              "source-node": "as2core1",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as2border2",
-              "dest-tp": "Gi2/0"
-            }
-          },
-          {
-            "link-id": "as2dist2,Gi1/0,as2core1,Gi3/0",
-            "source": {
-              "source-node": "as2dist2",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as2core1",
-              "dest-tp": "Gi3/0"
-            }
-          },
-          {
-            "link-id": "as2core2,Gi1/0,as2border1,Gi2/0",
-            "source": {
-              "source-node": "as2core2",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as2border1",
-              "dest-tp": "Gi2/0"
-            }
-          },
-          {
-            "link-id": "as2dist1,Gi0/0,as2core1,Gi2/0",
-            "source": {
-              "source-node": "as2dist1",
-              "source-tp": "Gi0/0"
-            },
-            "destination": {
-              "dest-node": "as2core1",
-              "dest-tp": "Gi2/0"
-            }
-          },
-          {
-            "link-id": "as3core1,Gi1/0,as3border1,Gi0/0",
-            "source": {
-              "source-node": "as3core1",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as3border1",
-              "dest-tp": "Gi0/0"
-            }
-          },
-          {
-            "link-id": "as2core1,Gi0/0,as2border1,Gi1/0",
-            "source": {
-              "source-node": "as2core1",
-              "source-tp": "Gi0/0"
-            },
-            "destination": {
-              "dest-node": "as2border1",
-              "dest-tp": "Gi1/0"
-            }
-          },
-          {
-            "link-id": "as2core2,Gi0/0,as2border2,Gi1/0",
-            "source": {
-              "source-node": "as2core2",
-              "source-tp": "Gi0/0"
-            },
-            "destination": {
-              "dest-node": "as2border2",
-              "dest-tp": "Gi1/0"
-            }
-          },
-          {
-            "link-id": "as3core1,Gi0/0,as3border2,Gi1/0",
-            "source": {
-              "source-node": "as3core1",
-              "source-tp": "Gi0/0"
-            },
-            "destination": {
-              "dest-node": "as3border2",
-              "dest-tp": "Gi1/0"
-            }
-          },
-          {
-            "link-id": "as2border1,Gi1/0,as2core1,Gi0/0",
-            "source": {
-              "source-node": "as2border1",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as2core1",
-              "dest-tp": "Gi0/0"
-            }
-          },
-          {
-            "link-id": "as2border2,Gi1/0,as2core2,Gi0/0",
-            "source": {
-              "source-node": "as2border2",
-              "source-tp": "Gi1/0"
-            },
-            "destination": {
-              "dest-node": "as2core2",
-              "dest-tp": "Gi0/0"
-            }
-          },
-          {
-            "link-id": "as2border1,Gi2/0,as2core2,Gi1/0",
-            "source": {
-              "source-node": "as2border1",
-              "source-tp": "Gi2/0"
-            },
-            "destination": {
-              "dest-node": "as2core2",
-              "dest-tp": "Gi1/0"
-            }
-          },
-          {
-            "link-id": "as2core1,Gi2/0,as2dist1,Gi0/0",
-            "source": {
-              "source-node": "as2core1",
-              "source-tp": "Gi2/0"
-            },
-            "destination": {
-              "dest-node": "as2dist1",
-              "dest-tp": "Gi0/0"
-            }
-          },
-          {
             "link-id": "as1border1,Gi0/0,as1core1,Gi1/0",
             "source": {
               "source-node": "as1border1",
@@ -4259,24 +4208,13 @@
             }
           },
           {
-            "link-id": "as2core2,Gi3/0,as2dist1,Gi1/0",
+            "link-id": "as1core1,Gi1/0,as1border1,Gi0/0",
             "source": {
-              "source-node": "as2core2",
-              "source-tp": "Gi3/0"
-            },
-            "destination": {
-              "dest-node": "as2dist1",
-              "dest-tp": "Gi1/0"
-            }
-          },
-          {
-            "link-id": "as3border2,Gi1/0,as3core1,Gi0/0",
-            "source": {
-              "source-node": "as3border2",
+              "source-node": "as1core1",
               "source-tp": "Gi1/0"
             },
             "destination": {
-              "dest-node": "as3core1",
+              "dest-node": "as1border1",
               "dest-tp": "Gi0/0"
             }
           },
@@ -4303,14 +4241,69 @@
             }
           },
           {
-            "link-id": "as1core1,Gi1/0,as1border1,Gi0/0",
+            "link-id": "as2border1,Gi1/0,as2core1,Gi0/0",
             "source": {
-              "source-node": "as1core1",
+              "source-node": "as2border1",
               "source-tp": "Gi1/0"
             },
             "destination": {
-              "dest-node": "as1border1",
+              "dest-node": "as2core1",
               "dest-tp": "Gi0/0"
+            }
+          },
+          {
+            "link-id": "as2core1,Gi0/0,as2border1,Gi1/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "Gi0/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "Gi1/0"
+            }
+          },
+          {
+            "link-id": "as2border1,Gi2/0,as2core2,Gi1/0",
+            "source": {
+              "source-node": "as2border1",
+              "source-tp": "Gi2/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "Gi1/0"
+            }
+          },
+          {
+            "link-id": "as2core2,Gi1/0,as2border1,Gi2/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as2border1",
+              "dest-tp": "Gi2/0"
+            }
+          },
+          {
+            "link-id": "as2border2,Gi1/0,as2core2,Gi0/0",
+            "source": {
+              "source-node": "as2border2",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "Gi0/0"
+            }
+          },
+          {
+            "link-id": "as2core2,Gi0/0,as2border2,Gi1/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "Gi0/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "Gi1/0"
             }
           },
           {
@@ -4325,6 +4318,39 @@
             }
           },
           {
+            "link-id": "as2core1,Gi1/0,as2border2,Gi2/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as2border2",
+              "dest-tp": "Gi2/0"
+            }
+          },
+          {
+            "link-id": "as2core1,Gi2/0,as2dist1,Gi0/0",
+            "source": {
+              "source-node": "as2core1",
+              "source-tp": "Gi2/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "Gi0/0"
+            }
+          },
+          {
+            "link-id": "as2dist1,Gi0/0,as2core1,Gi2/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "Gi0/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "Gi2/0"
+            }
+          },
+          {
             "link-id": "as2core1,Gi3/0,as2dist2,Gi1/0",
             "source": {
               "source-node": "as2core1",
@@ -4336,6 +4362,61 @@
             }
           },
           {
+            "link-id": "as2dist2,Gi1/0,as2core1,Gi3/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as2core1",
+              "dest-tp": "Gi3/0"
+            }
+          },
+          {
+            "link-id": "as2core2,Gi2/0,as2dist2,Gi0/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "Gi2/0"
+            },
+            "destination": {
+              "dest-node": "as2dist2",
+              "dest-tp": "Gi0/0"
+            }
+          },
+          {
+            "link-id": "as2dist2,Gi0/0,as2core2,Gi2/0",
+            "source": {
+              "source-node": "as2dist2",
+              "source-tp": "Gi0/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "Gi2/0"
+            }
+          },
+          {
+            "link-id": "as2core2,Gi3/0,as2dist1,Gi1/0",
+            "source": {
+              "source-node": "as2core2",
+              "source-tp": "Gi3/0"
+            },
+            "destination": {
+              "dest-node": "as2dist1",
+              "dest-tp": "Gi1/0"
+            }
+          },
+          {
+            "link-id": "as2dist1,Gi1/0,as2core2,Gi3/0",
+            "source": {
+              "source-node": "as2dist1",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as2core2",
+              "dest-tp": "Gi3/0"
+            }
+          },
+          {
             "link-id": "as3border1,Gi0/0,as3core1,Gi1/0",
             "source": {
               "source-node": "as3border1",
@@ -4343,6 +4424,39 @@
             },
             "destination": {
               "dest-node": "as3core1",
+              "dest-tp": "Gi1/0"
+            }
+          },
+          {
+            "link-id": "as3core1,Gi1/0,as3border1,Gi0/0",
+            "source": {
+              "source-node": "as3core1",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as3border1",
+              "dest-tp": "Gi0/0"
+            }
+          },
+          {
+            "link-id": "as3border2,Gi1/0,as3core1,Gi0/0",
+            "source": {
+              "source-node": "as3border2",
+              "source-tp": "Gi1/0"
+            },
+            "destination": {
+              "dest-node": "as3core1",
+              "dest-tp": "Gi0/0"
+            }
+          },
+          {
+            "link-id": "as3core1,Gi0/0,as3border2,Gi1/0",
+            "source": {
+              "source-node": "as3core1",
+              "source-tp": "Gi0/0"
+            },
+            "destination": {
+              "dest-node": "as3border2",
               "dest-tp": "Gi1/0"
             }
           }
@@ -5631,6 +5745,31 @@
             }
           },
           {
+            "node-id": "as4_10.14.22.4",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "10.14.22.4",
+                "ietf-l3-unicast-topology:l3-termination-point-attributes": {
+                  "ip-address": [
+                    "10.14.22.4/24"
+                  ]
+                }
+              }
+            ],
+            "ietf-l3-unicast-topology:l3-node-attributes": {
+              "name": "",
+              "flag": [
+                "layer3"
+              ],
+              "router-id": [
+                ""
+              ],
+              "prefix": [
+
+              ]
+            }
+          },
+          {
             "node-id": "host1",
             "ietf-network-topology:termination-point": [
               {
@@ -6138,6 +6277,28 @@
             "destination": {
               "dest-node": "as2dept1",
               "dest-tp": "Gi3/0"
+            }
+          },
+          {
+            "link-id": "as1border2,Gi2/0,as4_10.14.22.4,10.14.22.4",
+            "source": {
+              "source-node": "as1border2",
+              "source-tp": "Gi2/0"
+            },
+            "destination": {
+              "dest-node": "as4_10.14.22.4",
+              "dest-tp": "10.14.22.4"
+            }
+          },
+          {
+            "link-id": "as4_10.14.22.4,10.14.22.4,as1border2,Gi2/0",
+            "source": {
+              "source-node": "as4_10.14.22.4",
+              "source-tp": "10.14.22.4"
+            },
+            "destination": {
+              "dest-node": "as1border2",
+              "dest-tp": "Gi2/0"
             }
           }
         ]

@@ -16,8 +16,12 @@
     "label": "[batfish-L2] sample5"
   },
   {
-    "file": "bf_l3trial.json",
-    "label": "batfish trial (L3)"
+    "file": "bf_l3ex.json",
+    "label": "batfish trial (L3 example)"
+  },
+  {
+    "file": "bf_l3s1.json",
+    "label": "batfish trial (L3 sample1)"
   },
   {
     "file": "diff_test.json",
@@ -26,6 +30,10 @@
   {
     "file": "nlink_check.json",
     "label": "Link check for nested"
+  },
+  {
+    "file": "ops_s1.json",
+    "label": "Ops info overlay test"
   },
   {
     "file": "target.json",

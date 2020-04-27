@@ -1,0 +1,27 @@
+{
+  "standard": {
+    "grid": {
+      "x": [50, 150, 250],
+      "y": [50, 150]
+    },
+    "layout": {
+      "ops-info__switch01": { "i": 0, "j": 0 },
+      "ops-info__switch02": { "i": 1, "j": 0 },
+      "ops-info__server01": { "i": 0, "j": 1 },
+      "ops-info__hyperv01": { "i": 1, "j": 1 },
+      "ops-info__vserver01": { "i": 2, "j": 1 }
+    }
+  },
+  "reverse": {
+    "grid": {
+      "x": [50, 150],
+      "y": [50, 150]
+    },
+    "layout": {
+      "layer1__switch01": { "i": 0, "j": 0 },
+      "layer1__switch02": { "i": 1, "j": 0 },
+      "layer1__server01": { "i": 0, "j": 1 },
+      "layer1__hyperv01": { "i": 1, "j": 1 }
+    }
+  }
+}
