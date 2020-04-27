@@ -50,8 +50,8 @@ function deserialize_netoviz_GraphRequest(buffer_arg) {
 
 
 var TopologyDataService = exports.TopologyDataService = {
-  getDiagramData: {
-    path: '/netoviz.TopologyData/GetDiagramData',
+  getGraphData: {
+    path: '/netoviz.TopologyData/GetGraphData',
     requestStream: false,
     responseStream: false,
     requestType: server_api_grpc_topology$data_pb.GraphRequest,

@@ -72,8 +72,8 @@ proto.netoviz.TopologyDataPromiseClient =
  *   !proto.netoviz.GraphRequest,
  *   !proto.netoviz.GraphReply>}
  */
-const methodDescriptor_TopologyData_GetDiagramData = new grpc.web.MethodDescriptor(
-  '/netoviz.TopologyData/GetDiagramData',
+const methodDescriptor_TopologyData_GetGraphData = new grpc.web.MethodDescriptor(
+  '/netoviz.TopologyData/GetGraphData',
   grpc.web.MethodType.UNARY,
   proto.netoviz.GraphRequest,
   proto.netoviz.GraphReply,
@@ -94,7 +94,7 @@ const methodDescriptor_TopologyData_GetDiagramData = new grpc.web.MethodDescript
  *   !proto.netoviz.GraphRequest,
  *   !proto.netoviz.GraphReply>}
  */
-const methodInfo_TopologyData_GetDiagramData = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_TopologyData_GetGraphData = new grpc.web.AbstractClientBase.MethodInfo(
   proto.netoviz.GraphReply,
   /**
    * @param {!proto.netoviz.GraphRequest} request
@@ -117,13 +117,13 @@ const methodInfo_TopologyData_GetDiagramData = new grpc.web.AbstractClientBase.M
  * @return {!grpc.web.ClientReadableStream<!proto.netoviz.GraphReply>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.netoviz.TopologyDataClient.prototype.getDiagramData =
+proto.netoviz.TopologyDataClient.prototype.getGraphData =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/netoviz.TopologyData/GetDiagramData',
+      '/netoviz.TopologyData/GetGraphData',
       request,
       metadata || {},
-      methodDescriptor_TopologyData_GetDiagramData,
+      methodDescriptor_TopologyData_GetGraphData,
       callback);
 };
 
@@ -136,13 +136,13 @@ proto.netoviz.TopologyDataClient.prototype.getDiagramData =
  * @return {!Promise<!proto.netoviz.GraphReply>}
  *     A native promise that resolves to the response
  */
-proto.netoviz.TopologyDataPromiseClient.prototype.getDiagramData =
+proto.netoviz.TopologyDataPromiseClient.prototype.getGraphData =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/netoviz.TopologyData/GetDiagramData',
+      '/netoviz.TopologyData/GetGraphData',
       request,
       metadata || {},
-      methodDescriptor_TopologyData_GetDiagramData);
+      methodDescriptor_TopologyData_GetGraphData);
 };
 
 

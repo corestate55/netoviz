@@ -9,7 +9,7 @@ const messages = require('./topology-data_pb')
  * @param {function} callback
  * @returns {Promise<void>}
  */
-const getDiagramData = async (call, callback) => {
+const getGraphData = async (call, callback) => {
   /** @type {proto.netoviz.GraphRequest} */
   const request = call.request
   /** @type {proto.netoviz.GraphReply} */
@@ -54,4 +54,4 @@ const getAlerts = async (call, callback) => {
   callback(null, reply)
 }
 
-module.exports = { getDiagramData, getAlerts }
+module.exports = { getGraphData, getAlerts }

@@ -3,7 +3,7 @@ syntax = "proto3";
 package netoviz;
 
 service TopologyData {
-  rpc GetDiagramData (GraphRequest) returns (GraphReply);
+  rpc GetGraphData (GraphRequest) returns (GraphReply);
   rpc GetAlerts (AlertRequest) returns (AlertReply);
 }
 
