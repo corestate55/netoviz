@@ -34,7 +34,7 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: '~/lib/grpc-client/index.js', ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */

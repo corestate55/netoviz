@@ -3,7 +3,7 @@ const grpc = require('grpc')
 const messages = require('../server/api/grpc/topology-data_pb')
 const services = require('../server/api/grpc/topology-data_grpc_pb')
 
-const getDiagramData = (call, callback) => {
+const getGraphData = (call, callback) => {
   const request = call.request
   console.log('# reply to: ', request.toObject())
   const graphNameValue = request.getGraphName()
@@ -35,10 +35,8 @@ const getAlerts = (call, callback) => {
 function main() {
   console.log('# start server')
   const server = new grpc.Server()
-  server.addService(services.TopologyDataService, {
-    getDiagramData,
-    getAlerts
-  })
+  const impl = { getGraphData, getAlerts }
+  server.addService(services.TopologyDataService, impl)
   server.bind(
     `${process.env.NETOVIZ_BIND_ADDR}:${process.env.NETOVIZ_GRPC_PORT}`,
     grpc.ServerCredentials.createInsecure()

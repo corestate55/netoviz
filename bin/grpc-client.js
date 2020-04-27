@@ -33,7 +33,7 @@ function getGraphData() {
   request.setJsonName(jsonName)
 
   console.log('# send request: ', request.toString())
-  client.getDiagramData(request, (error, response) => {
+  client.getGraphData(request, (error, response) => {
     if (error) {
       console.warn('ERROR : ', error.message())
       process.exit(1)
