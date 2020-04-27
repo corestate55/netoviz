@@ -4,7 +4,7 @@
     "destination": "static/docs",
     "private": false,
     "recurse": true,
-    "template": "node_modules/braintree-jsdoc-template"
+    "template": "node_modules/foodoc/template"
   },
   "plugins": [],
   "recurseDepth": 10,
