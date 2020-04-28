@@ -18,6 +18,7 @@ import { debounce } from 'debounce'
 
 export default {
   props: {
+    // value prop used for v-model like a single text box
     value: {
       type: String,
       default: '',

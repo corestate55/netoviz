@@ -95,9 +95,8 @@
 </template>
 
 <script>
-import colors from 'vuetify/es5/util/colors'
 import TableAlertsInputHost from './TableAlertsInputHost'
-import getAlertsFromServer from '~/lib/alerts'
+import { getAlertsFromServer, severityColor } from '~/lib/alerts'
 
 export default {
   components: {
@@ -118,38 +117,6 @@ export default {
         { text: 'Message', sortable: true, value: 'message' },
         { text: 'Date', sortable: true, value: 'date' }
       ]),
-      colorTable: Object.freeze([
-        {
-          severity: 'disaster',
-          fill: colors.red.lighten1, // bright red
-          text: colors.grey.lighten5
-        },
-        {
-          severity: 'high',
-          fill: colors.red.darken4, // red
-          text: colors.grey.lighten5
-        },
-        {
-          severity: 'average',
-          fill: colors.orange.lighten1, // orange
-          text: colors.grey.darken4
-        },
-        {
-          severity: 'warning',
-          fill: colors.yellow.accent3, // bright yellow
-          text: colors.grey.darken4
-        },
-        {
-          severity: 'information',
-          fill: colors.lightGreen.darken1, // bright green
-          text: colors.grey.lighten5
-        }
-      ]),
-      defaultColorInfo: Object.freeze({
-        severity: 'default',
-        fill: colors.grey.darken1, // grey
-        text: colors.grey.lighten5
-      }),
       fromAlertHostInput: false,
       enableTimer: false,
       debug: false
@@ -166,11 +133,6 @@ export default {
     },
     alertHost() {
       return this.$store.state.alert.alertHost
-    },
-    disableClearSelectionButton() {
-      return (
-        this.currentAlertRow && Object.keys(this.currentAlertRow).length < 1
-      )
     }
   },
   watch: {
@@ -226,16 +188,14 @@ export default {
       // Add props for node highlighting when table row is clicked or updated.
       row.layer = ''
       row.tp = ''
-      // update aler host input
+      // update alert host input
       this.alertHostInput = row.host || ''
       // update selected row in alert table
       this.currentAlertRow = row
     },
     severityColor(prop, severity) {
-      const colorInfo = this.colorTable.find(
-        d => d.severity === severity.toLowerCase()
-      )
-      return colorInfo ? colorInfo[prop] : this.defaultColorInfo[prop]
+      // delegate: color table search
+      return severityColor(prop, severity)
     }
   }
 }

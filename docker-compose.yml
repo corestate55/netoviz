@@ -5,8 +5,10 @@ services:
     image: netoviz/envoy
     container_name: nv_envoy
     restart: always
+    env_file:
+      - .env
     extra_hosts:
       - netoviz:${NETOVIZ_HOST_ADDR}
     ports:
-      - 8080:8080
-      - 9901:9901
+      - ${NETOVIZ_GRPC_WEB_PORT}:8080
+      - ${ENVOY_MGMT_PORT}:9901
