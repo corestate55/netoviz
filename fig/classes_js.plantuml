@@ -898,6 +898,7 @@ class GRPCClient {
     +getAlerts()
     +getGraphData()
     +graphName()
+    +getModels()
 }
 GRPCClient -- GRPCClient
 @enduml

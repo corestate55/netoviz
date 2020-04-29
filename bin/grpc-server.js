@@ -32,10 +32,26 @@ const getAlerts = (call, callback) => {
   callback(null, reply)
 }
 
+const getModels = (call, callback) => {
+  const reply = new messages.ModelReply()
+  const models = [
+    {
+      file: 'bf_l2s3.json',
+      label: '[batfish-L2] sample3'
+    },
+    {
+      file: 'bf_l2s4.json',
+      label: '[batfish-L2] sample4'
+    }
+  ]
+  reply.setJson(JSON.stringify(models))
+  callback(null, reply)
+}
+
 function main() {
   console.log('# start server')
   const server = new grpc.Server()
-  const impl = { getGraphData, getAlerts }
+  const impl = { getGraphData, getAlerts, getModels }
   server.addService(services.TopologyDataService, impl)
   server.bind(
     `${process.env.NETOVIZ_BIND_ADDR}:${process.env.NETOVIZ_GRPC_PORT}`,

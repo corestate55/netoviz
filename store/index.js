@@ -1,3 +1,5 @@
+import grpcClient from '../lib/grpc-client'
+
 export const state = () => ({
   modelFiles: [],
   visualizers: Object.freeze([
@@ -38,9 +40,15 @@ export const mutations = {
 export const actions = {
   async updateModelFiles({ commit }) {
     try {
-      const response = await fetch('/api/models')
-      const modelFiles = await response.json()
-      commit('setModelFiles', Object.freeze(modelFiles))
+      if (process.env.NODE_ENV === 'development') {
+        const response = await grpcClient.getModels()
+        const modelFiles = JSON.parse(response.getJson())
+        commit('setModelFiles', Object.freeze(modelFiles))
+      } else {
+        const response = await fetch('/api/models')
+        const modelFiles = await response.json()
+        commit('setModelFiles', Object.freeze(modelFiles))
+      }
     } catch (error) {
       console.log('[SelectModel] Cannot get models data: ', error)
     }

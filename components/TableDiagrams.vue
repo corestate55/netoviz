@@ -4,6 +4,7 @@
       <v-data-table
         v-bind:headers="headers"
         v-bind:items="diagrams"
+        v-bind:items-per-page="20"
         caption="Select model/visualizer"
         dense
         hide-default-header

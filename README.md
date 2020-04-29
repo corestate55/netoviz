@@ -70,18 +70,18 @@ It selects a name of hosts from specified model file and send random message to 
 ```
 
 ### Install docker/gRPC tools
-Currently, netoviz have gRPC and REST API.
+Currently, netoviz has gRPC and REST API.
 It uses gRPC in development mode and REST in production mode.
 (Production mode is used to deploy on heroku.)
 So it needs gRPC tools to develop (run under development mode) netoviz,
 and docker tools to manipulate docker image of envoy proxy.
 
-Install docker and docker-compose
+Install docker and docker-compose.
 ```
 sudo apt install docker-ce docker-compose
 ```
 
-Install grpc-tools (`grpc_tools_node_protoc`)
+Install grpc-tools. (`grpc_tools_node_protoc`)
 ```
 sudo npm install -g --unsafe-perm grpc-tools
 ```
@@ -95,10 +95,10 @@ sudo chmod +x /usr/local/bin/protoc-gen-grpc-web
 
 ### Build envoy docker image
 Copy `dot.env` to `.env` and edit environment variables. 
-
-**NOTICE**: If you change default values in `.env`,
-you must change corresponding configurations in `docker-compose` and `envoy.yaml`,
-and rebuild envoy container. (These configuration files are independent of `.env` file settings.)
+```
+cp dot.env .env
+# vi .env
+```
 
 Check parameters.
 ```
@@ -189,6 +189,33 @@ Server (JSON API) (see [server/api.js](server/api/rest/index.js))
     * to save layout (for nested-graph)
   * GET `/api/graph/:graphName/:jsonName`
     * return diagram data converted from RFC8345-based topology model.
+
+### Server-side gRPC API
+
+Compile protocol buffer. (It can run with `npm run protoc`.)
+```
+hagiwara@dev01:~/nwmodel/netoviz/server/graph-api/grpc$ grpc_tools_node_protoc \
+  --js_out=import_style=commonjs,binary:. \
+  --grpc-web_out=import_style=commonjs,mode=grpcwebtext:. \
+  --grpc_out=. \
+  topology-data.proto 
+```
+
+Run test-server (returns dummy data)
+```
+hagiwara@dev01:~/nwmodel/netoviz/$ node bin/grpc-server.js 
+```
+
+Run test-client (CLI-client)
+```
+# PWD: ~/nwmodel/netoviz/
+
+# Arguments: graph <graph_name> <json>
+node bin/grpc-client.js graph force_simulation nlink_check.json
+
+# Arguments: graph <number>
+node bin/grpc-client.js alerts 3
+```
 
 ### Format, Lints and fixes files
 ```

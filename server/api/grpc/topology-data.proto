@@ -5,6 +5,7 @@ package netoviz;
 service TopologyData {
   rpc GetGraphData (GraphRequest) returns (GraphReply);
   rpc GetAlerts (AlertRequest) returns (AlertReply);
+  rpc GetModels (ModelRequest) returns (ModelReply);
 }
 
 enum GraphName {
@@ -50,4 +51,10 @@ message Alert {
 
 message AlertReply {
   repeated Alert alerts = 1;
+}
+
+message ModelRequest {}
+
+message ModelReply {
+  string json = 1;
 }

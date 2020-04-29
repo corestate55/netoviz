@@ -226,5 +226,85 @@ proto.netoviz.TopologyDataPromiseClient.prototype.getAlerts =
 };
 
 
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.netoviz.ModelRequest,
+ *   !proto.netoviz.ModelReply>}
+ */
+const methodDescriptor_TopologyData_GetModels = new grpc.web.MethodDescriptor(
+  '/netoviz.TopologyData/GetModels',
+  grpc.web.MethodType.UNARY,
+  proto.netoviz.ModelRequest,
+  proto.netoviz.ModelReply,
+  /**
+   * @param {!proto.netoviz.ModelRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.netoviz.ModelReply.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.netoviz.ModelRequest,
+ *   !proto.netoviz.ModelReply>}
+ */
+const methodInfo_TopologyData_GetModels = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.netoviz.ModelReply,
+  /**
+   * @param {!proto.netoviz.ModelRequest} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.netoviz.ModelReply.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.netoviz.ModelRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.netoviz.ModelReply)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.netoviz.ModelReply>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.netoviz.TopologyDataClient.prototype.getModels =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/netoviz.TopologyData/GetModels',
+      request,
+      metadata || {},
+      methodDescriptor_TopologyData_GetModels,
+      callback);
+};
+
+
+/**
+ * @param {!proto.netoviz.ModelRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.netoviz.ModelReply>}
+ *     A native promise that resolves to the response
+ */
+proto.netoviz.TopologyDataPromiseClient.prototype.getModels =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/netoviz.TopologyData/GetModels',
+      request,
+      metadata || {},
+      methodDescriptor_TopologyData_GetModels);
+};
+
+
 module.exports = proto.netoviz;
 

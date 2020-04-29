@@ -83,6 +83,19 @@ function getAlerts() {
   })
 }
 
+function getModels() {
+  console.log('# start client to get models')
+  const request = new messages.ModelRequest()
+  console.log('# send request: ', request.toString())
+  client.getModels(request, (error, response) => {
+    if (error) {
+      console.warn('ERROR : ', error.message())
+      process.exit(1)
+    }
+    console.log('# Receive response: ', response.getJson())
+  })
+}
+
 if (process.argv.slice(2).length < 1) {
   printGraphDataTestUsage()
   printAlertsTestUsage()
@@ -90,6 +103,8 @@ if (process.argv.slice(2).length < 1) {
 }
 if (process.argv[2] === 'graph') {
   getGraphData()
-} else {
+} else if (process.argv[2] === 'alert') {
   getAlerts()
+} else {
+  getModels()
 }

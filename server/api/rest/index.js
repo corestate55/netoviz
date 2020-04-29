@@ -44,25 +44,27 @@ apiRouter.get('/alert/:number', async (req, res) => {
 
 // API to send ALL alert log data
 apiRouter.get('/alert/all', async (req, res) => {
-  console.log('all logs requested')
+  console.log('[REST] alerts: all')
   res.send(await alertTable.allAlerts())
 })
 
 // API to send all model-file data.
 apiRouter.get('/models', async (req, res) => {
-  console.log('model list requested')
+  console.log('[REST] models')
   res.type('json')
   res.send(await restApi.getModels())
 })
 
 // API to receive graph-layout data. (in nested graph)
 apiRouter.post('/graph/:graphName/:jsonName', (req, res) => {
+  console.log('[REST] post graph layout')
   restApi.postGraphData(req)
   res.send(JSON.stringify({ message: 'layout data received.' }))
 })
 
 // API to send converted graph data. (for web frontend)
 apiRouter.get('/graph/:graphName/:jsonName', async (req, res) => {
+  console.log('[REST] graph')
   res.type('json')
   const p = req.params // alias
   res.send(await restApi.getGraphData(p.graphName, p.jsonName, req))

@@ -48,6 +48,28 @@ function deserialize_netoviz_GraphRequest(buffer_arg) {
   return server_api_grpc_topology$data_pb.GraphRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_netoviz_ModelReply(arg) {
+  if (!(arg instanceof server_api_grpc_topology$data_pb.ModelReply)) {
+    throw new Error('Expected argument of type netoviz.ModelReply');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_netoviz_ModelReply(buffer_arg) {
+  return server_api_grpc_topology$data_pb.ModelReply.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_netoviz_ModelRequest(arg) {
+  if (!(arg instanceof server_api_grpc_topology$data_pb.ModelRequest)) {
+    throw new Error('Expected argument of type netoviz.ModelRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_netoviz_ModelRequest(buffer_arg) {
+  return server_api_grpc_topology$data_pb.ModelRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 var TopologyDataService = exports.TopologyDataService = {
   getGraphData: {
@@ -71,6 +93,17 @@ var TopologyDataService = exports.TopologyDataService = {
     requestDeserialize: deserialize_netoviz_AlertRequest,
     responseSerialize: serialize_netoviz_AlertReply,
     responseDeserialize: deserialize_netoviz_AlertReply,
+  },
+  getModels: {
+    path: '/netoviz.TopologyData/GetModels',
+    requestStream: false,
+    responseStream: false,
+    requestType: server_api_grpc_topology$data_pb.ModelRequest,
+    responseType: server_api_grpc_topology$data_pb.ModelReply,
+    requestSerialize: serialize_netoviz_ModelRequest,
+    requestDeserialize: deserialize_netoviz_ModelRequest,
+    responseSerialize: serialize_netoviz_ModelReply,
+    responseDeserialize: deserialize_netoviz_ModelReply,
   },
 };
 
