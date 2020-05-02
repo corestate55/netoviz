@@ -18,8 +18,8 @@ config.dev = process.env.NODE_ENV !== 'production'
 
 // Init Nuxt.js
 const nuxt = new Nuxt(config)
-const host = nuxt.options.server.host
-const httpPort = nuxt.options.server.port
+const host = '0.0.0.0'
+const httpPort = process.env.NETOVIZ_REST_PORT
 const grpcPort = process.env.NETOVIZ_GRPC_PORT
 
 /** HTTP server */

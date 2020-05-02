@@ -54,4 +54,4 @@ static_resources:
         - lb_endpoints:
             - endpoint:
                 address:
-                  socket_address: { address: $NETOVIZ_HOST_ADDR, port_value: $NETOVIZ_GRPC_PORT }
+                  socket_address: { address: $NETOVIZ_GRPC_ADDR, port_value: $NETOVIZ_GRPC_PORT }

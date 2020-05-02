@@ -150,16 +150,34 @@ npm run doc
     (see. [netomox-examples](https://github.com/corestate55/netomox-examples))
 * `server`: API Server
 
+### All-in-one docker container
+
+Build all-in-one container. 
+(See detail: [Dockerfile](./Dockerfile). It copies current sources/packages and rebuild netoviz.)
+```
+docker build -t netoviz/allinone .
+```
+
+Run.
+```
+docker run -p3000:3000 --name nv-allinone netoviz/allinone
+```
+
+Debug.
+```
+docker run -it netoviz/allinone /bin/ash
+```
+
 ### Services
 
 ```
 Front-end  --(REST,tcp/3000)----> Netoviz <==> AlertDB
-(browser)  ----------+            Server
+(browser)  ----------+             Server
                      |               |
              (gRPC-web,tcp/8080)  (gRPC,tcp/9090)
                      |               |
                      +-----------> Envoy
-Envoy Mgmt --(HTTP,tcp/9901)-----> Container
+Envoy Mgmt --(HTTP,tcp/9901)----> Container
 (browser)
 ```
 
