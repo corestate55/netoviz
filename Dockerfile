@@ -13,7 +13,7 @@ FROM node:12.16.3-alpine3.11
 
 WORKDIR /home/netoviz
 COPY . /home/netoviz/
-RUN npm rebuild
+RUN cp dot.env .env && npm rebuild && npm run build
 
 EXPOSE 3000
 

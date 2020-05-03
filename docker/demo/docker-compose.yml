@@ -1,0 +1,44 @@
+version: "3"
+services:
+  web-server:
+    image: netoviz/web-server
+    container_name: nv-web
+    restart: always
+    env_file: .env
+    networks:
+      - netoviz-nw
+    ports:
+      # browser access
+      - "${NETOVIZ_WEB_PORT}:${NETOVIZ_WEB_PORT}"
+    depends_on:
+      - envoy
+      - app-server
+  envoy:
+    image: netoviz/envoy
+    container_name: nv-envoy
+    restart: always
+    networks:
+      - netoviz-nw
+    env_file: .env
+    ports:
+      # management (browser access)
+      - "${ENVOY_MGMT_PORT}:9901"
+      # grpc-web
+      - "${NETOVIZ_GRPC_WEB_PORT}:8080"
+    depends_on:
+      - app-server
+  app-server:
+    image: netoviz/app-server
+    container_name: nv-app
+    restart: always
+    env_file: .env
+    networks:
+      - netoviz-nw
+    expose:
+      # REST
+      - "${NETOVIZ_REST_PORT}"
+      # gRPC
+      - "${NETOVIZ_GRPC_PORT}"
+networks:
+  netoviz-nw:
+    driver: bridge

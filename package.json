@@ -18,7 +18,8 @@
     "lint:fix": "eslint --ext .js,.vue --ignore-path .gitignore --fix .",
     "doc": "jsdoc  --configure .jsdocrc.json --readme README.md --package package.json",
     "fig": "./bin/gen_fig.rb > fig/classes_js.plantuml && PLANTUML_LIMIT_SIZE=8192 plantuml fig/classes_js.plantuml",
-    "protoc": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:. ./server/api/grpc/topology-data.proto"
+    "protoc": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:. ./server/api/grpc/topology-data.proto",
+    "docker-build": "docker build -t netoviz/allinone ."
   },
   "dependencies": {
     "@babel/node": "^7.8.7",

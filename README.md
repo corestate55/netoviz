@@ -9,9 +9,16 @@ See also [Netomox (Network topology modeling toolbox)](https://github.com/corest
 
 ## Demo
 
-A live demo (with limited functions) can be viewed at the following URI.
+A live demo (with limited functions) can be viewed at the following URI,
 
 * https://netoviz.herokuapp.com/
+
+and the [netoviz docker container is on Docker Hub](https://hub.docker.com/r/netoviz/allinone).
+You can run it with docker and use it via `http://localhost:3030`.
+```
+docker pull netoviz/allinone
+docker run -p3000:3000 --name nv-allinone netoviz/allinone
+```
 
 Demo movie
 
@@ -153,9 +160,12 @@ npm run doc
 ### All-in-one docker container
 
 Build all-in-one container. 
-(See detail: [Dockerfile](./Dockerfile). It copies current sources/packages and rebuild netoviz.)
+(See detail: [Dockerfile for all-in-one container](./Dockerfile). NOTICE: It copies current sources/packages and rebuild netoviz.)
+
 ```
 docker build -t netoviz/allinone .
+# or
+npm run docker-build
 ```
 
 Run.
@@ -166,19 +176,6 @@ docker run -p3000:3000 --name nv-allinone netoviz/allinone
 Debug.
 ```
 docker run -it netoviz/allinone /bin/ash
-```
-
-### Services
-
-```
-Front-end  --(REST,tcp/3000)----> Netoviz <==> AlertDB
-(browser)  ----------+             Server
-                     |               |
-             (gRPC-web,tcp/8080)  (gRPC,tcp/9090)
-                     |               |
-                     +-----------> Envoy
-Envoy Mgmt --(HTTP,tcp/9901)----> Container
-(browser)
 ```
 
 ### Application URI
