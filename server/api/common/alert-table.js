@@ -2,7 +2,7 @@
  * @file Alert table operation
  */
 
-import db from '../../models'
+import db from '../../../db/models'
 
 /**
  * @typedef {Object} AlertData

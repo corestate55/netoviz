@@ -172,10 +172,16 @@ Run.
 ```
 docker run -p3000:3000 --name nv-allinone netoviz/allinone
 ```
+The container create alert-db file (sqlite3) when it `run`.
+If you want to keep alert-db file after the container was stopped,
+mount docker host directory as `/home/netoviz/db/storage` like that:
+```
+docker run -p3000:3000 --volume=`pwd`/db/storage:/home/netoviz/db/storage --name nv-allinone netoviz/allinone
+```  
 
 Debug.
 ```
-docker run -it netoviz/allinone /bin/ash
+docker run -it netoviz/allinone /bin/sh
 ```
 
 ### Application URI

@@ -13,8 +13,10 @@ FROM node:12.16.3-alpine3.11
 
 WORKDIR /home/netoviz
 COPY . /home/netoviz/
-RUN cp dot.env .env && npm rebuild && npm run build
+RUN cp dot.env .env \
+    && npm rebuild \
+    && npm run build
 
 EXPOSE 3000
 
-CMD npm run start
+CMD NODE_ENV=production ./bin/dbmigrate.sh && npm run start

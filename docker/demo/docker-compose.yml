@@ -11,9 +11,9 @@ services:
       # browser access
       - "${NETOVIZ_WEB_PORT}:${NETOVIZ_WEB_PORT}"
     depends_on:
-      - envoy
+      - proxy-server
       - app-server
-  envoy:
+  proxy-server:
     image: netoviz/envoy
     container_name: nv-envoy
     restart: always
@@ -32,11 +32,14 @@ services:
     container_name: nv-app
     restart: always
     env_file: .env
+    volumes:
+      - ./storage:/home/netoviz-app-server/db/storage
     networks:
       - netoviz-nw
-    expose:
+    ports:
       # REST
-      - "${NETOVIZ_REST_PORT}"
+      - "${NETOVIZ_REST_PORT}:${NETOVIZ_REST_PORT}"
+    expose:
       # gRPC
       - "${NETOVIZ_GRPC_PORT}"
 networks:
