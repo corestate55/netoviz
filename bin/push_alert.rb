@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'json'
+require 'optparse'
 
 # random argument generator for alert log
 class RandomArg
@@ -49,9 +50,33 @@ class RandomArg
   end
 end
 
-file = ARGV[0] || './static/model/target3b.json'
-rand_arg = RandomArg.new(file)
-url = 'http://localhost:3000/api/alert'
+opt = {
+  addr: 'localhost',
+  port: 3000
+}
+opt_parser = OptionParser.new
+opt_parser.on('-f', '--file=FILE', 'Topology file (json)') do |v|
+  opt[:file] = v
+end
+opt_parser.on('-a', '--addr=ADDR', 'Address to send alert') do |v|
+  opt[:addr] = v
+end
+opt_parser.on('-p', '--port=PORT', 'Port number to send alert') do |v|
+  opt[:port] = v.to_i
+end
+opt_parser.on('-h', '--help', 'Show this help') do
+  puts opt_parser
+  exit 0
+end
+opt_parser.parse(ARGV)
+
+if opt[:file].nil? || (opt[:port] <= 0 && opt[:port] >= 65536) || opt[:addr].nil?
+  STDERR.puts opt_parser
+  exit 1
+end
+
+rand_arg = RandomArg.new(opt[:file])
+url = "http://#{opt[:addr]}:#{opt[:port]}/api/alert"
 headers = [
   'Content-type: application/json',
   'Accept: application/json'

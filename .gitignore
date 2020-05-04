@@ -2,6 +2,7 @@
 *.sqlite3
 static/*.cache
 static/model/*.xml
+bin/webpack.config*.js
 
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
