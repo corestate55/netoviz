@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Definition of link class for topology diagram.
  */

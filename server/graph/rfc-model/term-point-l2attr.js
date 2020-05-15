@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Attribute class for layer2 term-point of topology model.
  */

@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Definition of base class of graph component.
  */

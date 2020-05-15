@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Attribute class for layer3 node of topology model.
  */

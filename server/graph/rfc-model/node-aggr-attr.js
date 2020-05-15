@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Definition of aggregated node attribute.
  */

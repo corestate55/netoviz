@@ -38,10 +38,10 @@ services:
       - netoviz-nw
     ports:
       # REST
-      - "${NETOVIZ_REST_PORT}:${NETOVIZ_REST_PORT}"
+      - "${NETOVIZ_REST_PORT}:3001"
     expose:
       # gRPC
-      - "${NETOVIZ_GRPC_PORT}"
+      - "9090"
 networks:
   netoviz-nw:
     driver: bridge
