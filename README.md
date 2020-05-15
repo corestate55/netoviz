@@ -14,10 +14,15 @@ A live demo (with limited functions) can be viewed at the following URI,
 * https://netoviz.herokuapp.com/
 
 and the [netoviz docker container is on Docker Hub](https://hub.docker.com/r/netoviz/allinone).
-You can run it with docker and use it via `http://localhost:3030`.
+You can run it with docker and use it via `http://localhost:3000`.
 ```
 docker pull netoviz/allinone
 docker run -p3000:3000 --name nv-allinone netoviz/allinone
+```
+If you use other port, set `NETOVIZ_REST_PORT` environment value.
+```
+docker run -p3005:3000 --env NETOVIZ_REST_PORT=3005 --name nv-allinone netoviz/allinone
+             ^^^^                              ^^^^
 ```
 
 Demo movie
