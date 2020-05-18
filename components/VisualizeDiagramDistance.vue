@@ -48,13 +48,10 @@ export default {
     },
     drawRfcTopologyData() {
       const params = {
-        layer: this.currentAlertRow?.layer // from AlertHost Input (layer__node)
+        modelFile: this.modelFile,
+        alertHost: this.alertHost
       }
-      this.visualizer.drawRfcTopologyData(
-        this.modelFile,
-        this.currentAlertRow,
-        params
-      )
+      this.visualizer.drawRfcTopologyData(params)
     }
   }
 }

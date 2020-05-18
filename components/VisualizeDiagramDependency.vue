@@ -43,7 +43,11 @@ export default {
       this.visualizer.clearHighlight()
     },
     drawRfcTopologyData() {
-      this.visualizer.drawRfcTopologyData(this.modelFile, this.currentAlertRow)
+      const params = {
+        modelFile: this.modelFile,
+        alertHost: this.alertHost
+      }
+      this.visualizer.drawRfcTopologyData(params)
     }
   }
 }

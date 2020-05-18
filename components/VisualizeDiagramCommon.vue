@@ -81,10 +81,7 @@ export default {
     // set watcher for store change
     this.unwatchalertHost = this.$store.watch(
       state => state.alert.alertHost,
-      (newValue, oldValue) => {
-        this.drawRfcTopologyData()
-        this.highlightByAlert(this.currentAlertRow)
-      }
+      this.watchAlertHost
     )
   },
   beforeDestroy() {
@@ -105,6 +102,10 @@ export default {
     makeVisualizer(width, height) {
       // return diagram visualizer as `this.visualizer`
       console.error('[viz] makeVisualizer must be overwritten.')
+    },
+    watchAlertHost(newValue, oldValue) {
+      this.drawRfcTopologyData()
+      this.highlightByAlert(newValue)
     },
     watchModelFile(newModelFile, oldModelFile) {
       // callback function when modelFile changed.
@@ -134,9 +135,9 @@ export default {
       // function to generate diagram using visualizer.
       console.error('[viz] drawRfcTopologyData must be overwrite.')
     },
-    highlightByAlert(alertRow) {
-      if (alertRow) {
-        this.visualizer.highlightByAlert(alertRow)
+    highlightByAlert(alertHost) {
+      if (alertHost) {
+        this.visualizer.highlightByAlert(alertHost)
       } else {
         this.clearAllHighlight()
       }

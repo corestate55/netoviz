@@ -199,10 +199,6 @@ export default {
       this.alertHost = this.alertHostInput
       // update selected row in alert table
       this.currentAlertRow = row
-      console.log(
-        '[alertTable] setAlertTableCurrentRow: ',
-        this.currentAlertRow
-      )
     },
     severityColor(prop, severity) {
       // delegate: color table search

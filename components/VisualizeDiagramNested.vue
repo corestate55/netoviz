@@ -91,17 +91,14 @@ export default {
     },
     drawRfcTopologyData() {
       const params = {
+        modelFile: this.modelFile,
+        alertHost: this.alertHost,
         reverse: this.reverse,
         depth: this.depth,
-        layer: this.currentAlertRow?.layer, // from AlertHost Input (layer__node)
         aggregate: this.aggregation,
         fitGrid: this.autoFitting
       }
-      this.visualizer.drawRfcTopologyData(
-        this.modelFile,
-        this.currentAlertRow,
-        params
-      )
+      this.visualizer.drawRfcTopologyData(params)
     },
     saveLayout() {
       this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)

@@ -59,16 +59,20 @@ export default {
       }
       this.visualizer.setUISideDrawRfcTopologyHook(getLayerNames)
     },
-    watchCurrentAlertRow(newRow, oldRow) {
+    watchAlertHost(newValue, oldValue) {
       // only change highlight.
       // no need to redraw because force-simulation diagrams draws all elements at first.
-      this.highlightByAlert(newRow)
+      this.highlightByAlert(newValue)
     },
     clearAllHighlight() {
       this.visualizer.clearAllHighlight()
     },
     drawRfcTopologyData() {
-      this.visualizer.drawRfcTopologyData(this.modelFile, this.currentAlertRow)
+      const params = {
+        modelFile: this.modelFile,
+        alertHost: this.alertHost
+      }
+      this.visualizer.drawRfcTopologyData(params)
     }
   }
 }
