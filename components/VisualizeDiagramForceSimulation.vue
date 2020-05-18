@@ -46,10 +46,7 @@ export default {
   }),
   methods: {
     makeVisualizer() {
-      return new ForceSimulationDiagramVisualizer(
-        this.restURIBase,
-        this.grpcURIBase
-      )
+      return new ForceSimulationDiagramVisualizer(this.apiParam)
     },
     afterMakeVisualizer() {
       const getLayerNames = graphs => {

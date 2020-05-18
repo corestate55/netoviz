@@ -81,8 +81,7 @@ export default {
     ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer() {
       return new NestedDiagramVisualizer(
-        this.restURIBase,
-        this.grpcURIBase,
+        this.apiParam,
         this.svgWidth,
         this.svgHeight
       )

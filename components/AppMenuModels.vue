@@ -37,12 +37,16 @@ export default {
     ...mapMutations(['setModelFiles']),
     async updateModelFiles() {
       try {
-        if (process.env.NETOVIZ_API === 'grpc') {
-          const response = await grpcClient(this.grpcURIBase).getModels()
+        if (this.apiParam.use === 'grpc') {
+          const response = await grpcClient(
+            this.apiParam.grpcURIBase
+          ).getModels()
           const modelFiles = JSON.parse(response.getJson())
           this.setModelFiles(Object.freeze(modelFiles))
         } else {
-          const response = await fetch(this.restURIBase + '/api/models')
+          const response = await fetch(
+            this.apiParam.restURIBase + '/api/models'
+          )
           const modelFiles = await response.json()
           this.setModelFiles(Object.freeze(modelFiles))
         }

@@ -178,10 +178,10 @@ export default {
     },
     async getAlertsFromServer() {
       try {
-        if (process.env.NETOVIZ_API === 'grpc') {
-          return await getAlertsViaGRPC(this.grpcURIBase, this.alertLimit)
+        if (this.apiParam.use === 'grpc') {
+          return await getAlertsViaGRPC(this.apiParam, this.alertLimit)
         } else {
-          return await getAlertsViaREST(this.restURIBase, this.alertLimit)
+          return await getAlertsViaREST(this.apiParam, this.alertLimit)
         }
       } catch (error) {
         console.error('[getAlertsFromServer] get alerts failed: ', error)

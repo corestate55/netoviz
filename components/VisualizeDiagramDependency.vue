@@ -35,8 +35,7 @@ export default {
   methods: {
     makeVisualizer() {
       return new DependencyDiagramVisualizer(
-        this.restURIBase,
-        this.grpcURIBase,
+        this.apiParam,
         this.svgWidth,
         this.svgHeight
       )

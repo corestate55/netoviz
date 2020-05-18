@@ -37,8 +37,7 @@ export default {
     ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer() {
       return new DistanceDiagramVisualizer(
-        this.restURIBase,
-        this.grpcURIBase,
+        this.apiParam,
         this.svgWidth,
         this.svgHeight
       )
