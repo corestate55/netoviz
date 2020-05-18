@@ -21,9 +21,12 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
+import grpcClient from '../lib/grpc-client'
+import AppAPICommon from './AppAPICommon'
 
 export default {
+  mixins: [AppAPICommon],
   computed: {
     ...mapState(['modelFiles'])
   },
@@ -31,7 +34,22 @@ export default {
     this.updateModelFiles()
   },
   methods: {
-    ...mapActions(['updateModelFiles']),
+    ...mapMutations(['setModelFiles']),
+    async updateModelFiles() {
+      try {
+        if (process.env.NETOVIZ_API === 'grpc') {
+          const response = await grpcClient(this.grpcURIBase).getModels()
+          const modelFiles = JSON.parse(response.getJson())
+          this.setModelFiles(Object.freeze(modelFiles))
+        } else {
+          const response = await fetch(this.restURIBase + '/api/models')
+          const modelFiles = await response.json()
+          this.setModelFiles(Object.freeze(modelFiles))
+        }
+      } catch (error) {
+        console.log('[SelectModel] Cannot get models data: ', error)
+      }
+    },
     selectRoute(modelFile) {
       if (this.$route.path.match(new RegExp('/model/.*/.*'))) {
         const visualizer = this.$route.params.visualizer

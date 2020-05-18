@@ -21,19 +21,25 @@
 </template>
 
 <script>
+import AppAPICommon from './AppAPICommon'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import Dependency2DiagramVisualizer from '~/lib/diagram/dependency2/visualizer'
 import '~/lib/style/dependency.scss'
 
 export default {
-  mixins: [VisualizeDiagramCommon],
+  mixins: [AppAPICommon, VisualizeDiagramCommon],
   data: () => ({
     visualizerName: 'dependency2',
     debug: false
   }),
   methods: {
     makeVisualizer() {
-      return new Dependency2DiagramVisualizer(this.svgWidth, this.svgHeight)
+      return new Dependency2DiagramVisualizer(
+        this.restURIBase,
+        this.grpcURIBase,
+        this.svgWidth,
+        this.svgHeight
+      )
     },
     clearAllHighlight() {
       this.visualizer.clearDependencyLines()

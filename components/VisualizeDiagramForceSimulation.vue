@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import AppAPICommon from './AppAPICommon'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import VisualizeDiagramSelectLayer from './VisualizeDiagramSelectLayer'
 import ForceSimulationDiagramVisualizer from '~/lib/diagram/force-simulation/visualizer'
@@ -37,7 +38,7 @@ export default {
   components: {
     VisualizeDiagramSelectLayer
   },
-  mixins: [VisualizeDiagramCommon],
+  mixins: [AppAPICommon, VisualizeDiagramCommon],
   data: () => ({
     wholeLayers: [],
     visualizerName: 'forceSimulation',
@@ -45,7 +46,10 @@ export default {
   }),
   methods: {
     makeVisualizer() {
-      return new ForceSimulationDiagramVisualizer()
+      return new ForceSimulationDiagramVisualizer(
+        this.restURIBase,
+        this.grpcURIBase
+      )
     },
     afterMakeVisualizer() {
       const getLayerNames = graphs => {

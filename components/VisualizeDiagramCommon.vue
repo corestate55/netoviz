@@ -1,7 +1,5 @@
 <template>
-  <div id="common-template">
-    <!-- Dummy: cannot crete <template> less single file component. -->
-  </div>
+  <div class="dummy"></div>
 </template>
 
 <script>

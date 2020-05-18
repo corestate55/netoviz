@@ -49,12 +49,13 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import AppAPICommon from './AppAPICommon'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import NestedDiagramVisualizer from '~/lib/diagram/nested/visualizer'
 import '~/lib/style/nested.scss'
 
 export default {
-  mixins: [VisualizeDiagramCommon],
+  mixins: [AppAPICommon, VisualizeDiagramCommon],
   data() {
     return {
       reverse: true,
@@ -79,7 +80,12 @@ export default {
   methods: {
     ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer() {
-      return new NestedDiagramVisualizer(this.svgWidth, this.svgHeight)
+      return new NestedDiagramVisualizer(
+        this.restURIBase,
+        this.grpcURIBase,
+        this.svgWidth,
+        this.svgHeight
+      )
     },
     clearAllHighlight() {
       this.visualizer.clearAllAlertHighlight()

@@ -102,9 +102,11 @@
 
 <script>
 import { debounce } from 'debounce'
-import { getAlertsFromServer, severityColor } from '~/lib/alerts'
+import AppAPICommon from './AppAPICommon'
+import { getAlertsViaREST, getAlertsViaGRPC, severityColor } from '~/lib/alerts'
 
 export default {
+  mixins: [AppAPICommon],
   data() {
     return {
       alerts: [],
@@ -174,10 +176,22 @@ export default {
         this.updateAlerts()
       }, this.alertPollingInterval * 1000) // sec
     },
+    async getAlertsFromServer() {
+      try {
+        if (process.env.NETOVIZ_API === 'grpc') {
+          return await getAlertsViaGRPC(this.grpcURIBase, this.alertLimit)
+        } else {
+          return await getAlertsViaREST(this.restURIBase, this.alertLimit)
+        }
+      } catch (error) {
+        console.error('[getAlertsFromServer] get alerts failed: ', error)
+        throw error
+      }
+    },
     async updateAlerts() {
       // update alerts and select head data
       // console.log('updateAlerts: ', new Date())
-      const newAlerts = await getAlertsFromServer(this.alertLimit)
+      const newAlerts = await this.getAlertsFromServer()
       this.alertUpdatedTime = new Date()
       if (!newAlerts || newAlerts.length < 1) {
         return

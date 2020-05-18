@@ -60,6 +60,6 @@ function startGRPCServer() {
 
 // Run server.
 startHTTPServer()
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NETOVIZ_API === 'grpc') {
   startGRPCServer()
 }

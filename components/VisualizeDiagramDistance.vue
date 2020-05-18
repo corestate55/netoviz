@@ -23,11 +23,12 @@
 <script>
 import { mapMutations } from 'vuex'
 import DistanceDiagramVisualizer from '../lib/diagram/distance/visualizer'
+import AppAPICommon from './AppAPICommon'
 import VisualizeDiagramCommon from './VisualizeDiagramCommon'
 import '~/lib/style/distance.scss'
 
 export default {
-  mixins: [VisualizeDiagramCommon],
+  mixins: [AppAPICommon, VisualizeDiagramCommon],
   data: () => ({
     visualizerName: 'distance',
     debug: false
@@ -35,7 +36,12 @@ export default {
   methods: {
     ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer() {
-      return new DistanceDiagramVisualizer(this.svgWidth, this.svgHeight)
+      return new DistanceDiagramVisualizer(
+        this.restURIBase,
+        this.grpcURIBase,
+        this.svgWidth,
+        this.svgHeight
+      )
     },
     clearAllHighlight() {
       this.visualizer.clearHighlight()
