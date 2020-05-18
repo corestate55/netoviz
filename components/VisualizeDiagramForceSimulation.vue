@@ -40,6 +40,7 @@ export default {
   mixins: [VisualizeDiagramCommon],
   data: () => ({
     wholeLayers: [],
+    visualizerName: 'forceSimulation',
     debug: false
   }),
   methods: {

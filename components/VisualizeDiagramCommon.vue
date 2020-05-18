@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-
 export default {
   props: {
     modelFile: {
@@ -18,11 +16,30 @@ export default {
   data() {
     return {
       visualizer: null,
-      unwatchCurrentAlertRow: null
+      visualizerName: 'base',
+      unwatchAlertHost: null
     }
   },
   computed: {
-    ...mapState('alert', ['currentAlertRow']),
+    alertHost: {
+      get() {
+        return this.$store.state.alert.alertHost
+      },
+      set(value) {
+        this.$store.commit('alert/setAlertHost', value)
+      }
+    },
+    currentAlertRow() {
+      const paths = String(this.alertHost).split('__')
+      switch (paths.length) {
+        case 2: // layer__host
+          return { layer: paths[0], host: paths[1], tp: '' }
+        case 3: // layer__host__tp
+          return { layer: paths[0], host: paths[1], tp: paths[2] }
+        default:
+          return { host: this.alertHost }
+      }
+    },
     isLarge() {
       return !!['lg', 'xl'].find(d => d === this.$vuetify.breakpoint.name)
     },
@@ -55,25 +72,32 @@ export default {
     // Lifecycle for diagram visualizer:
     // merged at including component X.
     // called here before X.mounted()
-    console.log('[viz] mounted')
-    this.unwatchCurrentAlertRow = this.$store.watch(
-      state => state.alert.currentAlertRow,
-      this.watchCurrentAlertRow
-    )
+    console.log(`[viz/${this.visualizerName}] mounted`)
     this.beforeMakeVisualizer() // hook (to ready make visualizer)
     this.visualizer = this.makeVisualizer(this.svgWidth, this.svgHeight)
     this.afterMakeVisualizer() // hook (to initialize visualizer)
     this.drawRfcTopologyData() // generate initial diagram
+
+    // set watcher for store change
+    this.unwatchalertHost = this.$store.watch(
+      state => state.alert.alertHost,
+      (newValue, oldValue) => {
+        this.drawRfcTopologyData()
+        this.highlightByAlert(this.currentAlertRow)
+      }
+    )
   },
   beforeDestroy() {
+    // clear store watcher
+    this.unwatchalertHost && this.unwatchalertHost()
+
     // Lifecycle for diagram visualizer:
     // merged at including component X.
     // called here before X.beforeDestroy()
-    console.log('[viz] before destroy')
+    console.log(`[viz/${this.visualizerName}] before destroy`)
     this.beforeDeleteVisualizer() // hook
     delete this.visualizer
     this.afterDeleteVisualizer() // hook
-    this.unwatchCurrentAlertRow()
   },
   methods: {
     // Common methods (template):
@@ -82,16 +106,10 @@ export default {
       // return diagram visualizer as `this.visualizer`
       console.error('[viz] makeVisualizer must be overwritten.')
     },
-    watchCurrentAlertRow(newRow, oldRow) {
-      // callback function when currentAlertRow changed.
-      // redraw (drawRfcTopologyData)
-      this.drawRfcTopologyData()
-      this.highlightByAlert(newRow)
-    },
     watchModelFile(newModelFile, oldModelFile) {
       // callback function when modelFile changed.
       console.log(
-        `[viz] modelFile changed from ${oldModelFile} to ${newModelFile}`
+        `[viz/${this.visualizerName}] modelFile changed from ${oldModelFile} to ${newModelFile}`
       )
       this.clearAllHighlight()
       this.drawRfcTopologyData()
@@ -126,6 +144,13 @@ export default {
     resizeSVG() {
       this.visualizer &&
         this.visualizer.resizeRootSVG(this.svgWidth, this.svgHeight)
+    },
+    nodeClickCallback(nodeData) {
+      // re-construct path with layer-name and name attribute,
+      // because path has deep-copy identifier (::N).
+      this.alertHost = [nodeData.path.split('__').shift(), nodeData.name].join(
+        '__'
+      )
     }
   }
 }

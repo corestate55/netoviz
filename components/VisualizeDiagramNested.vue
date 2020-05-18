@@ -63,6 +63,7 @@ export default {
       autoFitting: false,
       aggregation: true,
       depth: 1,
+      visualizerName: 'nested',
       debug: false
     }
   },
@@ -104,12 +105,6 @@ export default {
     },
     saveLayout() {
       this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
-    },
-    nodeClickCallback(nodeData) {
-      // re-construct path with layer-name and name attribute,
-      // because path has deep-copy identifier (::N).
-      const path = [nodeData.path.split('__').shift(), nodeData.name].join('__')
-      this.setAlertHost(path)
     }
   }
 }

@@ -19,7 +19,13 @@
         <v-expansion-panel-content>
           <v-row>
             <v-col cols="6" md="3" lg="6">
-              <TableAlertsInputHost v-model="alertHostInput" />
+              <v-text-field
+                v-model="alertHostInput"
+                clearable
+                label="Highlight Host"
+                placeholder="node OR layer__node"
+                v-on:input="inputAlertHost"
+              />
             </v-col>
             <v-col cols="6" md="3" lg="6">
               <v-switch v-model="enableTimer" inset label="Alert Polling" />
@@ -95,13 +101,10 @@
 </template>
 
 <script>
-import TableAlertsInputHost from './TableAlertsInputHost'
+import { debounce } from 'debounce'
 import { getAlertsFromServer, severityColor } from '~/lib/alerts'
 
 export default {
-  components: {
-    TableAlertsInputHost
-  },
   data() {
     return {
       alerts: [],
@@ -109,7 +112,8 @@ export default {
       alertPollingInterval: 10, // default: 10sec
       alertCheckTimer: null,
       alertUpdatedTime: null,
-      alertHostInput: '',
+      alertHostInput: '', // local state of alertHost
+      currentAlertRow: { id: -1 },
       alertTableHeader: Object.freeze([
         { text: 'ID', sortable: true, value: 'id' },
         { text: 'Severity', sortable: true, value: 'severity' },
@@ -119,20 +123,18 @@ export default {
       ]),
       fromAlertHostInput: false,
       enableTimer: false,
+      unwatchAlertHost: null,
       debug: false
     }
   },
   computed: {
-    currentAlertRow: {
+    alertHost: {
       get() {
-        return this.$store.state.alert.currentAlertRow
+        return this.$store.state.alert.alertHost
       },
       set(value) {
-        this.$store.commit('alert/setCurrentAlertRow', value)
+        this.$store.commit('alert/setAlertHost', value)
       }
-    },
-    alertHost() {
-      return this.$store.state.alert.alertHost
     }
   },
   watch: {
@@ -143,6 +145,12 @@ export default {
   mounted() {
     this.updateAlerts() // initial data
     this.setAlertCheckTimer()
+    this.unwatchAlertHost = this.$store.watch(
+      state => state.alert.alertHost,
+      (newValue, oldValue) => {
+        this.alertHostInput = newValue
+      }
+    )
   },
   beforeDestroy() {
     this.stopAlertCheckTimer()
@@ -185,18 +193,64 @@ export default {
       this.setAlertTableCurrentRow(this.alerts[0])
     },
     setAlertTableCurrentRow(row) {
-      // Add props for node highlighting when table row is clicked or updated.
-      row.layer = ''
-      row.tp = ''
-      // update alert host input
+      // update alertHostInput (text-box)
       this.alertHostInput = row.host || ''
+      // update store (NOTICE: fire alertHost store watcher)
+      this.alertHost = this.alertHostInput
       // update selected row in alert table
       this.currentAlertRow = row
+      console.log(
+        '[alertTable] setAlertTableCurrentRow: ',
+        this.currentAlertRow
+      )
     },
     severityColor(prop, severity) {
       // delegate: color table search
       return severityColor(prop, severity)
-    }
+    },
+    alertHostInputIsLayerHostFormat() {
+      return this.alertHostInput?.match(new RegExp('(.+)__(.+)'))
+    },
+    alertHostInputIsLayerHostTpFormat() {
+      return this.alertHostInput?.match(new RegExp('(.+)__(.+)__(.+)'))
+    },
+    splitAlertHostInput() {
+      if (this.alertHostInputIsLayerHostTpFormat()) {
+        // [layer, host, tp] for term-point highlighting.
+        //   if alertHostInput was 'hostA__tpX', it assumes as
+        //   {layer: hostA, host: tpX}. 'A__B' format input is used for
+        //   node click drill-down in nested diagram.
+        return this.alertHostInput.split('__')
+      } else if (this.alertHostInputIsLayerHostFormat()) {
+        // [layer, host, ''] for node click drill-down
+        return this.alertHostInput.split('__').concat([''])
+      }
+      return ['', this.alertHostInput, ''] // assume alertHostInput as host.
+    },
+    alertFromAlertHostInput() {
+      const pathElements = this.splitAlertHostInput()
+      return {
+        id: -1, // clear alert table selection
+        message: 'selected directly',
+        severity: 'information',
+        date: new Date().toISOString(),
+        // for click drill-down (nested diagram):
+        // there are objects that have same name in another layer.
+        // it must identify the object using layer info (by path).
+        layer: pathElements[0], // additional prop
+        host: pathElements[1],
+        tp: pathElements[2] // additional prop
+      }
+    },
+    // NOTICE: do not use arrow-function for debounce.
+    inputAlertHost: debounce(function () {
+      // avoid null when delete input by text-box [X] button.
+      this.alertHostInput = this.alertHostInput || ''
+      // update store
+      this.alertHost = this.alertHostInput
+      // set dummy alert to redraw diagram.
+      this.currentAlertRow = this.alertFromAlertHostInput()
+    }, 500 /* 0.5 sec */)
   }
 }
 </script>

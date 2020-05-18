@@ -31,7 +31,10 @@ import '~/lib/style/distance.scss'
 
 export default {
   mixins: [VisualizeDiagramCommon],
-  data: () => ({ debug: false }),
+  data: () => ({
+    visualizerName: 'distance',
+    debug: false
+  }),
   methods: {
     ...mapMutations('alert', ['setAlertHost']),
     makeVisualizer(width, height) {
@@ -52,12 +55,6 @@ export default {
         this.currentAlertRow,
         params
       )
-    },
-    nodeClickCallback(nodeData) {
-      // re-construct path with layer-name and name attribute,
-      // because path has deep-copy identifier (::N).
-      const path = [nodeData.path.split('__').shift(), nodeData.name].join('__')
-      this.setAlertHost(path)
     }
   }
 }

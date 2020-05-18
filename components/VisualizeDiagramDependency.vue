@@ -30,7 +30,10 @@ import '~/lib/style/dependency.scss'
 
 export default {
   mixins: [VisualizeDiagramCommon],
-  data: () => ({ debug: false }),
+  data: () => ({
+    visualizerName: 'dependency',
+    debug: false
+  }),
   methods: {
     makeVisualizer(width, height) {
       return new DependencyDiagramVisualizer(width, height)
