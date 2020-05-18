@@ -67,13 +67,12 @@ proto.netoviz.GraphRequest.prototype.toObject = function(opt_includeInstance) {
 proto.netoviz.GraphRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     graphName: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    jsonName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    target: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    layer: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    depth: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    aggregate: jspb.Message.getFieldWithDefault(msg, 6, false),
-    reverse: jspb.Message.getFieldWithDefault(msg, 7, false),
-    fitGrid: jspb.Message.getFieldWithDefault(msg, 8, false)
+    modelFile: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    alertHost: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    depth: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    aggregate: jspb.Message.getFieldWithDefault(msg, 5, false),
+    reverse: jspb.Message.getFieldWithDefault(msg, 6, false),
+    fitGrid: jspb.Message.getFieldWithDefault(msg, 7, false)
   };
 
   if (includeInstance) {
@@ -116,29 +115,25 @@ proto.netoviz.GraphRequest.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setJsonName(value);
+      msg.setModelFile(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTarget(value);
+      msg.setAlertHost(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setLayer(value);
-      break;
-    case 5:
       var value = /** @type {number} */ (reader.readUint32());
       msg.setDepth(value);
       break;
-    case 6:
+    case 5:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setAggregate(value);
       break;
-    case 7:
+    case 6:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setReverse(value);
       break;
-    case 8:
+    case 7:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setFitGrid(value);
       break;
@@ -178,52 +173,45 @@ proto.netoviz.GraphRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getJsonName();
+  f = message.getModelFile();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getTarget();
+  f = message.getAlertHost();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getLayer();
-  if (f.length > 0) {
-    writer.writeString(
-      4,
-      f
-    );
-  }
   f = message.getDepth();
   if (f !== 0) {
     writer.writeUint32(
-      5,
+      4,
       f
     );
   }
   f = message.getAggregate();
   if (f) {
     writer.writeBool(
-      6,
+      5,
       f
     );
   }
   f = message.getReverse();
   if (f) {
     writer.writeBool(
-      7,
+      6,
       f
     );
   }
   f = message.getFitGrid();
   if (f) {
     writer.writeBool(
-      8,
+      7,
       f
     );
   }
@@ -246,113 +234,98 @@ proto.netoviz.GraphRequest.prototype.setGraphName = function(value) {
 
 
 /**
- * optional string json_name = 2;
+ * optional string model_file = 2;
  * @return {string}
  */
-proto.netoviz.GraphRequest.prototype.getJsonName = function() {
+proto.netoviz.GraphRequest.prototype.getModelFile = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.netoviz.GraphRequest.prototype.setJsonName = function(value) {
+proto.netoviz.GraphRequest.prototype.setModelFile = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string target = 3;
+ * optional string alert_host = 3;
  * @return {string}
  */
-proto.netoviz.GraphRequest.prototype.getTarget = function() {
+proto.netoviz.GraphRequest.prototype.getAlertHost = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
 /** @param {string} value */
-proto.netoviz.GraphRequest.prototype.setTarget = function(value) {
+proto.netoviz.GraphRequest.prototype.setAlertHost = function(value) {
   jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string layer = 4;
- * @return {string}
- */
-proto.netoviz.GraphRequest.prototype.getLayer = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
-};
-
-
-/** @param {string} value */
-proto.netoviz.GraphRequest.prototype.setLayer = function(value) {
-  jspb.Message.setProto3StringField(this, 4, value);
-};
-
-
-/**
- * optional uint32 depth = 5;
+ * optional uint32 depth = 4;
  * @return {number}
  */
 proto.netoviz.GraphRequest.prototype.getDepth = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
 /** @param {number} value */
 proto.netoviz.GraphRequest.prototype.setDepth = function(value) {
-  jspb.Message.setProto3IntField(this, 5, value);
+  jspb.Message.setProto3IntField(this, 4, value);
 };
 
 
 /**
- * optional bool aggregate = 6;
+ * optional bool aggregate = 5;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.netoviz.GraphRequest.prototype.getAggregate = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 5, false));
 };
 
 
 /** @param {boolean} value */
 proto.netoviz.GraphRequest.prototype.setAggregate = function(value) {
-  jspb.Message.setProto3BooleanField(this, 6, value);
+  jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 
 /**
- * optional bool reverse = 7;
+ * optional bool reverse = 6;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.netoviz.GraphRequest.prototype.getReverse = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 6, false));
 };
 
 
 /** @param {boolean} value */
 proto.netoviz.GraphRequest.prototype.setReverse = function(value) {
-  jspb.Message.setProto3BooleanField(this, 7, value);
+  jspb.Message.setProto3BooleanField(this, 6, value);
 };
 
 
 /**
- * optional bool fit_grid = 8;
+ * optional bool fit_grid = 7;
  * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
  * You should avoid comparisons like {@code val === true/false} in those cases.
  * @return {boolean}
  */
 proto.netoviz.GraphRequest.prototype.getFitGrid = function() {
-  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 8, false));
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 7, false));
 };
 
 
 /** @param {boolean} value */
 proto.netoviz.GraphRequest.prototype.setFitGrid = function(value) {
-  jspb.Message.setProto3BooleanField(this, 8, value);
+  jspb.Message.setProto3BooleanField(this, 7, value);
 };
 
 
@@ -404,7 +377,7 @@ proto.netoviz.GraphReply.prototype.toObject = function(opt_includeInstance) {
 proto.netoviz.GraphReply.toObject = function(includeInstance, msg) {
   var f, obj = {
     graphName: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    jsonName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    modelFile: jspb.Message.getFieldWithDefault(msg, 2, ""),
     json: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
@@ -448,7 +421,7 @@ proto.netoviz.GraphReply.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setJsonName(value);
+      msg.setModelFile(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
@@ -490,7 +463,7 @@ proto.netoviz.GraphReply.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getJsonName();
+  f = message.getModelFile();
   if (f.length > 0) {
     writer.writeString(
       2,
@@ -523,16 +496,16 @@ proto.netoviz.GraphReply.prototype.setGraphName = function(value) {
 
 
 /**
- * optional string json_name = 2;
+ * optional string model_file = 2;
  * @return {string}
  */
-proto.netoviz.GraphReply.prototype.getJsonName = function() {
+proto.netoviz.GraphReply.prototype.getModelFile = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
 
 /** @param {string} value */
-proto.netoviz.GraphReply.prototype.setJsonName = function(value) {
+proto.netoviz.GraphReply.prototype.setModelFile = function(value) {
   jspb.Message.setProto3StringField(this, 2, value);
 };
 

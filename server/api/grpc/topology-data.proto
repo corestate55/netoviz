@@ -16,22 +16,20 @@ enum GraphName {
   DISTANCE = 4;
 }
 
-// TODO: temporary message format
 message GraphRequest {
   GraphName graph_name = 1;
-  string json_name = 2;
-  string target = 3;
-  string layer = 4;
-  uint32 depth = 5;
-  bool aggregate = 6;
-  bool reverse = 7;
-  bool fit_grid = 8;
+  string model_file = 2;
+  string alert_host = 3;
+  uint32 depth = 4;
+  bool aggregate = 5;
+  bool reverse = 6;
+  bool fit_grid = 7;
 }
 
 // TODO: temporary message format
 message GraphReply {
   GraphName graph_name = 1;
-  string json_name = 2;
+  string model_file = 2;
   string json = 3; // json string of diagram data
 }
 

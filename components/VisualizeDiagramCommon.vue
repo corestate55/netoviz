@@ -29,17 +29,6 @@ export default {
         this.$store.commit('alert/setAlertHost', value)
       }
     },
-    currentAlertRow() {
-      const paths = String(this.alertHost).split('__')
-      switch (paths.length) {
-        case 2: // layer__host
-          return { layer: paths[0], host: paths[1], tp: '' }
-        case 3: // layer__host__tp
-          return { layer: paths[0], host: paths[1], tp: paths[2] }
-        default:
-          return { host: this.alertHost }
-      }
-    },
     isLarge() {
       return !!['lg', 'xl'].find(d => d === this.$vuetify.breakpoint.name)
     },
@@ -74,7 +63,7 @@ export default {
     // called here before X.mounted()
     console.log(`[viz/${this.visualizerName}] mounted`)
     this.beforeMakeVisualizer() // hook (to ready make visualizer)
-    this.visualizer = this.makeVisualizer(this.svgWidth, this.svgHeight)
+    this.visualizer = this.makeVisualizer()
     this.afterMakeVisualizer() // hook (to initialize visualizer)
     this.drawRfcTopologyData() // generate initial diagram
 
@@ -99,7 +88,7 @@ export default {
   methods: {
     // Common methods (template):
     // Methods are overwritten at including (mix-in) component
-    makeVisualizer(width, height) {
+    makeVisualizer() {
       // return diagram visualizer as `this.visualizer`
       console.error('[viz] makeVisualizer must be overwritten.')
     },
@@ -149,9 +138,8 @@ export default {
     nodeClickCallback(nodeData) {
       // re-construct path with layer-name and name attribute,
       // because path has deep-copy identifier (::N).
-      this.alertHost = [nodeData.path.split('__').shift(), nodeData.name].join(
-        '__'
-      )
+      const paths = [nodeData.path.split('__').shift(), nodeData.name]
+      this.alertHost = paths.join('__')
     }
   }
 }

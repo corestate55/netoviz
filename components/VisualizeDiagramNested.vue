@@ -5,12 +5,10 @@
         <div>
           visualize diagram nested
           <ul>
-            <li>Nested model: {{ modelFile }}</li>
-            <li>
-              Alert Row:
-              {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
-            </li>
-            <li>Reverse? : {{ reverse }} Auto Fitting? : {{ autoFitting }}</li>
+            <li>Model File: {{ modelFile }}</li>
+            <li>Alert Host: {{ alertHost }}</li>
+            <li>Reverse? : {{ reverse }}</li>
+            <li>Auto Fitting? : {{ autoFitting }}</li>
           </ul>
         </div>
       </v-col>
@@ -80,8 +78,8 @@ export default {
   },
   methods: {
     ...mapMutations('alert', ['setAlertHost']),
-    makeVisualizer(width, height) {
-      return new NestedDiagramVisualizer(width, height)
+    makeVisualizer() {
+      return new NestedDiagramVisualizer(this.svgWidth, this.svgHeight)
     },
     clearAllHighlight() {
       this.visualizer.clearAllAlertHighlight()

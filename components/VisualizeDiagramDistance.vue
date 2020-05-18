@@ -5,11 +5,8 @@
         <div>
           visualize distance
           <ul>
-            <li>Distance model: {{ modelFile }}</li>
-            <li>
-              Alert Row:
-              {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
-            </li>
+            <li>Model File: {{ modelFile }}</li>
+            <li>Alert Host: {{ alertHost }}</li>
           </ul>
         </div>
       </v-col>
@@ -37,8 +34,8 @@ export default {
   }),
   methods: {
     ...mapMutations('alert', ['setAlertHost']),
-    makeVisualizer(width, height) {
-      return new DistanceDiagramVisualizer(width, height)
+    makeVisualizer() {
+      return new DistanceDiagramVisualizer(this.svgWidth, this.svgHeight)
     },
     clearAllHighlight() {
       this.visualizer.clearHighlight()

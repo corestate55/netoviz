@@ -5,9 +5,9 @@
         <div>
           visualize force-simulation diagram.
           <ul>
-            <li>Topology model: {{ modelFile }}</li>
-            <li>Whole layers: {{ wholeLayers }}</li>
-            <li>current Alert Row: {{ currentAlertRow }}</li>
+            <li>Model File: {{ modelFile }}</li>
+            <li>Whole Layers: {{ wholeLayers }}</li>
+            <li>Alert Host: {{ alertHost }}</li>
           </ul>
         </div>
       </v-col>
@@ -44,7 +44,7 @@ export default {
     debug: false
   }),
   methods: {
-    makeVisualizer(width, height) {
+    makeVisualizer() {
       return new ForceSimulationDiagramVisualizer()
     },
     afterMakeVisualizer() {

@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { promisify } from 'util'
+import { splitAlertHost } from './alert-util'
 import CacheRfcTopologyDataConverter from './cache-topo-graph-converter'
 
 const asyncReadFile = promisify(fs.readFile)
@@ -146,6 +147,11 @@ class APIBase {
       return JSON.stringify(await this.toDistanceTopologyData(jsonName, req))
     }
     return JSON.stringify({}) // invalid graph name
+  }
+
+  // delegate
+  splitAlertHost(alertHost) {
+    return splitAlertHost(alertHost)
   }
 }
 

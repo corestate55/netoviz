@@ -5,11 +5,8 @@
         <div>
           visualize diagram dependency2
           <ul>
-            <li>model: {{ modelFile }}</li>
-            <li>
-              Alert Row:
-              {{ currentAlertRow ? currentAlertRow.id : 'NOT selected' }}
-            </li>
+            <li>Model File: {{ modelFile }}</li>
+            <li>Alert Host: {{ alertHost }}</li>
           </ul>
         </div>
       </v-col>
@@ -35,8 +32,8 @@ export default {
     debug: false
   }),
   methods: {
-    makeVisualizer(width, height) {
-      return new Dependency2DiagramVisualizer(width, height)
+    makeVisualizer() {
+      return new Dependency2DiagramVisualizer(this.svgWidth, this.svgHeight)
     },
     clearAllHighlight() {
       this.visualizer.clearDependencyLines()

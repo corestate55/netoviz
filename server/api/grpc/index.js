@@ -15,7 +15,7 @@ const grpcApi = new GRPCIntegrator('static')
 const getGraphData = async (call, callback) => {
   /** @type {proto.netoviz.GraphRequest} */
   const request = call.request
-  const jsonName = request.getJsonName()
+  const jsonName = request.getModelFile()
   const snake2Camel = str =>
     str.toLowerCase().replace(/_./g, s => s.charAt(1).toUpperCase())
   const graphNameNumber2Key = num =>
@@ -27,7 +27,7 @@ const getGraphData = async (call, callback) => {
   /** @type {proto.netoviz.GraphReply} */
   const reply = new messages.GraphReply()
   reply.setGraphName(graphNameValue)
-  reply.setJsonName(jsonName)
+  reply.setModelFile(jsonName)
   reply.setJson(await grpcApi.getGraphData(graphName, jsonName, request))
   callback(null, reply)
 }
