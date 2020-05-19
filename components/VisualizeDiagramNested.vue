@@ -104,7 +104,11 @@ export default {
       this.visualizer.drawRfcTopologyData(params)
     },
     saveLayout() {
-      this.visualizer.saveLayout(this.modelFile, this.reverse, this.depth)
+      const params = {
+        modelFile: this.modelFile,
+        reverse: this.reverse
+      }
+      this.visualizer.saveLayout(params)
     }
   }
 }

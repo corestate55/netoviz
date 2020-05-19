@@ -16,6 +16,7 @@ import _toDependencyTopologyData from '../../graph/dependency'
 import _toNestedTopologyData from '../../graph/nested'
 import _toDistanceTopologyData from '../../graph/distance'
 import APIBase from '../common/api-base'
+import { splitAlertHost } from '../common/alert-util'
 
 const asyncReadFile = promisify(fs.readFile)
 
@@ -51,6 +52,20 @@ class RESTIntegrator extends APIBase {
   }
 
   /**
+   * Print graph query (logging)
+   * @param {string} graphType - Type of graph (topology, dependency, nested)
+   * @param {GraphQuery} graphQuery - Dictionary of get parameters.
+   * @private
+   */
+  _printGraphQuery(graphType, graphQuery) {
+    const paramStrings = []
+    Object.entries(/** @type {Object} */ graphQuery).forEach(
+      ([k, v]) => v && paramStrings.push(`${k}=${v}`)
+    )
+    console.log(`call ${graphType}: ${paramStrings.join(', ')}`)
+  }
+
+  /**
    * Construct graph query string (GET parameter of URI).
    * @param {string} graphType - Type of graph (topology, dependency, nested)
    * @param {Object} query - HTTP get parameter (key-value)
@@ -74,10 +89,15 @@ class RESTIntegrator extends APIBase {
         graphQuery[key] = query[key]
       }
     }
-    const paramString = Object.entries(graphQuery)
-      .map(([key, value]) => `${key}=${value}`)
-      .join(', ')
-    console.log(`call ${graphType}: ${paramString}`)
+    // 'alertHost' overwrite 'target'/'layer' parameter.
+    // value format: 'target', 'layer__target' ('layer_target_tp')
+    if (graphQuery.alertHost) {
+      const alert = splitAlertHost(graphQuery.alertHost)
+      graphQuery.target = alert.host
+      graphQuery.layer = alert.layer
+      delete graphQuery.alertHost
+    }
+    this._printGraphQuery(graphType, graphQuery)
     return graphQuery
   }
 
@@ -85,7 +105,11 @@ class RESTIntegrator extends APIBase {
    * @override
    */
   async toDependencyTopologyData(jsonName, req) {
-    const queryKeyTypeList = [['target', 'string']]
+    const queryKeyTypeList = [
+      ['target', 'string'],
+      ['layer', 'string'],
+      ['alertHost', 'string']
+    ]
     const graphQuery = /** @type {DependencyGraphQuery} */ this._makeGraphQuery(
       'dependency',
       req.query,
@@ -104,6 +128,7 @@ class RESTIntegrator extends APIBase {
       ['depth', 'number'],
       ['target', 'string'],
       ['layer', 'string'],
+      ['alertHost', 'string'],
       ['aggregate', 'bool']
     ]
     const graphQuery = /** @type {NestedGraphQuery} */ this._makeGraphQuery(
@@ -122,7 +147,8 @@ class RESTIntegrator extends APIBase {
   async toDistanceTopologyData(jsonName, req) {
     const queryKeyTypeList = [
       ['target', 'string'],
-      ['layer', 'string']
+      ['layer', 'string'],
+      ['alertHost', 'string']
     ]
     const graphQuery = /** @type {DistanceGraphQuery} */ this._makeGraphQuery(
       'distance',
@@ -145,14 +171,15 @@ class RESTIntegrator extends APIBase {
     const jsonName = req.params.jsonName
     const reverse = this._boolString2Bool(req.query.reverse)
 
-    const layoutJsonName = `${jsonName.split('.').shift()}-layout.json`
-    const layoutJsonPath = `${this.modelDir}/${layoutJsonName}`
-    const cacheLayoutJsonPath = layoutJsonPath // overwrite
-
     console.log(
       `receive ${graphName}/${jsonName}?reverse=${reverse}): `,
       layoutData
     )
+
+    const layoutJsonName = `${jsonName.split('.').shift()}-layout.json`
+    const layoutJsonPath = `${this.modelDir}/${layoutJsonName}`
+    const cacheLayoutJsonPath = layoutJsonPath // overwrite
+
     const buffer = await asyncReadFile(layoutJsonPath)
     const baseLayoutData = JSON.parse(buffer.toString())
     const reverseKey = reverse ? 'reverse' : 'standard'

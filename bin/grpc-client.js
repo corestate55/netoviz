@@ -30,12 +30,12 @@ function getGraphData() {
 
   const request = new messages.GraphRequest()
   request.setGraphName(messages.GraphName[graphName])
-  request.setJsonName(jsonName)
+  request.setModelFile(jsonName)
 
   console.log('# send request: ', request.toString())
   client.getGraphData(request, (error, response) => {
     if (error) {
-      console.warn('ERROR : ', error.message())
+      console.warn('ERROR : ', error)
       process.exit(1)
     }
     console.log('# Receive response:')
@@ -46,7 +46,7 @@ function getGraphData() {
         k => messages.GraphName[k] === response.getGraphName()
       )
     )
-    console.log('## Json name: ', response.getJsonName())
+    console.log('## Json name: ', response.getModelFile())
     console.log('## Json data: ', response.getJson())
   })
 }
@@ -64,7 +64,7 @@ function getAlerts() {
   console.log('# send request: ', request.toString())
   client.getAlerts(request, (error, response) => {
     if (error) {
-      console.warn('ERROR : ', error.message())
+      console.warn('ERROR : ', error)
       process.exit(1)
     }
     console.log('# Receive response:')
@@ -89,7 +89,7 @@ function getModels() {
   console.log('# send request: ', request.toString())
   client.getModels(request, (error, response) => {
     if (error) {
-      console.warn('ERROR : ', error.message())
+      console.warn('ERROR : ', error)
       process.exit(1)
     }
     console.log('# Receive response: ', response.getJson())

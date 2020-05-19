@@ -14,6 +14,7 @@ class APIBase {
     +toNestedTopologyData()
     +toDistanceTopologyData()
     +getGraphData()
+    +splitAlertHost()
 }
 APIBase -- CacheRfcTopologyDataConverter
 class CacheRfcTopologyDataConverter {
@@ -31,11 +32,13 @@ class GRPCIntegrator {
     +toDependencyTopologyData()
     +toNestedTopologyData()
     +toDistanceTopologyData()
+    +splitAlertHost()
 }
 GRPCIntegrator --|> APIBase
 class RESTIntegrator {
     -_boolString2Bool()
     -_numberString2Number()
+    -_printGraphQuery()
     -_makeGraphQuery()
     +toDependencyTopologyData()
     +toNestedTopologyData()
@@ -549,7 +552,6 @@ class NestedDiagramOperator {
 }
 NestedDiagramOperator --|> NestedDiagramBuilder
 class NestedDiagramVisualizer {
-    +restURI()
     +afterDrawRfcTopologyDataHook()
     +saveLayout()
     +setUISideNodeClickHook()
@@ -675,11 +677,11 @@ class MultilayerDiagramBase {
     +drawRfcTopologyData()
     +makeAllDiagramElements()
     +setAllDiagramElementsHandler()
-    +highlightByAlert()
     +drawRfcTopologyDataAsDiagram()
-    +targetNameFromAlert()
-    +grpcURI()
+    -_constructRestURIParams()
     +restURI()
+    +splitAlertHost()
+    +highlightByAlert()
 }
 MultilayerDiagramBase --|> DiagramBase
 class DiagramBase {

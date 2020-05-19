@@ -20,7 +20,7 @@ config.dev = process.env.NODE_ENV !== 'production'
 const nuxt = new Nuxt(config)
 const host = nuxt.options.server.host
 const httpPort = nuxt.options.server.port
-const grpcPort = process.env.NETOVIZ_GRPC_PORT
+const grpcPort = process.env.NETOVIZ_GRPC_LISTEN
 
 /** HTTP server */
 async function startHTTPServer() {
@@ -59,6 +59,7 @@ function startGRPCServer() {
 }
 
 // Run server.
+console.log('[Server] NETOVIZ_API: ', process.env.NETOVIZ_API)
 startHTTPServer()
 if (process.env.NETOVIZ_API === 'grpc') {
   startGRPCServer()

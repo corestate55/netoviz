@@ -14,7 +14,7 @@ const getGraphData = (call, callback) => {
 
   const reply = new messages.GraphReply()
   reply.setGraphName(request.getGraphName())
-  reply.setJsonName(request.getJsonName())
+  reply.setModelFile(request.getModelFile())
   reply.setJson('{ "hoge": "test" }')
   callback(null, reply)
 }
@@ -54,7 +54,7 @@ function main() {
   const impl = { getGraphData, getAlerts, getModels }
   server.addService(services.TopologyDataService, impl)
   server.bind(
-    `${process.env.NETOVIZ_BIND_ADDR}:${process.env.NETOVIZ_GRPC_PORT}`,
+    `localhost:${process.env.NETOVIZ_GRPC_LISTEN}`,
     grpc.ServerCredentials.createInsecure()
   )
   server.start()

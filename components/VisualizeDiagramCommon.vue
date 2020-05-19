@@ -134,6 +134,7 @@ export default {
         this.visualizer.resizeRootSVG(this.svgWidth, this.svgHeight)
     },
     nodeClickCallback(nodeData) {
+      // For nested and distance diagram:
       // re-construct path with layer-name and name attribute,
       // because path has deep-copy identifier (::N).
       const paths = [nodeData.path.split('__').shift(), nodeData.name]

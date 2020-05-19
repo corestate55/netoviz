@@ -6,26 +6,23 @@
 export default {
   computed: {
     apiParam() {
-      /**
-       * @typedef {Object} VisualizerAPIParam
-       * @prop {string} use - API type to connect application server.
-       * @prop {string} grpcURIBase - gRPC API URI.
-       * @prop {string} restURIBase - REST API URI.
-       */
       return {
-        use: process.env.NETOVIZ_API || 'rest', // default: REST
+        use: this.$env.NETOVIZ_API,
         grpcURIBase: this.grpcURIBase,
         restURIBase: this.restURIBase
       }
     },
     grpcURIBase() {
-      const host = window.location.hostname || process.env.NETOVIZ_GRPC_WEB_ADDR
-      const port = process.env.NETOVIZ_GRPC_WEB_PORT
+      const host = window.location.hostname
+      const port = this.$env.NETOVIZ_GRPC_WEB_PORT
       return `http://${host}:${port}`
     },
     restURIBase() {
-      const host = window.location.hostname || process.env.NETOVIZ_REST_ADDR
-      const port = window.location.port || process.env.NETOVIZ_REST_PORT
+      const host = window.location.hostname
+      // If NETOVIZ_REST_PORT is defined,
+      // use it instead of browser location port.
+      // Run all-in-one application, unset NETOVIZ_REST_PORT.
+      const port = this.$env.NETOVIZ_WEB_PORT || window.location.port
       return `http://${host}:${port}`
     }
   }

@@ -8,26 +8,31 @@ Netoviz (**Ne**twork **To**pology **Vis**ualizer) is a tool to visualize network
 See also [Netomox (Network topology modeling toolbox)](https://github.com/corestate55/netomox), the tool to construct RFC8345 based network topology data.
 
 ## Demo
-
+### Live demo
 A live demo (with limited functions) can be viewed at the following URI,
 
 * https://netoviz.herokuapp.com/
 
-and the [netoviz docker container is on Docker Hub](https://hub.docker.com/r/netoviz/allinone).
+### All-in-one docker image.
+
+There is [netoviz docker container on Docker Hub](https://hub.docker.com/r/netoviz/allinone).
 You can run it with docker and use it via `http://localhost:3000`.
 ```
 docker pull netoviz/allinone
 docker run -p3000:3000 --name nv-allinone netoviz/allinone
 ```
-If you use other port, set `NETOVIZ_REST_PORT` environment value.
+
+If you change the port number to access it, set `-p` option.
 ```
-docker run -p3005:3000 --env NETOVIZ_REST_PORT=3005 --name nv-allinone netoviz/allinone
-             ^^^^                              ^^^^
+docker run -p3005:3000 --name nv-allinone netoviz/allinone
+             ^^^^
 ```
 
-Demo movie
+### Demo movie
 
 [![Batfish を使ってネットワーク構成を可視化してみよう \- YouTube](https://img.youtube.com/vi/YKKWg7Ap6H8/0.jpg)](https://www.youtube.com/watch?v=YKKWg7Ap6H8)
+
+### Links
 
 Blog
 * [Batfish を使ってネットワーク構成を可視化してみよう \(1\) \- Qiita](https://qiita.com/corestate55/items/8a39af553785fd77c20a)
@@ -72,20 +77,25 @@ For production mode
 NODE_ENV=production ./bin/dbmigrate.sh
 ```
 
-To send a dummy log message (after running web server),
+To send a dummy log message (after running netoviz server),
 use test script like below.
 It selects a name of hosts from specified model file and send random message to API server.
 (NOTE: `push_alert.rb` calls `curl` command.)
 
 ```bash
-./bin/push_alert.rb ./static/model/target.json
+# option help: -h
+./bin/push_alert.rb -f ./static/model/target.json -p 3000
+```
+
+Pushing several logs (adjust number of logs and interval)
+```bash
+for cnt in `seq 1 10`; do ./bin/push_alert.rb -f ./static/model/target.json -p 3000; sleep 5; done
 ```
 
 ### Install docker/gRPC tools
-Currently, netoviz has gRPC and REST API.
-It uses gRPC in development mode and REST in production mode.
-(Production mode is used to deploy on heroku.)
-So it needs gRPC tools to develop (run under development mode) netoviz,
+Currently, Netoviz has gRPC and REST API.
+It choose API according to `NETOVIZ_API` value (`rest` or `grpc`).
+So it needs gRPC tools to run netoviz with gRPC mode
 and docker tools to manipulate docker image of envoy proxy.
 
 Install docker and docker-compose.
@@ -106,9 +116,12 @@ sudo chmod +x /usr/local/bin/protoc-gen-grpc-web
 ```
 
 ### Build envoy docker image
+See [Dockerfile for netoviz/envoy](./docker/envoy/Dockerfile) and [docker-compose config](./docker-compose.yml).
+
 Copy `dot.env` to `.env` and edit environment variables. 
 ```
 cp dot.env .env
+# edit NETOVIZ_GRPC_HOST to set gRPC server host/address for envoy proxy
 # vi .env
 ```
 
@@ -122,7 +135,19 @@ Build envoy docker image for netoviz.
 docker-compose build
 ```
 
-## Run the application
+## Run Netoviz
+### Configure environment variable
+Netoviz has REST and gRPC API. 
+Its frontend application and backend server changes API to communicate each other by value of `NETOVIZ_API`.
+You can change (override) the API to use by the variable at run-time like that:
+```
+NETOVIZ_API=grpc npm run (dev|start)
+```
+
+* `NETOVIZ_API=rest` (default): frontend (client) and backend (server) use only REST.
+* `NETOVIZ_API=grpc`: frontend (client) and backend (server) use REST and gRPC.
+  * Not all the features of the REST API are achieved with the gRPC API.
+
 ### Netoviz server (development mode)
 ```
 npm run dev
@@ -138,10 +163,45 @@ and run the application.
 npm run start
 ```
 
-### Envoy gRPC proxy
+### Run envoy proxy (for gRPC API)
 Run envoy container to proxy grpc-web request.
 ```
 docker-compose up
+```
+
+### All-in-one docker container
+
+Build all-in-one container. 
+(See detail: [Dockerfile for all-in-one container](./Dockerfile). NOTICE: It copies current sources/packages and rebuild netoviz.)
+
+```
+docker build -t netoviz/allinone .
+# or
+npm run docker-build
+```
+
+Run.
+```
+docker run -p3000:3000 --name nv-allinone netoviz/allinone
+```
+
+It can run with gRPC API (port 9090 is for gRPC) with environment variable `NETOVIZ_API=grpc`.
+Then, it need envoy proxy to use gRPC-web.
+```
+# build and run envoy proxy at first.
+docker run -p3000:3000 -p9090:9090 --env NETOVIZ_API=grpc --name nv-allinone netoviz/allinone                        
+```
+
+The container create alert-db file (sqlite3) when it `run`.
+If you want to keep alert-db file after the container was stopped,
+mount docker host directory as `/home/netoviz/db/storage` like that:
+```
+docker run -p3000:3000 --volume=`pwd`/db/storage:/home/netoviz/db/storage --name nv-allinone netoviz/allinone
+```  
+
+Debug.
+```
+docker run -it netoviz/allinone /bin/sh
 ```
 
 ## Development
@@ -162,33 +222,6 @@ npm run doc
     (see. [netomox-examples](https://github.com/corestate55/netomox-examples))
 * `server`: API Server
 
-### All-in-one docker container
-
-Build all-in-one container. 
-(See detail: [Dockerfile for all-in-one container](./Dockerfile). NOTICE: It copies current sources/packages and rebuild netoviz.)
-
-```
-docker build -t netoviz/allinone .
-# or
-npm run docker-build
-```
-
-Run.
-```
-docker run -p3000:3000 --name nv-allinone netoviz/allinone
-```
-The container create alert-db file (sqlite3) when it `run`.
-If you want to keep alert-db file after the container was stopped,
-mount docker host directory as `/home/netoviz/db/storage` like that:
-```
-docker run -p3000:3000 --volume=`pwd`/db/storage:/home/netoviz/db/storage --name nv-allinone netoviz/allinone
-```  
-
-Debug.
-```
-docker run -it netoviz/allinone /bin/sh
-```
-
 ### Application URI
 
 Application (see [pages](./pages))
@@ -201,7 +234,7 @@ Application (see [pages](./pages))
   * `/model/:modelFile/:visualizer`
   * `/visualizer/:visualizer/:modelFile`
 
-### Server-side REST API
+### REST API
 
 Server (JSON API) (see [server/api.js](server/api/rest/index.js))
 
@@ -216,7 +249,7 @@ Server (JSON API) (see [server/api.js](server/api/rest/index.js))
   * GET `/api/graph/:graphName/:jsonName`
     * return diagram data converted from RFC8345-based topology model.
 
-### Server-side gRPC API
+### gRPC API
 
 Compile protocol buffer. (It can run with `npm run protoc`.)
 ```
@@ -244,8 +277,13 @@ node bin/grpc-client.js alerts 3
 ```
 
 ### Format, Lints and fixes files
-```
+prettier
+```bash
 npm run format
+```
+
+eslint
+```bash
 npm run lint
 npm run lint:fix
 ```
