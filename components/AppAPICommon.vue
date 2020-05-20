@@ -22,7 +22,7 @@ export default {
       // If NETOVIZ_REST_PORT is defined,
       // use it instead of browser location port.
       // Run all-in-one application, unset NETOVIZ_REST_PORT.
-      const port = this.$env.NETOVIZ_WEB_PORT || window.location.port
+      const port = this.$env.NETOVIZ_REST_PORT || window.location.port
       return `http://${host}:${port}`
     }
   }

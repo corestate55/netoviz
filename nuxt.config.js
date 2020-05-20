@@ -55,7 +55,7 @@ module.exports = {
       {
         keys: [
           { key: 'NETOVIZ_API', default: 'rest' },
-          'NETOVIZ_WEB_PORT',
+          'NETOVIZ_REST_PORT',
           'NETOVIZ_GRPC_WEB_PORT'
         ]
       }
