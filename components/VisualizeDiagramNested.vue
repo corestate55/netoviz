@@ -71,7 +71,9 @@ export default {
       this.drawRfcTopologyData()
     },
     autoFitting() {
-      this.drawRfcTopologyData()
+      this.autoFitting
+        ? this.visualizer.fitGrid() // turn on (adjust grid position in frontend)
+        : this.drawRfcTopologyData() // turn off (redraw)
     },
     aggregation() {
       this.drawRfcTopologyData()
