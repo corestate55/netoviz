@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Definition of network and supporting-network class of topology model.
  */
@@ -6,6 +5,13 @@
 import RfcModelBase from './base'
 import RfcNode from './node'
 import RfcLink from './link'
+
+/**
+ * @typedef {RfcNode|RfcL2Node|RfcL3Node|MultiPurposeNode} AllRfcNode
+ */
+/**
+ * @typedef {RfcLink|RfcL2Link|RfcL3Link|MultiPurposeLink} AllRfcLink
+ */
 
 /**
  * Supporting network of topology model.
@@ -152,7 +158,7 @@ class RfcNetwork extends RfcModelBase {
    * @private
    */
   _constructNodes(data) {
-    /** @type {Array<RfcNode|RfcL2Node|RfcL3Node>} */
+    /** @type {Array<AllRfcNode>} */
     this.nodes = []
     if (data.node) {
       this.nodes = data.node.map((d, i) => {
@@ -178,7 +184,7 @@ class RfcNetwork extends RfcModelBase {
    * @private
    */
   _constructLinks(data) {
-    /** @type {Array<RfcLink|RfcL2Link|RfcL3Link>} */
+    /** @type {Array<AllRfcLink>} */
     this.links = []
     const linkKey = 'ietf-network-topology:link' // alias
     if (data[linkKey]) {
@@ -229,6 +235,11 @@ class RfcNetwork extends RfcModelBase {
   isTypeLayer2() {
     const nwL2TypeKey = 'ietf-l2-topology:l2-network' // alias
     return this.networkTypes.hasType(nwL2TypeKey)
+  }
+
+  isTypeMultiPurpose() {
+    const nwMPTypeKey = 'multi-purpose-topology' // alias
+    return this.networkTypes.hasType(nwMPTypeKey)
   }
 }
 

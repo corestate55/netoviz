@@ -1,0 +1,110 @@
+{
+  "ietf-network:networks": {
+    "network": [
+      {
+        "network-id": "system_monitor",
+        "network-types": {
+          "multi-purpose-topology": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "network1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "sv1"
+              },
+              {
+                "tp-id": "sv2"
+              }
+            ],
+            "multi-purpose-node-attributes": {
+              "name": "server-segment",
+              "monitor_id": 20001
+            }
+          },
+          {
+            "node-id": "sv1",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "multi-purpose-termination-point-attributes": {
+                  "address": "192.168.1.101"
+                }
+              }
+            ],
+            "multi-purpose-node-attributes": {
+              "name": "server1",
+              "monitor_id": 30001
+            }
+          },
+          {
+            "node-id": "sv2",
+            "ietf-network-topology:termination-point": [
+              {
+                "tp-id": "eth0",
+                "multi-purpose-termination-point-attributes": {
+                  "address": "192.168.1.102"
+                }
+              }
+            ],
+            "multi-purpose-node-attributes": {
+              "name": "server2",
+              "monitor_id": 30002
+            }
+          }
+        ],
+        "ietf-network-topology:link": [
+          {
+            "link-id": "network1,sv1,sv1,eth0",
+            "source": {
+              "source-node": "network1",
+              "source-tp": "sv1"
+            },
+            "destination": {
+              "dest-node": "sv1",
+              "dest-tp": "eth0"
+            }
+          },
+          {
+            "link-id": "sv1,eth0,network1,sv1",
+            "source": {
+              "source-node": "sv1",
+              "source-tp": "eth0"
+            },
+            "destination": {
+              "dest-node": "network1",
+              "dest-tp": "sv1"
+            }
+          },
+          {
+            "link-id": "network1,sv2,sv2,eth0",
+            "source": {
+              "source-node": "network1",
+              "source-tp": "sv2"
+            },
+            "destination": {
+              "dest-node": "sv2",
+              "dest-tp": "eth0"
+            }
+          },
+          {
+            "link-id": "sv2,eth0,network1,sv2",
+            "source": {
+              "source-node": "sv2",
+              "source-tp": "eth0"
+            },
+            "destination": {
+              "dest-node": "network1",
+              "dest-tp": "sv2"
+            }
+          }
+        ],
+        "multi-purpose-network-attributes": {
+          "description": "relation of monitoring objects",
+          "network": "192.168.1.0/24"
+        }
+      }
+    ]
+  }
+}

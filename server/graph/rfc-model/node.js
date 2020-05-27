@@ -1,4 +1,3 @@
-'use strict'
 /**
  * @file Definition of node and supporting-node class of topology model.
  */
@@ -6,6 +5,10 @@
 import ForceSimulationNode from '../force-simulation/node'
 import RfcModelBase from './base'
 import RfcTermPoint from './term-point'
+
+/**
+ * @typedef {RfcTermPoint|RfcL2TermPoint|RfcL3TermPoint|MultiPurposeTermPoint} AllRfcTermPoint
+ */
 
 /**
  * Supporting node of topology model.
@@ -70,7 +73,7 @@ class RfcNode extends RfcModelBase {
    * @private
    */
   _constructTermPoints(data) {
-    /** @type {Array<RfcTermPoint|RfcL2TermPoint|RfcL3TermPoint>} */
+    /** @type {Array<AllRfcTermPoint>} */
     this.termPoints = []
     const tpKey = 'ietf-network-topology:termination-point' // alias
     if (data[tpKey]) {

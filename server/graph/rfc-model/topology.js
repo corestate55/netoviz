@@ -1,12 +1,16 @@
-'use strict'
 /**
  * @file Definition of networks class of topology model.
  */
+
 import RfcModelBase from './base'
 import RfcNetwork from './network'
-import RfcL2Network from './l2network'
-import RfcL3Network from './l3network'
+import { RfcL2Network } from './elements-l2'
+import { RfcL3Network } from './elements-l3'
+import { MultiPurposeNetwork } from './elements-mp'
 
+/**
+ * @typedef {RfcNetwork|RfcL2Network|RfcL3Network|MultiPurposeNetwork} AllRfcNetwork
+ */
 /**
  * Networks of topology model.
  * (Container of multiple networks.)
@@ -27,7 +31,7 @@ class RfcTopology extends RfcModelBase {
   constructor(rfcTopologyData) {
     const nwKey = 'ietf-network:networks' // alias
     super(rfcTopologyData[nwKey])
-    /** @type {Array<RfcNetwork|RfcL2Network|RfcL3Network>} */
+    /** @type {Array<AllRfcNetwork>} */
     this.networks = rfcTopologyData[nwKey].network.map((nw, nwNum) => {
       return this.newNetwork(nw, nwNum + 1)
     })
@@ -37,7 +41,7 @@ class RfcTopology extends RfcModelBase {
    * Create (new) network.
    * @param {RfcNetworkData} data - Network data.
    * @param {number} nwNum - ID of network.
-   * @returns {RfcNetwork|RfcL2Network|RfcL3Network}
+   * @returns {AllRfcNetwork}
    * @protected
    */
   newNetwork(data, nwNum) {
@@ -47,6 +51,8 @@ class RfcTopology extends RfcModelBase {
       return new RfcL3Network(data, nwNum)
     } else if (nw.isTypeLayer2()) {
       return new RfcL2Network(data, nwNum)
+    } else if (nw.isTypeMultiPurpose()) {
+      return new MultiPurposeNetwork(data, nwNum)
     }
     return nw
   }

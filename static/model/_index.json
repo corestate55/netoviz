@@ -28,6 +28,10 @@
     "label": "diff viewer test data"
   },
   {
+    "file": "mp_attr.json",
+    "label": "Multi-purpose attribute trial"
+  },
+  {
     "file": "nlink_check.json",
     "label": "Link check for nested"
   },
