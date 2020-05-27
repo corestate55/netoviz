@@ -7,6 +7,7 @@ import { promisify } from 'util'
 import toForceSimulationTopologyData from '../../graph/force-simulation'
 
 const readFile = promisify(fs.readFile)
+const statFile = promisify(fs.stat)
 
 /**
  * RFC8345 Graph data (topology data) converter with data-cache.
@@ -17,12 +18,6 @@ class CacheRfcTopologyDataConverter {
    * @param {string} cacheDir - Directory path to save cache.
    */
   constructor(modelDir, cacheDir) {
-    /**
-     * timestamp table (json path - timestamp dictionary)
-     * @type {Object}
-     * @private
-     */
-    this._timeStampOf = {}
     /**
      * Directory path of model files.
      * @const {string}
@@ -55,8 +50,23 @@ class CacheRfcTopologyDataConverter {
    */
   async _readForceSimulationTopologyDataFromCacheJSON() {
     console.log('use cache: ', this._cacheJsonPath)
-    const buffer = await readFile(this._cacheJsonPath)
-    return JSON.parse(buffer.toString())
+    try {
+      const buffer = await readFile(this._cacheJsonPath)
+      return JSON.parse(buffer.toString())
+    } catch (error) {
+      // this function is called after checking operative cache existence (_foundOperativeCache())
+      // exception in readFile() for cache json means error in json (contents).
+      console.error('Error: cannot read cache: ', this._cacheJsonPath)
+      fs.unlink(this._cacheJsonPath, error => {
+        if (error) {
+          throw error
+        }
+        console.warn(
+          `Warning: server removes cache ${this._cacheJsonPath}. Retry request again.`
+        )
+      })
+      throw error
+    }
   }
 
   /**
@@ -65,8 +75,13 @@ class CacheRfcTopologyDataConverter {
    * @private
    */
   async _readRfcTopologyDataFromJSON() {
-    const buffer = await readFile(this._jsonPath)
-    return JSON.parse(buffer.toString())
+    try {
+      const buffer = await readFile(this._jsonPath)
+      return JSON.parse(buffer.toString())
+    } catch (error) {
+      console.error('Error: cannot read model file: ', this._jsonPath)
+      throw error
+    }
   }
 
   /**
@@ -78,6 +93,7 @@ class CacheRfcTopologyDataConverter {
     console.log('create cache: ', this._cacheJsonPath)
     fs.writeFile(this._cacheJsonPath, jsonString, 'utf8', error => {
       if (error) {
+        console.error('Error: cannot write cache file: ', this._cacheJsonPath)
         throw error
       }
       console.log(`cache saved: ${this._cacheJsonPath}`)
@@ -89,7 +105,7 @@ class CacheRfcTopologyDataConverter {
    * @param {string} jsonName - File name of topology data.
    * @private
    */
-  _updateStatsOfTopologyJSON(jsonName) {
+  async _updateStatsOfTopologyJSON(jsonName) {
     /**
      * Target topology data file
      * @type {string}
@@ -102,35 +118,59 @@ class CacheRfcTopologyDataConverter {
      * @private
      */
     this._cacheJsonPath = `${this._cacheDir}/${jsonName}.cache`
-    /**
-     * Timestamp of target topology data file.
-     * @type {Stats}
-     * @private
-     */
-    this._timeStamp = fs.statSync(this._jsonPath)
+
+    try {
+      /**
+       * Timestamp of target topology data file.
+       * @type {Stats|null}
+       * @private
+       */
+      this._targetStats = await statFile(this._jsonPath)
+    } catch (error) {
+      console.error('Error: Cannot stat topology data file: ', this._jsonPath)
+      this._targetStats = null
+      throw error
+    }
+
+    try {
+      /**
+       * Timestamp of cache file.
+       * @type {Stats|null}
+       * @private
+       */
+      this._cacheStats = await statFile(this._cacheJsonPath)
+    } catch (error) {
+      console.warn('Warning: cannot stat cache file: ', this._cacheJsonPath)
+      this._cacheStats = null
+    }
   }
 
   /**
    * Check cache file existence and target topology file updating.
+   * @param {string} jsonName - File name of topology data.
    * @returns {boolean} True if operative cache exists.
    * @private
    */
-  _foundOperativeCache() {
-    // if timestamp exists and not equal, then target json file was updated.
-    // (Need to convert its data and cache again.)
+  async _foundOperativeCache(jsonName) {
+    await this._updateStatsOfTopologyJSON(jsonName)
+    console.log('Requested: ', this._jsonPath)
     return (
-      this._timeStampOf[this._jsonPath] &&
-      this._timeStampOf[this._jsonPath] === this._timeStamp.mtimeMs
+      this._targetStats &&
+      this._cacheStats &&
+      this._targetStats.mtimeMs < this._cacheStats.mtimeMs
     )
   }
 
   /**
-   * Update timestamp of target topology data when cache create.
+   * Read topology data, conver it to force-simulation data and save it as cache.
+   * @returns {Promise<ForceSimulationTopologyData>} Converted topology data object.
    * @private
    */
-  _updateCacheTimeStamp() {
-    // record timestamp of target json file.
-    this._timeStampOf[this._jsonPath] = this._timeStamp.mtimeMs
+  async _readForceSimulationTopologyDataAndWriteCache() {
+    const rfcTopologyData = await this._readRfcTopologyDataFromJSON()
+    const topologyData = await toForceSimulationTopologyData(rfcTopologyData)
+    this._writeCache(JSON.stringify(topologyData))
+    return topologyData
   }
 
   /**
@@ -140,18 +180,10 @@ class CacheRfcTopologyDataConverter {
    * @public
    */
   async toForceSimulationTopologyData(jsonName) {
-    this._updateStatsOfTopologyJSON(jsonName)
-    console.log('Requested: ', this._jsonPath)
-
-    if (this._foundOperativeCache()) {
+    if (await this._foundOperativeCache(jsonName)) {
       return this._readForceSimulationTopologyDataFromCacheJSON()
     } else {
-      // the json file was changed.
-      this._updateCacheTimeStamp()
-      const rfcTopologyData = await this._readRfcTopologyDataFromJSON()
-      const topologyData = await toForceSimulationTopologyData(rfcTopologyData)
-      this._writeCache(JSON.stringify(topologyData))
-      return topologyData
+      return await this._readForceSimulationTopologyDataAndWriteCache()
     }
   }
 }

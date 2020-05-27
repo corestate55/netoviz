@@ -137,16 +137,23 @@ class APIBase {
    * @public
    */
   async getGraphData(graphName, jsonName, req) {
-    if (graphName === 'forceSimulation') {
-      return JSON.stringify(await this.toForceSimulationTopologyData(jsonName))
-    } else if (graphName === 'dependency') {
-      return JSON.stringify(await this.toDependencyTopologyData(jsonName, req))
-    } else if (graphName === 'nested') {
-      return JSON.stringify(await this.toNestedTopologyData(jsonName, req))
-    } else if (graphName === 'distance') {
-      return JSON.stringify(await this.toDistanceTopologyData(jsonName, req))
+    try {
+      let data = { error: 'invalid graph name', graphName } // default
+      if (graphName === 'forceSimulation') {
+        data = await this.toForceSimulationTopologyData(jsonName)
+      } else if (graphName === 'dependency') {
+        data = await this.toDependencyTopologyData(jsonName, req)
+      } else if (graphName === 'nested') {
+        data = await this.toNestedTopologyData(jsonName, req)
+      } else if (graphName === 'distance') {
+        data = await this.toDistanceTopologyData(jsonName, req)
+      }
+      return JSON.stringify(data)
+    } catch (error) {
+      // catch-up all exceptions about target/cache file handling.
+      console.error(error)
+      return JSON.stringify({ error: 'invalid data file', jsonName })
     }
-    return JSON.stringify({}) // invalid graph name
   }
 
   // delegate
