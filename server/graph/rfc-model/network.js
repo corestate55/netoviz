@@ -7,10 +7,10 @@ import RfcNode from './node'
 import RfcLink from './link'
 
 /**
- * @typedef {RfcNode|RfcL2Node|RfcL3Node|MultiPurposeNode} AllRfcNode
+ * @typedef {RfcNode|RfcL2Node|RfcL3Node|OpsNode} AllRfcNode
  */
 /**
- * @typedef {RfcLink|RfcL2Link|RfcL3Link|MultiPurposeLink} AllRfcLink
+ * @typedef {RfcLink|RfcL2Link|RfcL3Link|OpsLink} AllRfcLink
  */
 
 /**
@@ -237,9 +237,9 @@ class RfcNetwork extends RfcModelBase {
     return this.networkTypes.hasType(nwL2TypeKey)
   }
 
-  isTypeMultiPurpose() {
-    const nwMPTypeKey = 'multi-purpose-topology' // alias
-    return this.networkTypes.hasType(nwMPTypeKey)
+  isTypeOps() {
+    const nwOpsTypeKey = 'ops-topology:ops-network' // alias
+    return this.networkTypes.hasType(nwOpsTypeKey)
   }
 }
 

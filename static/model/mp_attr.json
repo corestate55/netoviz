@@ -2,9 +2,50 @@
   "ietf-network:networks": {
     "network": [
       {
-        "network-id": "system_monitor",
+        "network-id": "monitor-region",
         "network-types": {
-          "multi-purpose-topology": {
+          "ops-topology:ops-network": {
+          }
+        },
+        "node": [
+          {
+            "node-id": "region1",
+            "ietf-network-topology:termination-point": [
+
+            ],
+            "supporting-node": [
+              {
+                "network-ref": "system-monitor",
+                "node-ref": "network1"
+              },
+              {
+                "network-ref": "system-monitor",
+                "node-ref": "sv1"
+              },
+              {
+                "network-ref": "system-monitor",
+                "node-ref": "sv2"
+              }
+            ],
+            "ops-topology:ops-node-attributes": {
+              "region_id": "r100001",
+              "place": "Nishi-shinjuku"
+            }
+          }
+        ],
+        "ietf-network-topology:link": [
+
+        ],
+        "supporting-network": [
+          {
+            "network-ref": "system-monitor"
+          }
+        ]
+      },
+      {
+        "network-id": "system-monitor",
+        "network-types": {
+          "ops-topology:ops-network": {
           }
         },
         "node": [
@@ -18,7 +59,7 @@
                 "tp-id": "sv2"
               }
             ],
-            "multi-purpose-node-attributes": {
+            "ops-topology:ops-node-attributes": {
               "name": "server-segment",
               "monitor_id": 20001
             }
@@ -28,12 +69,12 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "eth0",
-                "multi-purpose-termination-point-attributes": {
+                "ops-topology:ops-termination-point-attributes": {
                   "address": "192.168.1.101"
                 }
               }
             ],
-            "multi-purpose-node-attributes": {
+            "ops-topology:ops-node-attributes": {
               "name": "server1",
               "monitor_id": 30001
             }
@@ -43,12 +84,12 @@
             "ietf-network-topology:termination-point": [
               {
                 "tp-id": "eth0",
-                "multi-purpose-termination-point-attributes": {
+                "ops-topology:ops-termination-point-attributes": {
                   "address": "192.168.1.102"
                 }
               }
             ],
-            "multi-purpose-node-attributes": {
+            "ops-topology:ops-node-attributes": {
               "name": "server2",
               "monitor_id": 30002
             }
@@ -100,7 +141,7 @@
             }
           }
         ],
-        "multi-purpose-network-attributes": {
+        "ops-topology:ops-network-attributes": {
           "description": "relation of monitoring objects",
           "network": "192.168.1.0/24"
         }

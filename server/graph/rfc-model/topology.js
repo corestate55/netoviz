@@ -6,10 +6,10 @@ import RfcModelBase from './base'
 import RfcNetwork from './network'
 import { RfcL2Network } from './elements-l2'
 import { RfcL3Network } from './elements-l3'
-import { MultiPurposeNetwork } from './elements-mp'
+import { OpsNetwork } from './elements-ops'
 
 /**
- * @typedef {RfcNetwork|RfcL2Network|RfcL3Network|MultiPurposeNetwork} AllRfcNetwork
+ * @typedef {RfcNetwork|RfcL2Network|RfcL3Network|OpsNetwork} AllRfcNetwork
  */
 /**
  * Networks of topology model.
@@ -51,8 +51,8 @@ class RfcTopology extends RfcModelBase {
       return new RfcL3Network(data, nwNum)
     } else if (nw.isTypeLayer2()) {
       return new RfcL2Network(data, nwNum)
-    } else if (nw.isTypeMultiPurpose()) {
-      return new MultiPurposeNetwork(data, nwNum)
+    } else if (nw.isTypeOps()) {
+      return new OpsNetwork(data, nwNum)
     }
     return nw
   }
