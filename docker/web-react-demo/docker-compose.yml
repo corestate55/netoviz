@@ -2,11 +2,7 @@ version: "3"
 services:
   web-server:
     image: netoviz/web-react
-    container_name: nv-web-react
-    restart: always
     env_file: .env
-    networks:
-      - netoviz-nw
     ports:
       # browser access
       - "${NETOVIZ_WEB_PORT}:3000"
@@ -15,10 +11,6 @@ services:
       - app-server
   proxy-server:
     image: netoviz/envoy
-    container_name: nv-envoy
-    restart: always
-    networks:
-      - netoviz-nw
     env_file: .env
     ports:
       # management (browser access)
@@ -29,13 +21,9 @@ services:
       - app-server
   app-server:
     image: netoviz/app-server
-    container_name: nv-app
-    restart: always
     env_file: .env
     volumes:
       - ./storage:/home/netoviz-app-server/db/storage
-    networks:
-      - netoviz-nw
     ports:
       # REST
       - "${REACT_APP_NETOVIZ_REST_PORT}:3001"
@@ -43,5 +31,5 @@ services:
       # gRPC
       - "9090"
 networks:
-  netoviz-nw:
+  default:
     driver: bridge
