@@ -23,7 +23,7 @@ class CustomBundleBuilder extends BundleBuilder {
    * Skip running compiler and store compiler into compilerMap
    * @override
    */
-  async webpackCompile(compiler) {
+  webpackCompile(compiler) {
     this.compilerMap[compiler.name] = compiler
   }
 }

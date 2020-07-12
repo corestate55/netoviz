@@ -15,9 +15,7 @@ module.exports = {
     'plugin:nuxt/recommended',
     'prettier-standard'
   ],
-  plugins: [
-    'prettier'
-  ],
+  plugins: ['prettier'],
   ignorePatterns: ['server/api/grpc/*_pb.js'],
   // add your custom rules here
   rules: {

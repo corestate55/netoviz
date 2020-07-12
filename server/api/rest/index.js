@@ -36,16 +36,16 @@ apiRouter.post('/alert', (req, res) => {
   res.send('Log message received.')
 })
 
-// API to send several alert log data.
-apiRouter.get('/alert/:number', async (req, res) => {
-  console.log(`requested ${req.params.number} logs`)
-  res.send(await alertTable.alerts(req.params.number))
-})
-
 // API to send ALL alert log data
 apiRouter.get('/alert/all', async (req, res) => {
   console.log('[REST] alerts: all')
   res.send(await alertTable.allAlerts())
+})
+
+// API to send several alert log data.
+apiRouter.get('/alert/:number', async (req, res) => {
+  console.log(`requested ${req.params.number} logs`)
+  res.send(await alertTable.alerts(req.params.number))
 })
 
 // API to send all model-file data.

@@ -5,8 +5,7 @@
   "author": "corestate55",
   "private": true,
   "engines": {
-    "node": "10.x",
-    "npm": "6.x"
+    "node": ">=10.x"
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --exec babel-node",
@@ -16,18 +15,18 @@
     "format": "prettier --write '{components,layouts,lib,pages,server,store}/**/*.{js,vue}'",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "lint:fix": "eslint --ext .js,.vue --ignore-path .gitignore --fix .",
-    "doc": "jsdoc  --configure .jsdocrc.json --readme README.md --package package.json",
+    "doc": "jsdoc --configure .jsdocrc.json --readme README.md --package package.json",
     "fig": "./bin/gen_fig.rb > fig/classes_js.plantuml && PLANTUML_LIMIT_SIZE=8192 plantuml fig/classes_js.plantuml",
     "protoc": "grpc_tools_node_protoc --js_out=import_style=commonjs,binary:. --grpc_out=. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:. ./server/api/grpc/topology-data.proto",
     "docker-build": "docker build -t netoviz/allinone ."
   },
   "dependencies": {
-    "@babel/node": "^7.8.7",
-    "@nuxtjs/axios": "^5.10.1",
+    "@babel/node": "^7.10.4",
+    "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/dotenv": "^1.4.1",
     "cross-env": "^7.0.2",
     "d3-drag": "^1.2.5",
-    "d3-fetch": "^1.1.2",
+    "d3-fetch": "^1.2.0",
     "d3-force": "^2.0.1",
     "d3-selection": "^1.4.1",
     "d3-shape": "^1.3.7",
@@ -35,32 +34,32 @@
     "d3-zoom": "^1.8.3",
     "debounce": "^1.2.0",
     "express": "^4.17.1",
-    "google-protobuf": "^3.11.4",
-    "grpc": "^1.24.2",
-    "grpc-web": "^1.0.7",
+    "google-protobuf": "^3.12.2",
+    "grpc": "^1.24.3",
+    "grpc-web": "^1.2.0",
     "localStorage": "^1.0.4",
-    "nuxt": "^2.12.2",
+    "nuxt": "^2.13.3",
     "nuxt-env": "^0.1.0",
-    "sequelize": "^5.21.7",
-    "sqlite3": "^4.1.1"
+    "sequelize": "^6.3.3",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/preset-env": "^7.9.5",
-    "@nuxtjs/eslint-config": "^2.0.2",
-    "@nuxtjs/eslint-module": "^1.2.0",
+    "@babel/preset-env": "^7.10.4",
+    "@nuxtjs/eslint-config": "^3.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
+    "eslint": "^7.4.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-config-prettier-standard": "^3.0.1",
-    "eslint-plugin-nuxt": ">=0.5.2",
-    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-nuxt": ">=1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "foodoc": "0.0.9",
     "jsdoc": "^3.6.4",
-    "nodemon": "^2.0.3",
+    "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "prettier-config-standard": "^1.0.1",
-    "sequelize-cli": "^5.5.1"
+    "sequelize-cli": "^6.2.0"
   }
 }

@@ -86,13 +86,13 @@ class AlertTable {
    * @returns {Promise<Array<Alert>>} - Alerts.
    * @public
    */
-  alerts(number) {
-    return db.alert
-      .findAll({
-        limit: number,
-        order: [['id', 'DESC']]
-      })
-      .map(d => new Alert(d))
+  async alerts(number) {
+    const opts = {
+      limit: number,
+      order: [['id', 'DESC']]
+    }
+    const alerts = await db.alert.findAll(opts)
+    return alerts.map(d => new Alert(d.dataValues))
   }
 
   /**
@@ -100,12 +100,10 @@ class AlertTable {
    * @returns {Promise<Array<Alert>>} - Alerts.
    * @public
    */
-  allAlerts() {
-    return db.alert
-      .findAll({
-        order: [['id', 'DESC']]
-      })
-      .map(d => new Alert(d))
+  async allAlerts() {
+    const opts = { order: [['id', 'DESC']] }
+    const alerts = await db.alert.findAll(opts)
+    return alerts.map(d => new Alert(d.dataValues))
   }
 }
 

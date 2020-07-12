@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 module.exports = {
+  telemetry: false,
   server: {
     host: '0.0.0.0',
     port: process.env.PORT || process.env.NETOVIZ_WEB_LISTEN

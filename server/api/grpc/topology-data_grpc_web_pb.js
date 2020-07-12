@@ -6,13 +6,11 @@
 
 // GENERATED CODE -- DO NOT EDIT!
 
+const grpc = {}
+grpc.web = require('grpc-web')
 
-
-const grpc = {};
-grpc.web = require('grpc-web');
-
-const proto = {};
-proto.netoviz = require('./topology-data_pb.js');
+const proto = {}
+proto.netoviz = require('./topology-data_pb.js')
 
 /**
  * @param {string} hostname
@@ -22,23 +20,20 @@ proto.netoviz = require('./topology-data_pb.js');
  * @struct
  * @final
  */
-proto.netoviz.TopologyDataClient =
-    function(hostname, credentials, options) {
-  if (!options) options = {};
-  options['format'] = 'text';
+proto.netoviz.TopologyDataClient = function (hostname, credentials, options) {
+  if (!options) options = {}
+  options['format'] = 'text'
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
    */
-  this.client_ = new grpc.web.GrpcWebClientBase(options);
+  this.client_ = new grpc.web.GrpcWebClientBase(options)
 
   /**
    * @private @const {string} The hostname
    */
-  this.hostname_ = hostname;
-
-};
-
+  this.hostname_ = hostname
+}
 
 /**
  * @param {string} hostname
@@ -48,23 +43,24 @@ proto.netoviz.TopologyDataClient =
  * @struct
  * @final
  */
-proto.netoviz.TopologyDataPromiseClient =
-    function(hostname, credentials, options) {
-  if (!options) options = {};
-  options['format'] = 'text';
+proto.netoviz.TopologyDataPromiseClient = function (
+  hostname,
+  credentials,
+  options
+) {
+  if (!options) options = {}
+  options['format'] = 'text'
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
    */
-  this.client_ = new grpc.web.GrpcWebClientBase(options);
+  this.client_ = new grpc.web.GrpcWebClientBase(options)
 
   /**
    * @private @const {string} The hostname
    */
-  this.hostname_ = hostname;
-
-};
-
+  this.hostname_ = hostname
+}
 
 /**
  * @const
@@ -81,12 +77,11 @@ const methodDescriptor_TopologyData_GetGraphData = new grpc.web.MethodDescriptor
    * @param {!proto.netoviz.GraphRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
-    return request.serializeBinary();
+  function (request) {
+    return request.serializeBinary()
   },
   proto.netoviz.GraphReply.deserializeBinary
-);
-
+)
 
 /**
  * @const
@@ -100,12 +95,11 @@ const methodInfo_TopologyData_GetGraphData = new grpc.web.AbstractClientBase.Met
    * @param {!proto.netoviz.GraphRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
-    return request.serializeBinary();
+  function (request) {
+    return request.serializeBinary()
   },
   proto.netoviz.GraphReply.deserializeBinary
-);
-
+)
 
 /**
  * @param {!proto.netoviz.GraphRequest} request The
@@ -117,16 +111,19 @@ const methodInfo_TopologyData_GetGraphData = new grpc.web.AbstractClientBase.Met
  * @return {!grpc.web.ClientReadableStream<!proto.netoviz.GraphReply>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.netoviz.TopologyDataClient.prototype.getGraphData =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/netoviz.TopologyData/GetGraphData',
-      request,
-      metadata || {},
-      methodDescriptor_TopologyData_GetGraphData,
-      callback);
-};
-
+proto.netoviz.TopologyDataClient.prototype.getGraphData = function (
+  request,
+  metadata,
+  callback
+) {
+  return this.client_.rpcCall(
+    this.hostname_ + '/netoviz.TopologyData/GetGraphData',
+    request,
+    metadata || {},
+    methodDescriptor_TopologyData_GetGraphData,
+    callback
+  )
+}
 
 /**
  * @param {!proto.netoviz.GraphRequest} request The
@@ -136,15 +133,17 @@ proto.netoviz.TopologyDataClient.prototype.getGraphData =
  * @return {!Promise<!proto.netoviz.GraphReply>}
  *     A native promise that resolves to the response
  */
-proto.netoviz.TopologyDataPromiseClient.prototype.getGraphData =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/netoviz.TopologyData/GetGraphData',
-      request,
-      metadata || {},
-      methodDescriptor_TopologyData_GetGraphData);
-};
-
+proto.netoviz.TopologyDataPromiseClient.prototype.getGraphData = function (
+  request,
+  metadata
+) {
+  return this.client_.unaryCall(
+    this.hostname_ + '/netoviz.TopologyData/GetGraphData',
+    request,
+    metadata || {},
+    methodDescriptor_TopologyData_GetGraphData
+  )
+}
 
 /**
  * @const
@@ -161,12 +160,11 @@ const methodDescriptor_TopologyData_GetAlerts = new grpc.web.MethodDescriptor(
    * @param {!proto.netoviz.AlertRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
-    return request.serializeBinary();
+  function (request) {
+    return request.serializeBinary()
   },
   proto.netoviz.AlertReply.deserializeBinary
-);
-
+)
 
 /**
  * @const
@@ -180,12 +178,11 @@ const methodInfo_TopologyData_GetAlerts = new grpc.web.AbstractClientBase.Method
    * @param {!proto.netoviz.AlertRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
-    return request.serializeBinary();
+  function (request) {
+    return request.serializeBinary()
   },
   proto.netoviz.AlertReply.deserializeBinary
-);
-
+)
 
 /**
  * @param {!proto.netoviz.AlertRequest} request The
@@ -197,16 +194,19 @@ const methodInfo_TopologyData_GetAlerts = new grpc.web.AbstractClientBase.Method
  * @return {!grpc.web.ClientReadableStream<!proto.netoviz.AlertReply>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.netoviz.TopologyDataClient.prototype.getAlerts =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/netoviz.TopologyData/GetAlerts',
-      request,
-      metadata || {},
-      methodDescriptor_TopologyData_GetAlerts,
-      callback);
-};
-
+proto.netoviz.TopologyDataClient.prototype.getAlerts = function (
+  request,
+  metadata,
+  callback
+) {
+  return this.client_.rpcCall(
+    this.hostname_ + '/netoviz.TopologyData/GetAlerts',
+    request,
+    metadata || {},
+    methodDescriptor_TopologyData_GetAlerts,
+    callback
+  )
+}
 
 /**
  * @param {!proto.netoviz.AlertRequest} request The
@@ -216,15 +216,17 @@ proto.netoviz.TopologyDataClient.prototype.getAlerts =
  * @return {!Promise<!proto.netoviz.AlertReply>}
  *     A native promise that resolves to the response
  */
-proto.netoviz.TopologyDataPromiseClient.prototype.getAlerts =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/netoviz.TopologyData/GetAlerts',
-      request,
-      metadata || {},
-      methodDescriptor_TopologyData_GetAlerts);
-};
-
+proto.netoviz.TopologyDataPromiseClient.prototype.getAlerts = function (
+  request,
+  metadata
+) {
+  return this.client_.unaryCall(
+    this.hostname_ + '/netoviz.TopologyData/GetAlerts',
+    request,
+    metadata || {},
+    methodDescriptor_TopologyData_GetAlerts
+  )
+}
 
 /**
  * @const
@@ -241,12 +243,11 @@ const methodDescriptor_TopologyData_GetModels = new grpc.web.MethodDescriptor(
    * @param {!proto.netoviz.ModelRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
-    return request.serializeBinary();
+  function (request) {
+    return request.serializeBinary()
   },
   proto.netoviz.ModelReply.deserializeBinary
-);
-
+)
 
 /**
  * @const
@@ -260,12 +261,11 @@ const methodInfo_TopologyData_GetModels = new grpc.web.AbstractClientBase.Method
    * @param {!proto.netoviz.ModelRequest} request
    * @return {!Uint8Array}
    */
-  function(request) {
-    return request.serializeBinary();
+  function (request) {
+    return request.serializeBinary()
   },
   proto.netoviz.ModelReply.deserializeBinary
-);
-
+)
 
 /**
  * @param {!proto.netoviz.ModelRequest} request The
@@ -277,16 +277,19 @@ const methodInfo_TopologyData_GetModels = new grpc.web.AbstractClientBase.Method
  * @return {!grpc.web.ClientReadableStream<!proto.netoviz.ModelReply>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.netoviz.TopologyDataClient.prototype.getModels =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/netoviz.TopologyData/GetModels',
-      request,
-      metadata || {},
-      methodDescriptor_TopologyData_GetModels,
-      callback);
-};
-
+proto.netoviz.TopologyDataClient.prototype.getModels = function (
+  request,
+  metadata,
+  callback
+) {
+  return this.client_.rpcCall(
+    this.hostname_ + '/netoviz.TopologyData/GetModels',
+    request,
+    metadata || {},
+    methodDescriptor_TopologyData_GetModels,
+    callback
+  )
+}
 
 /**
  * @param {!proto.netoviz.ModelRequest} request The
@@ -296,15 +299,16 @@ proto.netoviz.TopologyDataClient.prototype.getModels =
  * @return {!Promise<!proto.netoviz.ModelReply>}
  *     A native promise that resolves to the response
  */
-proto.netoviz.TopologyDataPromiseClient.prototype.getModels =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/netoviz.TopologyData/GetModels',
-      request,
-      metadata || {},
-      methodDescriptor_TopologyData_GetModels);
-};
+proto.netoviz.TopologyDataPromiseClient.prototype.getModels = function (
+  request,
+  metadata
+) {
+  return this.client_.unaryCall(
+    this.hostname_ + '/netoviz.TopologyData/GetModels',
+    request,
+    metadata || {},
+    methodDescriptor_TopologyData_GetModels
+  )
+}
 
-
-module.exports = proto.netoviz;
-
+module.exports = proto.netoviz
