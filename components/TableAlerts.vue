@@ -50,35 +50,39 @@
           </v-row>
           <v-row>
             <v-col>
-              <v-data-table
-                v-bind:headers="alertTableHeader"
-                v-bind:items="alerts"
-                v-bind:items-per-page="5"
-                dense
-              >
-                <template v-slot:item="{ item, headers }">
-                  <tr
-                    v-bind:class="{
-                      'info font-weight-bold white--text':
-                        item.id === currentAlertRow.id
-                    }"
-                    v-on:click="setAlertTableCurrentRow(item)"
-                  >
-                    <td v-for="(header, index) in headers" v-bind:key="index">
-                      <v-chip
-                        v-if="header.value === 'severity'"
-                        v-bind:color="severityColor('fill', item.severity)"
-                        v-bind:text-color="severityColor('text', item.severity)"
-                      >
-                        {{ item.severity }}
-                      </v-chip>
-                      <template v-else>
-                        {{ item[header.value] }}
-                      </template>
-                    </td>
-                  </tr>
-                </template>
-              </v-data-table>
+              <client-only>
+                <v-data-table
+                  v-bind:headers="alertTableHeader"
+                  v-bind:items="alerts"
+                  v-bind:items-per-page="5"
+                  dense
+                >
+                  <template v-slot:item="{ item, headers }">
+                    <tr
+                      v-bind:class="{
+                        'info font-weight-bold white--text':
+                          item.id === currentAlertRow.id
+                      }"
+                      v-on:click="setAlertTableCurrentRow(item)"
+                    >
+                      <td v-for="(header, index) in headers" v-bind:key="index">
+                        <v-chip
+                          v-if="header.value === 'severity'"
+                          v-bind:color="severityColor('fill', item.severity)"
+                          v-bind:text-color="
+                            severityColor('text', item.severity)
+                          "
+                        >
+                          {{ item.severity }}
+                        </v-chip>
+                        <template v-else>
+                          {{ item[header.value] }}
+                        </template>
+                      </td>
+                    </tr>
+                  </template>
+                </v-data-table>
+              </client-only>
             </v-col>
           </v-row>
         </v-expansion-panel-content>
