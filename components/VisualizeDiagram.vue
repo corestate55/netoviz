@@ -3,9 +3,7 @@
     <v-row v-if="debug">
       <v-col>
         <div id="visualizer-state-debug">
-          <p>
-            Visualizer Component (UI Debug)
-          </p>
+          <p>Visualizer Component (UI Debug)</p>
           <ul>
             <li>Visualizer = {{ visualizer }}</li>
             <li>Model File = {{ modelFile }}</li>

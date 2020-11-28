@@ -23,6 +23,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'vue/v-bind-style': ['error', 'longform'],
-    'vue/v-on-style': ['error', 'longform']
+    'vue/v-on-style': ['error', 'longform'],
+    'vue/v-slot-style': ['error', 'longform']
   }
 }

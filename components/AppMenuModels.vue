@@ -3,9 +3,7 @@
     <template v-slot:activator="{ on }">
       <v-btn elevation="0" v-on="on">
         Models
-        <v-icon right>
-          mdi-menu-down
-        </v-icon>
+        <v-icon right> mdi-menu-down </v-icon>
       </v-btn>
     </template>
     <v-list>
@@ -55,10 +53,10 @@ export default {
       }
     },
     selectRoute(modelFile) {
-      if (this.$route.path.match(new RegExp('/model/.*/.*'))) {
+      if (this.$route.path.match(/\/model\/.*\/.*/)) {
         const visualizer = this.$route.params.visualizer
         return `/model/${modelFile}/${visualizer}`
-      } else if (this.$route.path.match(new RegExp('/visualizer/.*'))) {
+      } else if (this.$route.path.match(/\/visualizer\/.*/)) {
         const visualizer = this.$route.params.visualizer
         return `/visualizer/${visualizer}/${modelFile}`
       }

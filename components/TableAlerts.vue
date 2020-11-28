@@ -223,10 +223,10 @@ export default {
       return severityColor(prop, severity)
     },
     alertHostInputIsLayerHostFormat() {
-      return this.alertHostInput?.match(new RegExp('(.+)__(.+)'))
+      return this.alertHostInput?.match(/(.+)__(.+)/)
     },
     alertHostInputIsLayerHostTpFormat() {
-      return this.alertHostInput?.match(new RegExp('(.+)__(.+)__(.+)'))
+      return this.alertHostInput?.match(/(.+)__(.+)__(.+)/)
     },
     splitAlertHostInput() {
       if (this.alertHostInputIsLayerHostTpFormat()) {
