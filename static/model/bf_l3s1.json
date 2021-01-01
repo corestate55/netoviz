@@ -195,6 +195,28 @@
             }
           },
           {
+            "link-id": "as65532,10.0.1.14,as65534,10.0.1.13",
+            "source": {
+              "source-node": "as65532",
+              "source-tp": "10.0.1.14"
+            },
+            "destination": {
+              "dest-node": "as65534",
+              "dest-tp": "10.0.1.13"
+            }
+          },
+          {
+            "link-id": "as65534,10.0.1.13,as65532,10.0.1.14",
+            "source": {
+              "source-node": "as65534",
+              "source-tp": "10.0.1.13"
+            },
+            "destination": {
+              "dest-node": "as65532",
+              "dest-tp": "10.0.1.14"
+            }
+          },
+          {
             "link-id": "as65531,10.0.0.18,as65533,10.0.0.17",
             "source": {
               "source-node": "as65531",
@@ -236,28 +258,6 @@
             "destination": {
               "dest-node": "as65531",
               "dest-tp": "10.0.0.46"
-            }
-          },
-          {
-            "link-id": "as65532,10.0.1.14,as65534,10.0.1.13",
-            "source": {
-              "source-node": "as65532",
-              "source-tp": "10.0.1.14"
-            },
-            "destination": {
-              "dest-node": "as65534",
-              "dest-tp": "10.0.1.13"
-            }
-          },
-          {
-            "link-id": "as65534,10.0.1.13,as65532,10.0.1.14",
-            "source": {
-              "source-node": "as65534",
-              "source-tp": "10.0.1.13"
-            },
-            "destination": {
-              "dest-node": "as65532",
-              "dest-tp": "10.0.1.14"
             }
           }
         ]
@@ -333,20 +333,7 @@
                 "10.0.0.1"
               ],
               "prefix": [
-                {
-                  "prefix": "10.0.1.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.0.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
+
               ]
             }
           },
@@ -414,27 +401,7 @@
                 "10.0.0.2"
               ],
               "prefix": [
-                {
-                  "prefix": "10.0.0.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.0.0/16",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.1.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
+
               ]
             }
           },
@@ -502,27 +469,7 @@
                 "10.0.0.3"
               ],
               "prefix": [
-                {
-                  "prefix": "10.0.1.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.0.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.0.0/16",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
+
               ]
             }
           },
@@ -581,13 +528,6 @@
                   "flag": [
                     "bgp"
                   ]
-                },
-                {
-                  "prefix": "10.0.0.0/16",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
                 }
               ]
             }
@@ -641,20 +581,7 @@
                 "10.0.0.5"
               ],
               "prefix": [
-                {
-                  "prefix": "10.0.1.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.0.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "ibgp"
-                  ]
-                }
+
               ]
             }
           },
@@ -709,13 +636,6 @@
               "prefix": [
                 {
                   "prefix": "10.0.0.0/24",
-                  "metric": 0,
-                  "flag": [
-                    "bgp"
-                  ]
-                },
-                {
-                  "prefix": "10.0.0.0/16",
                   "metric": 0,
                   "flag": [
                     "bgp"
@@ -973,6 +893,28 @@
             }
           },
           {
+            "link-id": "10.0.1.0,10.0.1.14,as65534_10.0.1.13,10.0.1.13",
+            "source": {
+              "source-node": "10.0.1.0",
+              "source-tp": "10.0.1.14"
+            },
+            "destination": {
+              "dest-node": "as65534_10.0.1.13",
+              "dest-tp": "10.0.1.13"
+            }
+          },
+          {
+            "link-id": "as65534_10.0.1.13,10.0.1.13,10.0.1.0,10.0.1.14",
+            "source": {
+              "source-node": "as65534_10.0.1.13",
+              "source-tp": "10.0.1.13"
+            },
+            "destination": {
+              "dest-node": "10.0.1.0",
+              "dest-tp": "10.0.1.14"
+            }
+          },
+          {
             "link-id": "10.0.0.1,10.0.0.18,as65533_10.0.0.17,10.0.0.17",
             "source": {
               "source-node": "10.0.0.1",
@@ -1014,28 +956,6 @@
             "destination": {
               "dest-node": "10.0.0.5",
               "dest-tp": "10.0.0.46"
-            }
-          },
-          {
-            "link-id": "10.0.1.0,10.0.1.14,as65534_10.0.1.13,10.0.1.13",
-            "source": {
-              "source-node": "10.0.1.0",
-              "source-tp": "10.0.1.14"
-            },
-            "destination": {
-              "dest-node": "as65534_10.0.1.13",
-              "dest-tp": "10.0.1.13"
-            }
-          },
-          {
-            "link-id": "as65534_10.0.1.13,10.0.1.13,10.0.1.0,10.0.1.14",
-            "source": {
-              "source-node": "as65534_10.0.1.13",
-              "source-tp": "10.0.1.13"
-            },
-            "destination": {
-              "dest-node": "10.0.1.0",
-              "dest-tp": "10.0.1.14"
             }
           }
         ]
@@ -3018,6 +2938,28 @@
             }
           },
           {
+            "link-id": "border21,Fa1/0,as65534_10.0.1.13,10.0.1.13",
+            "source": {
+              "source-node": "border21",
+              "source-tp": "Fa1/0"
+            },
+            "destination": {
+              "dest-node": "as65534_10.0.1.13",
+              "dest-tp": "10.0.1.13"
+            }
+          },
+          {
+            "link-id": "as65534_10.0.1.13,10.0.1.13,border21,Fa1/0",
+            "source": {
+              "source-node": "as65534_10.0.1.13",
+              "source-tp": "10.0.1.13"
+            },
+            "destination": {
+              "dest-node": "border21",
+              "dest-tp": "Fa1/0"
+            }
+          },
+          {
             "link-id": "border01,Fa0/0,as65533_10.0.0.17,10.0.0.17",
             "source": {
               "source-node": "border01",
@@ -3059,28 +3001,6 @@
             "destination": {
               "dest-node": "border12",
               "dest-tp": "Fa1/1"
-            }
-          },
-          {
-            "link-id": "border21,Fa1/0,as65534_10.0.1.13,10.0.1.13",
-            "source": {
-              "source-node": "border21",
-              "source-tp": "Fa1/0"
-            },
-            "destination": {
-              "dest-node": "as65534_10.0.1.13",
-              "dest-tp": "10.0.1.13"
-            }
-          },
-          {
-            "link-id": "as65534_10.0.1.13,10.0.1.13,border21,Fa1/0",
-            "source": {
-              "source-node": "as65534_10.0.1.13",
-              "source-tp": "10.0.1.13"
-            },
-            "destination": {
-              "dest-node": "border21",
-              "dest-tp": "Fa1/0"
             }
           }
         ]
