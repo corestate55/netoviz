@@ -9,5 +9,8 @@ module.exports = {
       }
     ]
   ],
-  plugins: ['@babel/transform-runtime']
+  plugins: [
+    '@babel/transform-runtime',
+    ['@babel/plugin-proposal-private-methods', { loose: true }]
+  ]
 }
