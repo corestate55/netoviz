@@ -54,7 +54,7 @@ export default {
         }
       ]
       return head.concat(
-        this.visualizers.map(v => ({
+        this.visualizers.map((v) => ({
           text: v.text,
           value: v.value,
           sortable: false,

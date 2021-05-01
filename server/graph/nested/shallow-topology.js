@@ -96,7 +96,7 @@ class ShallowNestedTopology {
    * @protected
    */
   setNodes() {
-    this.setNodesAs(node => new ShallowNestedNode(node, this.reverse))
+    this.setNodesAs((node) => new ShallowNestedNode(node, this.reverse))
   }
 
   /**
@@ -113,9 +113,9 @@ class ShallowNestedTopology {
      */
     /** @type {Array<NestedNodeData>} */
     this.nodes = this.topologyData
-      .map(network => network.nodes) // pick nodes in each network.
+      .map((network) => network.nodes) // pick nodes in each network.
       .reduce((acc, nodes) => [...acc, ...nodes], []) // flatten
-      .map(node => generateGraphNodeCallback(node))
+      .map((node) => generateGraphNodeCallback(node))
   }
 
   /**
@@ -126,7 +126,7 @@ class ShallowNestedTopology {
    * @protected
    */
   findLinkBetween(sourcePath, targetPath) {
-    return this.links.find(d => {
+    return this.links.find((d) => {
       return d.sourcePath === sourcePath && d.targetPath === targetPath
     })
   }
@@ -136,7 +136,7 @@ class ShallowNestedTopology {
    * @protected
    */
   setLinks() {
-    const markReverseLink = link => {
+    const markReverseLink = (link) => {
       if (link.reverse) {
         return
       }
@@ -149,11 +149,11 @@ class ShallowNestedTopology {
 
     /** @type {Array<NestedLink>} */
     this.links = this.topologyData
-      .map(network => network.links) // pick links in each network.
+      .map((network) => network.links) // pick links in each network.
       .reduce((acc, links) => [...acc, ...links], []) // flatten
-      .map(link => new NestedLink(link))
+      .map((link) => new NestedLink(link))
     this.links.forEach(markReverseLink)
-    this.links = this.links.filter(link => !link.reverse)
+    this.links = this.links.filter((link) => !link.reverse)
   }
 
   /**
@@ -161,7 +161,7 @@ class ShallowNestedTopology {
    * @protected
    */
   setRootNodes() {
-    this.rootNodes = this.nodes.filter(d => d.isRootNode())
+    this.rootNodes = this.nodes.filter((d) => d.isRootNode())
   }
 
   /**
@@ -170,7 +170,7 @@ class ShallowNestedTopology {
    * @returns {NestedNode} Found node.
    */
   findNodeByPath(path) {
-    return this.nodes.find(d => d.path === path)
+    return this.nodes.find((d) => d.path === path)
   }
 
   /**
@@ -179,7 +179,7 @@ class ShallowNestedTopology {
    * @returns {Array<NestedNode>} Node objects.
    */
   mapPathsToNodes(paths) {
-    return paths.map(path => this.findNodeByPath(path))
+    return paths.map((path) => this.findNodeByPath(path))
   }
 
   /**
@@ -203,7 +203,7 @@ class ShallowNestedTopology {
    * @private
    */
   _singleParentChildNodePaths(node) {
-    return node.childNodePaths().filter(path => {
+    return node.childNodePaths().filter((path) => {
       const childNode = this.findNodeByPath(path)
       return childNode.numberOfParentNodes() === 1
     })
@@ -461,7 +461,7 @@ class ShallowNestedTopology {
    * @private
    */
   _heightByChildNodes(childrenWHList) {
-    const maxChildHeight = Math.max(...childrenWHList.map(d => d.height))
+    const maxChildHeight = Math.max(...childrenWHList.map((d) => d.height))
     return this._heightByTp() + maxChildHeight + this.nodeYPad
   }
 
@@ -530,7 +530,7 @@ class ShallowNestedTopology {
    * @private
    */
   _operativeNodes() {
-    return this.nodes.filter(node => node.operative)
+    return this.nodes.filter((node) => node.operative)
   }
 
   /**
@@ -539,7 +539,7 @@ class ShallowNestedTopology {
    * @private
    */
   _inoperativeNodes() {
-    return this.nodes.filter(node => !node.operative)
+    return this.nodes.filter((node) => !node.operative)
   }
 
   /**
@@ -549,7 +549,7 @@ class ShallowNestedTopology {
    * @private
    */
   _operativeLinksIn(operativeNodes) {
-    return this.links.filter(link => link.availableIn(operativeNodes))
+    return this.links.filter((link) => link.availableIn(operativeNodes))
   }
 
   /**
@@ -560,10 +560,10 @@ class ShallowNestedTopology {
    */
   _makeSupportTpLinks(operativeNodes) {
     const supportTpLinks = []
-    for (const tp of operativeNodes.filter(d => d.isTp())) {
+    for (const tp of operativeNodes.filter((d) => d.isTp())) {
       // check tp path is available in _operativeNodes?
       for (const childTpPath of tp.childTpPaths()) {
-        const childTp = operativeNodes.find(d => d.path === childTpPath)
+        const childTp = operativeNodes.find((d) => d.path === childTpPath)
         if (!childTp) {
           continue
         }

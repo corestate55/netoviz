@@ -75,7 +75,7 @@ class RfcL2TermPointAttribute extends RfcModelBase {
     this.vlanIdName = []
     const vlanIdList = data['vlan-id-name'] || data.vlanIdName
     if (vlanIdList) {
-      this.vlanIdName = vlanIdList.map(d => new RfcL2VlanIdName(d))
+      this.vlanIdName = vlanIdList.map((d) => new RfcL2VlanIdName(d))
     }
     /** @type {string} */
     this.tpState = data['tp-state'] || data.tpState || 'others'
@@ -88,7 +88,7 @@ class RfcL2TermPointAttribute extends RfcModelBase {
    * @public
    */
   toHtml() {
-    const portIdNameStr = this.vlanIdName.map(d => `<li>${d.toHtml()}</li>`)
+    const portIdNameStr = this.vlanIdName.map((d) => `<li>${d.toHtml()}</li>`)
     return `
 <ul>
   <li><span class="attr">Description:</span> ${this.description}</li>

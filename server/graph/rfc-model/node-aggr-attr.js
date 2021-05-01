@@ -37,7 +37,7 @@ class AggregatedNodeAttribute extends RfcModelBase {
    */
   _aggregatesNodeStr() {
     return this.aggregates
-      .map(d => {
+      .map((d) => {
         const nameAttr = `data-name="${d.name}"`
         const pathAttr = `data-path="${d.path}"`
         return `<li><a ${nameAttr} ${pathAttr}>${d.name}</a></li>`

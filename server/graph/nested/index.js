@@ -10,7 +10,7 @@ import AggregatedTopology from './aggregated-topology'
  * @param {NestedGraphQuery} graphQuery - Dictionary of get request properties.
  * @returns {NestedTopologyData} Graph data for nested view.
  */
-const toNestedTopologyData = graphQuery => {
+const toNestedTopologyData = (graphQuery) => {
   const nestedTopology = graphQuery.aggregate
     ? new AggregatedTopology(graphQuery)
     : new DeepNestedTopology(graphQuery)

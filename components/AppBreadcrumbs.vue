@@ -14,7 +14,7 @@ export default {
   computed: {
     items() {
       let currentPath = ''
-      const pathTexts = ['index'].concat(this.path.split('/').filter(d => d))
+      const pathTexts = ['index'].concat(this.path.split('/').filter((d) => d))
       const crumbs = [
         this.makeCrumb(pathTexts[0], currentPath, pathTexts.length - 1 === 0)
       ]

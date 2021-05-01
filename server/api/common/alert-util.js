@@ -4,7 +4,7 @@
  * @returns {AlertRow}
  * @protected
  */
-export const splitAlertHost = alertHost => {
+export const splitAlertHost = (alertHost) => {
   const paths = String(alertHost).split('__')
   switch (paths.length) {
     case 2: // layer__host

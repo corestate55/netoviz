@@ -185,7 +185,7 @@ class RESTIntegrator extends APIBase {
     const reverseKey = reverse ? 'reverse' : 'standard'
     baseLayoutData[reverseKey].grid = layoutData
     const layoutDataString = JSON.stringify(baseLayoutData, null, 2) // pretty print
-    fs.writeFile(cacheLayoutJsonPath, layoutDataString, 'utf8', error => {
+    fs.writeFile(cacheLayoutJsonPath, layoutDataString, 'utf8', (error) => {
       if (error) {
         throw error
       }

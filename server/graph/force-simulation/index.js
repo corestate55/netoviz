@@ -9,7 +9,7 @@ import ForceSimulationTopology from './topology'
  * @param {RfcTopologyData} rfcTopologyData RFC8345 topology data.
  * @returns {ForceSimulationTopologyData} Graph data for topology view.
  */
-const toForceSimulationTopologyData = rfcTopologyData => {
+const toForceSimulationTopologyData = (rfcTopologyData) => {
   const topologyData = new ForceSimulationTopology(rfcTopologyData)
   return topologyData.toData()
 }

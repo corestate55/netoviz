@@ -75,7 +75,7 @@ class RfcNetworkTypes extends RfcModelBase {
    * @public
    */
   hasType(type) {
-    return Boolean(this.types && this.types.find(d => d === type))
+    return Boolean(this.types && this.types.find((d) => d === type))
   }
 }
 
@@ -116,7 +116,7 @@ class RfcNetwork extends RfcModelBase {
     this.supportingNetworks = []
     if (data['supporting-network']) {
       this.supportingNetworks = data['supporting-network'].map(
-        d => new RfcSupportingNetwork(d)
+        (d) => new RfcSupportingNetwork(d)
       )
     }
   }
@@ -127,7 +127,7 @@ class RfcNetwork extends RfcModelBase {
    * @private
    */
   _makeGraphNodesAsNode() {
-    return this.nodes.map(node => node.graphNode())
+    return this.nodes.map((node) => node.graphNode())
   }
 
   /**
@@ -136,8 +136,8 @@ class RfcNetwork extends RfcModelBase {
    * @private
    */
   _makeGraphNodesAsTp() {
-    const tps = this.nodes.map(node => {
-      return node.termPoints.map(tp => tp.graphNode())
+    const tps = this.nodes.map((node) => {
+      return node.termPoints.map((tp) => tp.graphNode())
     })
     return this.flatten(tps)
   }
@@ -188,7 +188,7 @@ class RfcNetwork extends RfcModelBase {
     this.links = []
     const linkKey = 'ietf-network-topology:link' // alias
     if (data[linkKey]) {
-      this.links = data[linkKey].map(d => {
+      this.links = data[linkKey].map((d) => {
         return this.newLink(d)
       })
     }
@@ -210,9 +210,9 @@ class RfcNetwork extends RfcModelBase {
    * @public
    */
   makeGraphLinks() {
-    const links = this.links.map(link => link.graphLink())
-    const linksNodeTp = this.nodes.map(node => {
-      return node.termPoints.map(tp => tp.graphLink())
+    const links = this.links.map((link) => link.graphLink())
+    const linksNodeTp = this.nodes.map((node) => {
+      return node.termPoints.map((tp) => tp.graphLink())
     })
     return this.flatten([links, this.flatten(linksNodeTp)])
   }

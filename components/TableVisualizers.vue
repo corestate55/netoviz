@@ -47,10 +47,10 @@ export default {
       if (!this.modelFile) {
         return true
       }
-      return this.modelFiles.find(m => m.file === this.modelFile)
+      return this.modelFiles.find((m) => m.file === this.modelFile)
     },
     visualizerData() {
-      return this.visualizers.map(v => ({
+      return this.visualizers.map((v) => ({
         text: v.text,
         link: this.modelFile
           ? `/model/${this.modelFile}/${v.value}`

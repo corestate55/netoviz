@@ -37,7 +37,7 @@ class DeepNestedTopology extends ShallowNestedTopology {
    * @override
    */
   setNodes() {
-    this.setNodesAs(node => new DeepNestedNode(node, this.reverse))
+    this.setNodesAs((node) => new DeepNestedNode(node, this.reverse))
   }
 
   /**
@@ -116,7 +116,7 @@ class DeepNestedTopology extends ShallowNestedTopology {
     if (this._inTargetDepth(layerOrder) || !this._overDepth(layerOrder)) {
       return node.childNodePaths()
     }
-    return node.childNodePaths().filter(childNodePath => {
+    return node.childNodePaths().filter((childNodePath) => {
       const childNode = this.findNodeByPath(childNodePath)
       // select family of target, from root (parent) until child of target:
       // root(parent)-...-parent-target-child <-select ignore-> -child-...-child

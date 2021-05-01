@@ -24,9 +24,9 @@ class AggregatedTopology extends DeepNestedTopology {
    */
   _replaceChildrenByAggregatedNode(targetNode, childNodes, aggregatedNode) {
     // remove targetNodes from targetNode.children
-    const targetNodePaths = childNodes.map(d => d.path)
+    const targetNodePaths = childNodes.map((d) => d.path)
     targetNode.children = targetNode.children.filter(
-      path => !targetNodePaths.includes(path)
+      (path) => !targetNodePaths.includes(path)
     )
     // add aggregatedNode instead of targetNodes
     targetNode.children.push(aggregatedNode.path)
@@ -58,7 +58,7 @@ class AggregatedTopology extends DeepNestedTopology {
    */
   _makeAggregateNode(targetNode, childNodes, combinedClassifier) {
     const name = this._aggregatedNodeName(targetNode, combinedClassifier)
-    const makeFamily = family => {
+    const makeFamily = (family) => {
       // pseudo FamilyRelation instance (omit .degree)
       return family ? { relation: family } : null
     }
@@ -97,7 +97,7 @@ class AggregatedTopology extends DeepNestedTopology {
    * @private
    */
   _uniqLayerPaths(nodes) {
-    return Array.from(new Set(nodes.map(d => d.layerPath())))
+    return Array.from(new Set(nodes.map((d) => d.layerPath())))
   }
 
   /**
@@ -134,10 +134,11 @@ class AggregatedTopology extends DeepNestedTopology {
    * @private
    */
   _makeFamilyClassifiers() {
-    const familyClassifierCB1 = family => d => d?.family?.relation === family
-    const familyClassifierCB2 = d => !d?.family?.relation
+    const familyClassifierCB1 = (family) => (d) =>
+      d?.family?.relation === family
+    const familyClassifierCB2 = (d) => !d?.family?.relation
 
-    return ['parents', 'children', 'target', null].map(family => {
+    return ['parents', 'children', 'target', null].map((family) => {
       // partial application for each family to get family-classifier-callback
       return family
         ? this._familyClassifier(family, familyClassifierCB1(family))
@@ -169,9 +170,9 @@ class AggregatedTopology extends DeepNestedTopology {
    * @private
    */
   _makeLayerClassifiers(layerPaths) {
-    const layerClassifierCB = layerPath => d => d.layerPath() === layerPath
+    const layerClassifierCB = (layerPath) => (d) => d.layerPath() === layerPath
     // partial application for each layerPath to get layer-classifier-callback
-    return layerPaths.map(layerPath =>
+    return layerPaths.map((layerPath) =>
       this._layerClassifier(layerPath, layerClassifierCB(layerPath))
     )
   }
@@ -189,7 +190,7 @@ class AggregatedTopology extends DeepNestedTopology {
     // ex) classifiers1 = [c11, c12], classifiers2 = [c21, c22]
     // => return [[c11, c21], [c11, c22], [c12, c21], [c12, c22]]
     return classifiers1
-      .map(c1 => classifiers2.map(c2 => [c1, c2])) // make product set
+      .map((c1) => classifiers2.map((c2) => [c1, c2])) // make product set
       .reduce((acc, classifier) => [...acc, ...classifier], []) // flatten
   }
 
@@ -215,12 +216,12 @@ class AggregatedTopology extends DeepNestedTopology {
      */
     // merge param
     const combinedClassifier = {}
-    classifiers.forEach(classifier => {
+    classifiers.forEach((classifier) => {
       combinedClassifier[classifier.param] = classifier[classifier.param]
     })
     // combine classifier functions
     combinedClassifier.callback = classifiers.reduce(
-      (acc, classifier) => d => classifier.callback(d) && acc(d),
+      (acc, classifier) => (d) => classifier.callback(d) && acc(d),
       () => true
     )
     return combinedClassifier
@@ -240,7 +241,7 @@ class AggregatedTopology extends DeepNestedTopology {
       this._makeFamilyClassifiers(),
       this._makeLayerClassifiers(childrenLayerPaths)
     )
-    return classifierCombinations.map(classifiers =>
+    return classifierCombinations.map((classifiers) =>
       this._combinedClassifier(classifiers)
     )
   }
@@ -282,7 +283,7 @@ class AggregatedTopology extends DeepNestedTopology {
     }
     // Append aggregated nodes to nodes (node list)
     this.nodes = this.nodes.concat(aggregatedNodes)
-    const path = d => d.path
+    const path = (d) => d.path
     return passNodes.map(path).concat(aggregatedNodes.map(path))
   }
 

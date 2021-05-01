@@ -152,7 +152,7 @@ export default {
     this.updateAlerts() // initial data
     this.setAlertCheckTimer()
     this.unwatchAlertHost = this.$store.watch(
-      state => state.alert.alertHost,
+      (state) => state.alert.alertHost,
       (newValue, oldValue) => {
         this.alertHostInput = newValue
       }

@@ -46,7 +46,7 @@ class FamilyMaker extends RelationMakerBase {
    * @private
    */
   _findNodeByPath(path) {
-    return this.nodes.find(d => d.path === path)
+    return this.nodes.find((d) => d.path === path)
   }
 
   /**

@@ -29,7 +29,7 @@ class AggregatedNestedNode extends DeepNestedNode {
   _aggregateWith(aggregateNodes) {
     /** @type {AggregatedNodeAttribute} */
     this.attribute = new AggregatedNodeAttribute({
-      aggregates: aggregateNodes.map(node => ({
+      aggregates: aggregateNodes.map((node) => ({
         name: node.name,
         path: node.path
       }))

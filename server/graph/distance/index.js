@@ -9,7 +9,7 @@ import DistanceTopology from './topology'
  * @param {DistanceGraphQuery} graphQuery - Graph query.
  * @returns {DistanceTopologyData} - Distance graph data.
  */
-const toDistanceTopologyData = graphQuery => {
+const toDistanceTopologyData = (graphQuery) => {
   const distanceTopology = new DistanceTopology(graphQuery)
   return distanceTopology.toData()
 }

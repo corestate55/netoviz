@@ -21,7 +21,7 @@ class ForceSimulationTopology extends BaseContainer {
     this.rfcTopology = new RfcTopology(rfcTopologyData)
     /** @type {Array<ForceSimulationNetwork>} */
     this.networks = this.rfcTopology.networks.map(
-      nw => new ForceSimulationNetwork(nw)
+      (nw) => new ForceSimulationNetwork(nw)
     )
     /** @type {Array<ForceSimulationNode>} */
     this.nodes = this._makeNodes()
@@ -35,7 +35,7 @@ class ForceSimulationTopology extends BaseContainer {
    * @private
    */
   _makeNodes() {
-    const nodesOfLayers = this.networks.map(nw => nw.nodes)
+    const nodesOfLayers = this.networks.map((nw) => nw.nodes)
     return this.flatten(nodesOfLayers)
   }
 
@@ -46,7 +46,7 @@ class ForceSimulationTopology extends BaseContainer {
    * @private
    */
   _findNodeByPath(path) {
-    return this.nodes.find(d => d.path === path)
+    return this.nodes.find((d) => d.path === path)
   }
 
   /**

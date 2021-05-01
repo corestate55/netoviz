@@ -54,7 +54,7 @@ export default {
       return v.text
     },
     modelData() {
-      return this.modelFiles.map(m => ({
+      return this.modelFiles.map((m) => ({
         text: m.label,
         link: this.visualizer
           ? `/visualizer/${this.visualizer}/${m.file}`
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     findVisualizerByValue() {
-      return this.visualizers.find(v => v.value === this.visualizer)
+      return this.visualizers.find((v) => v.value === this.visualizer)
     }
   }
 }

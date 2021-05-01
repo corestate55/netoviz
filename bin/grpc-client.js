@@ -43,7 +43,7 @@ function getGraphData() {
       '## Graph name: ',
       response.getGraphName(),
       Object.keys(messages.GraphName).find(
-        k => messages.GraphName[k] === response.getGraphName()
+        (k) => messages.GraphName[k] === response.getGraphName()
       )
     )
     console.log('## Json name: ', response.getModelFile())
@@ -68,7 +68,7 @@ function getAlerts() {
       process.exit(1)
     }
     console.log('# Receive response:')
-    response.getAlertsList().forEach(d => {
+    response.getAlertsList().forEach((d) => {
       // const str = [
       //   `i=${d.getId()}`,
       //   `h=${d.getHost()}`,

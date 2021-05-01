@@ -9,7 +9,7 @@ import DependencyTopology from './topology'
  * @param {DependencyGraphQuery} graphQuery - Dictionary of get request properties.
  * @returns {DependencyTopologyData}
  */
-const toDependencyTopologyData = graphQuery => {
+const toDependencyTopologyData = (graphQuery) => {
   const dependencyTopology = new DependencyTopology(graphQuery)
   return dependencyTopology.toData()
 }

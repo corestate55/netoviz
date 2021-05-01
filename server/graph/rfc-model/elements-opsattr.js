@@ -21,7 +21,7 @@ class OpsAttributeBase {
 
   toHtml() {
     const list = Object.keys(this.attrBody).map(
-      k => `<li><span class="attr">${k}:</span> ${this.attrBody[k]}</li>`
+      (k) => `<li><span class="attr">${k}:</span> ${this.attrBody[k]}</li>`
     )
     return `<ul>${list.join('')}</ul>`
   }

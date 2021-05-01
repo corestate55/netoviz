@@ -8,7 +8,7 @@ const getGraphData = (call, callback) => {
   console.log('# reply to: ', request.toObject())
   const graphNameValue = request.getGraphName()
   const graphNameKey = Object.keys(messages.GraphName).find(
-    k => messages.GraphName[k] === graphNameValue
+    (k) => messages.GraphName[k] === graphNameValue
   )
   console.log(`## graph: ${graphNameKey} : ${graphNameValue}`)
 
@@ -28,7 +28,7 @@ const getAlerts = (call, callback) => {
     [10, 'aaa', 'error', '2020-04-20', 'msg1', 'xx', 'jj'],
     [11, 'bbb', 'warning', '2020-04-20', 'msg2', 'xx', 'jj']
   ]
-  reply.setAlertsList(alerts.map(d => new messages.Alert(d)))
+  reply.setAlertsList(alerts.map((d) => new messages.Alert(d)))
   callback(null, reply)
 }
 

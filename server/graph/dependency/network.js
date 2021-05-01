@@ -85,13 +85,13 @@ class DependencyNetwork {
     let nx = this.x + this.c.nodeXPad1
     const termPoints = this._findAllTermPointsFrom(networkData)
     for (const nodes of this._findAllNodesFrom(networkData)) {
-      const node = new DependencyNode(nodes, nodeData => {
-        return nodeData.parents.filter(parentPath => {
+      const node = new DependencyNode(nodes, (nodeData) => {
+        return nodeData.parents.filter((parentPath) => {
           // With family-filtered dependency graph,
           // term-points of child node (of the target node) is ignored.
           // Because these term-points are 'parents of child of the target,
           // so these are not under children-tree.
-          return termPoints.find(tp => tp.path === parentPath)
+          return termPoints.find((tp) => tp.path === parentPath)
         })
       })
       node.setPosition(nx, this.y + this.c.nodeYPad1)
@@ -107,7 +107,7 @@ class DependencyNetwork {
    * @private
    */
   _findNodeByPath(path) {
-    return this.nodes.find(node => node.path === path)
+    return this.nodes.find((node) => node.path === path)
   }
 
   /**
@@ -152,7 +152,7 @@ class DependencyNetwork {
    * @private
    */
   _findAllNodesFrom(networkData) {
-    return networkData.nodes.filter(d => this._isType(d, 'node'))
+    return networkData.nodes.filter((d) => this._isType(d, 'node'))
   }
 
   /**
@@ -162,7 +162,7 @@ class DependencyNetwork {
    * @private
    */
   _findAllTermPointsFrom(networkData) {
-    return networkData.nodes.filter(d => this._isType(d, 'tp'))
+    return networkData.nodes.filter((d) => this._isType(d, 'tp'))
   }
 
   /**
@@ -188,8 +188,8 @@ class DependencyNetwork {
       height: this._layerHeight(),
       name: this.name,
       path: this.path,
-      nodes: this.nodes.map(node => node.toData()),
-      tps: this.termPoints.map(tp => tp.toData())
+      nodes: this.nodes.map((node) => node.toData()),
+      tps: this.termPoints.map((tp) => tp.toData())
     }
   }
 }

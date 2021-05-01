@@ -32,7 +32,7 @@ class DeepNestedNode extends ShallowNestedNode {
     // operation for parent node of multiple-parents node
     // (change child info)
     this.children = this.children
-      .filter(d => d !== oldChildPath)
+      .filter((d) => d !== oldChildPath)
       .concat(newChildPath)
   }
 
@@ -59,7 +59,7 @@ class DeepNestedNode extends ShallowNestedNode {
     splitNode.children = this.children
     splitNode.parents = [parentPath]
     // delete and ignore tp path
-    this.parents = this.parentNodePaths().filter(d => d !== parentPath)
+    this.parents = this.parentNodePaths().filter((d) => d !== parentPath)
 
     return splitNode
   }

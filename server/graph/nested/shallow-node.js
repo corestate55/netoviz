@@ -200,7 +200,7 @@ class ShallowNestedNode {
    * @public
    */
   filterTpPath(paths) {
-    return paths.filter(path => this.matchTpPath(path))
+    return paths.filter((path) => this.matchTpPath(path))
   }
 
   /**
@@ -210,7 +210,7 @@ class ShallowNestedNode {
    * @public
    */
   filterNodePath(paths) {
-    return paths.filter(path => this.matchNodePath(path))
+    return paths.filter((path) => this.matchNodePath(path))
   }
 
   /**

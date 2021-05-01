@@ -75,7 +75,7 @@ class AlertTable {
    * @public
    */
   addAlert(alertData) {
-    db.alert.create(new Alert(alertData)).then(instance => {
+    db.alert.create(new Alert(alertData)).then((instance) => {
       console.log('create instance: ', instance.dataValues)
     })
   }
@@ -92,7 +92,7 @@ class AlertTable {
       order: [['id', 'DESC']]
     }
     const alerts = await db.alert.findAll(opts)
-    return alerts.map(d => new Alert(d.dataValues))
+    return alerts.map((d) => new Alert(d.dataValues))
   }
 
   /**
@@ -103,7 +103,7 @@ class AlertTable {
   async allAlerts() {
     const opts = { order: [['id', 'DESC']] }
     const alerts = await db.alert.findAll(opts)
-    return alerts.map(d => new Alert(d.dataValues))
+    return alerts.map((d) => new Alert(d.dataValues))
   }
 }
 

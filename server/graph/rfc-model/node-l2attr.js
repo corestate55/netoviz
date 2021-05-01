@@ -48,7 +48,7 @@ class RfcL2NodeAttribute extends RfcModelBase {
    * @public
    */
   toHtml() {
-    const mgmtIpStr = this.mgmtAddr.map(d => `<li>${d}</li>`)
+    const mgmtIpStr = this.mgmtAddr.map((d) => `<li>${d}</li>`)
     return `
 <ul>
   <li><span class="attr">Name:</span> ${this.name}</li>

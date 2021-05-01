@@ -37,14 +37,14 @@ const collectWebpackConfigs = async () => {
   return customBuilder.bundleBuilder.compilerMap
 }
 
-const makeWebpackConfigName = postFix =>
+const makeWebpackConfigName = (postFix) =>
   path.join(__dirname, 'webpack.config.' + postFix + '.js')
 const outputConfigurationAsFile = ({ name, options }) => {
   const webpackFilePath = makeWebpackConfigName(name)
   const content = 'module.exports = ' + JSON.stringify(options)
   fs.writeFileSync(webpackFilePath, content)
 }
-const processWebpackCompilerMap = webpackCompilerMap => {
+const processWebpackCompilerMap = (webpackCompilerMap) => {
   Object.entries(webpackCompilerMap).forEach(([name, compiler]) => {
     outputConfigurationAsFile({ name, options: compiler.options })
   })

@@ -49,14 +49,14 @@ export default {
       return new ForceSimulationDiagramVisualizer(this.apiParam)
     },
     afterMakeVisualizer() {
-      const getLayerNames = graphs => {
+      const getLayerNames = (graphs) => {
         // When the visualizer draws force-simulation diagram,
         // vue doesn't wait SVG DOM rendering and run next setLayerDisplayStyle().
         // so, these setLayerDisplayStyle() could not found target layer container
         // WORKAROUND :
         //   FORCE to select all layers
         //   to avoid mismatch between UI (layer selector) and Graph.
-        this.wholeLayers = graphs.map(layer => layer.name)
+        this.wholeLayers = graphs.map((layer) => layer.name)
       }
       this.visualizer.setUISideDrawRfcTopologyHook(getLayerNames)
     },

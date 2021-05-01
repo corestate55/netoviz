@@ -70,7 +70,7 @@ class RfcL3NodeAttribute extends RfcModelBase {
     /** @type {Array<RfcL3Prefix>} */
     this.prefix = [] // array
     if (data.prefix) {
-      this.prefix = data.prefix.map(d => new RfcL3Prefix(d))
+      this.prefix = data.prefix.map((d) => new RfcL3Prefix(d))
     }
   }
 
@@ -95,7 +95,7 @@ class RfcL3NodeAttribute extends RfcModelBase {
    * @public
    */
   toHtml() {
-    const prefixList = this.prefix.map(d => {
+    const prefixList = this.prefix.map((d) => {
       return ['<li>', d.toHtml(), '</li>'].join('')
     })
     return `

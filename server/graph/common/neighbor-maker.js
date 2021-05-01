@@ -81,7 +81,7 @@ class NeighborMaker extends RelationMakerBase {
    */
   _findAllTpTpLinksInLayerOf(targetNode) {
     const layer = targetNode.layerPath()
-    return this.links.filter(d => d.isTypeTpTp() && d.isInLayer(layer))
+    return this.links.filter((d) => d.isTypeTpTp() && d.isInLayer(layer))
   }
 
   /**
@@ -106,7 +106,7 @@ class NeighborMaker extends RelationMakerBase {
     this.consoleDebug(
       degree,
       '_markNeighbor',
-      `targetLinks: ${targetLinks.map(d => d.path)}`
+      `targetLinks: ${targetLinks.map((d) => d.path)}`
     )
     for (const targetLink of targetLinks) {
       const dstNode = this._findNodeByPath(targetLink.targetNodePath)
@@ -132,7 +132,7 @@ class NeighborMaker extends RelationMakerBase {
     this.consoleDebug(
       degree,
       '_markNeighbor',
-      `nextSrcNodes=${nextSrcNodes.map(d => d.path)}`
+      `nextSrcNodes=${nextSrcNodes.map((d) => d.path)}`
     )
     degree += 1
     for (const nextSrcNode of nextSrcNodes) {
@@ -152,7 +152,7 @@ class NeighborMaker extends RelationMakerBase {
    * @private
    */
   _findNodeByPath(path) {
-    return this.nodes.find(d => d.path === path)
+    return this.nodes.find((d) => d.path === path)
   }
 
   /**
@@ -163,7 +163,7 @@ class NeighborMaker extends RelationMakerBase {
    * @private
    */
   _findAllLinksWithoutOrigin(links, target) {
-    return links.filter(d => !d.isConnectingNode(target.path))
+    return links.filter((d) => !d.isConnectingNode(target.path))
   }
 
   /**
@@ -174,7 +174,7 @@ class NeighborMaker extends RelationMakerBase {
    * @private
    */
   _findAllLinksWithOrigin(links, target) {
-    return links.filter(d => d.sourceNodePath === target.path)
+    return links.filter((d) => d.sourceNodePath === target.path)
   }
 }
 

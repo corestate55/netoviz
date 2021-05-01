@@ -104,7 +104,7 @@ class RfcNode extends RfcModelBase {
     this.supportingNodes = []
     if (data['supporting-node']) {
       this.supportingNodes = data['supporting-node'].map(
-        d => new RfcSupportingNode(d)
+        (d) => new RfcSupportingNode(d)
       )
     }
   }
@@ -116,7 +116,7 @@ class RfcNode extends RfcModelBase {
    * @public
    */
   findTpByPath(path) {
-    return this.termPoints.find(d => d.path === path)
+    return this.termPoints.find((d) => d.path === path)
   }
 
   /**
@@ -125,7 +125,7 @@ class RfcNode extends RfcModelBase {
    * @private
    */
   _makeChildren() {
-    return this.supportingNodes.map(sn => sn.refPath)
+    return this.supportingNodes.map((sn) => sn.refPath)
   }
 
   /**

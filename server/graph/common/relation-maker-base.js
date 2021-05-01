@@ -48,7 +48,7 @@ class RelationMakerBase {
     // it always find a node in lowest layer.
     return this.nodes
       .sort((a, b) => b.id - a.id)
-      .find(d => d.type === 'node' && d.name === name)
+      .find((d) => d.type === 'node' && d.name === name)
   }
 
   /**
@@ -58,7 +58,7 @@ class RelationMakerBase {
    * @protected
    */
   findTargetNodeByPath(path) {
-    return this.nodes.find(d => d.path === path)
+    return this.nodes.find((d) => d.path === path)
   }
 
   /**

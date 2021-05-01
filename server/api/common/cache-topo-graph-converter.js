@@ -57,7 +57,7 @@ class CacheRfcTopologyDataConverter {
       // this function is called after checking operative cache existence (_foundOperativeCache())
       // exception in readFile() for cache json means error in json (contents).
       console.error('Error: cannot read cache: ', this._cacheJsonPath)
-      fs.unlink(this._cacheJsonPath, error => {
+      fs.unlink(this._cacheJsonPath, (error) => {
         if (error) {
           throw error
         }
@@ -91,7 +91,7 @@ class CacheRfcTopologyDataConverter {
    */
   _writeCache(jsonString) {
     console.log('create cache: ', this._cacheJsonPath)
-    fs.writeFile(this._cacheJsonPath, jsonString, 'utf8', error => {
+    fs.writeFile(this._cacheJsonPath, jsonString, 'utf8', (error) => {
       if (error) {
         console.error('Error: cannot write cache file: ', this._cacheJsonPath)
         throw error

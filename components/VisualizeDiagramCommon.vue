@@ -28,7 +28,7 @@ export default {
       }
     },
     isLarge() {
-      return !!['lg', 'xl'].find(d => d === this.$vuetify.breakpoint.name)
+      return !!['lg', 'xl'].find((d) => d === this.$vuetify.breakpoint.name)
     },
     svgWidth() {
       const factor = (this.isLarge ? 8 / 12 : 1.0) * 0.95
@@ -67,7 +67,7 @@ export default {
 
     // set watcher for store change
     this.unwatchalertHost = this.$store.watch(
-      state => state.alert.alertHost,
+      (state) => state.alert.alertHost,
       this.watchAlertHost
     )
   },

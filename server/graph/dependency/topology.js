@@ -29,7 +29,7 @@ class DependencyTopology {
    */
   _markFamilyWithTarget(topologyData, target) {
     const nodes = topologyData
-      .map(network => network.nodes)
+      .map((network) => network.nodes)
       .reduce((sum, nodes) => sum.concat(nodes), [])
     return markFamilyWithTarget(nodes, target)
   }
@@ -54,7 +54,7 @@ class DependencyTopology {
     /**
      * @typedef {Array<DependencyNetworkData>} DependencyTopologyData
      */
-    return this.networks.map(network => network.toData())
+    return this.networks.map((network) => network.toData())
   }
 }
 

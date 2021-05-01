@@ -83,10 +83,10 @@ export default {
   computed: {
     ...mapState(['modelFiles', 'visualizers']),
     validVisualizer() {
-      return this.visualizers.find(v => v.value === this.visualizer)
+      return this.visualizers.find((v) => v.value === this.visualizer)
     },
     validModelFile() {
-      return this.modelFiles.find(m => m.file === this.modelFile)
+      return this.modelFiles.find((m) => m.file === this.modelFile)
     }
   }
 }

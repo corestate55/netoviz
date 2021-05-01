@@ -23,7 +23,7 @@ export default {
   computed: {
     notSelectedLayers() {
       return this.wholeLayers.filter(
-        layer => !this.selectedLayers.includes(layer)
+        (layer) => !this.selectedLayers.includes(layer)
       )
     }
   },

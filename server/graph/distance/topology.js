@@ -18,11 +18,11 @@ class DistanceTopology {
     const networks = graphQuery.topologyData
     /** @type {Array<DistanceNode>} */
     this.nodes = this._correctArrays(networks, 'nodes').map(
-      d => new DistanceNode(d)
+      (d) => new DistanceNode(d)
     )
     /** @type {Array<DistanceLink>} */
     this.links = this._correctArrays(networks, 'links').map(
-      d => new DistanceLink(d)
+      (d) => new DistanceLink(d)
     )
 
     /**
@@ -57,7 +57,7 @@ class DistanceTopology {
    */
   _correctArrays(networks, attribute) {
     return networks
-      .map(nw => nw[attribute])
+      .map((nw) => nw[attribute])
       .reduce((sum, arr) => sum.concat(arr), [])
   }
 
@@ -109,17 +109,17 @@ class DistanceTopology {
   _makeNodeLayout() {
     const nodes = this.nodes.filter(
       // markFamily marked tp-type node. filter it.
-      d => d.hasTargetRelation() && d.isTypeNode()
+      (d) => d.hasTargetRelation() && d.isTypeNode()
     )
-    const maxDistance = Math.max(...nodes.map(d => d.distance()))
+    const maxDistance = Math.max(...nodes.map((d) => d.distance()))
     const layouts = []
-    const round = value => {
+    const round = (value) => {
       const k = 1000
       return Math.floor(value * k) / k
     }
 
     for (let di = 0; di <= maxDistance; di++) {
-      const diNodes = nodes.filter(d => d.distance() === di)
+      const diNodes = nodes.filter((d) => d.distance() === di)
       const count = diNodes.length
       const diR = this._distanceCircleRadius(di, layouts, count)
       /**
@@ -154,7 +154,7 @@ class DistanceTopology {
    */
   _nodesInLayouts(layouts) {
     return layouts
-      .map(layout => layout.nodes)
+      .map((layout) => layout.nodes)
       .reduce((sum, n) => sum.concat(n), [])
   }
 
@@ -170,7 +170,7 @@ class DistanceTopology {
 
     for (const node of nodes) {
       for (const supportPath of node.children) {
-        if (!nodes.find(d => d.path === supportPath)) {
+        if (!nodes.find((d) => d.path === supportPath)) {
           continue
         }
         const supportName = supportPath.split('__').slice(1)
@@ -197,18 +197,18 @@ class DistanceTopology {
    */
   _makeLinks(layouts) {
     const nodes = this._nodesInLayouts(layouts)
-    const baseLinks = this.links.filter(d => d.isTypeTpTp())
+    const baseLinks = this.links.filter((d) => d.isTypeTpTp())
     const links = []
 
     for (const srcNode of nodes) {
       const linksFromSrcNode = baseLinks.filter(
-        l => l.sourceNodePath === srcNode.path
+        (l) => l.sourceNodePath === srcNode.path
       )
       for (const linkFromSrcNode of linksFromSrcNode) {
         if (
-          nodes.find(d => d.path === linkFromSrcNode.targetNodePath) &&
+          nodes.find((d) => d.path === linkFromSrcNode.targetNodePath) &&
           // limit single side (one of bi-directional link)
-          !links.find(l => l.isReverseLink(linkFromSrcNode))
+          !links.find((l) => l.isReverseLink(linkFromSrcNode))
         ) {
           links.push(linkFromSrcNode)
         }
