@@ -6,7 +6,6 @@ module.exports = {
     host: '0.0.0.0',
     port: process.env.PORT || process.env.NETOVIZ_WEB_LISTEN
   },
-  mode: 'universal',
   /*
    ** Headers of the page
    */
