@@ -327,13 +327,22 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "border01",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={:local_as=>65531, :global_as=>65530}",
+                "RR={}",
+                "network=[\"10.0.0.0/16\"]"
               ],
               "router-id": [
                 "10.0.0.1"
               ],
               "prefix": [
-
+                {
+                  "prefix": "10.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
               ]
             }
           },
@@ -395,13 +404,36 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "core01",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={:local_as=>65531, :global_as=>65530}",
+                "RR={:type=>:server, :cluster_id=>\"10.0.0.2\", :clients=>[\"10.0.0.4\"]}",
+                "network=[]"
               ],
               "router-id": [
                 "10.0.0.2"
               ],
               "prefix": [
-
+                {
+                  "prefix": "10.0.0.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "10.0.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "10.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
               ]
             }
           },
@@ -463,13 +495,29 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "core02",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={:local_as=>65531, :global_as=>65530}",
+                "RR={:type=>:server, :cluster_id=>\"10.0.0.3\", :clients=>[\"10.0.0.5\"]}",
+                "network=[]"
               ],
               "router-id": [
                 "10.0.0.3"
               ],
               "prefix": [
-
+                {
+                  "prefix": "10.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                },
+                {
+                  "prefix": "10.0.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
               ]
             }
           },
@@ -516,7 +564,10 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "border11",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={:local_as=>65531, :global_as=>65530}",
+                "RR={:type=>:client, :servers=>[\"10.0.0.2\"]}",
+                "network=[\"10.0.0.0/24\"]"
               ],
               "router-id": [
                 "10.0.0.4"
@@ -527,6 +578,13 @@
                   "metric": 0,
                   "flag": [
                     "bgp"
+                  ]
+                },
+                {
+                  "prefix": "10.0.0.0/16",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
                   ]
                 }
               ]
@@ -575,13 +633,22 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "border12",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={:local_as=>65531, :global_as=>65530}",
+                "RR={:type=>:client, :servers=>[\"10.0.0.3\"]}",
+                "network=[\"10.0.0.0/16\"]"
               ],
               "router-id": [
                 "10.0.0.5"
               ],
               "prefix": [
-
+                {
+                  "prefix": "10.0.1.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "ibgp"
+                  ]
+                }
               ]
             }
           },
@@ -628,7 +695,10 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "border21",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={:local_as=>65532, :global_as=>65530}",
+                "RR={}",
+                "network=[\"10.0.1.0/24\"]"
               ],
               "router-id": [
                 "10.0.1.0"
@@ -636,6 +706,13 @@
               "prefix": [
                 {
                   "prefix": "10.0.0.0/24",
+                  "metric": 0,
+                  "flag": [
+                    "bgp"
+                  ]
+                },
+                {
+                  "prefix": "10.0.0.0/16",
                   "metric": 0,
                   "flag": [
                     "bgp"
@@ -672,7 +749,10 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "as65533_10.0.0.17",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={}",
+                "RR={}",
+                "network=[]"
               ],
               "router-id": [
                 "as65533_10.0.0.17"
@@ -710,7 +790,10 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "as65534_10.0.0.45",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={}",
+                "RR={}",
+                "network=[]"
               ],
               "router-id": [
                 "as65534_10.0.0.45"
@@ -748,7 +831,10 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "as65534_10.0.1.13",
               "flag": [
-                "bgp-proc"
+                "bgp-proc",
+                "confederation={}",
+                "RR={}",
+                "network=[]"
               ],
               "router-id": [
                 "as65534_10.0.1.13"
@@ -1279,7 +1365,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.21/30"
+                    "area100:10.0.0.21/30"
                   ]
                 }
               },
@@ -1294,7 +1380,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.25/30"
+                    "area100:10.0.0.25/30"
                   ]
                 }
               }
@@ -1308,10 +1394,11 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "process_1",
               "flag": [
-                "ospf-proc"
+                "ospf-proc",
+                "areas=100"
               ],
               "router-id": [
-                ""
+                "10.0.0.1"
               ],
               "prefix": [
                 {
@@ -1415,7 +1502,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.41/30"
+                    "area10:10.0.0.41/30"
                   ]
                 }
               },
@@ -1430,7 +1517,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.34/30"
+                    "area10:10.0.0.34/30"
                   ]
                 }
               }
@@ -1444,10 +1531,11 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "process_1",
               "flag": [
-                "ospf-proc"
+                "ospf-proc",
+                "areas=10"
               ],
               "router-id": [
-                ""
+                "10.0.0.4"
               ],
               "prefix": [
                 {
@@ -1551,7 +1639,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.42/30"
+                    "area10:10.0.0.42/30"
                   ]
                 }
               },
@@ -1566,7 +1654,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.38/30"
+                    "area10:10.0.0.38/30"
                   ]
                 }
               }
@@ -1580,10 +1668,11 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "process_1",
               "flag": [
-                "ospf-proc"
+                "ospf-proc",
+                "areas=10"
               ],
               "router-id": [
-                ""
+                "10.0.0.5"
               ],
               "prefix": [
                 {
@@ -1687,7 +1776,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.29/30"
+                    "area0:10.0.0.29/30"
                   ]
                 }
               },
@@ -1702,7 +1791,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.22/30"
+                    "area100:10.0.0.22/30"
                   ]
                 }
               },
@@ -1717,7 +1806,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.33/30"
+                    "area10:10.0.0.33/30"
                   ]
                 }
               }
@@ -1731,10 +1820,11 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "process_1",
               "flag": [
-                "ospf-proc"
+                "ospf-proc",
+                "areas=0/10/100"
               ],
               "router-id": [
-                ""
+                "10.0.0.2"
               ],
               "prefix": [
                 {
@@ -1838,7 +1928,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.30/30"
+                    "area0:10.0.0.30/30"
                   ]
                 }
               },
@@ -1853,7 +1943,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.26/30"
+                    "area100:10.0.0.26/30"
                   ]
                 }
               },
@@ -1868,7 +1958,7 @@
                 ],
                 "ietf-l3-unicast-topology:l3-termination-point-attributes": {
                   "ip-address": [
-                    "10.0.0.37/30"
+                    "area10:10.0.0.37/30"
                   ]
                 }
               }
@@ -1882,10 +1972,11 @@
             "ietf-l3-unicast-topology:l3-node-attributes": {
               "name": "process_1",
               "flag": [
-                "ospf-proc"
+                "ospf-proc",
+                "areas=0/10/100"
               ],
               "router-id": [
-                ""
+                "10.0.0.3"
               ],
               "prefix": [
                 {
