@@ -3,17 +3,18 @@
  */
 
 import dotenv from 'dotenv'
-dotenv.config()
 import express from 'express'
 import consola from 'consola'
 import _nuxt from 'nuxt'
-const { Nuxt, Builder } = _nuxt
 import grpc from 'grpc'
 
 import config from '../nuxt.config.js'
 import restApiRouter from './api/rest'
 import grpcImplement from './api/grpc'
 import services from './api/grpc/topology-data_grpc_pb'
+
+dotenv.config()
+const { Nuxt, Builder } = _nuxt
 
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'

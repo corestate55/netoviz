@@ -138,9 +138,8 @@ class DeepNestedTopology extends ShallowNestedTopology {
    * @param {string} childNodePath
    */
   childNodeFrom(parentNode, childNodePath) {
-    const childNode = /** @type {DeepNestedNode} */ this.findNodeByPath(
-      childNodePath
-    )
+    const childNode =
+      /** @type {DeepNestedNode} */ this.findNodeByPath(childNodePath)
     if (!childNode) {
       console.error(`child ${childNodePath} not found in ${parentNode.path}`)
     }
