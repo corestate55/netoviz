@@ -8,9 +8,9 @@
     "node": ">=10.x"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server --exec babel-node",
+    "dev": "cross-env NODE_ENV=development nodemon server/index.mjs --watch server --exec \"babel-node --experimental-specifier-resolution=node\"",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production babel-node server/index.js",
+    "start": "cross-env NODE_ENV=production babel-node server/index.mjs",
     "generate": "nuxt generate",
     "format": "prettier --write '{components,layouts,lib,pages,server,store}/**/*.{js,vue}'",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",

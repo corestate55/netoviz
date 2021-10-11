@@ -2,16 +2,18 @@
  * @file netoviz server definition
  */
 
-require('dotenv').config()
-const express = require('express')
-const consola = require('consola')
-const { Nuxt, Builder } = require('nuxt')
-const grpc = require('grpc')
+import dotenv from 'dotenv'
+dotenv.config()
+import express from 'express'
+import consola from 'consola'
+import _nuxt from 'nuxt'
+const { Nuxt, Builder } = _nuxt
+import grpc from 'grpc'
 
-const config = require('../nuxt.config.js')
-const restApiRouter = require('./api/rest')
-const grpcImplement = require('./api/grpc')
-const services = require('./api/grpc/topology-data_grpc_pb')
+import config from '../nuxt.config.js'
+import restApiRouter from './api/rest'
+import grpcImplement from './api/grpc'
+import services from './api/grpc/topology-data_grpc_pb'
 
 // Import and Set Nuxt.js options
 config.dev = process.env.NODE_ENV !== 'production'

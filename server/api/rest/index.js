@@ -2,10 +2,10 @@
  * @file API definition of netoviz HTTP server.
  */
 
+import express from 'express'
 import AlertTable from '../common/alert-table'
 import RESTIntegrator from './integrator'
 
-const express = require('express')
 /**
  * Routing API class of Express server.
  * ({@link http://expressjs.com/en/guide/routing.html})
@@ -70,4 +70,4 @@ apiRouter.get('/graph/:graphName/:jsonName', async (req, res) => {
   res.send(await restApi.getGraphData(p.graphName, p.jsonName, req))
 })
 
-module.exports = apiRouter
+export default apiRouter

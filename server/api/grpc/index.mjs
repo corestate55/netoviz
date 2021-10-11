@@ -1,6 +1,6 @@
 import AlertTable from '../common/alert-table'
 import GRPCIntegrator from './integrator'
-const messages = require('./topology-data_pb')
+import messages from './topology-data_pb'
 
 /** @const {GRPCIntegrator} */
 const grpcApi = new GRPCIntegrator('static')
@@ -72,4 +72,4 @@ const getModels = async (call, callback) => {
   callback(null, reply)
 }
 
-module.exports = { getGraphData, getAlerts, getModels }
+export default { getGraphData, getAlerts, getModels }
