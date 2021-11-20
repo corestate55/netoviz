@@ -7,6 +7,12 @@
       placeholder="node OR layer__node"
       v-on:input="inputAlertHost"
     />
+    <div v-if="debug">
+      <ul>
+        <li>alert host input: {{ alertHostInput }}</li>
+        <li>alert host store: {{ alertHost }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -19,8 +25,27 @@ export default {
   data() {
     return {
       alertHostInput: '', // local state of alertHost
+      unwatchAlertHost: null,
       debug: false
     }
+  },
+  computed: {
+    alertHost: {
+      get() {
+        return this.$store.state.alert.alertHost
+      },
+      set(value) {
+        this.$store.commit('alert/setAlertHost', value)
+      }
+    }
+  },
+  mounted() {
+    this.unwatchAlertHost = this.$store.watch(
+      (state) => state.alert.alertHost,
+      (newValue, oldValue) => {
+        this.alertHostInput = newValue
+      }
+    )
   },
   methods: {
     alertHostInputIsLayerHostFormat() {
