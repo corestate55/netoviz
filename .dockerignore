@@ -3,6 +3,5 @@
 .nuxt/
 docker/
 fig/
-db/storage/
 static/docs/
 static/*.cache

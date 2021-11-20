@@ -55,11 +55,11 @@ This application depends on:
 
 ### Project setup
 This application depends on:
-* [D3.js v4](https://d3js.org/)
+* [D3.js](https://d3js.org/) (v4 or later)
 * [Nuxt.js](https://nuxtjs.org/)
 
 ```
-npm install
+npm install [--legacy-peer-deps]
 ```
 
 ### Install docker/gRPC tools
