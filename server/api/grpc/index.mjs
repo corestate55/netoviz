@@ -1,4 +1,3 @@
-import AlertTable from '../common/alert-table'
 import GRPCIntegrator from './integrator'
 import messages from './topology-data_pb'
 
@@ -33,30 +32,6 @@ const getGraphData = async (call, callback) => {
 }
 
 /**
- * Return alert data as AlertReply message.
- * @param call
- * @param {function} callback
- * @returns {Promise<void>}
- */
-const getAlerts = async (call, callback) => {
-  /** @type {proto.netoviz.AlertRequest} */
-  const request = call.request
-  console.log(`[gRPC] alerts: ${request.getNumber()}`)
-
-  /** @type {proto.netoviz.AlertReply} */
-  const reply = new messages.AlertReply()
-  const alertTable = new AlertTable()
-  const alerts = await alertTable.alerts(request.getNumber())
-  reply.setAlertsList(
-    alerts.map(
-      (d) =>
-        /** @type {proto.netoviz.Alert} */ new messages.Alert(d.toGRPCArray())
-    )
-  )
-  callback(null, reply)
-}
-
-/**
  * Return models (model file information) as ModelReply message.
  * @param call
  * @param callback
@@ -72,4 +47,4 @@ const getModels = async (call, callback) => {
   callback(null, reply)
 }
 
-export default { getGraphData, getAlerts, getModels }
+export default { getGraphData, getModels }

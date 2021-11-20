@@ -13,13 +13,11 @@
     <v-main>
       <v-container fluid>
         <v-row>
-          <v-col cols="12" lg="4">
-            <AppBreadcrumbs v-bind:path="$nuxt.$route.path" />
-            <TableAlerts />
-          </v-col>
-          <v-col cols="12" lg="8">
-            <nuxt />
-          </v-col>
+          <v-col><AppBreadcrumbs v-bind:path="$nuxt.$route.path" /></v-col>
+          <v-col><TableAlerts /></v-col>
+        </v-row>
+        <v-row>
+          <nuxt />
         </v-row>
       </v-container>
     </v-main>

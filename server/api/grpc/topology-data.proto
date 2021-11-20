@@ -4,7 +4,6 @@ package netoviz;
 
 service TopologyData {
   rpc GetGraphData (GraphRequest) returns (GraphReply);
-  rpc GetAlerts (AlertRequest) returns (AlertReply);
   rpc GetModels (ModelRequest) returns (ModelReply);
 }
 
@@ -31,24 +30,6 @@ message GraphReply {
   GraphName graph_name = 1;
   string model_file = 2;
   string json = 3; // json string of diagram data
-}
-
-message AlertRequest {
-  uint32 number = 1;
-}
-
-message Alert {
-  uint32 id = 1;
-  string host = 2;
-  string severity = 3;
-  string date = 4;
-  string message = 5;
-  string created_at = 6;
-  string updated_at = 7;
-}
-
-message AlertReply {
-  repeated Alert alerts = 1;
 }
 
 message ModelRequest {}

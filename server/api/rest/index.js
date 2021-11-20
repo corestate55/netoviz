@@ -3,7 +3,6 @@
  */
 
 import express from 'express'
-import AlertTable from '../common/alert-table'
 import RESTIntegrator from './integrator'
 
 /**
@@ -17,9 +16,6 @@ import RESTIntegrator from './integrator'
 /** @type {Router} */
 const apiRouter = express.Router()
 
-/** @type {AlertTable} */
-const alertTable = new AlertTable()
-
 /**
  * API class instance of topology graph.
  * It converts RFC8345 data (from json) for topology data.
@@ -28,25 +24,6 @@ const alertTable = new AlertTable()
  */
 const restApi = new RESTIntegrator('static')
 apiRouter.use(express.json())
-
-// API to receive alert log data.
-apiRouter.post('/alert', (req, res) => {
-  const alertData = req.body
-  alertTable.addAlert(alertData)
-  res.send('Log message received.')
-})
-
-// API to send ALL alert log data
-apiRouter.get('/alert/all', async (req, res) => {
-  console.log('[REST] alerts: all')
-  res.send(await alertTable.allAlerts())
-})
-
-// API to send several alert log data.
-apiRouter.get('/alert/:number', async (req, res) => {
-  console.log(`requested ${req.params.number} logs`)
-  res.send(await alertTable.alerts(req.params.number))
-})
 
 // API to send all model-file data.
 apiRouter.get('/models', async (req, res) => {

@@ -62,36 +62,6 @@ This application depends on:
 npm install
 ```
 
-### Initialize database file
-To highlight hosts in the dialog by event log,
-SQLite3 database is used in this application.
-
-For development mode (environment variable `NODE_ENV` is not `production`)
-
-```bash
-./bin/dbmigrate.sh
-```
-
-For production mode
-```bash
-NODE_ENV=production ./bin/dbmigrate.sh
-```
-
-To send a dummy log message (after running netoviz server),
-use test script like below.
-It selects a name of hosts from specified model file and send random message to API server.
-(NOTE: `push_alert.rb` calls `curl` command.)
-
-```bash
-# option help: -h
-./bin/push_alert.rb -f ./static/model/target.json -p 3000
-```
-
-Pushing several logs (adjust number of logs and interval)
-```bash
-for cnt in `seq 1 10`; do ./bin/push_alert.rb -f ./static/model/target.json -p 3000; sleep 5; done
-```
-
 ### Install docker/gRPC tools
 Currently, Netoviz has gRPC and REST API.
 It choose API according to `NETOVIZ_API` value (`rest` or `grpc`).
@@ -108,7 +78,7 @@ Install grpc-tools. (`grpc_tools_node_protoc`)
 sudo npm install -g --unsafe-perm grpc-tools
 ```
 
-Download `protoc-gen-grpc-web` binary from [grpc/grpc\-web](https://github.com/grpc/grpc-web/releases)
+Download `protoc-gen-grpc-web` binary from [grpc/grpc\-web](https://github.com/grpc/grpc-web/releases )
 and install it.
 ```
 sudo cp ~/Downloads/protoc-gen-grpc-web-1.0.7-linux-x86_64 /usr/local/bin/protoc-gen-grpc-web
@@ -192,13 +162,6 @@ Then, it need envoy proxy to use gRPC-web.
 docker run -p3000:3000 -p9090:9090 --env NETOVIZ_API=grpc --name nv-allinone netoviz/allinone                        
 ```
 
-The container create alert-db file (sqlite3) when it `run`.
-If you want to keep alert-db file after the container was stopped,
-mount docker host directory as `/home/netoviz/db/storage` like that:
-```
-docker run -p3000:3000 --volume=`pwd`/db/storage:/home/netoviz/db/storage --name nv-allinone netoviz/allinone
-```  
-
 Debug.
 ```
 docker run -it netoviz/allinone /bin/sh
@@ -238,10 +201,6 @@ Application (see [pages](./pages))
 
 Server (JSON API) (see [server/api.js](server/api/rest/index.js))
 
-* Alert handling
-  * POST `/api/alert` (see [push_alert.rb](./bin/push_alert.rb))
-  * GET `/api/alert/:number`
-  * GET `/api/alert/all`
 * Topology data handling
   * GET `/api/models` (return [topology model list](./static/model/_index.json))
   * POST `/api/graph/:graphName/:jsonName`

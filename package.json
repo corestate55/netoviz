@@ -41,9 +41,7 @@
     "grpc-web": "^1.2.1",
     "localStorage": "^1.0.4",
     "nuxt": "^2.15.8",
-    "nuxt-env": "^0.1.0",
-    "sequelize": "^6.7.0",
-    "sqlite3": "^5.0.2"
+    "nuxt-env": "^0.1.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
@@ -61,7 +59,6 @@
     "jsdoc": "^3.6.7",
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
-    "prettier-config-standard": "^4.0.0",
-    "sequelize-cli": "^6.2.0"
+    "prettier-config-standard": "^4.0.0"
   }
 }
