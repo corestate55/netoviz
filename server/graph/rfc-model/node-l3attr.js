@@ -23,7 +23,7 @@ class RfcL3Prefix extends RfcModelBase {
     /** @type {string} */
     this.prefix = data.prefix || ''
     /** @type {number} */
-    this.metric = data.metric || 100
+    this.metric = data.metric || 0
     /** @type {Array<string>} */
     this.flag = data.flag || [] // array
   }
