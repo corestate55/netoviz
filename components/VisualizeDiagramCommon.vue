@@ -27,16 +27,11 @@ export default {
         this.$store.commit('alert/setAlertHost', value)
       }
     },
-    isLarge() {
-      return !!['lg', 'xl'].find((d) => d === this.$vuetify.breakpoint.name)
-    },
     svgWidth() {
-      const factor = (this.isLarge ? 8 / 12 : 1.0) * 0.95
-      return this.$vuetify.breakpoint.width * factor
+      return this.$vuetify.breakpoint.width * 0.95
     },
     svgHeight() {
-      const factor = this.isLarge ? 0.9 : 0.8
-      return this.$vuetify.breakpoint.height * factor
+      return this.$vuetify.breakpoint.height * 0.8
     }
   },
   watch: {
